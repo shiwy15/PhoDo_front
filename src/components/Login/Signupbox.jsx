@@ -16,14 +16,14 @@ const Signupbox = () => {
     const { name, email, password, error } = formData;
 
     console.log(formData);
-    
+
     const handleChange = text => e => {
         setFormData({ ...formData, [text]: e.target.value });
     };
 
     const handleSubmit = e => {
         e.preventDefault();
-        axios.post(`${API}/signup`, {
+        axios.post(`${API.SIGNUP}`, {
             name,
             email,
             password
