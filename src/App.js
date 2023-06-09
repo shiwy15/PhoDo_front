@@ -1,5 +1,3 @@
-import './App.css';
-
 import Login from "./pages/Login/Login.jsx";
 import { Routes, Route } from "react-router-dom"
 
