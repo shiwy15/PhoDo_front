@@ -10,7 +10,7 @@ const Signupbox = () => {
                 <form className="mt-6">
                     <div className="mb-2">
                         <label
-                            for="name"
+                            htmlFor="name"
                             className="block text-sm font-semibold text-gray-800"
                         >
                             Name
@@ -22,7 +22,7 @@ const Signupbox = () => {
                     </div>
                     <div className="mb-2">
                         <label
-                            for="email"
+                            htmlFor="email"
                             className="block text-sm font-semibold text-gray-800"
                         >
                             Email
@@ -34,7 +34,7 @@ const Signupbox = () => {
                     </div>
                     <div className="mb-2">
                         <label
-                            for="password"
+                            htmlFor="password"
                             className="block text-sm font-semibold text-gray-800"
                         >
                             Password

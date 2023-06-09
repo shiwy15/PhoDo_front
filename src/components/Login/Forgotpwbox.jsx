@@ -10,7 +10,7 @@ const Forgotpwbox = () => {
                 <form className="mt-6">
                     <div className="mb-2">
                         <label
-                            for="email"
+                            htmlFor="email"
                             className="block text-sm font-semibold text-gray-800"
                         >
                             Email
