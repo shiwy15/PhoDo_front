@@ -15,8 +15,8 @@ const Signupbox = () => {
 
     const { name, email, password, error } = formData;
 
-    console.log(formData);
-
+    console.log('signup:  ', formData); //🔥 testing
+    
     const handleChange = text => e => {
         setFormData({ ...formData, [text]: e.target.value });
     };
@@ -33,7 +33,11 @@ const Signupbox = () => {
                 navigate('/login');
             }
         }).catch(err => {
-            setFormData({ ...formData, error: err.response.data.error, success: false });
+            if (err.response) {
+                setFormData({ ...formData, error: err.response.data.error, success: false });
+            } else {
+                setFormData({ ...formData, error: "An error occurred", success: false });
+            }
         });
     };
     
@@ -43,7 +47,6 @@ const Signupbox = () => {
                 <h1 className="text-4xl font-semibold text-center text-purple-700">
                    Sign up
                 </h1>
-                {error && <div className="alert alert-danger">{error}</div>}
                 <form className="mt-6" onSubmit={handleSubmit}>
                     <div className="mb-2">
                         <label
@@ -93,12 +96,12 @@ const Signupbox = () => {
                         </button>
                     </div>
                 </form>
-
+                {error && <div className="text-red-500 mb-2 text-center">{error}</div>}
                 <p className="mt-8 text-xs font-light text-center text-gray-700">
                     {" "}
                     Back to login page{" "}
                     <a
-                        href="/"
+                        href="/login"
                         className="font-medium text-purple-600 hover:underline"
                     >
                         login page 
