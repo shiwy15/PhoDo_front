@@ -18,13 +18,15 @@ import ReactFlow, {
 
 
 const initialNodes = [
-    { id: '1', position: { x: 0, y: 0 }, data: { label: '공사 초기' } },
-    { id: '2', position: { x: 0, y: 100 }, data: { label: '공사 중기' } },
-    { id: '3', position: { x: 0, y: 200 }, data: { label: '공사 말기' } },
+    { id: '1', position: { x: 400, y: 200 }, data: { label: '공사 초기' } },
+    { id: '2', position: { x: 400, y: 400 }, data: { label: '공사 중기' } },
+    { id: '3', position: { x: 400, y: 600 }, data: { label: '공사 말기' } },
   ];
 
 //🔥 Setting for node id
-// let id = 1;
+let id = 4;
+const getId = () => `${id++}`;
+
 
 const initialEdges = [{ id: 'e1-2', source: '1', target: '2' },
                       { id: 'e2-3', source: '2', target: '3' }];
@@ -52,12 +54,12 @@ const Editingbox = () => {
             
             if (targetIsPane){
                 const { top, left } = reactFlowWrapper.current.getBoundingClientRect();
-                const id = "새로운 스테이지";
+                const id = getId();
                 const newNode = {
                     id,
                     // we are removing the half of the node width (75) to center the new node
                     position: project({ x: event.clientX - left - 75, y: event.clientY - top }),
-                    data: { label: `${id}` },
+                    data: { label: `새로운 노드 ${id}`  },
                   };
 
                 setNodes((nds) => nds.concat(newNode));
