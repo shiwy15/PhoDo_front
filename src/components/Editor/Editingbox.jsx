@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect} from "react";
 // import axios from "axios";
 // import { API } from "../../config";
 // import { useNavigate } from 'react-router-dom';
@@ -43,11 +43,23 @@ const Editingbox = () => {
     //🍀 first setting!
     const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
+    //🌸 changing node name! 
+    const [selectedNode, setSelectedNode] = useState(null);
+    const [nodeName, setNodeName] = useState('');
+    useEffect(() => {
+        if(selectedNode) {
+            setNodeName(selectedNode.data.label);
+        }
+    }, [selectedNode]);
+
+
     //🔥 Adding Node! --> nodeId not set yet!
     const onConnectStart = useCallback((_, {nodeId}) => {
         connectingNodeId.current = nodeId;
     }, []);
 
+
+    //🔥 Adding Node! --> nodeId not set yet!
     const onConnectEnd = useCallback(
         (event) => {
             const targetIsPane = event.target.classList.contains('react-flow__pane');
@@ -63,14 +75,39 @@ const Editingbox = () => {
                   };
 
                 setNodes((nds) => nds.concat(newNode));
-                setEdges((eds) => eds.concat({id, source: connectingNodeId.current, target: id}));
+                setEdges((eds) => eds.concat({id: `e${connectingNodeId.current}-${id}`, source: connectingNodeId.current, target: id}));
             }
         },
         [project]
     );
 
+    //🌸 changing node name! 
+    const onNodeClick = useCallback((_, node) => {
+        setSelectedNode(node);
+    }, []);
+
+    const onLabelChange = useCallback((event) => {
+        setNodeName(event.target.value);
+        setNodes((nds) => nds.map(n => n.id === selectedNode.id ? { ...n, data: { ...n.data, label: event.target.value } } : n));
+    }, [selectedNode]);
+
     return (
         <div className= "wrapper" ref={reactFlowWrapper} style={{ width: '100vw', height: '100vh' }}>
+            {/* <input type="text" value={nodeName} onChange={onLabelChange} placeholder="노드 라벨" /> */}
+            
+        
+            <div style={{ position: 'absolute', right: 0, top: 0, margin: '1rem', zIndex: 1000 }}>
+                <label hidden="large-input" 
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> 라벨링 고치기
+                </label>
+                <input type="text" id="large-input" 
+                class="block w-full p-4 text-gray-900 border border-purple-700 rounded-lg bg-gray-50 sm:text-md focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                value={nodeName} onChange={onLabelChange}>
+                </input>
+            </div>
+
+
+
             <ReactFlow 
                 nodes={nodes} 
                 edges={edges}
@@ -79,11 +116,12 @@ const Editingbox = () => {
                 onConnect={onConnect}
                 onConnectStart={onConnectStart}
                 onConnectEnd={onConnectEnd}
+                onElementClick={onNodeClick}
                 // fitView
             >
-                {/* <Controls/> */}
-                {/* <MiniMap/> */}
-                {/* <NodeToolbar /> */}
+                <Controls/>
+                <MiniMap/>
+                <NodeToolbar />
                 <Background variant="dots" gap={12} size={1} />
 
             </ReactFlow>
