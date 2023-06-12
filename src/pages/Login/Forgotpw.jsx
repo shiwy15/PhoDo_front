@@ -8,4 +8,4 @@ function Forgotpw() {
         </div>
     )
 }
-export default Forgotpw;
+export default Forgotpw; 
