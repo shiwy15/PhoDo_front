@@ -8,11 +8,8 @@ const fetchNodes = () => {
 
 function Practicepage2() {
     const {isLoading, data} = useQuery('nodes', fetchNodes)
-    console.log('Yalla: ', data.data);
+    console.log('Yalla: ', data);//🥦 먼저 등록되는 것은 아니다! 먼저 data rendering을 하게 된다
     
-    if(isLoading){
-        return <h2>Loaing.. </h2>
-    }
     
     return (
         <>
