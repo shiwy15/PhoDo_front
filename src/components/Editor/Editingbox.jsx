@@ -1,7 +1,4 @@
 import React, { useState, useCallback, useRef, useEffect} from "react";
-// import axios from "axios";
-// import { API } from "../../config";
-// import { useNavigate } from 'react-router-dom';
 import 'reactflow/dist/style.css';
 import ReactFlow, { 
     useNodesState, 
@@ -44,13 +41,23 @@ const Editingbox = () => {
     const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
     //🌸 changing node name! 
+    const [nodeName, setNodeName] = useState('node name');
     const [selectedNode, setSelectedNode] = useState(null);
-    const [nodeName, setNodeName] = useState('');
+    
     useEffect(() => {
-        if(selectedNode) {
-            setNodeName(selectedNode.data.label);
-        }
-    }, [selectedNode]);
+        setNodes((nds) => 
+            nds.map((node) => {
+            if (node.id === '1'){
+                node.data = {
+                    ...node.data,
+                    label: nodeName,
+                };
+            }
+
+            return node;
+            })
+        );
+    }, [nodeName, selectedNode]);
 
 
     //🔥 Adding Node! --> nodeId not set yet!
@@ -81,15 +88,6 @@ const Editingbox = () => {
         [project]
     );
 
-    //🌸 changing node name! 
-    const onNodeClick = useCallback((_, node) => {
-        setSelectedNode(node);
-    }, []);
-
-    const onLabelChange = useCallback((event) => {
-        setNodeName(event.target.value);
-        setNodes((nds) => nds.map(n => n.id === selectedNode.id ? { ...n, data: { ...n.data, label: event.target.value } } : n));
-    }, [selectedNode]);
 
     return (
         <div className= "wrapper" ref={reactFlowWrapper} style={{ width: '100vw', height: '100vh' }}>
@@ -102,8 +100,11 @@ const Editingbox = () => {
                 </label>
                 <input type="text" id="large-input" 
                 class="block w-full p-4 text-gray-900 border border-purple-700 rounded-lg bg-gray-50 sm:text-md focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
-                value={nodeName} onChange={onLabelChange}>
+                value={nodeName} onChange={(e) => setNodeName(e.target.value)}>
                 </input>
+                <button>
+                    hello
+                </button>
             </div>
 
 
@@ -116,7 +117,7 @@ const Editingbox = () => {
                 onConnect={onConnect}
                 onConnectStart={onConnectStart}
                 onConnectEnd={onConnectEnd}
-                onElementClick={onNodeClick}
+                // onElementClick={onNodeClick}
                 // fitView
             >
                 <Controls/>
