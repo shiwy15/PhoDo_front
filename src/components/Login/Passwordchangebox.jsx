@@ -26,13 +26,13 @@ const Forgotpwbox = () => {
     const handleSubmit = e => {
         e.preventDefault();
         //🔥 reset/token
-        axios.post(`${API.CHANGEPW, token}`, { password, confirmpassword })
+        axios.post(`${API.CHANGEPW, token}`, { password, confirmpassword, token })
             .then(res => {
                 if (res.status === 200) {
                     navigate('/login');
                 }
             }).catch(err => {
-                setFormData({ ...formData, error: "Failed to send the email. Please check your email." });
+                setFormData({ ...formData, error: "Failed to change the password. Please check your password." });
             });
     };
 
