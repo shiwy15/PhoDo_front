@@ -9,6 +9,7 @@ import Editor from "./pages/Editor/Editor.jsx"
 
 //react query practice set
 import Practice from "./pages/Practice/Practice.jsx"
+import Practice2 from "./pages/Practice/Practice2.jsx"
 
 import { Routes, Route } from "react-router-dom"
 
@@ -27,6 +28,7 @@ function App() {
 
         {/* react query sample */}
         <Route path="/practice" element={<Practice />} />
+        <Route path="/practice2" element={<Practice2 />} />
 
 
       </Routes>

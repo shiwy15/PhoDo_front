@@ -18,7 +18,8 @@ function Practicepage() {
     return (
         <>
         <h2>Node page</h2>
-        {data.map((nodes) =>{
+        {data.map((nodes) => 
+        {
             return <div key={nodes.id}>{nodes.data.label}</div>
         })}
         </>
