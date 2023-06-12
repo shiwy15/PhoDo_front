@@ -9,12 +9,13 @@ const Forgotpwbox = () => {
     console.log('token: ', token);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        email: '',
+        password: '',
+        confirmpassword: '',
         token: token,
         error: ''
     });
 
-    const { email, error } = formData;
+    const { password, confirmpassword, error } = formData;
 
     const handleChange = text => e => {
         setFormData({ ...formData, [text]: e.target.value });
@@ -24,7 +25,8 @@ const Forgotpwbox = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        axios.post(`${API.FORGOTPW}`, { email, token })
+        //🔥 reset/token
+        axios.post(`${API.CHANGEPW, token}`, { password, confirmpassword })
             .then(res => {
                 if (res.status === 200) {
                     navigate('/login');
@@ -42,16 +44,19 @@ const Forgotpwbox = () => {
                 </h1>
                 <form className="mt-6" onSubmit={handleSubmit}>
                     <div className="mb-2">
-                        <label htmlFor="password" className="block text-sm font-semibold text-gray-800">Password</label>
+                        <label htmlFor="password" 
+                        className="block text-sm font-semibold text-gray-800">Password</label>
                         <input 
                             type="password" 
+                            onChange={handleChange('password')}
                             className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40" 
                         />
                     </div>
                     <div className="mb-2">
-                        <label htmlFor="newpassword" className="block text-sm font-semibold text-gray-800">Confirm password</label>
+                        <label htmlFor="confirmpassword" className="block text-sm font-semibold text-gray-800">Confirm password</label>
                         <input 
-                            type="newpassword" 
+                            type="confirmpassword"
+                            onChange={handleChange('confirmpassword')}
                             className="block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40" 
                         />
                     </div>
