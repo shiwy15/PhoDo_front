@@ -8,3 +8,10 @@ npm install react-icons --save
 npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
 yarn global add json-server
 npm install --save-dev concurrently
+yarn add react-query
+//npm install @tanstack/react-query
+//npm install @tanstack/react-query-devtools
+//npm install react-router-dom
+//yarn add styled-components
+//yarn add axios
+//npm install reactflow

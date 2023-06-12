@@ -1,11 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  // 템플릿 파일의 경로 설정 👀
-  content: [
-    "./src/**/*.{js,jsx,html}",
-  ],
+  content: ["./src/**/*.{html,js,jsx}"],
   theme: {
     extend: {},
   },
   plugins: [],
 }
+
