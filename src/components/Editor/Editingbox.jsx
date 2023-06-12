@@ -1,5 +1,9 @@
 import React, { useState, useCallback, useRef, useEffect} from "react";
 import 'reactflow/dist/style.css';
+import TextUpdaterNode from './TextUpdaterNode.js';
+
+import './text-updater-node.css';
+
 import ReactFlow, { 
     useNodesState, 
     useEdgesState, 
@@ -10,15 +14,21 @@ import ReactFlow, {
     NodeToolbar,
     // @For adding node on edge drop
     useReactFlow,
-    ReactFlowProvider
+    ReactFlowProvider,
+    // @For changing node name
+    applyNodeChanges,
+    applyEdgeChanges
 } from 'reactflow';
 
 
 const initialNodes = [
-    { id: '1', position: { x: 400, y: 200 }, data: { label: '공사 초기' } },
-    { id: '2', position: { x: 400, y: 400 }, data: { label: '공사 중기' } },
-    { id: '3', position: { x: 400, y: 600 }, data: { label: '공사 말기' } },
+    { id: '1', type: 'textUpdater', position: { x: 400, y: 200 }, data: { label: '공사 초기' } },
+    { id: '2', type: 'textUpdater', position: { x: 400, y: 400 }, data: { label: '공사 중기' } },
+    { id: '3', type: 'textUpdater', position: { x: 400, y: 600 }, data: { label: '공사 말기' } },
   ];
+
+const nodeTypes = {textUpdater: TextUpdaterNode}
+
 
 //🔥 Setting for node id
 let id = 4;
@@ -33,31 +43,40 @@ const Editingbox = () => {
     const reactFlowWrapper = useRef(null);
     const connectingNodeId = useRef(null);
     //🍀 first setting!
-    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+    const [nodes, setNodes] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
     //🔥 Adding Node!
     const { project } = useReactFlow();
     //🍀 first setting!
+    const onNodesChange = useCallback(
+        (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
+        [setNodes]
+      );
+    //   const onEdgesChange = useCallback(
+    //     (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    //     [setEdges]
+    //   );
+
     const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
     //🌸 changing node name! 
     const [nodeName, setNodeName] = useState('node name');
     const [selectedNode, setSelectedNode] = useState(null);
     
-    useEffect(() => {
-        setNodes((nds) => 
-            nds.map((node) => {
-            if (node.id === '1'){
-                node.data = {
-                    ...node.data,
-                    label: nodeName,
-                };
-            }
+    // useEffect(() => {
+    //     setNodes((nds) => 
+    //         nds.map((node) => {
+    //         if (node.id === '1'){
+    //             node.data = {
+    //                 ...node.data,
+    //                 label: nodeName,
+    //             };
+    //         }
 
-            return node;
-            })
-        );
-    }, [nodeName, selectedNode]);
+    //         return node;
+    //         })
+    //     );
+    // }, [nodeName, selectedNode]);
 
 
     //🔥 Adding Node! --> nodeId not set yet!
@@ -78,11 +97,12 @@ const Editingbox = () => {
                     id,
                     // we are removing the half of the node width (75) to center the new node
                     position: project({ x: event.clientX - left - 75, y: event.clientY - top }),
+                    type: 'textUpdater',
                     data: { label: `새로운 노드 ${id}`  },
                   };
-
                 setNodes((nds) => nds.concat(newNode));
                 setEdges((eds) => eds.concat({id: `e${connectingNodeId.current}-${id}`, source: connectingNodeId.current, target: id}));
+                console.log(initialNodes)
             }
         },
         [project]
@@ -117,6 +137,7 @@ const Editingbox = () => {
                 onConnect={onConnect}
                 onConnectStart={onConnectStart}
                 onConnectEnd={onConnectEnd}
+                nodeTypes={nodeTypes}
                 // onElementClick={onNodeClick}
                 // fitView
             >
