@@ -24,19 +24,19 @@ const ButtonContainer = styled.div`
 `
 
 const GalleryBox = () => {
-    const [isLoading, setIsLoading] = useState(true)
-    const [data, setData] = useState([])
+    // const [isLoading, setIsLoading] = useState(true)
+    // const [data, setData] = useState([])
 
-    useEffect(() => {
-        axios.get('http://localhost:4000/superheroes').then((res) => {
-            setData(res.data)
-            setIsLoading(false)
-        })
-    },[])
+    // useEffect(() => {
+    //     axios.get('http://localhost:4000/superheroes').then((res) => {
+    //         setData(res.data)
+    //         setIsLoading(false)
+    //     })
+    // },[])
 
-    if (isLoading) {
-        return <h2>Loading...</h2>
-    }
+    // if (isLoading) {
+    //     return <h2>Loading...</h2>
+    // }
 
     const PhodoButton = () => {
         console.log("포도 버튼 클릭");
