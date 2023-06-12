@@ -6,6 +6,7 @@ import Passwordchange from "./pages/Login/Passwordchange.jsx";
 
 //editor set
 import Editor from "./pages/Editor/Editor.jsx"
+import Editor2 from "./pages/Editor/Editor2.jsx"
 
 //react query practice set
 import Practice from "./pages/Practice/Practice.jsx"
@@ -27,6 +28,7 @@ function App() {
 
         {/* editor set */}
         <Route path="/editor" element={<Editor />} />
+        <Route path="/editor2" element={<Editor2 />} />
 
         {/* react query sample */}
         <Route path="/practice" element={<Practice />} />

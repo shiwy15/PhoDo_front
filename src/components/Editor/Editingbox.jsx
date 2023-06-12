@@ -81,6 +81,7 @@ const Editingbox = () => {
                     data: { label: `새로운 노드 ${id}`  },
                   };
                 setNodes((nds) => nds.concat(newNode));
+                console.log(nodes);
                 setEdges((eds) => eds.concat({id: `e${connectingNodeId.current}-${id}`, source: connectingNodeId.current, target: id}));
                 console.log(initialNodes)
             }
