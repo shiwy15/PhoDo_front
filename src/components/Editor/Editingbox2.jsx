@@ -1,3 +1,6 @@
+import 'reactflow/dist/style.css';
+import './text-updater-node.css';
+import TextUpdaterNode from './TextUpdaterNode.js';
 import React, { useState, useRef ,useCallback } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
@@ -10,33 +13,80 @@ import ReactFlow, {
   MiniMap,
   NodeToolbar,
 } from 'reactflow';
-import 'reactflow/dist/style.css';
 
 const flowKey = 'example-flow';
 
-const getNodeId = () => `randomnode_${+new Date()}`;
-
+const nodeTypes = {textUpdater: TextUpdaterNode}
 const initialNodes = [
-  { id: '1', data: { label: 'Node 1' }, position: { x: 100, y: 100 } },
-  { id: '2', data: { label: 'Node 2' }, position: { x: 100, y: 200 } },
+  { id: '1', type: 'textUpdater', data: { label: 'Node 1' }, position: { x: 100, y: 100 } },
+  { id: '2', type: 'textUpdater', data: { label: 'Node 2' }, position: { x: 100, y: 200 } },
 ];
+
+let id = 3;
+const getNodeId = () => `${id++}`;
+
+
+const fitViewOptions = {
+   padding: 3,
+ };
 
 const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
 
 const Editingbox2 = () => {
+   //🔥 Adding Node!
   const reactFlowWrapper = useRef(null);
+  const connectingNodeId = useRef(null);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const [rfInstance, setRfInstance] = useState(null);
-  const { setViewport } = useReactFlow();
 
+   //for saving
+  const [rfInstance, setRfInstance] = useState(null);
+//   const [clickedNode, setclickedNode] = useState(null);
+
+  const { project, setViewport } = useReactFlow();
+   //Adding Node by lining
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
+
+  //🔥 DRAG Adding Node! --> nodeId not set yet!
+  const onConnectStart = useCallback((_, {nodeId}) => {
+   connectingNodeId.current = nodeId;
+}, []);
+
+
+//🔥 Adding Node! --> nodeId not set yet!
+const onConnectEnd = useCallback(
+   (event) => {
+       const targetIsPane = event.target.classList.contains('react-flow__pane');
+       
+       if (targetIsPane){
+           const { top, left } = reactFlowWrapper.current.getBoundingClientRect();
+           const id = getNodeId();
+           const newNode = {
+               id,
+               // we are removing the half of the node width (75) to center the new node
+               position: project({ x: event.clientX - left - 75, y: event.clientY - top }),
+               type: 'textUpdater',
+               data: { label: `새로운 노드 ${id}`  },
+             };
+           setNodes((nds) => nds.concat(newNode));
+           console.log(nodes);
+           setEdges((eds) => eds.concat({id: `e${connectingNodeId.current}-${id}`, source: connectingNodeId.current, target: id}));
+           console.log(initialNodes)
+       }
+   },
+   [project]
+);
+  
+  
+  // Connet, Save and restore adding
+  
   const onSave = useCallback(() => {
     if (rfInstance) {
       const flow = rfInstance.toObject();
       localStorage.setItem(flowKey, JSON.stringify(flow));
       console.log(JSON.stringify(flow));
+      console.log(localStorage)
     }
   }, [rfInstance]);
 
@@ -76,8 +126,13 @@ const Editingbox2 = () => {
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
-      style= {{background : '#808080'}}
+      onConnectStart={onConnectStart}
+      onConnectEnd={onConnectEnd}
+      nodeTypes={nodeTypes}
+      style= {{background : '#D4EFE4'}}
       onInit={setRfInstance}
+      fitView
+      fitViewOptions={fitViewOptions}
     >
       <Controls/>
       <MiniMap/>
