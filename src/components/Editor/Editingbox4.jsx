@@ -18,12 +18,12 @@ import axios from "axios";
 const flowKey = 'example-flow';
 const nodeTypes = {textUpdater: TextUpdaterNode}
 const initialNodes = [
-  { id: '1', 
-//   type: 'textUpdater',
-   data: { label: '여기를 클릭하시고! 🐬' }, position: { x: 100, y: 100 } },
-  { id: '2', 
-//   type: 'textUpdater', 
-  data: { label: '오른쪽에 Selected Node 입력해주시면 됩니다 :) 🍀' }, position: { x: 100, y: 200 } },
+//   { id: '1', 
+// //   type: 'textUpdater',
+//    data: { label: '여기를 클릭하시고! 🐬' }, position: { x: 100, y: 100 } },
+//   { id: '2', 
+// //   type: 'textUpdater', 
+//   data: { label: '오른쪽에 Selected Node 입력해주시면 됩니다 :) 🍀' }, position: { x: 100, y: 200 } },
 ];
 
 
@@ -32,16 +32,52 @@ const getNodeId = () => `${id++}`;
 const fitViewOptions = {
    padding: 3,
  };
-const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
+const initialEdges = [
+  // { id: 'e1-2', source: '1', target: '2' }
+];
 
 //////////////////
-const Editingbox2 = () => {
+const Editingbox4 = () => {
    //🔥 Adding Node!
   const reactFlowWrapper = useRef(null);
   const connectingNodeId = useRef(null);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+
+  //@GETTING NODES 
+  const getNodes = () => {
+    axios.get('https://localhost:4000/nodes')
+    .then(res => {
+      const newNodes = res.data; // Assuming res.data is an array of nodes
+      setNodes(newNodes);
+    })
+    .catch(error => {
+      console.error("Error fetching data: ", error);
+    });
+  }
+  useEffect(() => {
+    getNodes();
+  }, []);
+
+  //@GETTING EDGES
+  const getEdges = () => {
+    axios.get('https://localhost:4000/edges')
+    .then(res => {
+      const newEdges = res.data; // Assuming res.data is an array of nodes
+      setEdges(newEdges);
+    })
+    .catch(error => {
+      console.error("Error fetching data: ", error);
+    });
+  }
+  useEffect(() => {
+    getEdges();
+  }, []);
+
+  ///////SETTING///////
+
+
 
 
    //for saving
@@ -275,6 +311,6 @@ const onConnectEnd = useCallback(
 
 export default () => (
   <ReactFlowProvider>
-    <Editingbox2 />
+    <Editingbox4 />
   </ReactFlowProvider>
 );
