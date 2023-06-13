@@ -82,19 +82,19 @@ const GalleryBox = () => {
     return (
         <div>
             <GalleryContainer>
-                <div className=" button-box bg-purple-100 h-16 mb-2 rounded-lg shadow-lg justify-center">
+            <div className='flex flex-wrap justify-center'> 보고싶은 사진의 tag를 선택하세요! </div>
+                <div className="button-box bg-purple-100 h-20 mb-2 rounded-lg shadow-lg flex flex-wrap justify-center items-center">
                     {buttons.map((button) => (
-                        <button onClick={() => handleButtonClick(button)} key={button} className="bg-white rounded-full px-4 py-2 text-black shadow mx-2 my-2">
+                        <button onClick={() => handleButtonClick(button)} key={button} className="bg-white rounded-full px-2 py-1 text-black shadow mx-1 my-1">
                             {button}
                         </button>
                     ))}
-
                 </div>
                 <ImageList sx={{ width: '100%', height: 450, gap: 16 }} cols={3} rowHeight={164}>
-                    {data?.data.map((imagesQuery) => (
-                        <ImageListItem key={imagesQuery.id}>
+                    {data?.data?.map((image) => (
+                        <ImageListItem key={image._id}>
                 <img
-                    src={`${imagesQuery.url}?w=248&fit=crop&auto=format`}
+                    src={`${image.url}?w=248&fit=crop&auto=format`}
                     alt='loading...'
                     loading="lazy"
                     style={{ height: '100%', width: '100%', objectFit: 'cover' }}
@@ -102,8 +102,8 @@ const GalleryBox = () => {
                 <ImageListItemBar
                     title={
                         <span>
-                            {Object.values(imagesQuery.tags).map((tag, index) => {
-                                return index < Object.values(imagesQuery.tags).length - 1 ? `${tag}, ` : tag;
+                            {Object.values(image.tags).map((tag, index) => {
+                                return index < Object.values(image.tags).length - 1 ? `${tag}, ` : tag;
                             })}
                         </span>
                     }
