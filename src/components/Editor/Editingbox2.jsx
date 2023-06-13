@@ -1,7 +1,7 @@
 import 'reactflow/dist/style.css';
 import './text-updater-node.css';
 import TextUpdaterNode from './TextUpdaterNode.js';
-import React, { useState, useRef ,useCallback } from 'react';
+import React, { useEffect, useState, useRef ,useCallback } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
   useNodesState,
@@ -18,20 +18,31 @@ const flowKey = 'example-flow';
 
 const nodeTypes = {textUpdater: TextUpdaterNode}
 const initialNodes = [
-  { id: '1', type: 'textUpdater', data: { label: 'Node 1' }, position: { x: 100, y: 100 } },
-  { id: '2', type: 'textUpdater', data: { label: 'Node 2' }, position: { x: 100, y: 200 } },
+  { id: '1', 
+//   type: 'textUpdater',
+   data: { label: 'Node 1' }, position: { x: 100, y: 100 } },
+  { id: '2', 
+//   type: 'textUpdater', 
+  data: { label: 'Node 2' }, position: { x: 100, y: 200 } },
 ];
 
 let id = 3;
 const getNodeId = () => `${id++}`;
 
+//trial
+// const onNodeDragStart = (event, node) => console.log('drag start', node);
+// const onNodeDragStop = (event, node) => console.log('drag stop', node);
+// const onNodeClick = (event, node) => console.log('click node', node);
+// const onPaneClick = (event) => console.log('onPaneClick', event);
+// const onPaneScroll = (event) => console.log('onPaneScroll', event);
+// const onPaneContextMenu = (event) => console.log('onPaneContextMenu', event);
 
 const fitViewOptions = {
    padding: 3,
  };
-
 const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
 
+//////////////////
 const Editingbox2 = () => {
    //🔥 Adding Node!
   const reactFlowWrapper = useRef(null);
@@ -40,9 +51,23 @@ const Editingbox2 = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
+
    //for saving
   const [rfInstance, setRfInstance] = useState(null);
-//   const [clickedNode, setclickedNode] = useState(null);
+
+
+  // SETTING  
+//   const [isSelectable, setIsSelectable] = useState(false);
+//   const [isDraggable, setIsDraggable] = useState(false);
+//   const [isConnectable, setIsConnectable] = useState(false);
+//   const [zoomOnScroll, setZoomOnScroll] = useState(false);
+//   const [panOnScroll, setPanOnScroll] = useState(false);
+//   const [panOnScrollMode, setPanOnScrollMode] = useState('free');
+//   const [zoomOnDoubleClick, setZoomOnDoubleClick] = useState(false);
+//   const [panOnDrag, setpanOnDrag] = useState(true);
+//   const [captureZoomClick, setCaptureZoomClick] = useState(false);
+//   const [captureZoomScroll, setCaptureZoomScroll] = useState(false);
+//   const [captureElementClick, setCaptureElementClick] = useState(false);
 
   const { project, setViewport } = useReactFlow();
    //Adding Node by lining
@@ -53,6 +78,8 @@ const Editingbox2 = () => {
    connectingNodeId.current = nodeId;
 }, []);
 
+
+const [nodeName, setNodeName] = useState("Node 1");
 
 //🔥 Adding Node! --> nodeId not set yet!
 const onConnectEnd = useCallback(
@@ -66,7 +93,7 @@ const onConnectEnd = useCallback(
                id,
                // we are removing the half of the node width (75) to center the new node
                position: project({ x: event.clientX - left - 75, y: event.clientY - top }),
-               type: 'textUpdater',
+               // type: 'textUpdater',
                data: { label: `새로운 노드 ${id}`  },
              };
            setNodes((nds) => nds.concat(newNode));
@@ -117,14 +144,38 @@ const onConnectEnd = useCallback(
     setNodes((nds) => nds.concat(newNode));
   }, [setNodes]);
 
+  useEffect(() => {
+   setNodes((nds) =>
+     nds.map((node) => {
+       if (node.selected === true) {
+         // it's important that you create a new object here
+         // in order to notify react flow about the change
+         node.data = {
+           ...node.data,
+           label: nodeName
+         };
+       }
+
+       return node;
+     })
+   );
+ }, [nodeName, setNodes]);
+
   return (
     <>
-    <div className= "wrapper" ref={reactFlowWrapper} style={{ width: '80vw', height: '100vh' }}>
+    <div className= "wrapper" ref={reactFlowWrapper} style={{ width: '100vw', height: '100vh' }}>
     <ReactFlow
       nodes={nodes}
       edges={edges}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
+      // elementsSelectable={isSelectable}
+      // nodesConnectable={isConnectable}
+      // onNodeClick={captureElementClick ? onNodeClick : undefined}
+      // onPaneClick={captureZoomClick ? onPaneClick : undefined}
+      // onPaneScroll={captureZoomScroll ? onPaneScroll : undefined}
+      // onPaneContextMenu={captureZoomClick ? onPaneContextMenu : undefined}
+
       onConnect={onConnect}
       onConnectStart={onConnectStart}
       onConnectEnd={onConnectEnd}
@@ -147,8 +198,12 @@ const onConnectEnd = useCallback(
       <ul class="space-y-2 font-medium">
          <li>
             <button type="button" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 bg-gray-200" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-                  <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>건설 현장 프로젝트</span>                  
+                  <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item> 현장 프로젝트</span>                  
             </button>
+         </li>
+         <br/>
+         <li>
+            <label> 사용 버튼: </label>
          </li>
          <li>
             <button type="button" onClick={onSave} class=" bg-gray-200 flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
@@ -165,9 +220,11 @@ const onConnectEnd = useCallback(
                   <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>추가하기</span>                  
             </button>
          </li>
+         <br/>
+         <li>
+            <label> 사용자 버튼: </label>
+         </li>
 
-
-    
          <li>
             <a href="#" class="flex bg-gray-200 items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
@@ -188,61 +245,17 @@ const onConnectEnd = useCallback(
                <span class="flex-1 ml-3 whitespace-nowrap">음성 채팅</span>
             </a>
          </li>
+         <br/>
 
-         
+         <li>
+            <label> Selected Node: </label>
+            <input value={nodeName}
+                   onChange={(evt) => setNodeName(evt.target.value)}/>
+         </li>   
       </ul>
    </div>
 </aside>
 
-<div class="p-4 sm:ml-64">
-   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-      <div class="grid grid-cols-3 gap-4 mb-4">
-         <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-         </div>
-         <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-         </div>
-         <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-         </div>
-      </div>
-      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-         <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-      </div>
-      <div class="grid grid-cols-2 gap-4 mb-4">
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-         </div>
-      </div>
-      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-         <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-      </div>
-      <div class="grid grid-cols-2 gap-4">
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-         </div>
-      </div>
-   </div>
-</div>
 </div>
 </>
   );
