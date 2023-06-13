@@ -1,5 +1,10 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import 'tailwindcss/tailwind.css';
+import { useQuery } from 'react-query';
+
+// //서버요청용
+import { request } from "../../utils/axios-utils"
 
 // mui list
 import ImageList from '@mui/material/ImageList';
@@ -8,6 +13,8 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 const GalleryContainer = styled.div`
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     position: absolute;
     left: 220px;
     bottom:0px;
@@ -16,27 +23,51 @@ const GalleryContainer = styled.div`
     background-color: #F1E3E1;
     border-top: solid 1px lightgray;
 `
+const ButtonBox = styled.div`
+    self-align: start;
+`
 
-// const ButtonContainer = styled.div`
-//     display: flex;
-//     position:relative;
-//     width: calc(100vw - 220px);
-//     top:0;
-//     justify-content: center;
-//     align-items: center;  
-//     height: 50px;
-// `
+const fetchGallery =() => {
+    return request( { url: '/api/gallery'})
+}
+
 
 const GalleryBox = () => {
+    const onSuccess = (data) => {
+        console.log('Perfrom side effect after data fetching', data)
+    }
 
+    const onError = (error) => {
+        console.log('Perfrom side effect after data error',error)
+    }
+
+    const { isLoading, data, isError, error} = useQuery('imagesQuery', fetchGallery,{onSuccess, onError})
+    
+    if(isLoading) {
+        return <h2>Loading...</h2>
+    }
+
+    if(isError) {
+        return <h2>{error.message}</h2>
+    }
 
     return (
         <div>
         <GalleryContainer>
-        <ImageList sx={{ width: 500, height: 450 }}>
-
-
-        </ImageList>
+        <ButtonBox className="mb-auto bg-purple-100 h-16">button box</ButtonBox>
+            <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+            {data?.data.map((imagesQuery) => (
+                <ImageListItem key={imagesQuery.url}>
+                <img
+                    src={`${imagesQuery.url}?w=164&h=164&fit=crop&auto=format`}
+                    srcSet={`${imagesQuery.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                    alt={'loading...'}
+                    loading="lazy"
+                />
+                
+                </ImageListItem>
+            ))}
+            </ImageList>
         </GalleryContainer>
         </div>
     );

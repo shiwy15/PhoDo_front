@@ -1,43 +1,36 @@
-
 import { Link } from 'react-router-dom'
-
+import { useMutation } from 'react-query';
 import React, { useState } from 'react';
 
 //서버요청용
 import { request } from "../../utils/axios-utils"
 
-const addImgFile =(ImgData) => {
-    return request( { url: '/api/upload', method: 'post', data: ImgData })
+const addImgFile = async (ImgData) => {
+  const response = await request({ url: '/api/upload', method: 'post', data: ImgData });
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return response.json();
 }
 
 function ImageUpload() {
   const [image, setImage] = useState('');
   const [file, setFile] = useState(null);
+  const mutation = useMutation(addImgFile);
 
   const handleImageChange = (e) => {
     setImage(URL.createObjectURL(e.target.files[0]));
     setFile(e.target.files[0]);
   };
 
-  const handleUpload = async () => {
+  const handleUpload = () => {
     const formData = new FormData();
     formData.append('image', file);
-
-    try {
-      const response = await fetch('http://localhost:4000/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    mutation.mutate(formData, {
+      onSuccess: (data) => {
+        console.log(data);
+      },
+    });
   };
 
   return (
