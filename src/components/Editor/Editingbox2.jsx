@@ -13,30 +13,22 @@ import ReactFlow, {
   MiniMap,
   NodeToolbar,
 } from 'reactflow';
+import axios from "axios";
 
 const flowKey = 'example-flow';
-
 const nodeTypes = {textUpdater: TextUpdaterNode}
 const initialNodes = [
   { id: '1', 
 //   type: 'textUpdater',
-   data: { label: 'Node 1' }, position: { x: 100, y: 100 } },
+   data: { label: '여기를 클릭하시고! 🐬' }, position: { x: 100, y: 100 } },
   { id: '2', 
 //   type: 'textUpdater', 
-  data: { label: 'Node 2' }, position: { x: 100, y: 200 } },
+  data: { label: '오른쪽에 Selected Node 입력해주시면 됩니다 :) 🍀' }, position: { x: 100, y: 200 } },
 ];
+
 
 let id = 3;
 const getNodeId = () => `${id++}`;
-
-//trial
-// const onNodeDragStart = (event, node) => console.log('drag start', node);
-// const onNodeDragStop = (event, node) => console.log('drag stop', node);
-// const onNodeClick = (event, node) => console.log('click node', node);
-// const onPaneClick = (event) => console.log('onPaneClick', event);
-// const onPaneScroll = (event) => console.log('onPaneScroll', event);
-// const onPaneContextMenu = (event) => console.log('onPaneContextMenu', event);
-
 const fitViewOptions = {
    padding: 3,
  };
@@ -54,20 +46,6 @@ const Editingbox2 = () => {
 
    //for saving
   const [rfInstance, setRfInstance] = useState(null);
-
-
-  // SETTING  
-//   const [isSelectable, setIsSelectable] = useState(false);
-//   const [isDraggable, setIsDraggable] = useState(false);
-//   const [isConnectable, setIsConnectable] = useState(false);
-//   const [zoomOnScroll, setZoomOnScroll] = useState(false);
-//   const [panOnScroll, setPanOnScroll] = useState(false);
-//   const [panOnScrollMode, setPanOnScrollMode] = useState('free');
-//   const [zoomOnDoubleClick, setZoomOnDoubleClick] = useState(false);
-//   const [panOnDrag, setpanOnDrag] = useState(true);
-//   const [captureZoomClick, setCaptureZoomClick] = useState(false);
-//   const [captureZoomScroll, setCaptureZoomScroll] = useState(false);
-//   const [captureElementClick, setCaptureElementClick] = useState(false);
 
   const { project, setViewport } = useReactFlow();
    //Adding Node by lining
@@ -113,7 +91,19 @@ const onConnectEnd = useCallback(
       const flow = rfInstance.toObject();
       localStorage.setItem(flowKey, JSON.stringify(flow));
       console.log(JSON.stringify(flow));
-      console.log(localStorage)
+      console.log('flow: ', flow);
+      // const send_flow = JSON.parse(JSON.stringify(flow));
+      console.log('only node data: ', flow.nodes);
+      console.log('only edge data: ', flow.edges);
+      // console.log(localStorage)
+      axios.post('http://localhost:4000/editor', {
+         "nodes": flow.nodes,
+         "edges": flow.edges
+      }).then(res => {
+         if (res.status === 200) {
+            console.log('saved');
+         }
+     });
     }
   }, [rfInstance]);
 
@@ -198,12 +188,12 @@ const onConnectEnd = useCallback(
       <ul class="space-y-2 font-medium">
          <li>
             <button type="button" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 bg-gray-200" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-                  <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item> 현장 프로젝트</span>                  
+                  <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>새 프로젝트</span>                  
             </button>
          </li>
          <br/>
          <li>
-            <label> 사용 버튼: </label>
+            <label> 포도 사용 버튼: </label>
          </li>
          <li>
             <button type="button" onClick={onSave} class=" bg-gray-200 flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
