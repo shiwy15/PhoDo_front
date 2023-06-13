@@ -16,7 +16,7 @@ const ContentContainer = styled.div`
   justify-content: center;
   align-items: center;  
   width: calc(100vw - 220px);
-  height: 400px;
+  height: 350px;
   border-bottom:  solid 1px lightgray;
   overflow: hidden;
 `;

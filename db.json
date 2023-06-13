@@ -51,7 +51,8 @@
     ]
   ,
   "gallery": [
-    {
+    { 
+      "id" : 1,
       "url" : "https://storage.googleapis.com/jungle_project/1686376841607_스크린샷 2023-06-03 오후 7.29.57.png",
       "tags" : {
         "tag1": "animal",
@@ -60,7 +61,17 @@
       }
     },
     {
-      "url" :  "https://storage.googleapis.com/jungle_project/1686377932573_스크린샷 2023-06-03 오후 7.29.57.png",
+      "id" : 2,
+      "url" :  "https://cdn.topstarnews.net/news/photo/202210/14750895_977542_239_org.jpg",
+      "tags" : {
+        "tag1": "animal",
+        "tag2": "furniture",
+        "tag3":"clothing"
+      }
+    },
+    { 
+      "id" : 3,
+      "url" : "https://noritter.com/Bboard/thumb_new.php?file=/upload/blogbody/367100_1624238860_0.jpg&width=960",
       "tags" : {
         "tag1": "animal",
         "tag2": "furniture",
@@ -68,7 +79,35 @@
       }
     },
     {
-      "url" : "https://storage.googleapis.com/jungle_project/1686385199444_스크린샷 2023-06-03 오후 7.29.57.png",
+      "id" : 4,
+      "url" : "https://noritter.com/Bboard/thumb_new.php?file=/upload/blogbody/367100_1624238860_0.jpg&width=960",
+      "tags" : {
+        "tag1": "animal",
+        "tag2": "furniture",
+        "tag3":"clothing"
+      }
+    },
+    {
+      "id" : 5,
+      "url" : "https://noritter.com/Bboard/thumb_new.php?file=/upload/blogbody/367100_1624238860_0.jpg&width=960",
+      "tags" : {
+        "tag1": "animal",
+        "tag2": "furniture",
+        "tag3":"clothing"
+      }
+    },
+    {
+      "id" : 6,
+      "url" : "https://noritter.com/Bboard/thumb_new.php?file=/upload/blogbody/367100_1624238860_0.jpg&width=960",
+      "tags" : {
+        "tag1": "animal",
+        "tag2": "furniture",
+        "tag3":"clothing"
+      }
+    },
+    {
+      "id" : 7,
+      "url" : "https://noritter.com/Bboard/thumb_new.php?file=/upload/blogbody/367100_1624238860_0.jpg&width=960",
       "tags" : {
         "tag1": "animal",
         "tag2": "furniture",
