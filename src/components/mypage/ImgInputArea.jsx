@@ -2,7 +2,8 @@ import styled from 'styled-components'
 
 
 //이미지 파일업로드용 components
-import { ImgFileInput } from "./ImgFileInput"
+// import { ImgFileInput } from "./ImgFileInput"
+import ImageUpload from "./ImgFileInput"
 
 //폴더단위 components (추후에 업데이트 예정)
 // import ImgFolderInput from "./ImgFolderInput"
@@ -54,7 +55,7 @@ const InputBox = () => {
             <div className="flex flex-col items-center justify-start w-full h-full">
               <div className="text-xl font-bold tracking-tight text-gray-900 sm:text-xl">InPut your Photo</div>
             </div>
-            <div ><ImgFileInput /></div>
+            <div ><ImageUpload /></div>
           </Column>
           <Column>
             <div className="flex flex-col items-center justify-start w-full h-full">

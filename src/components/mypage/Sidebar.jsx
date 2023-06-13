@@ -15,26 +15,28 @@ width: 220px;
 
 //서버용 코드
 const fetchLikePhodo = () => {
-  return request({ url: '/likephodo?_limit=2'})
+  return request({ url: 'api/upload'})
 }
 
-const fetchLastPhodo = () => {
-  return request({ url: '/lastphodo?_limit=2'})
-}
+// const fetchLastPhodo = () => {
+//   return request({ url: 'lastphodo?_limit=2'})
+// }
 
 
 
 const Sidebar = () => {
     // useQuery를 사용하여 fetchLikePhoto 함수를 호출하고, 그 결과를 콘솔에 출력
     const { data: likePhodo, isLoading: likeLoading, isError: likeIsError, error: likeError } = useQuery('likePhoto', fetchLikePhodo);
-    const { data: lastPhodo, isLoading:lastLoad, isError:lastIsError, error:lastError } = useQuery('lastPhoto', fetchLastPhodo);
-    if (likeLoading || lastLoad){
+    // const { data: lastPhodo, isLoading:lastLoad, isError:lastIsError, error:lastError } = useQuery('lastPhoto', fetchLastPhodo);
+    if (likeLoading ){
         return <h2>Loading...</h2>
     }
 
-    if (likeIsError || lastIsError){
-        return <h2>{likeError.message || lastError}</h2>
+    if (likeIsError ){
+        return <h2>{likeError.message}</h2>
     }
+
+    console.log(likePhodo.data)
 
     return (
         <SideContainer>
@@ -56,17 +58,7 @@ const Sidebar = () => {
 
                 <div className="p-4">
                     <div className="text-white text-lg mb-4">최근 포도 리스트</div>
-                        <div>
-                            {lastPhodo?.data.map((like) => {
-                                return (
-                                    <div className="text-gray-100" key={like.id}>
-                                        <h2>
-                                            {like.id} : {like.name}
-                                        </h2>
-                                    </div>
-                                )
-                            })}
-                        </div>
+
                 </div>
 
 

@@ -21,55 +21,6 @@
       }
     }
   ],
-  "gallery": [
-    {
-      "uri": "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA1cpNkb.img?w=800&h=415&q=60&m=2&f=jpg",
-      "tag": [
-        "장원영",
-        "person"
-      ],
-      "thub": "https://th.bing.com/th/id/OIP.9S9YkJMFZnrrTW1Qaal6BAHaH4?w=176&h=187&c=7&r=0&o=5&pid=1.7"
-    },
-    {
-      "uri": "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA165Gbh.img?w=800&h=415&q=60&m=2&f=jpg",
-      "tag": [
-        "장원영",
-        "person",
-        "building"
-      ],
-      "thub": "https://th.bing.com/th/id/OIP.WB4_pzMHgR2BkZNUo4uJeQHaEK?w=268&h=180&c=7&r=0&o=5&pid=1.7"
-    }
-  ],
-  "likephodo": [
-    {
-      "name": "좋아하는 포도",
-      "id": "1"
-    },
-    {
-      "name": "강아지 포도",
-      "id": "2"
-    }
-  ],
-  "lastphodo": [
-    {
-      "name": "최신 포도",
-      "id": "1"
-    },
-    {
-      "name": "최신두번쨰 포도",
-      "id": "2"
-    }
-  ],
-  "likeproject": [
-    {
-      "name": "좋아하는 프로젝트1",
-      "id": "1"
-    },
-    {
-      "name": "좋아하는 프로젝트2",
-      "id": "2"
-    }
-  ],
   "lastproject": [
     {
       "name": "최신 프로젝트1",
@@ -84,5 +35,15 @@
     {
       "id": 1
     }
-  ]
+  ],
+  "likephodo": [
+      {
+        "name": "좋아하는 프로젝트1",
+        "id": "1"
+      },
+      {
+        "name": "좋아하는 프로젝트2",
+        "id": "2"
+      }
+    ]
 }
