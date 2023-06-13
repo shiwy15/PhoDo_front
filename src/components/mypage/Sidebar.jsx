@@ -15,18 +15,12 @@ width: 220px;
 
 //서버용 코드
 const fetchLikePhodo = () => {
-  return request({ url: 'api/upload'})
+  return request({ url: 'api/likePhodo'})
 }
-
-// const fetchLastPhodo = () => {
-//   return request({ url: 'lastphodo?_limit=2'})
-// }
-
-
 
 const Sidebar = () => {
     // useQuery를 사용하여 fetchLikePhoto 함수를 호출하고, 그 결과를 콘솔에 출력
-    const { data: likePhodo, isLoading: likeLoading, isError: likeIsError, error: likeError } = useQuery('likePhoto', fetchLikePhodo);
+    const { data: likePhodo, isLoading: likeLoading, isError: likeIsError, error: likeError } = useQuery('likePhodo', fetchLikePhodo);
     // const { data: lastPhodo, isLoading:lastLoad, isError:lastIsError, error:lastError } = useQuery('lastPhoto', fetchLastPhodo);
     if (likeLoading ){
         return <h2>Loading...</h2>
@@ -55,13 +49,6 @@ const Sidebar = () => {
                             })}
                         </div>
                 </div>
-
-                <div className="p-4">
-                    <div className="text-white text-lg mb-4">최근 포도 리스트</div>
-
-                </div>
-
-
 
                 <hr className="border-gray-700" />
                 <div className="p-4">
