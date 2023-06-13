@@ -1,9 +1,12 @@
 import styled from 'styled-components'
 
-import ImgFileInput from "./ImgFileInput"
-import ImgFolderInput from "./ImgFolderInput"
-import BoxName from "./BoxName"
-import BoxName2 from "./BoxName2"
+
+//이미지 파일업로드용 components
+import { ImgFileInput } from "./ImgFileInput"
+
+//폴더단위 components (추후에 업데이트 예정)
+// import ImgFolderInput from "./ImgFolderInput"
+
 
 const ContentContainer = styled.div`
   display: flex;
@@ -19,40 +22,44 @@ const ContentContainer = styled.div`
 
 const ContentBox = styled.div`
   position: relative;
-  top: 30px;
+  top: 25px;
   padding: 10px;
   display: flex;
   flex-direction: row;  // Add this
   justify-content: center;
   background-color: #D8B2AD;
-  width: 70%;
+  width: 80%;
+  height: 70%;
   border-radius: 10px;
 `
 
 const Column = styled.div`
-  display: flex;  // Add this
-  flex-direction: column;  // Add this
+  display: flex;  
+  flex-direction: column; 
   justify-content: center;
-  align-items: center;  // Add this
-  flex: 1;  // Add this
-  overflow: hidden;  // Add this
+  align-items: center;  
+  width: 100%; // Add this
+  overflow: hidden; 
   &:not(:last-child) {
-    border-right: 1px solid lightgray;  // Add this
+    border-right: 1px solid lightgray;
   }
-`
+`;
+
 
 const InputBox = () => {
-
   return (
     <ContentContainer>
         <ContentBox>
           <Column>
-          <div><BoxName /></div>
-          <div><ImgFileInput /></div>
+            <div className="flex flex-col items-center justify-start w-full h-full">
+              <div className="text-xl font-bold tracking-tight text-gray-900 sm:text-xl">InPut your Photo</div>
+            </div>
+            <div ><ImgFileInput /></div>
           </Column>
           <Column>
-            <div><BoxName2 /></div>
-            <div><ImgFolderInput /></div>
+            <div className="flex flex-col items-center justify-start w-full h-full">
+              <div className="text-xl font-bold tracking-tight text-gray-900 sm:text-xl">Tag Output</div>
+            </div>
           </Column>
         </ContentBox>
     </ContentContainer>
