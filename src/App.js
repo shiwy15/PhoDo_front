@@ -17,9 +17,6 @@ import { MainPage } from './pages/Main/Main.jsx'
 import Mypage from "./pages/Mypage/Mypage";
 import { Routes, Route } from "react-router-dom"
 
-//pages
-import Login from "./pages/Login/Login.jsx";
-import Mypage from "./pages/Mypage/Mypage.jsx";
 
 function App() {
   return (
