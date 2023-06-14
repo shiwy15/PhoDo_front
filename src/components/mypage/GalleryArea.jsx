@@ -67,7 +67,7 @@ const GalleryBox = () => {
     const { data, isLoading, isError, error} = useQuery('imagesQuery', fetchGallery,{
         onSuccess : (data) => {console.log('/gallery 초기 이미지 렌더링 success:', data)}
         , onError : (error) => {console.log('/gallery 초기 이미지 렌더링 fail:',error)}
-        ,refetchInterval: 1000*5
+        // ,refetchInterval: 1000*5
     })
 
     if(isLoading) {return <h2>Loading...</h2>}
