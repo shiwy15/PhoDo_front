@@ -24,11 +24,15 @@ const Loginbox = () => {
         axios.post(`${API.LOGIN}`, {
             email,
             password
-        }).then(res => {
+        }, {
+            withCredentials: true
+        })
+        .then(res => {
             if (res.status === 200) {
                 navigate('/Mypage');
             }
-        }).catch(err => {
+        })
+        .catch(err => {
             setFormData({ ...formData, error: "Failed to login. Please check your email or password." });
         });
     };
@@ -36,6 +40,9 @@ const Loginbox = () => {
     return (
         <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
             <div className="w-full p-6 m-auto bg-white rounded-md shadow-xl lg:max-w-xl">
+
+                <img src="/logo.png" alt="logo" className="h-20 w-auto center" />
+
                 <h1 className="text-4xl font-semibold text-center text-purple-700">
                     Log in
                 </h1>
