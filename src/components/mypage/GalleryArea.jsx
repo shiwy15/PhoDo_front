@@ -1,13 +1,9 @@
 import styled from 'styled-components';
 import 'tailwindcss/tailwind.css';
 import * as React from 'react';
-import { useState } from 'react';
-import { useMutation, useQueryClient, useQuery } from 'react-query';
-
-// 서버요청용
+import { useState, useEffect } from 'react';
+import { useMutation, useQuery } from 'react-query';
 import { request } from "../../utils/axios-utils"
-
-// mui list
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
@@ -26,49 +22,46 @@ const GalleryContainer = styled.div`
     padding: 0 50px;
 `
 
-
-
-//처음 렌더링될 때 gallery에서 이미지 get하는 함수
-const fetchGallery =() => {
-    return request( { url: 'api/gallery'})
+const fetchGallery = () => {
+    return request({ url: 'api/gallery' });
 }
 
+const postActiveTags = (activeTags) => {
+    return request({ url: 'api/galleryTags', method: 'POST', data: { tags: activeTags } });
+}
 
-//화면에 보일 component 내용
 const GalleryBox = () => {
-    /* ------------버튼 관련 함수 ------------ */
-    //버튼 종류
     const buttons = ['total', 'tool', 'animal', 'clothing', 'vehicle', 'food', 'person', 'building', 'sports equipment', 'furniture', 'kitchenware', 'office supplies', 'plant'];
-
-    //버튼 색깔 바꾸기용 useState
     const [activeButtons, setActiveButtons] = useState({})
-    // 활성화된 버튼을 서버에 post 보내는 mutation
-      const mutation = useMutation(
-        activeTags => request({ url: 'api/galleryTags', method: 'POST', data: { tags: activeTags }}),
-        {
-        // 요청이 성공적으로 완료된 후에 응답을 콘솔에 로그로 출력합니다.
-        onSuccess: (data) => {console.log('activeButtons post success',data);},
-        onError: (error) => {console.log('activeButtons post fail',error);}
+
+    const { data: initialData, isLoading, isError, error } = useQuery('imagesQuery', fetchGallery);
+
+    const mutation = useMutation(postActiveTags, {
+        onSuccess: (data) => {
+            console.log('activeButtons post success', data);
+            setImagesData(data);
+        },
+        onError: (error) => {
+            console.log('activeButtons post fail', error);
         }
-    );
-    // 버튼이 클릭되었을 때 실행되는 함수
-    const handleClick =(button) => {
+    });
+
+    const [imagesData, setImagesData] = useState(null);
+
+    const handleClick = (button) => {
         setActiveButtons(prevState => {
-            const newState = {...prevState, [button]: !prevState[button]};
+            const newState = { ...prevState, [button]: !prevState[button] };
             const activeTags = Object.keys(newState).filter(key => newState[key]);
-            // 활성화된 모든 버튼의 태그를 서버에 POST 요청을 보냅니다.
-            // console.log('request:',activeTags)
             mutation.mutate(activeTags);
             return newState;
         });
     };
-    /* ---------------------------------------------------------------------------------- */
-    /* ------------처음 my page에 들어왔을 때 /gallery에서 사진 렌더링하는 함수 ------------ */
-    const { data, isLoading, isError, error} = useQuery('imagesQuery', fetchGallery,{
-        onSuccess : (data) => {console.log('/gallery 초기 이미지 렌더링 success:', data)}
-        , onError : (error) => {console.log('/gallery 초기 이미지 렌더링 fail:',error)}
-        // ,refetchInterval: 1000*5
-    })
+
+    useEffect(() => {
+        if (!isLoading && initialData) {
+            setImagesData(initialData);
+        }
+    }, [isLoading, initialData]);
 
     if(isLoading) {return <h2>Loading...</h2>}
     if(isError) {return <h2>{error.message}</h2>}
@@ -92,7 +85,7 @@ const GalleryBox = () => {
                     ))}
                 </div>
                 <ImageList sx={{ width: '100%', height: 450, gap: 16 }} cols={3} rowHeight={164}>
-                    {data?.data?.map((image) => (
+                    {imagesData?.data?.map((image) => (
                         <ImageListItem key={image._id}>
                         <img
                             src={`${image.url}?w=248&fit=crop&auto=format`}

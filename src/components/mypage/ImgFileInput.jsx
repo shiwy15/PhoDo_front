@@ -26,12 +26,10 @@ function ImageUpload() {
   const handleUpload = () => {
     const formData = new FormData();
     formData.append('image', file);
-    mutation.mutate(formData, {
-      onSuccess: (data) => {
-        console.log('image upload success:',data);
-      },
-      onError: (error) => {console.log('image upload fail:',error)}
-    });
+    mutation.mutate(formData, 
+      { onSuccess: (data) => {console.log('image upload success:',data);},
+        onError: (error) => {console.log('image upload fail:',error)}}
+      );
   };
 
   return (
@@ -43,7 +41,7 @@ function ImageUpload() {
         <span className="ml-2 text-base leading-normal">Select a file</span>
         <input type='file' className="hidden" accept="image/*" onChange={handleImageChange} />
       </label>
-      {image && <img src={image} alt="Preview" className="w-40 h-32 object-cover" />}
+      {image && <img src={image} alt="Preview" className="w-32 h-24 object-cover" />}
       <button onClick={handleUpload} className="px-4 py-2 font-semibold text-white bg-blue-500 rounded-lg shadow-lg hover:bg-blue-700 relative bottom-0 left-0 right-0">Upload</button>
     </div>
   );
