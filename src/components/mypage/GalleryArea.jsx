@@ -49,7 +49,7 @@ const GalleryBox = () => {
     const [activeButtons, setActiveButtons] = useState({})
     // 활성화된 버튼을 서버에 post 보내는 mutation
       const mutation = useMutation(
-        activeTags => request({ url: '/api/galleryTags', method: 'POST', data: { tags: activeTags }}),
+        activeTags => request({ url: 'api/galleryTags', method: 'POST', data: { tags: activeTags }}),
         {
         // 요청이 성공적으로 완료된 후에 응답을 콘솔에 로그로 출력합니다.
         onSuccess: (data) => {
@@ -85,40 +85,40 @@ const GalleryBox = () => {
             <div className='flex flex-wrap justify-center'> 보고싶은 사진의 tag를 선택하세요! </div>
                 <div className="button-box bg-purple-100 h-20 mb-2 rounded-lg shadow-lg flex flex-wrap justify-center items-center">
                     {buttons.map((button) => (
-                            <React.Fragment key={button}>
-                                <section>
-                                    <button
-                                        onClick={() => handleClick(button)} 
-                                        className={`rounded-full px-2 py-1 text-black shadow mx-1 my-1 ${(activeButtons[button] === true)? 'bg-blue-500' : 'bg-white'}`}>
-                                        {button}
-                                    </button>
-                                </section>
-                            </React.Fragment>
-                        ))}
+                        <React.Fragment key={button}>
+                            <section>
+                                <button
+                                    onClick={() => handleClick(button)} 
+                                    className={`rounded-full px-2 py-1 text-black shadow mx-1 my-1 ${(activeButtons[button] === true)? 'bg-blue-500' : 'bg-white'}`}>
+                                    {button}
+                                </button>
+                            </section>
+                        </React.Fragment>
+                    ))}
                 </div>
                 <ImageList sx={{ width: '100%', height: 450, gap: 16 }} cols={3} rowHeight={164}>
                     {data?.data?.map((image) => (
                         <ImageListItem key={image._id}>
-                <img
-                    src={`${image.url}?w=248&fit=crop&auto=format`}
-                    alt='loading...'
-                    loading="lazy"
-                    style={{ height: '100%', width: '100%', objectFit: 'cover' }}
-                />
-                <ImageListItemBar
-                    title={
-                        <span>
-                            {Object.values(image.tags).map((tag, index) => {
-                                return index < Object.values(image.tags).length - 1 ? `${tag}, ` : tag;
-                            })}
-                        </span>
-                    }
-                    position="bottom"
-                />
-            </ImageListItem>
-        ))}
-    </ImageList>
-</GalleryContainer>
+                        <img
+                            src={`${image.url}?w=248&fit=crop&auto=format`}
+                            alt='loading...'
+                            loading="lazy"
+                            style={{ height: '100%', width: '100%', objectFit: 'cover' }}
+                        />
+                        <ImageListItemBar
+                            title={
+                                <span>
+                                    {Object.values(image.tags).map((tag, index) => {
+                                        return index < Object.values(image.tags).length - 1 ? `${tag}, ` : tag;
+                                    })}
+                                </span>
+                            }
+                            position="bottom"
+                        />
+                        </ImageListItem>
+                    ))}
+                </ImageList>
+            </GalleryContainer>
         </div>
     );
 };
