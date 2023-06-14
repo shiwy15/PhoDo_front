@@ -1,14 +1,28 @@
 {
-    "nodes" : [
-        {
-            "id" : 1,
-            "position" : { "x" :400, "y": 200},
-            "data" : {"label" : "공사 초기"}
-        },
-        {
-            "id" : 2,
-            "position" : { "x" :400, "y": 400},
-            "data" : {"label" : "공사 중기"}
-        }
-    ]
+  "nodes": [
+    {
+      "id": 1,
+      "position": {
+        "x": 400,
+        "y": 200
+      },
+      "width": 150, 
+      "height": 40,
+      "data": {
+        "label": "공사 초기"
+      }
+    },
+    {
+      "id": 2,
+      "position": {
+        "x": 400,
+        "y": 400
+      },
+      "width": 150, 
+      "height": 40,
+      "data": {
+        "label": "공사 중기"
+      }
+    }
+  ]
 }
