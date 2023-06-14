@@ -1,7 +1,7 @@
 import axios from "axios";
 import _ from 'lodash';
 
-const client = axios.create({ baseURL : 'http://localhost:4000'})
+const client = axios.create({ baseURL : 'http://43.201.112.156:4000'})
 
 export const request = _.debounce(({ ...options}) => {
     client.defaults.headers.common.Authorization = `Bearer token`
