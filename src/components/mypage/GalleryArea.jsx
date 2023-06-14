@@ -69,7 +69,7 @@ const GalleryBox = () => {
     };
     /* ---------------------------------------------------------------------------------- */
     /* ------------처음 my page에 들어왔을 때 /gallery에서 사진 렌더링하는 함수 ------------ */
-    const { data, isLoading, isError, error} = useQuery('imagesQuery', fetchGallery,{
+    const { data=fetchGallery, isLoading, isError, error} = useQuery('imagesQuery', fetchGallery,{
         onSuccess : (data) => {console.log('Perfrom side effect after data fetching', data)}
         , onError : (error) => {console.log('Perfrom side effect after data error',error)}
         ,})

@@ -20,8 +20,11 @@ const fetchLikePhodo = () => {
 
 const Sidebar = () => {
     // useQuery를 사용하여 fetchLikePhoto 함수를 호출하고, 그 결과를 콘솔에 출력
-    const { data: likePhodo, isLoading: likeLoading, isError: likeIsError, error: likeError } = useQuery('likePhodo', fetchLikePhodo);
+    const { data: likePhodo, isLoading: likeLoading, isError: likeIsError, error: likeError } = useQuery('likePhodo', fetchLikePhodo,{
+        onSuccess: (likePhodo) => {console.log('Perfrom side effect after data fetching', likePhodo)}
+    });
     // const { data: lastPhodo, isLoading:lastLoad, isError:lastIsError, error:lastError } = useQuery('lastPhoto', fetchLastPhodo);
+
     if (likeLoading ){
         return <h2>Loading...</h2>
     }

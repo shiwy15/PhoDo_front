@@ -52,10 +52,6 @@ const Editingbox = () => {
         (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
         [setNodes]
       );
-    //   const onEdgesChange = useCallback(
-    //     (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-    //     [setEdges]
-    //   );
 
     const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
@@ -63,22 +59,6 @@ const Editingbox = () => {
     const [nodeName, setNodeName] = useState('node name');
     const [selectedNode, setSelectedNode] = useState(null);
     
-    // useEffect(() => {
-    //     setNodes((nds) => 
-    //         nds.map((node) => {
-    //         if (node.id === '1'){
-    //             node.data = {
-    //                 ...node.data,
-    //                 label: nodeName,
-    //             };
-    //         }
-
-    //         return node;
-    //         })
-    //     );
-    // }, [nodeName, selectedNode]);
-
-
     //🔥 Adding Node! --> nodeId not set yet!
     const onConnectStart = useCallback((_, {nodeId}) => {
         connectingNodeId.current = nodeId;
@@ -101,6 +81,7 @@ const Editingbox = () => {
                     data: { label: `새로운 노드 ${id}`  },
                   };
                 setNodes((nds) => nds.concat(newNode));
+                console.log(nodes);
                 setEdges((eds) => eds.concat({id: `e${connectingNodeId.current}-${id}`, source: connectingNodeId.current, target: id}));
                 console.log(initialNodes)
             }
@@ -108,12 +89,8 @@ const Editingbox = () => {
         [project]
     );
 
-
     return (
         <div className= "wrapper" ref={reactFlowWrapper} style={{ width: '100vw', height: '100vh' }}>
-            {/* <input type="text" value={nodeName} onChange={onLabelChange} placeholder="노드 라벨" /> */}
-            
-        
             <div style={{ position: 'absolute', right: 0, top: 0, margin: '1rem', zIndex: 1000 }}>
                 <label hidden="large-input" 
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> 라벨링 고치기
@@ -127,8 +104,6 @@ const Editingbox = () => {
                 </button>
             </div>
 
-
-
             <ReactFlow 
                 nodes={nodes} 
                 edges={edges}
@@ -138,8 +113,6 @@ const Editingbox = () => {
                 onConnectStart={onConnectStart}
                 onConnectEnd={onConnectEnd}
                 nodeTypes={nodeTypes}
-                // onElementClick={onNodeClick}
-                // fitView
             >
                 <Controls/>
                 <MiniMap/>
