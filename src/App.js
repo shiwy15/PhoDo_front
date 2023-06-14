@@ -11,7 +11,7 @@ import Editor4 from "./pages/Editor/Editor4.jsx"
 
 //react query practice set
 import Practice from "./pages/Practice/Practice.jsx"
-import Practice2 from "./pages/Practice/Practice2.jsx"
+import Practice3 from "./pages/Practice/Practice3.jsx"
 
 import { MainPage } from './pages/Main/Main.jsx'
 import Mypage from "./pages/Mypage/Mypage";
@@ -38,7 +38,7 @@ function App() {
 
         {/* react query sample */}
         <Route path="/practice" element={<Practice />} />
-        <Route path="/practice2" element={<Practice2 />} />
+        <Route path="/practice3" element={<Practice3 />} />
 
         {/* My page */}
         <Route path="/mypage" element={<Mypage />} />
