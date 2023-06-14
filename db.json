@@ -34,11 +34,6 @@
       "id": "2"
     }
   ],
-  "img": [
-    {
-      "id": 1
-    }
-  ],
   "likephodo": [
       {
         "name": "좋아하는 프로젝트1",
@@ -146,5 +141,32 @@
             "tag1": "animal"
         }
     }
-]
+],
+  "galleryTags": 
+    	[
+	    {
+	      "url" : "https://storage.googleapis.com/jungle_project/1686376841607_스크린샷 2023-06-03 오후 7.29.57.png",
+	      "tags" : {
+	        "tag1": "animal",
+	        "tag2": "furniture",
+	        "tag3":"clothing"
+	      }
+	    },
+	    {
+	      "url" :  "https://storage.googleapis.com/jungle_project/1686377932573_스크린샷 2023-06-03 오후 7.29.57.png",
+	      "tags" : {
+	        "tag1": "animal",
+	        "tag2": "furniture",
+	        "tag3":"clothing"
+	      }
+	    },
+	    {
+	      "url" : "https://storage.googleapis.com/jungle_project/1686385199444_스크린샷 2023-06-03 오후 7.29.57.png",
+	      "tags" : {
+	        "tag1": "animal",
+	        "tag2": "furniture",
+	        "tag3":"clothing"
+	      }
+	    }
+	]
 }

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import 'tailwindcss/tailwind.css';
 import * as React from 'react';
 import { useState } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQueryClient, useQuery } from 'react-query';
 
 
 // 서버요청용
@@ -41,29 +41,43 @@ const fetchGallery =() => {
 
 //화면에 보일 component 내용
 const GalleryBox = () => {
+    /* ------------버튼 관련 함수 ------------ */
+    //버튼 종류
     const buttons = ['total', 'tool', 'animal', 'clothing', 'vehicle', 'food', 'person', 'building', 'sports equipment', 'furniture', 'kitchenware', 'office supplies', 'plant'];
 
     //버튼 색깔 바꾸기용 useState
-    const [changeColor, setChangeColor] = useState({})
-
-    // 버튼 색깔 바꾸기용  handleClick
+    const [activeButtons, setActiveButtons] = useState({})
+    // 활성화된 버튼을 서버에 post 보내는 mutation
+      const mutation = useMutation(
+        activeTags => request({ url: '/api/galleryTags', method: 'POST', data: { tags: activeTags }}),
+        {
+        // 요청이 성공적으로 완료된 후에 응답을 콘솔에 로그로 출력합니다.
+        onSuccess: (data) => {
+            console.log(data);
+        },
+        }
+    );
+    // 버튼이 클릭되었을 때 실행되는 함수
     const handleClick =(button) => {
-        setChangeColor(prevState => ({...prevState, [button]: !prevState[button]}));
-    }
-    //서버랑 통신 성공하면 data와 message띄우기
-    const onSuccess = (data) => {console.log('Perfrom side effect after data fetching', data)}
-
-    //서버랑 통신 실패하면 data와 error띄우기
-    const onError = (error) => {console.log('Perfrom side effect after data error',error)}
-
-    //처음 '/gallery'에 있는 모든 이미지 띄우기
-    const { data = fetchGallery(), isLoading, isError, error} = useQuery('imagesQuery', fetchGallery,{onSuccess, onError,})
+        setActiveButtons(prevState => {
+            const newState = {...prevState, [button]: true};
+            const activeTags = Object.keys(newState).filter(key => newState[key]);
+            // 활성화된 모든 버튼의 태그를 서버에 POST 요청을 보냅니다.
+            console.log('request:',activeTags)
+            mutation.mutate(activeTags);
+            return newState;
+        });
+    };
+    /* ---------------------------------------------------------------------------------- */
+    /* ------------처음 my page에 들어왔을 때 /gallery에서 사진 렌더링하는 함수 ------------ */
+    const { data = fetchGallery(), isLoading, isError, error} = useQuery('imagesQuery', fetchGallery,{
+        onSuccess : (data) => {console.log('Perfrom side effect after data fetching', data)}
+        , onError : (error) => {console.log('Perfrom side effect after data error',error)}
+        ,})
 
     if(isLoading) {return <h2>Loading...</h2>}
-
     if(isError) {return <h2>{error.message}</h2>}
-
-
+    /* ---------------------------------------------------------------------------------- */
     return (
         <div>
             <GalleryContainer>
@@ -71,16 +85,16 @@ const GalleryBox = () => {
             <div className='flex flex-wrap justify-center'> 보고싶은 사진의 tag를 선택하세요! </div>
                 <div className="button-box bg-purple-100 h-20 mb-2 rounded-lg shadow-lg flex flex-wrap justify-center items-center">
                     {buttons.map((button) => (
-                        <React.Fragment>
-                        <section>
-                        <button key={button}
-                        onClick={() => handleClick(button)} 
-                        className={`rounded-full px-2 py-1 text-black shadow mx-1 my-1 ${(changeColor[button] === true)? 'bg-blue-500' : 'bg-white'}`}>
-                        {button}
-                        </button>
-                        </section>
-                        </React.Fragment>
-                    ))}
+                            <React.Fragment key={button}>
+                                <section>
+                                    <button
+                                        onClick={() => handleClick(button)} 
+                                        className={`rounded-full px-2 py-1 text-black shadow mx-1 my-1 ${(activeButtons[button] === true)? 'bg-blue-500' : 'bg-white'}`}>
+                                        {button}
+                                    </button>
+                                </section>
+                            </React.Fragment>
+                        ))}
                 </div>
                 <ImageList sx={{ width: '100%', height: 450, gap: 16 }} cols={3} rowHeight={164}>
                     {data?.data?.map((image) => (
