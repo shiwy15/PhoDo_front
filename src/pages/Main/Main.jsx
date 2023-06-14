@@ -3,24 +3,19 @@ import * as React from 'react';
 import { useState } from 'react';
 
 
-export const MainPage =() => {
-    const [changeColor, setChangeColor] = useState(false)
+//component
+import Header from '../../components/mypage/Header'
+import MainPost from '../../components/Main/MainPost'
+import { ExampleCard } from '../../components/Main/exampleCard'
 
-    //function for handleClick
-    const handleClick =() => {
-        setChangeColor(!changeColor)
-    }
+
+export const MainPage =() => {
+
     return (
-        <React.Fragment>
-            <section>
-                <div>
-                    <button
-                    onClick={handleClick} 
-                    className={`px-20 py-10 text-3xl vapiltalize font-bold text-white rounded-lg ${(changeColor === true)? 'bg-green-700' : 'bg-blue-700'}`}>
-                    PhoDo
-                    </button>
-                </div>
-            </section>
-        </React.Fragment>
+        <div>
+            <Header />
+            <MainPost />
+            <ExampleCard />
+        </div>
     )
 }
