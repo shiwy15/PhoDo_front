@@ -20,18 +20,19 @@ const fetchLikePhodo = () => {
 
 const Sidebar = () => {
     // useQuery를 사용하여 fetchLikePhoto 함수를 호출하고, 그 결과를 콘솔에 출력
-    const { data: likePhodo, isLoading: likeLoading, isError: likeIsError, error: likeError } = useQuery('likePhodo', fetchLikePhodo,{
-        onSuccess: (likePhodo) => {console.log('Perfrom side effect after data fetching', likePhodo)}
+    const { data: likePhodo, isLoading: likeLoading, isError: likeIsError, error: likeError, isFetching } = useQuery('likePhodo', fetchLikePhodo,{
+        // onSuccess: (likePhodo) => {console.log('sidebar get success', likePhodo)},
+        retry:5,
+        retryDelay:500,
+        staleTime:1000*60,
+        cacheTime:1000*300,
+        refetchOnWindowFocus:true
     });
     // const { data: lastPhodo, isLoading:lastLoad, isError:lastIsError, error:lastError } = useQuery('lastPhoto', fetchLastPhodo);
 
-    if (likeLoading ){
-        return <h2>Loading...</h2>
-    }
+    if (likeLoading || isFetching ){return <h2>Loading...</h2>}
 
-    if (likeIsError ){
-        return <h2>{likeError.message}</h2>
-    }
+    if (likeIsError ){return <h2>{likeError.message}</h2>}
 
     return (
         <SideContainer>
@@ -39,7 +40,7 @@ const Sidebar = () => {
                 <div className="p-4">
                     <div className="text-white text-lg mb-4">좋아하는 포도 리스트</div>
                         <div>
-                            {likePhodo?.data.map((like) => {
+                            {likePhodo?.data.map(like => {
                                 return (
                                     <div className="text-gray-100" key={like.id}>
                                         <h2>

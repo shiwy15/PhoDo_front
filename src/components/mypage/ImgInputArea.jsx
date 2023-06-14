@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 
 //이미지 파일업로드용 components
-// import { ImgFileInput } from "./ImgFileInput"
 import ImageUpload from "./ImgFileInput"
 
 //폴더단위 components (추후에 업데이트 예정)
