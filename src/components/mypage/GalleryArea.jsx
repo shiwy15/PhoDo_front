@@ -20,7 +20,7 @@ const GalleryContainer = styled.div`
     left: 220px;
     bottom:0px;
     width: calc(100vw - 220px);
-    height: calc(100vh - 350px);
+    height: calc(100vh - 400px);
     background-color: #F1E3E1;
     border-top: solid 1px lightgray;
     padding: 0 50px;
@@ -33,10 +33,6 @@ const fetchGallery =() => {
     return request( { url: 'api/gallery'})
 }
 
-// //버튼이 활성화됐을 때, 활성화된 버튼을 post로 보내는 함수
-// const postActiveTags = (activeTags) => {
-//     return request({ url: '/api/galleryTags', method: 'POST', data: { tags: activeTags }});
-// }
 
 //화면에 보일 component 내용
 const GalleryBox = () => {
@@ -51,28 +47,28 @@ const GalleryBox = () => {
         activeTags => request({ url: 'api/galleryTags', method: 'POST', data: { tags: activeTags }}),
         {
         // 요청이 성공적으로 완료된 후에 응답을 콘솔에 로그로 출력합니다.
-        onSuccess: (data) => {
-            console.log(data);
-        },
+        onSuccess: (data) => {console.log('activeButtons post success',data);},
+        onError: (error) => {console.log('activeButtons post fail',error);}
         }
     );
     // 버튼이 클릭되었을 때 실행되는 함수
     const handleClick =(button) => {
         setActiveButtons(prevState => {
-            const newState = {...prevState, [button]: true};
+            const newState = {...prevState, [button]: !prevState[button]};
             const activeTags = Object.keys(newState).filter(key => newState[key]);
             // 활성화된 모든 버튼의 태그를 서버에 POST 요청을 보냅니다.
-            console.log('request:',activeTags)
+            // console.log('request:',activeTags)
             mutation.mutate(activeTags);
             return newState;
         });
     };
     /* ---------------------------------------------------------------------------------- */
     /* ------------처음 my page에 들어왔을 때 /gallery에서 사진 렌더링하는 함수 ------------ */
-    const { data=fetchGallery, isLoading, isError, error} = useQuery('imagesQuery', fetchGallery,{
-        onSuccess : (data) => {console.log('Perfrom side effect after data fetching', data)}
-        , onError : (error) => {console.log('Perfrom side effect after data error',error)}
-        ,})
+    const { data, isLoading, isError, error} = useQuery('imagesQuery', fetchGallery,{
+        onSuccess : (data) => {console.log('/gallery 초기 이미지 렌더링 success:', data)}
+        , onError : (error) => {console.log('/gallery 초기 이미지 렌더링 fail:',error)}
+        ,refetchInterval: 1000*5
+    })
 
     if(isLoading) {return <h2>Loading...</h2>}
     if(isError) {return <h2>{error.message}</h2>}

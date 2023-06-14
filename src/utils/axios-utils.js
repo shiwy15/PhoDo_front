@@ -7,7 +7,7 @@ export const request = _.debounce(({ ...options}) => {
     client.defaults.headers.common.Authorization = `Bearer token`
     const onSuccess = response => response
     const onError = error => {
-        return error
+        console.error('Error:', error);
     }
     return client(options).then(onSuccess).catch(onError)
 }, 300); // 300ms 디바운스 시간
