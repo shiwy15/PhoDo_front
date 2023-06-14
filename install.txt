@@ -20,3 +20,4 @@ npm install lodash
 //yarn add styled-components
 //yarn add axios
 //npm install reactflow
+//yarn add tailwindcss
