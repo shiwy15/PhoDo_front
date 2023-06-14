@@ -10,164 +10,170 @@
     }
   ],
   "likephodo": [
-      {
-        "name": "좋아하는 프로젝트1",
-        "id": "1"
-      },
-      {
-        "name": "좋아하는 프로젝트2",
-        "id": "2"
-      }
-    ]
-  ,
-  "gallery": 
-  [
     {
-        "url": "https://storage.googleapis.com/jungle_project/1686548029785_215154019_1_1680493838_w360.jpeg",
-        "tags": {}
+      "name": "좋아하는 프로젝트1",
+      "id": "1"
     },
     {
-        "url": "https://storage.googleapis.com/jungle_project/1686548466824_215154019_1_1680493838_w360.jpeg",
-        "tags": {}
-    },
-    {
-        "url": "https://storage.googleapis.com/jungle_project/1686548730720_215154019_1_1680493838_w360.jpeg",
-        "tags": {}
-    },
-    {
-        "url": "https://storage.googleapis.com/jungle_project/1686548811851_215154019_1_1680493838_w360.jpeg",
-        "tags": {}
-    },
-    {
-        "url": "https://storage.googleapis.com/jungle_project/1686548887860_215154019_1_1680493838_w360.jpeg",
-        "tags": {}
-    },
-    {
-        "url": "https://storage.googleapis.com/jungle_project/1686549281033_215154019_1_1680493838_w360.jpeg",
-        "tags": {
-            "tag1": "animal",
-            "tag2": "furniture",
-            "tag3": "clothing"
-        }
-    },
-    {
-        "url": "https://storage.googleapis.com/jungle_project/1686549665950_215154019_1_1680493838_w360.jpeg",
-        "tags": {
-            "tag1": "animal",
-            "tag2": "furniture",
-            "tag3": "clothing"
-        }
-    },
-    {
-        "url": "https://storage.googleapis.com/jungle_project/1686550410070_215154019_1_1680493838_w360.jpeg",
-        "tags": {
-            "tag1": "animal",
-            "tag2": "furniture",
-            "tag3": "clothing"
-        }
-    },
-    {
-        "url": "https://storage.googleapis.com/jungle_project/1686555513862_215154019_1_1680493838_w360.jpeg",
-        "tags": {
-            "tag1": "animal",
-            "tag2": "furniture",
-            "tag3": "clothing"
-        }
-    },
-    {
-        "url": "https://storage.googleapis.com/jungle_project/1686555962670_IMG_2220.JPG",
-        "tags": {
-            "tag1": "animal"
-        }
-    },
-    {
-        "url": "https://storage.googleapis.com/jungle_project/1686583190279_IMG_2220.JPG",
-        "tags": {
-            "tag1": "animal"
-        }
-    },
-    {
-        "url": "https://storage.googleapis.com/jungle_project/1686623025345_IMG_2220.JPG",
-        "tags": {
-            "tag1": "animal"
-        }
-    },
-    {
-        "url": "https://storage.googleapis.com/jungle_project/1686623059047_IMG_2220.JPG",
-        "tags": {
-            "tag1": "animal"
-        }
-    },
-    {
-        "url": "https://storage.googleapis.com/jungle_project/1686623147331_IMG_2220.JPG",
-        "tags": {
-            "tag1": "animal"
-        }
-    },
-    {
-        "url": "https://storage.googleapis.com/jungle_project/1686639571129_IMG_6788.jpg",
-        "tags": {
-            "tag1": "animal"
-        }
-    },
-    {
-        "url": "https://storage.googleapis.com/jungle_project/1686639710495_IMG_6788.jpg",
-        "tags": {
-            "tag1": "animal"
-        }
+      "name": "좋아하는 프로젝트2",
+      "id": "2"
     }
-],
-  "galleryTags": 
-    	[
-	    {
-	      "url" : "https://storage.googleapis.com/jungle_project/1686376841607_스크린샷 2023-06-03 오후 7.29.57.png",
-	      "tags" : {
-	        "tag1": "animal",
-	        "tag2": "furniture",
-	        "tag3":"clothing"
-	      }
-	    },
-	    {
-	      "url" :  "https://storage.googleapis.com/jungle_project/1686377932573_스크린샷 2023-06-03 오후 7.29.57.png",
-	      "tags" : {
-	        "tag1": "animal",
-	        "tag2": "furniture",
-	        "tag3":"clothing"
-	      }
-	    },
-	    {
-	      "url" : "https://storage.googleapis.com/jungle_project/1686385199444_스크린샷 2023-06-03 오후 7.29.57.png",
-	      "tags" : {
-	        "tag1": "animal",
-	        "tag2": "furniture",
-	        "tag3":"clothing"
-	      }
-	    }
-	],
+  ],
+  "gallery": [
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686548029785_215154019_1_1680493838_w360.jpeg",
+      "tags": {}
+    },
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686548466824_215154019_1_1680493838_w360.jpeg",
+      "tags": {}
+    },
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686548730720_215154019_1_1680493838_w360.jpeg",
+      "tags": {}
+    },
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686548811851_215154019_1_1680493838_w360.jpeg",
+      "tags": {}
+    },
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686548887860_215154019_1_1680493838_w360.jpeg",
+      "tags": {}
+    },
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686549281033_215154019_1_1680493838_w360.jpeg",
+      "tags": {
+        "tag1": "animal",
+        "tag2": "furniture",
+        "tag3": "clothing"
+      }
+    },
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686549665950_215154019_1_1680493838_w360.jpeg",
+      "tags": {
+        "tag1": "animal",
+        "tag2": "furniture",
+        "tag3": "clothing"
+      }
+    },
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686550410070_215154019_1_1680493838_w360.jpeg",
+      "tags": {
+        "tag1": "animal",
+        "tag2": "furniture",
+        "tag3": "clothing"
+      }
+    },
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686555513862_215154019_1_1680493838_w360.jpeg",
+      "tags": {
+        "tag1": "animal",
+        "tag2": "furniture",
+        "tag3": "clothing"
+      }
+    },
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686555962670_IMG_2220.JPG",
+      "tags": {
+        "tag1": "animal"
+      }
+    },
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686583190279_IMG_2220.JPG",
+      "tags": {
+        "tag1": "animal"
+      }
+    },
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686623025345_IMG_2220.JPG",
+      "tags": {
+        "tag1": "animal"
+      }
+    },
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686623059047_IMG_2220.JPG",
+      "tags": {
+        "tag1": "animal"
+      }
+    },
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686623147331_IMG_2220.JPG",
+      "tags": {
+        "tag1": "animal"
+      }
+    },
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686639571129_IMG_6788.jpg",
+      "tags": {
+        "tag1": "animal"
+      }
+    },
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686639710495_IMG_6788.jpg",
+      "tags": {
+        "tag1": "animal"
+      }
+    }
+  ],
+  "galleryTags": [
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686376841607_스크린샷 2023-06-03 오후 7.29.57.png",
+      "tags": {
+        "tag1": "animal",
+        "tag2": "furniture",
+        "tag3": "clothing"
+      }
+    },
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686377932573_스크린샷 2023-06-03 오후 7.29.57.png",
+      "tags": {
+        "tag1": "animal",
+        "tag2": "furniture",
+        "tag3": "clothing"
+      }
+    },
+    {
+      "url": "https://storage.googleapis.com/jungle_project/1686385199444_스크린샷 2023-06-03 오후 7.29.57.png",
+      "tags": {
+        "tag1": "animal",
+        "tag2": "furniture",
+        "tag3": "clothing"
+      }
+    }
+  ],
   "nodes": [
     {
-      "id": 1,
+      "id": "1",
       "position": {
         "x": 400,
         "y": 200
       },
-      "width": 150, 
+      "type" : "default",
+      "width": 150,
       "height": 40,
       "data": {
         "label": "공사 초기"
       }
     },
     {
-      "id": 2,
+      "id": "2",
       "position": {
         "x": 400,
         "y": 400
       },
-      "width": 150, 
+      "type" : "default",
+      "width": 150,
       "height": 40,
       "data": {
         "label": "공사 중기"
       }
+    }
+  ],
+  "edges": [
+    {
+      "id" : "e1-2",
+      "source" : "1",
+      "target" : "2"
     }
   ]
 }

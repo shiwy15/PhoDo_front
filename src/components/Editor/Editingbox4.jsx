@@ -31,24 +31,37 @@ const Editingbox4 = () => {
   const reactFlowWrapper = useRef(null);
   const connectingNodeId = useRef(null);
 
-  const initialEdges = [ ];
+  const initialEdges = [    {
+    "id" : "e1-2",
+    "source" : "1",
+    "target" : "2"
+  }];
   const initialNodes  = []; 
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   
   useEffect(() => {
     axios.get('http://localhost:4000/nodes')
     .then((res) => {
-      console.log('setting: ', res?.data);
+      console.log('node setting: ', res?.data);
       setNodes(res.data);
     })
     .catch((err) => {
       console.error(err);
     });
   }, []);
-  
-  // console.log('Nodes: ' , nodes);
-  // console.log('changed Nodes: ' , changedNodes);
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+
+
+  useEffect(() => {
+    axios.get('http://localhost:4000/edges')
+    .then((res) => {
+      console.log('edge setting: ', res?.data);
+      setEdges(res.data);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+  }, []);
 
 
    //for saving
@@ -189,6 +202,7 @@ const onConnectEnd = useCallback(
 
     <div className= "wrapper" ref={reactFlowWrapper} style={{ width: '100vw', height: '100vh' }}>
     <ReactFlow
+      // defaultNodes={defaultNodes}
       nodes={nodes}
       edges={edges}
       onNodesChange={onNodesChange}
