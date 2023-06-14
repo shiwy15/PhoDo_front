@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { request } from "../../utils/axios-utils"
 
 const addImgFile = async (ImgData) => {
-  const response = await request({ url: '/api/upload', method: 'post', data: ImgData });
+  const response = await request({ url: 'api/upload', method: 'post', data: ImgData });
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
@@ -28,8 +28,9 @@ function ImageUpload() {
     formData.append('image', file);
     mutation.mutate(formData, {
       onSuccess: (data) => {
-        console.log(data);
+        console.log('image upload success:',data);
       },
+      onError: (error) => {console.log('image upload fail:',error)}
     });
   };
 

@@ -11,7 +11,7 @@ function Mypage() {
     <div className="Mypage">
       <ImgInputContainer />
       <GalleryArea />
-      {/* <Sidebar /> */}
+      <Sidebar />
       <Header />
     </div>
   );

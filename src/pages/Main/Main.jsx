@@ -17,7 +17,7 @@ export const MainPage =() => {
                     <button
                     onClick={handleClick} 
                     className={`px-20 py-10 text-3xl vapiltalize font-bold text-white rounded-lg ${(changeColor === true)? 'bg-green-700' : 'bg-blue-700'}`}>
-                    click me
+                    PhoDo
                     </button>
                 </div>
             </section>
