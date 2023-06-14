@@ -4,7 +4,6 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 
-
 // 서버요청용
 import { request } from "../../utils/axios-utils"
 
@@ -31,7 +30,7 @@ const GalleryContainer = styled.div`
 
 //처음 렌더링될 때 gallery에서 이미지 get하는 함수
 const fetchGallery =() => {
-    return request( { url: '/api/gallery'})
+    return request( { url: 'api/gallery'})
 }
 
 // //버튼이 활성화됐을 때, 활성화된 버튼을 post로 보내는 함수
@@ -70,7 +69,7 @@ const GalleryBox = () => {
     };
     /* ---------------------------------------------------------------------------------- */
     /* ------------처음 my page에 들어왔을 때 /gallery에서 사진 렌더링하는 함수 ------------ */
-    const { data = fetchGallery(), isLoading, isError, error} = useQuery('imagesQuery', fetchGallery,{
+    const { data, isLoading, isError, error} = useQuery('imagesQuery', fetchGallery,{
         onSuccess : (data) => {console.log('Perfrom side effect after data fetching', data)}
         , onError : (error) => {console.log('Perfrom side effect after data error',error)}
         ,})

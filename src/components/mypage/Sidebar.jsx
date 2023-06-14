@@ -15,7 +15,7 @@ width: 220px;
 
 //서버용 코드
 const fetchLikePhodo = () => {
-  return request({ url: 'api/likePhodo'})
+  return request({ url: 'api/likephodo'})
 }
 
 const Sidebar = () => {
@@ -29,8 +29,6 @@ const Sidebar = () => {
     if (likeIsError ){
         return <h2>{likeError.message}</h2>
     }
-
-    console.log(likePhodo.data)
 
     return (
         <SideContainer>
