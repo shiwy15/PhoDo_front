@@ -11,6 +11,7 @@ import Editor from "./pages/Editor/Editor.jsx"
 import Practice from "./pages/Practice/Practice.jsx"
 import Practice2 from "./pages/Practice/Practice2.jsx"
 
+import { MainPage } from './pages/Main/Main.jsx'
 import Mypage from "./pages/Mypage/Mypage";
 
 import { Routes, Route } from "react-router-dom"
@@ -35,6 +36,8 @@ function App() {
         {/* My page */}
         <Route path="/mypage" element={<Mypage />} />
 
+        {/* Main */}
+        <Route path="/" element={<MainPage />} />
       </Routes>
     </div>
   );
