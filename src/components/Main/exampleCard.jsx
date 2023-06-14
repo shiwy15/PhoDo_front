@@ -5,28 +5,28 @@ import Typography from '@mui/material/Typography';
 
 const data = [
   {
-    src: '/서식_벤다이어그램.png',
+    src: '/venn.png',
     title: 'venn diagram',
     channel: 'Don Diablo',
     views: '396k views',
     createdAt: '2023.06.20',
   },
   {
-    src: '/서식_썬버스트.png',
+    src: '/sunb.png',
     title: 'TH',
     channel: 'Queen Official',
     views: '40M views',
     createdAt: '2023.05.12',
   },
   {
-    src: '/서식_타임라인1.png',
+    src: '/timeline1.png',
     title: 'Calvin Harris, Sam Smith - Promises (Official Video)',
     channel: 'Calvin Harris',
     views: '130M views',
     createdAt: '2023.09.10',
   },
 {
-    src: '/서식_타임라인2.png',
+    src: '/timeline2.png',
     title: 'Calvin Harris, Sam Smith - Promises (Official Video)',
     channel: 'Calvin Harris',
     views: '130M views',
