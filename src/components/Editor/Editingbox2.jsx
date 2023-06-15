@@ -1,6 +1,11 @@
 import 'reactflow/dist/style.css';
 import './text-updater-node.css';
+
 import TextUpdaterNode from './TextUpdaterNode.js';
+import PictureNode from './PictureNode.js';
+import PictureNode2 from './PictureNode2.js';
+import PictureNode3 from './PictureNode3.js';
+
 import React, { useEffect, useState, useRef ,useCallback } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
@@ -15,24 +20,65 @@ import ReactFlow, {
 } from 'reactflow';
 import axios from "axios";
 
+
+
 const flowKey = 'example-flow';
-const nodeTypes = {textUpdater: TextUpdaterNode}
-const initialNodes = [
+const nodeTypes = {textUpdater: TextUpdaterNode, 
+                  pix: PictureNode,
+                  pix2: PictureNode2,
+                  pix3: PictureNode3
+                }
+
+                  const initialNodes = [
   { id: '1', 
 //   type: 'textUpdater',
-   data: { label: '여기를 클릭하시고! 🐬' }, position: { x: 100, y: 100 } },
-  { id: '2', 
+   data: { label: '공사 초기 현장' }, 
+   position: { x: -42, y: 59 } },
+  
+   { id: '2', 
 //   type: 'textUpdater', 
-  data: { label: '오른쪽에 Selected Node 입력해주시면 됩니다 :) 🍀' }, position: { x: 100, y: 200 } },
+  data: { label: '공사 중기 현장' }, 
+  position: { x: 75, y: 286 } 
+  },
+  { id: '3', 
+  //   type: 'textUpdater', 
+    data: { label: '공사 말기 현장' }, 
+    position: { x: 6, y: 570 } 
+    },
+
+  {
+    id: '4',
+    type: 'pix', 
+    data: { label: 'picture node1'}, 
+    position: {x: 164, y: -87}
+  }
+  ,
+  {
+    id: '5',
+    type: 'pix2', 
+    data: { label: 'picture node2'}, 
+    position: {x: 243, y: 178}
+  }
+  ,
+  {
+    id: '6',
+    type: 'pix3', 
+    data: { label: 'picture node3'}, 
+    position: {x: 195, y: 457}
+  }
 ];
 
 
-let id = 3;
+let id = 100;
 const getNodeId = () => `${id++}`;
 const fitViewOptions = {
    padding: 3,
  };
-const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
+const initialEdges = 
+[
+  { id: 'e1-2', source: '1', target: '2' }, 
+  { id: 'e1-2', source: '2', target: '3' }, 
+];
 
 //////////////////
 const Editingbox2 = () => {
@@ -187,7 +233,8 @@ const onConnectEnd = useCallback(
       onConnectStart={onConnectStart}
       onConnectEnd={onConnectEnd}
       nodeTypes={nodeTypes}
-      style= {{background : '#D4EFE4'}}
+      style= {{background : '#F3B0C3'}} // Mint!
+      // style= {{background : '#00008B'}} //
       onInit={setRfInstance}
       fitView
       fitViewOptions={fitViewOptions}
