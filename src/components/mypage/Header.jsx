@@ -16,7 +16,7 @@ export const Header = () => {
           <Link href="/mypage" color="inherit" sx={{ ml: 2 }}>
             Mypage
           </Link>
-          <Link href="/myproject" color="inherit" sx={{ ml: 2 }}>
+          <Link href="/newproject" color="inherit" sx={{ ml: 2 }}>
             My project
           </Link>
           <Link href="/myphodo" color="inherit" sx={{ ml: 2 }}>

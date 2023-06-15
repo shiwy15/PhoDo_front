@@ -11,7 +11,7 @@ function Editor2() {
     return (
         <div className="edit">
             <Editingbox2/>
-            <MenuBar />
+            {/* <MenuBar /> */}
         </div>
     )
 }
