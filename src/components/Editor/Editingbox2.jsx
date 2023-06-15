@@ -22,6 +22,7 @@ import axios from "axios";
 
 
 // import MenubarL from './MenuBarL.jsx'
+// 새프
 
 
 const flowKey = 'example-flow';
@@ -279,6 +280,8 @@ const onConnectEnd = useCallback(
             <button type="button" onClick={onFullSave} class=" bg-gray-200 flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
                   <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>서버에 저장하기</span>                  
             </button>
+            <input type= "text" name="projectname" placeholder='프로젝트 이름 '>
+            </input>
          </li>
          <br/>
          <li>
