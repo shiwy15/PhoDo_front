@@ -6,5 +6,6 @@ export const API = {
   LOGIN: `${BASE_URL}/login`,
   FORGOTPW: `${BASE_URL}/forgot`,
   MYPAGE: `${BASE_URL}/mypage`,
-  CHANGEPW: `${BASE_URL}/reset`
+  CHANGEPW: `${BASE_URL}/reset`,
+  NPROJECT: `${BASE_URL}/project`,
 };

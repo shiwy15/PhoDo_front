@@ -6,6 +6,8 @@ import PictureNode from './PictureNode.js';
 import PictureNode2 from './PictureNode2.js';
 import PictureNode3 from './PictureNode3.js';
 
+import Modal from './Modal';
+
 import React, { useEffect, useState, useRef ,useCallback } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
@@ -19,10 +21,6 @@ import ReactFlow, {
   NodeToolbar,
 } from 'reactflow';
 import axios from "axios";
-
-
-// import MenubarL from './MenuBarL.jsx'
-// 새프
 
 
 const flowKey = 'example-flow';
@@ -325,7 +323,10 @@ const onConnectEnd = useCallback(
 };
 
 export default () => (
+  <>
+  <Modal/>
   <ReactFlowProvider>
     <Editingbox2 />
   </ReactFlowProvider>
+  </>
 );
