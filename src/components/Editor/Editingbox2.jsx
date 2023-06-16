@@ -1,14 +1,20 @@
+// import style sheets
 import 'reactflow/dist/style.css';
 import './text-updater-node.css';
 
+// import Node Types
 import TextUpdaterNode from './TextUpdaterNode.js';
 import PictureNode from './PictureNode.js';
 import PictureNode2 from './PictureNode2.js';
 import PictureNode3 from './PictureNode3.js';
 
+// import Component
 import Modal from './Modal';
 
+// import React 
 import React, { useEffect, useState, useRef ,useCallback } from 'react';
+
+// import React Flow 
 import ReactFlow, {
   ReactFlowProvider,
   useNodesState,
@@ -20,7 +26,18 @@ import ReactFlow, {
   MiniMap,
   NodeToolbar,
 } from 'reactflow';
+
+// import axios connection
 import axios from "axios";
+
+// import zustand
+import {create} from 'zustand';
+
+// define the store
+export const useStore = create(set => ({
+  projectId: null,
+  setProjectId: (id) => set({ projectId: id }),
+}));
 
 
 const flowKey = 'example-flow';
@@ -30,7 +47,7 @@ const nodeTypes = {textUpdater: TextUpdaterNode,
                   pix3: PictureNode3
                 }
 
-                  const initialNodes = [
+  const initialNodes = [
   { id: '1', 
 //   type: 'textUpdater',
    data: { label: '공사 초기 현장' }, 
@@ -90,7 +107,7 @@ const Editingbox2 = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
-
+  const {projectId} = useStore();
    //for saving
   const [rfInstance, setRfInstance] = useState(null);
 
@@ -156,7 +173,8 @@ const onConnectEnd = useCallback(
      console.log('only edge data: ', flow.edges);
      // console.log(localStorage)
      console.log('sending: ', {'nodes': flow.nodes})
-     axios.post('http://localhost:4000/nodes', {
+
+     axios.post(`http://localhost:4000/nodes/${projectId}`, {
         "nodes": flow.nodes
      }).then((res , err) => {
         if (res.status === 200) {
@@ -164,7 +182,7 @@ const onConnectEnd = useCallback(
         }
         else (console.log(err))
     });
-    axios.post('http://localhost:4000/edges', {
+    axios.post(`http://localhost:4000/edges/${projectId}`, {
      "edges": flow.edges
      }).then((res , err) => {
      if (res.status === 200) {

@@ -8,9 +8,12 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import {useStore } from './Editingbox2';
+
 
 const Modal = () => {
     const [projectName, setProjectName] = useState('');
+    const {setProjectId} =  useStore();
     const [showModal, setShowModal] = useState(true);
 
     useEffect(() => {
@@ -23,16 +26,17 @@ const Modal = () => {
 
     const handleSend = async () => {
         try {
-            console.log({ name: projectName });
-            const response = await axios.post(`${API.NPROJECT}`, { name: projectName });
-            console.log(response);
-            // response를 주지? --> 이것을 가지고 있어야함! 
-
-            setShowModal(false);
+          console.log({ name: projectName });
+          const response = await axios.post(`${API.NPROJECT}`, { name: projectName });
+          console.log(response.data);
+          // Store the id returned by the response
+          setProjectId(response.data.id);
+          // Close the modal
+          setShowModal(false);
         } catch (err) {
-            console.error(err);
+          console.error(err);
         }
-    };
+      };
 
     return (
         <Dialog
