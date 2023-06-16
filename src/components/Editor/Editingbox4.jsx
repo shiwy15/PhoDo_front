@@ -63,7 +63,6 @@ const Editingbox4 = () => {
     });
   }, []);
 
-
    //for saving
   const [rfInstance, setRfInstance] = useState(null);
 
