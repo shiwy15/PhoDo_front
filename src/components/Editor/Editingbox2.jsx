@@ -1,7 +1,20 @@
+// import style sheets
 import 'reactflow/dist/style.css';
 import './text-updater-node.css';
+
+// import Node Types
 import TextUpdaterNode from './TextUpdaterNode.js';
+import PictureNode from './PictureNode.js';
+import PictureNode2 from './PictureNode2.js';
+import PictureNode3 from './PictureNode3.js';
+
+// import Component
+import Modal from './Modal';
+
+// import React 
 import React, { useEffect, useState, useRef ,useCallback } from 'react';
+
+// import React Flow 
 import ReactFlow, {
   ReactFlowProvider,
   useNodesState,
@@ -13,26 +26,77 @@ import ReactFlow, {
   MiniMap,
   NodeToolbar,
 } from 'reactflow';
+
+// import axios connection
 import axios from "axios";
 
+// import zustand
+import {create} from 'zustand';
+
+// define the store
+export const useStore = create(set => ({
+  projectId: null,
+  setProjectId: (id) => set({ projectId: id }),
+}));
+
+
 const flowKey = 'example-flow';
-const nodeTypes = {textUpdater: TextUpdaterNode}
-const initialNodes = [
+const nodeTypes = {textUpdater: TextUpdaterNode, 
+                  pix: PictureNode,
+                  pix2: PictureNode2,
+                  pix3: PictureNode3
+                }
+
+  const initialNodes = [
   { id: '1', 
 //   type: 'textUpdater',
-   data: { label: '여기를 클릭하시고! 🐬' }, position: { x: 100, y: 100 } },
-  { id: '2', 
+   data: { label: '공사 초기 현장' }, 
+   position: { x: -42, y: 59 } },
+  
+   { id: '2', 
 //   type: 'textUpdater', 
-  data: { label: '오른쪽에 Selected Node 입력해주시면 됩니다 :) 🍀' }, position: { x: 100, y: 200 } },
+  data: { label: '공사 중기 현장' }, 
+  position: { x: 75, y: 286 } 
+  },
+  { id: '3', 
+  //   type: 'textUpdater', 
+    data: { label: '공사 말기 현장' }, 
+    position: { x: 6, y: 570 } 
+    },
+
+  {
+    id: '4',
+    type: 'pix', 
+    data: { label: 'picture node1'}, 
+    position: {x: 164, y: -87}
+  }
+  ,
+  {
+    id: '5',
+    type: 'pix2', 
+    data: { label: 'picture node2'}, 
+    position: {x: 243, y: 178}
+  }
+  ,
+  {
+    id: '6',
+    type: 'pix3', 
+    data: { label: 'picture node3'}, 
+    position: {x: 195, y: 457}
+  }
 ];
 
 
-let id = 3;
+let id = 100;
 const getNodeId = () => `${id++}`;
 const fitViewOptions = {
    padding: 3,
  };
-const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
+const initialEdges = 
+[
+  { id: 'e1-2', source: '1', target: '2' }, 
+  { id: 'e1-2', source: '2', target: '3' }, 
+];
 
 //////////////////
 const Editingbox2 = () => {
@@ -43,7 +107,7 @@ const Editingbox2 = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
-
+  const {projectId} = useStore();
    //for saving
   const [rfInstance, setRfInstance] = useState(null);
 
@@ -109,7 +173,8 @@ const onConnectEnd = useCallback(
      console.log('only edge data: ', flow.edges);
      // console.log(localStorage)
      console.log('sending: ', {'nodes': flow.nodes})
-     axios.post('http://localhost:4000/nodes', {
+
+     axios.post(`http://localhost:4000/nodes/${projectId}`, {
         "nodes": flow.nodes
      }).then((res , err) => {
         if (res.status === 200) {
@@ -117,7 +182,7 @@ const onConnectEnd = useCallback(
         }
         else (console.log(err))
     });
-    axios.post('http://localhost:4000/edges', {
+    axios.post(`http://localhost:4000/edges/${projectId}`, {
      "edges": flow.edges
      }).then((res , err) => {
      if (res.status === 200) {
@@ -187,7 +252,8 @@ const onConnectEnd = useCallback(
       onConnectStart={onConnectStart}
       onConnectEnd={onConnectEnd}
       nodeTypes={nodeTypes}
-      style= {{background : '#D4EFE4'}}
+      style= {{background : '#F3B0C3'}} // Mint!
+      // style= {{background : '#00008B'}} //
       onInit={setRfInstance}
       fitView
       fitViewOptions={fitViewOptions}
@@ -198,7 +264,6 @@ const onConnectEnd = useCallback(
     </ReactFlow>
     </div>
 
-    // SIDEBAR
     <div>
 <aside id="sidebar-multi-level-sidebar" class="fixed top-0 right-0 z-40 w-60 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
@@ -231,6 +296,8 @@ const onConnectEnd = useCallback(
             <button type="button" onClick={onFullSave} class=" bg-gray-200 flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
                   <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>서버에 저장하기</span>                  
             </button>
+            <input type= "text" name="projectname" placeholder='프로젝트 이름 '>
+            </input>
          </li>
          <br/>
          <li>
@@ -274,7 +341,10 @@ const onConnectEnd = useCallback(
 };
 
 export default () => (
+  <>
+  <Modal/>
   <ReactFlowProvider>
     <Editingbox2 />
   </ReactFlowProvider>
+  </>
 );

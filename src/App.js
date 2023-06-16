@@ -17,6 +17,8 @@ import { MainPage } from './pages/Main/Main.jsx'
 import Mypage from "./pages/Mypage/Mypage";
 import { Routes, Route } from "react-router-dom"
 
+// import ForcedDirectedTree from "./pages/Editor/forcedTree.jsx"
+// import VennDiagram from "./pages/Editor/venndiagram.jsx"
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
         <Route path="/newproject" element={<Editor2 />} />
         <Route path="/existingproject" element={<Editor4 />} />
         
+        {/* <Route path="/tree" element={<ForcedDirectedTree/>} />
+        <Route path="/venn" element={<VennDiagram />} /> */}
         {/* <Route path="/editor3" element={<Editor3 />} /> */}
         
 
