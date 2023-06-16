@@ -12,7 +12,7 @@ function Editor2() {
         <div className="edit">
             {/* <Menubar/> */}
             <Editingbox2/>
-            <MenuBar />
+            {/* <MenuBar /> */}
         </div>
     )
 }
