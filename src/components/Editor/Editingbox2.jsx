@@ -5,8 +5,6 @@ import './index.css';
 // import Node Types
 import TextUpdaterNode from './TextUpdaterNode.js';
 import PictureNode from './PictureNode.js';
-import PictureNode2 from './PictureNode2.js';
-import PictureNode3 from './PictureNode3.js';
 
 // import Component
 import Modal from './Modal';
@@ -18,6 +16,7 @@ import useEdgesStateSynced from './useEdgesStateSynced';
 // import React 
 import React, { useEffect, useState, useRef , useCallback } from 'react';
 import Picturebar from './Picturebar';
+import MenuBarR from './MenuBarR';
 
 
 // import React Flow 
@@ -32,9 +31,6 @@ import ReactFlow, {
   MiniMap,
   NodeToolbar,
 } from 'reactflow';
-
-// import axios connection
-import axios from "axios";
 
 // import zustand
 import {create} from 'zustand';
@@ -62,33 +58,23 @@ const getNodeId = () => `${id++}`;
 const fitViewOptions = {
    padding: 3,
  };
-const initialEdges = 
-[
-  { id: 'e1-2', source: '1', target: '2' }, 
-];
 
 //////////////////
+  // 🍀🌼 기존에 드래그와 동일, 근데 기존은 그냥 컴포넌트 밖에다 세팅이 되어있음
+  // const onDragOver = useCallback((event) => {
+  //   event.preventDefault();
+  //   event.dataTransfer.dropEffect = 'move';
+  // }, []);
+
 const Editingbox2 = () => {
    
   const reactFlowWrapper = useRef(null); // 큰 react flow wrapper
-  const connectingNodeId = useRef(null); // 연결 노드
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
-
-  // 🍁 모달창에서 새로운 프로젝트 만들면 Id를 가지고 있기, 프로젝트 아이디를 만들기
-  const {projectId} = useStore();
-
-  // 🌼 기존 세팅
-  // const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  // const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   
-  const { project, setViewport } = useReactFlow();
-
-  const [rfInstance, setRfInstance] = useState(null);
-  
-
   //🍀 webrtc 세팅
   const [nodes, onNodesChange] = useNodesStateSynced();
   const [edges, onEdgesChange, onConnect] = useEdgesStateSynced();
+  const { project, setViewport } = useReactFlow();
 
   // 🌼 기존 세팅: 엣지 새로 생성
   // const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
@@ -123,7 +109,7 @@ const Editingbox2 = () => {
       }
 
       //🌸 position 확인하기 새로 떨어뜨, react flow의 인스턴스를 사용
-      const position = reactFlowInstance.project({
+      const position = project({
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
       });
@@ -142,124 +128,124 @@ const Editingbox2 = () => {
     // [reactFlowInstance]
   );
 
-
-const [nodeName, setNodeName] = useState("Node 1");
+//🌼 이름 바꾸기용
+// const [nodeName, setNodeName] = useState("Node 1");
 
 //🔥 Adding Node! --> nodeId not set yet!
-const onConnectEnd = useCallback(
-   (event) => {
-       const targetIsPane = event.target.classList.contains('react-flow__pane');
+// const onConnectEnd = useCallback(
+//    (event) => {
+//        const targetIsPane = event.target.classList.contains('react-flow__pane');
        
-       if (targetIsPane){
-           const { top, left } = reactFlowWrapper.current.getBoundingClientRect();
-           const id = getNodeId();
-           const newNode = {
-               id,
-               // we are removing the half of the node width (75) to center the new node
-               position: project({ x: event.clientX - left - 75, y: event.clientY - top }),
-               // type: 'textUpdater',
-               data: { label: `새로운 노드 ${id}`  },
-             };
-           setNodes((nds) => nds.concat(newNode));
-           console.log(nodes);
-           setEdges((eds) => eds.concat({id: `e${connectingNodeId.current}-${id}`, source: connectingNodeId.current, target: id}));
-           console.log(initialNodes)
-       }
-   },
-   [project]
-);
+//        if (targetIsPane){
+//            const { top, left } = reactFlowWrapper.current.getBoundingClientRect();
+//            const id = getNodeId();
+//            const newNode = {
+//                id,
+//                // we are removing the half of the node width (75) to center the new node
+//                position: project({ x: event.clientX - left - 75, y: event.clientY - top }),
+//                // type: 'textUpdater',
+//                data: { label: `새로운 노드 ${id}`  },
+//              };
+//            setNodes((nds) => nds.concat(newNode));
+//            console.log(nodes);
+//            setEdges((eds) => eds.concat({id: `e${connectingNodeId.current}-${id}`, source: connectingNodeId.current, target: id}));
+//            console.log(initialNodes)
+//        }
+//    },
+//    [project]
+// );
   
   
-  // Connet, Save and restore adding
-  const onSave = useCallback(() => {
-    if (rfInstance) {
-      const flow = rfInstance.toObject();
-      localStorage.setItem(flowKey, JSON.stringify(flow));
-      console.log(JSON.stringify(flow));
-      console.log('flow: ', flow);
-      // console.log(type(flow.nodes));
-      console.log('only node data: ', flow.nodes);
-      console.log('only edge data: ', flow.edges);
-    }
-  }, [rfInstance]);
+//   // Connet, Save and restore adding
+//   const onSave = useCallback(() => {
+//     if (rfInstance) {
+//       const flow = rfInstance.toObject();
+//       localStorage.setItem(flowKey, JSON.stringify(flow));
+//       console.log(JSON.stringify(flow));
+//       console.log('flow: ', flow);
+//       // console.log(type(flow.nodes));
+//       console.log('only node data: ', flow.nodes);
+//       console.log('only edge data: ', flow.edges);
+//     }
+//   }, [rfInstance]);
 
-  const onFullSave = useCallback(() => {
-   if (rfInstance) {
-     const flow = rfInstance.toObject();
-     localStorage.setItem(flowKey, JSON.stringify(flow));
-     console.log(JSON.stringify(flow));
-     console.log('flow: ', flow);
-     // const send_flow = JSON.parse(JSON.stringify(flow));
-     console.log('only node data: ', flow.nodes);
-     console.log('only edge data: ', flow.edges);
-     // console.log(localStorage)
-     console.log('sending: ', {'nodes': flow.nodes})
+//   const onFullSave = useCallback(() => {
+//    if (rfInstance) {
+//      const flow = rfInstance.toObject();
+//      localStorage.setItem(flowKey, JSON.stringify(flow));
+//      console.log(JSON.stringify(flow));
+//      console.log('flow: ', flow);
+//      // const send_flow = JSON.parse(JSON.stringify(flow));
+//      console.log('only node data: ', flow.nodes);
+//      console.log('only edge data: ', flow.edges);
+//      // console.log(localStorage)
+//      console.log('sending: ', {'nodes': flow.nodes})
 
-     axios.post(`http://localhost:4000/nodes/${projectId}`, {
-        "nodes": flow.nodes
-     }).then((res , err) => {
-        if (res.status === 200) {
-           console.log('nodes saved');
-        }
-        else (console.log(err))
-    });
-    axios.post(`http://localhost:4000/edges/${projectId}`, {
-     "edges": flow.edges
-     }).then((res , err) => {
-     if (res.status === 200) {
-        console.log('edges saved');
-     }
-     else (console.log(err))
-     });
+//      axios.post(`http://localhost:4000/nodes/${projectId}`, {
+//         "nodes": flow.nodes
+//      }).then((res , err) => {
+//         if (res.status === 200) {
+//            console.log('nodes saved');
+//         }
+//         else (console.log(err))
+//     });
+//     axios.post(`http://localhost:4000/edges/${projectId}`, {
+//      "edges": flow.edges
+//      }).then((res , err) => {
+//      if (res.status === 200) {
+//         console.log('edges saved');
+//      }
+//      else (console.log(err))
+//      });
 
-   }
- }, [rfInstance]);
+//    }
+//  }, [rfInstance]);
 
 
 
-  const onRestore = useCallback(() => {
-    const restoreFlow = async () => {
-      const flow = JSON.parse(localStorage.getItem(flowKey));
+//   const onRestore = useCallback(() => {
+//     const restoreFlow = async () => {
+//       const flow = JSON.parse(localStorage.getItem(flowKey));
 
-      if (flow) {
-        const { x = 0, y = 0, zoom = 1 } = flow.viewport;
-        setNodes(flow.nodes || []);
-        setEdges(flow.edges || []);
-        setViewport({ x, y, zoom });
-      }
-    };
+//       if (flow) {
+//         const { x = 0, y = 0, zoom = 1 } = flow.viewport;
+//         setNodes(flow.nodes || []);
+//         setEdges(flow.edges || []);
+//         setViewport({ x, y, zoom });
+//       }
+//     };
 
-    restoreFlow();
-  }, [setNodes, setViewport]);
+//     restoreFlow();
+//   }, [setNodes, setViewport]);
 
-  const onAdd = useCallback(() => {
-    const newNode = {
-      id: getNodeId(),
-      data: { label: 'Added node' },
-      position: {
-        x: Math.random() * window.innerWidth - 100,
-        y: Math.random() * window.innerHeight,
-      },
-    };
-    setNodes((nds) => nds.concat(newNode));
-  }, [setNodes]);
+//   const onAdd = useCallback(() => {
+//     const newNode = {
+//       id: getNodeId(),
+//       data: { label: 'Added node' },
+//       position: {
+//         x: Math.random() * window.innerWidth - 100,
+//         y: Math.random() * window.innerHeight,
+//       },
+//     };
+//     setNodes((nds) => nds.concat(newNode));
+//   }, [setNodes]);
 
-  useEffect(() => {
-   setNodes((nds) =>
-     nds.map((node) => {
-       if (node.selected === true) {
-         // it's important that you create a new object here
-         // in order to notify react flow about the change
-         node.data = {
-           ...node.data,
-           label: nodeName
-         };
-       }
+//   useEffect(() => {
+//    setNodes((nds) =>
+//      nds.map((node) => {
+//        if (node.selected === true) {
+//          // it's important that you create a new object here
+//          // in order to notify react flow about the change
+//          node.data = {
+//            ...node.data,
+//            label: nodeName
+//          };
+//        }
 
-       return node;
-     })
-   );
- }, [nodeName, setNodes]);
+//        return node;
+//      })
+//    );
+//  }, [nodeName, setNodes]);
 
   return (
     <>
@@ -270,9 +256,9 @@ const onConnectEnd = useCallback(
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
-      onConnectStart={onConnectStart}
-      onConnectEnd={onConnectEnd}
-      onInit={setReactFlowInstance}
+      // onConnectStart={onConnectStart}
+      // onConnectEnd={onConnectEnd}
+      // onInit={setReactFlowInstance}
       onDrop={onDrop}
       onDragOver={onDragOver}
       proOptions={proOptions}
