@@ -135,6 +135,9 @@ const onDrop = useCallback(
 
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
     const type = event.dataTransfer.getData('application/reactflow');
+    const img = event.dataTransfer.getData('data/imageurl');
+
+    console.log('🌲Getting data ', type)
 
     // check if the dropped element is valid
     if (typeof type === 'undefined' || !type) {
@@ -149,7 +152,7 @@ const onDrop = useCallback(
       id: getNodeId(),
       type,
       position,
-      data: { label: `${type} node` },
+      data: { label: `${type} node` , url: `${img}`},
     };
 
     setNodes((nds) => nds.concat(newNode));
