@@ -36,8 +36,10 @@ const GalleryBox = () => {
     const buttons = ['tool', 'animal', 'clothing', 'vehicle', 'food', 'person', 'building', 'sports equipment', 'furniture', 'kitchenware', 'office supplies', 'plant'];
     const [activeButtons, setActiveButtons] = useState({})
 
+    // get 
     const { data: initialData, isLoading, isError, error } = useQuery('imagesQuery', fetchGallery);
 
+    // post
     const mutation = useMutation(postActiveTags, {
         onSuccess: (data) => {
             console.log('activeButtons post success', data);

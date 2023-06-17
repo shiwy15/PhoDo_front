@@ -1,18 +1,19 @@
 // import style sheets
 import 'reactflow/dist/style.css';
 import './text-updater-node.css';
-
+import './index.css';
 // import Node Types
 import TextUpdaterNode from './TextUpdaterNode.js';
 import PictureNode from './PictureNode.js';
-import PictureNode2 from './PictureNode2.js';
-import PictureNode3 from './PictureNode3.js';
 
 // import Component
 import Modal from './Modal';
 
 // import React 
-import React, { useEffect, useState, useRef ,useCallback } from 'react';
+import React, { useEffect, useState, useRef , useCallback } from 'react';
+import Picturebar from './Picturebar';
+import MenuBarR from "../../components/Editor/MenuBarR";
+
 
 // import React Flow 
 import ReactFlow, {
@@ -43,8 +44,6 @@ export const useStore = create(set => ({
 const flowKey = 'example-flow';
 const nodeTypes = {textUpdater: TextUpdaterNode, 
                   pix: PictureNode,
-                  pix2: PictureNode2,
-                  pix3: PictureNode3
                 }
 
   const initialNodes = [
@@ -106,6 +105,8 @@ const Editingbox2 = () => {
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [reactFlowInstance, setReactFlowInstance] = useState(null);
+
 
   const {projectId} = useStore();
    //for saving
@@ -119,6 +120,42 @@ const Editingbox2 = () => {
   const onConnectStart = useCallback((_, {nodeId}) => {
    connectingNodeId.current = nodeId;
 }, []);
+
+const onDragOver = useCallback((event) => {
+  event.preventDefault();
+  event.dataTransfer.dropEffect = 'move';
+}, []);
+
+const onDrop = useCallback(
+  (event) => {
+    event.preventDefault();
+
+    const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
+    const type = event.dataTransfer.getData('application/reactflow');
+    const img = event.dataTransfer.getData('data/imageurl');
+
+    console.log('🌲Getting data ', type)
+
+    // check if the dropped element is valid
+    if (typeof type === 'undefined' || !type) {
+      return;
+    }
+
+    const position = reactFlowInstance.project({
+      x: event.clientX - reactFlowBounds.left,
+      y: event.clientY - reactFlowBounds.top,
+    });
+    const newNode = {
+      id: getNodeId(),
+      type,
+      position,
+      data: { label: `${type} node` , url: `${img}`},
+    };
+
+    setNodes((nds) => nds.concat(newNode));
+  },
+  [reactFlowInstance]
+);
 
 
 const [nodeName, setNodeName] = useState("Node 1");
@@ -242,7 +279,7 @@ const onConnectEnd = useCallback(
 
   return (
     <>
-    <div className= "wrapper" ref={reactFlowWrapper} style={{ width: '100vw', height: '100vh' }}>
+    <div className= "wrapper" ref={reactFlowWrapper} style={{ height: '100vh'}}>
     <ReactFlow
       nodes={nodes}
       edges={edges}
@@ -251,98 +288,29 @@ const onConnectEnd = useCallback(
       onConnect={onConnect}
       onConnectStart={onConnectStart}
       onConnectEnd={onConnectEnd}
+      onInit={setReactFlowInstance}
+      onDrop={onDrop}
+      onDragOver={onDragOver}
       nodeTypes={nodeTypes}
-      style= {{background : '#F3B0C3'}} // Mint!
+      style= {{background : '#F3B0C3', position:'relative'}} // Mint!
       // style= {{background : '#00008B'}} //
-      onInit={setRfInstance}
+      // onInit={setRfInstance}
       fitView
-      fitViewOptions={fitViewOptions}
-    >
-      <Controls/>
-      <MiniMap/>
-      <NodeToolbar/>
+      fitViewOptions={fitViewOptions}>
+      <Controls position='top-left'/>
+      <MiniMap pannable position='bottom-left'/>
+      
     </ReactFlow>
     </div>
-
-    <div>
-<aside id="sidebar-multi-level-sidebar" class="fixed top-0 right-0 z-40 w-60 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
-   <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-      <ul class="space-y-2 font-medium">
-         <li>
-            <button type="button" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 bg-gray-200" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-                  <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>새 프로젝트</span>                  
-            </button>
-         </li>
-         <br/>
-         <li>
-            <label> 포도 사용 버튼: </label>
-         </li>
-         <li>
-            <button type="button" onClick={onSave} class=" bg-gray-200 flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-                  <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>잠시 저장하기</span>                  
-            </button>
-         </li>
-         <li>
-            <button type="button" onClick={onRestore} class="bg-gray-200 flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-                  <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>되돌아가기</span>                  
-            </button>
-         </li>
-         <li>
-            <button type="button" onClick={onAdd} class="flex bg-gray-200 items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-                  <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>추가하기</span>                  
-            </button>
-         </li>
-         <li>
-            <button type="button" onClick={onFullSave} class=" bg-gray-200 flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-                  <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>서버에 저장하기</span>                  
-            </button>
-            <input type= "text" name="projectname" placeholder='프로젝트 이름 '>
-            </input>
-         </li>
-         <br/>
-         <li>
-            <label> 사용자 버튼: </label>
-         </li>
-
-         <li>
-            <a href="#" class="flex bg-gray-200 items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-               <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
-               <span class="flex-1 ml-3 whitespace-nowrap">현재 유저</span>
-            </a>
-         </li>
-
-         <li>
-            <a href="/login" class="flex bg-gray-200 items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-               <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path></svg>
-               <span class="flex-1 ml-3 whitespace-nowrap">로그아웃</span>
-            </a>
-         </li>
-
-         <li>
-            <a href="#" class="flex bg-gray-200 items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-               <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clip-rule="evenodd"></path></svg>
-               <span class="flex-1 ml-3 whitespace-nowrap">음성 채팅</span>
-            </a>
-         </li>
-         <br/>
-
-         <li>
-            <label> 선택한 노드: </label>
-            <input value={nodeName}
-                   onChange={(evt) => setNodeName(evt.target.value)}/>
-         </li>   
-      </ul>
-   </div>
-</aside>
-
-</div>
-</>
+    <Picturebar/>
+    <MenuBarR style={{ position: 'absolute', zIndex: 2147483647 }} />
+    </>
   );
 };
 
 export default () => (
   <>
-  <Modal/>
+  {/* <Modal/> */}
   <ReactFlowProvider>
     <Editingbox2 />
   </ReactFlowProvider>

@@ -1,6 +1,4 @@
 import MenuBarR from "../../components/Editor/MenuBarR";
-import MenuBarL from "../../components/Editor/MenuBarL";
-import Editor3 from "../../pages/Editor/Editor3"
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 
@@ -16,8 +14,7 @@ console.log((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYe
 const Practice3 =() => {
     return(
         <div>
-            {/* <MenuBarR />
-            <MenuBarL /> */}
+            {/* <MenuBarR /> */}
             <Box sx={{ width: 300 }}>
                 <Slider
                     aria-label="Small steps"
