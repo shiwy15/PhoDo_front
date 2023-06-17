@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { Handle, Position } from 'reactflow';
-import factory from './factory_inital.png';
 
 const handleStyle = { left: 10 };
 

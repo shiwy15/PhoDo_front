@@ -5,8 +5,6 @@ import './index.css';
 // import Node Types
 import TextUpdaterNode from './TextUpdaterNode.js';
 import PictureNode from './PictureNode.js';
-import PictureNode2 from './PictureNode2.js';
-import PictureNode3 from './PictureNode3.js';
 
 // import Component
 import Modal from './Modal';
@@ -14,6 +12,7 @@ import Modal from './Modal';
 // import React 
 import React, { useEffect, useState, useRef , useCallback } from 'react';
 import Picturebar from './Picturebar';
+import MenuBarR from "../../components/Editor/MenuBarR";
 
 
 // import React Flow 
@@ -45,8 +44,6 @@ export const useStore = create(set => ({
 const flowKey = 'example-flow';
 const nodeTypes = {textUpdater: TextUpdaterNode, 
                   pix: PictureNode,
-                  pix2: PictureNode2,
-                  pix3: PictureNode3
                 }
 
   const initialNodes = [
@@ -282,7 +279,7 @@ const onConnectEnd = useCallback(
 
   return (
     <>
-    <div className= "wrapper" ref={reactFlowWrapper} style={{ width: '80vw', height: '50vh' }}>
+    <div className= "wrapper" ref={reactFlowWrapper} style={{ height: '100vh'}}>
     <ReactFlow
       nodes={nodes}
       edges={edges}
@@ -295,16 +292,18 @@ const onConnectEnd = useCallback(
       onDrop={onDrop}
       onDragOver={onDragOver}
       nodeTypes={nodeTypes}
-      style= {{background : '#F3B0C3'}} // Mint!
+      style= {{background : '#F3B0C3', position:'relative'}} // Mint!
       // style= {{background : '#00008B'}} //
       // onInit={setRfInstance}
       fitView
       fitViewOptions={fitViewOptions}>
-      <Controls/>
-      <MiniMap/>
+      <Controls position='top-left'/>
+      <MiniMap pannable position='bottom-left'/>
+      
     </ReactFlow>
     </div>
     <Picturebar/>
+    <MenuBarR style={{ position: 'absolute', zIndex: 2147483647 }} />
     </>
   );
 };

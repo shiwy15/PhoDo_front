@@ -5,46 +5,34 @@ import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
 
 const MenuBar =() =>{
     return(
-        <div>
-    <Paper sx={{ width: 80,height:'100vh', position: 'fixed', right: 0, display: 'flex', justifyContent: 'center' }}>
-      <MenuList dense>
-        <ListItemText primaryTypographyProps={{ variant: 'h6' }} disableTypography sx={{ mx:2, my: 2}}>Option</ListItemText>
-        <MenuItem>
-            <ListItemIcon sx={{ borderBottom: '1px solid gray' }}>
-                <img src='/menu_group.png' width={48} />
-            </ListItemIcon>
-        </MenuItem>
-        <MenuItem>
-            <ListItemIcon sx={{ borderBottom: '1px solid gray' }}>
-                <img src='/menu_node.png' width={48} />
-            </ListItemIcon>
-        </MenuItem>
-        <MenuItem>
-            <ListItemIcon sx={{ borderBottom: '1px solid gray' }}>
-                <img src='/menu_cal.png' width={48} />
-            </ListItemIcon>
-        </MenuItem>
-        <MenuItem>
-            <ListItemIcon sx={{ borderBottom: '1px solid gray' }}>
-                <img src='/menu_sunb.png' width={48} />
-            </ListItemIcon>
-        </MenuItem>
-        <MenuItem>
-            <ListItemIcon sx={{ borderBottom: '1px solid gray' }}>
-                <img src='/menu_data.png' width={48} />
-            </ListItemIcon>
-        </MenuItem>
+    <div>
+        <Paper sx={{width:'60px', position: 'fixed', top: '63px',right: 0, height: '100vh', borderRadius:0, justifyContent: 'center', backgroundColor:'#D951DB' }}>
+            <MenuList>
+                <MenuItem>
+                <ListItemIcon>
+                    <Typography variant="inherit">Tool</Typography>
+                </ListItemIcon>
+                </MenuItem>
+                <Divider variant="middle" sx={{ padding:'8px', borderColor: 'rgba(0,0,0,0.3)' }} />
+                <MenuItem>
+                <ListItemIcon>
+                    <p>icon</p>
+                </ListItemIcon>
+                </MenuItem>
+                <MenuItem>
+                <ListItemIcon>
+                    <p>icon</p>
+                </ListItemIcon>
 
-        
-        <Divider />
-      </MenuList>
-    </Paper>
-
-        </div>
-    )
+                </MenuItem>
+            </MenuList>
+        </Paper>
+    </div>
+)
 }
 
 export default MenuBar;
