@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from 'react';
-import { request } from "../../utils/axios-utils"
-import { useMutation, useQuery } from 'react-query';
+import { request } from "../../../utils/axios-utils"
+import {useQuery } from 'react-query';
 
 
 /** 이미지 출력용 import **/
@@ -19,6 +19,9 @@ import Typography from '@mui/material/Typography';
 
 /** 기능component import **/
 import FileUpload from './FileUpload';
+import GallerySearch from './GallerySearch';
+import TimeBar from './TimeBar';
+import TagButtons from './TagButtons';
 
 const fetchGallery = () => {
   return request({ url: 'api/gallery' });
@@ -62,7 +65,7 @@ export default () => {
         position: 'fixed', 
         width: 270,
         height: '100vh',
-        top: '63px', 
+        top: '58px', 
         right: '60px', 
         backgroundColor: 'rgba(0,0,0,0.6)',
         borderTopRightRadius: 0,
@@ -74,9 +77,9 @@ export default () => {
         </MenuItem>
         <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />
         <div className='fileUpload'><FileUpload/></div>
-        <div> 갤러리에서 검색</div>
-        <div> 시간별 분류</div>
-        <div>tag별 분류</div>
+        <div> <GallerySearch /></div>
+        <div> <TimeBar /> </div>
+        <div> <TagButtons/> </div>
 
         <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />
          <ImageList cols={3} gap={6} sx={{ padding: '10px', height: '400px'}}>
