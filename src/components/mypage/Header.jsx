@@ -9,7 +9,7 @@ import LogoutIcon from '@mui/icons-material/ExitToApp';
 export const Header = () => {
   return (
     <React.Fragment>
-      <Toolbar sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'space-between' }}>
+      <Toolbar sx={{ position: 'fixed', borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'space-between', zIndex: '1000', backgroundColor:'white', width: '100vw', height: '60px' }}>
         <div style={{ display: 'flex', alignItems: 'flex-end' }}>
           <img src="/name.png" alt="logo" className="h-10 w-auto" />
 

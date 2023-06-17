@@ -11,7 +11,7 @@ import Modal from './Modal';
 
 // import React 
 import React, { useEffect, useState, useRef , useCallback } from 'react';
-import Picturebar from './Picturebar';
+import Sidebar from '../Editor/SideBar/Sidebar';
 import MenuBarR from "../../components/Editor/MenuBarR";
 
 
@@ -302,7 +302,7 @@ const onConnectEnd = useCallback(
       
     </ReactFlow>
     </div>
-    <Picturebar/>
+    <Sidebar/>
     <MenuBarR style={{ position: 'absolute', zIndex: 2147483647 }} />
     </>
   );
