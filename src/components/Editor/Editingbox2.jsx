@@ -17,7 +17,7 @@ import useEdgesStateSynced from './useEdgesStateSynced';
 import React, { useEffect, useState, useRef , useCallback } from 'react';
 import Picturebar from './Picturebar';
 import MenuBarR from './MenuBarR';
-
+import Sidebar from './Sidebar_sample';
 
 // import React Flow 
 import ReactFlow, {
@@ -128,128 +128,11 @@ const Editingbox2 = () => {
     // [reactFlowInstance]
   );
 
-//🌼 이름 바꾸기용
-// const [nodeName, setNodeName] = useState("Node 1");
 
-//🔥 Adding Node! --> nodeId not set yet!
-// const onConnectEnd = useCallback(
-//    (event) => {
-//        const targetIsPane = event.target.classList.contains('react-flow__pane');
-       
-//        if (targetIsPane){
-//            const { top, left } = reactFlowWrapper.current.getBoundingClientRect();
-//            const id = getNodeId();
-//            const newNode = {
-//                id,
-//                // we are removing the half of the node width (75) to center the new node
-//                position: project({ x: event.clientX - left - 75, y: event.clientY - top }),
-//                // type: 'textUpdater',
-//                data: { label: `새로운 노드 ${id}`  },
-//              };
-//            setNodes((nds) => nds.concat(newNode));
-//            console.log(nodes);
-//            setEdges((eds) => eds.concat({id: `e${connectingNodeId.current}-${id}`, source: connectingNodeId.current, target: id}));
-//            console.log(initialNodes)
-//        }
-//    },
-//    [project]
-// );
-  
-  
-//   // Connet, Save and restore adding
-//   const onSave = useCallback(() => {
-//     if (rfInstance) {
-//       const flow = rfInstance.toObject();
-//       localStorage.setItem(flowKey, JSON.stringify(flow));
-//       console.log(JSON.stringify(flow));
-//       console.log('flow: ', flow);
-//       // console.log(type(flow.nodes));
-//       console.log('only node data: ', flow.nodes);
-//       console.log('only edge data: ', flow.edges);
-//     }
-//   }, [rfInstance]);
-
-//   const onFullSave = useCallback(() => {
-//    if (rfInstance) {
-//      const flow = rfInstance.toObject();
-//      localStorage.setItem(flowKey, JSON.stringify(flow));
-//      console.log(JSON.stringify(flow));
-//      console.log('flow: ', flow);
-//      // const send_flow = JSON.parse(JSON.stringify(flow));
-//      console.log('only node data: ', flow.nodes);
-//      console.log('only edge data: ', flow.edges);
-//      // console.log(localStorage)
-//      console.log('sending: ', {'nodes': flow.nodes})
-
-//      axios.post(`http://localhost:4000/nodes/${projectId}`, {
-//         "nodes": flow.nodes
-//      }).then((res , err) => {
-//         if (res.status === 200) {
-//            console.log('nodes saved');
-//         }
-//         else (console.log(err))
-//     });
-//     axios.post(`http://localhost:4000/edges/${projectId}`, {
-//      "edges": flow.edges
-//      }).then((res , err) => {
-//      if (res.status === 200) {
-//         console.log('edges saved');
-//      }
-//      else (console.log(err))
-//      });
-
-//    }
-//  }, [rfInstance]);
-
-
-
-//   const onRestore = useCallback(() => {
-//     const restoreFlow = async () => {
-//       const flow = JSON.parse(localStorage.getItem(flowKey));
-
-//       if (flow) {
-//         const { x = 0, y = 0, zoom = 1 } = flow.viewport;
-//         setNodes(flow.nodes || []);
-//         setEdges(flow.edges || []);
-//         setViewport({ x, y, zoom });
-//       }
-//     };
-
-//     restoreFlow();
-//   }, [setNodes, setViewport]);
-
-//   const onAdd = useCallback(() => {
-//     const newNode = {
-//       id: getNodeId(),
-//       data: { label: 'Added node' },
-//       position: {
-//         x: Math.random() * window.innerWidth - 100,
-//         y: Math.random() * window.innerHeight,
-//       },
-//     };
-//     setNodes((nds) => nds.concat(newNode));
-//   }, [setNodes]);
-
-//   useEffect(() => {
-//    setNodes((nds) =>
-//      nds.map((node) => {
-//        if (node.selected === true) {
-//          // it's important that you create a new object here
-//          // in order to notify react flow about the change
-//          node.data = {
-//            ...node.data,
-//            label: nodeName
-//          };
-//        }
-
-//        return node;
-//      })
-//    );
-//  }, [nodeName, setNodes]);
 
   return (
     <>
-    <div className= "wrapper" ref={reactFlowWrapper} style={{ height: '100vh'}}>
+    <div className= "wrapper" ref={reactFlowWrapper} style={{ height: '50vh'}}>
     <ReactFlow
       nodes={nodes}
       edges={edges}
@@ -273,8 +156,8 @@ const Editingbox2 = () => {
 
     </ReactFlow>
     </div>
-    <Picturebar/>
-    <MenuBarR style={{ position: 'absolute', zIndex: 2147483647 }} />
+    <Sidebar/>
+    {/* <MenuBarR style={{ position: 'absolute', zIndex: 2147483647 }} /> */}
     </>
   );
 };
