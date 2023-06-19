@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 import { Handle, Position } from 'reactflow';
 
-// const handleStyle = { left: 10 };
 
 function TextNode({ data, isConnectable }) {
   const onChange = useCallback((evt) => {
@@ -9,7 +8,7 @@ function TextNode({ data, isConnectable }) {
   }, []);
 
   return (
-    <div className="text-updater-node">
+    <div className="textNode bg-white px-5 py-2 rounded-lg">
       <Handle type="target" position={Position.Top} id="top" isConnectable={isConnectable} />
       <Handle type="target" position={Position.Left} id="left" isConnectable={isConnectable} />
       <div>

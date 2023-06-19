@@ -82,6 +82,7 @@ const Editingbox2 = () => {
     event.dataTransfer.dropEffect = 'move';
   }, []);
 
+  //DragStart 후 편집창에 데이터 input하는 부분!
   const onDrop = useCallback(
     (event) => {
       event.preventDefault();
@@ -92,9 +93,9 @@ const Editingbox2 = () => {
       // Drag을 통한 이벤트 생성
       const type = event.dataTransfer.getData('application/reactflow');
       const img = event.dataTransfer.getData('data/imageurl');
+      const tags = event.dataTransfer.getData('data/tags');
       console.log('🌲Getting type ', type); // 🍎 drag start에서 가져온 type
       console.log('🌲Getting image ', img); // 🍎 drag start에서 가져온 image 
-
       //🥰 타입 확인 하기: 굳이 ? 
       if (typeof type === 'undefined' || !type) {
         return;
@@ -110,7 +111,7 @@ const Editingbox2 = () => {
         id: getNodeId(),
         type,
         position,
-        data: { label: `${type}` , url: `${img}`},
+        data: { label: `${type}` , url: `${img}`, tags: `${tags}`},
       };
 
       //🌼 webrtc 전에 있는 코드, 개인 편집
