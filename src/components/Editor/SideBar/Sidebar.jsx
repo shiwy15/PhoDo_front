@@ -16,12 +16,16 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+
 
 /** 기능component import **/
 import FileUpload from './FileUpload';
 import GallerySearch from './GallerySearch';
 import TimeBar from './TimeBar';
 import TagButtons from './TagButtons';
+import Nodechangebar from './Nodechangebar';
 
 const fetchGallery = () => {
   return request({ url: 'api/gallery' });
@@ -67,7 +71,7 @@ export default () => {
         height: '100vh',
         top: '58px', 
         right: '60px', 
-        backgroundColor: 'rgba(0,0,0,0.6)',
+        backgroundColor: 'rgba(211,211,211,0.7)',
         borderTopRightRadius: 0,
         borderBottomRightRadius: 0,
         color: 'rgb(255,255,255)'}}>
@@ -81,7 +85,9 @@ export default () => {
         <div> <TimeBar /> </div>
         <div> <TagButtons/> </div>
 
+        {/* 🌸 구분선 */}
         <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />
+        {/* 🌸 이미지 모아볼 수 있는 미니 갤러리 */}
          <ImageList cols={3} gap={6} sx={{ padding: '10px', height: '400px'}}>
             {images && images.map((image, index) => (
                 <ImageListItem key={image.id} sx={{border: 'solid 1px white'}}>
@@ -99,11 +105,11 @@ export default () => {
                                 })}
                             </span>
                 </ImageListItem>
-            ))}
+            ))}    
         </ImageList>
+        
         <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />
-
-
+            <Nodechangebar/>
          </MenuList>
         </Paper>
     </div>
