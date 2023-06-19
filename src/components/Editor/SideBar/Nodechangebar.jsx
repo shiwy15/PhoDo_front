@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import { Box, Typography, TextField, MenuItem } from '@mui/material';
 
 
 function Nodechangebar(){
 
+  const [nodeName, setNodeName] = useState("Node 1");
     return (
         <Box display="flex" justifyContent="center" alignItems="center" sx={{ padding: '5px' }}> 
         <Box sx={{ width: '75%' }}>
@@ -17,6 +18,8 @@ function Nodechangebar(){
             <Box sx = {{padding: '7px'}}>
             <TextField 
       id="outlined-basic" 
+      value= {nodeName}
+      onChange={(evt) => setNodeName(evt.target.value)}
       label= "선택한 노드 이름"
       variant="outlined"
       color="secondary"
