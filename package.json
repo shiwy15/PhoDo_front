@@ -3,138 +3,70 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@heroicons/react": "^2.0.18",
-    "@mui/icons-material": "^5.11.16",
-    "@mui/material": "^5.13.4",
-    "@tanstack/react-query": "^4.29.12",
-    "@tanstack/react-query-devtools": "^4.29.12",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.4.0",
-    "concurrently": "^8.2.0",
-    "d3": "^7.8.5",
-    "json-server": "^0.17.3",
-    "lodash": "^4.17.21",
-    "mui": "^0.0.1",
-    "prop-types": "^15.8.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-query": "^3.39.3",
-    "react-router-dom": "^6.12.1",
-    "react-scripts": "5.0.1",
-    "reactflow": "^11.7.2",
-    "styled-components": "^6.0.0-rc.3",
-    "tailwindcss": "^3.3.2",
-    "types": "^0.1.1",
-    "venn.js": "^0.2.20",
-    "web-vitals": "^2.1.4",
-    "zustand": "^4.3.8"
+      "@emotion/react": "^11.11.1",
+      "@emotion/styled": "^11.11.0",
+      "@heroicons/react": "^2.0.18",
+      "@mobiscroll/react": "https://npm.mobiscroll.com/@mobiscroll/react-trial/-/react-trial-5.25.1.tgz",
+      "@mui/icons-material": "^5.11.16",
+      "@mui/material": "^5.13.4",
+      "@tanstack/react-query": "^4.29.12",
+      "@tanstack/react-query-devtools": "^4.29.12",
+      "@testing-library/jest-dom": "^5.16.5",
+      "@testing-library/react": "^13.4.0",
+      "@testing-library/user-event": "^13.5.0",
+      "axios": "^1.4.0",
+      "concurrently": "^8.2.0",
+      "d3": "^7.8.5",
+      "json-server": "^0.17.3",
+      "lodash": "^4.17.21",
+      "material-ui-popup-state": "^5.0.9",
+      "mui": "^0.0.1",
+      "prop-types": "^15.8.1",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0",
+      "react-query": "^3.39.3",
+      "react-router-dom": "^6.12.1",
+      "react-scripts": "5.0.1",
+      "reactflow": "^11.7.2",
+      "styled-components": "^6.0.0-rc.3",
+      "tailwindcss": "^3.3.2",
+      "types": "^0.1.1",
+      "venn.js": "^0.2.20",
+      "web-vitals": "^2.1.4",
+      "zustand": "^4.3.8"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "serve-json": "yarn json-server db.json --routes routes.json --port 4000"
-  },
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject",
+  "serve-json": "yarn json-server db.json --routes routes.json --port 4000"
+},
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+      "extends": [
+          "react-app",
+          "react-app/jest"
+      ]
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+      "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+      ],
+      "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+      ]
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.24",
-    "tailwindcss": "^3.3.2"
-  }
-    "name": "jungle-front",
-    "version": "0.1.0",
-    "private": true,
-    "dependencies": {
-        "@emotion/react": "^11.11.1",
-        "@emotion/styled": "^11.11.0",
-        "@heroicons/react": "^2.0.18",
-        "@mobiscroll/react": "https://npm.mobiscroll.com/@mobiscroll/react-trial/-/react-trial-5.25.1.tgz",
-        "@mui/icons-material": "^5.11.16",
-        "@mui/material": "^5.13.4",
-        "@tanstack/react-query": "^4.29.12",
-        "@tanstack/react-query-devtools": "^4.29.12",
-        "@testing-library/jest-dom": "^5.16.5",
-        "@testing-library/react": "^13.4.0",
-        "@testing-library/user-event": "^13.5.0",
-        "axios": "^1.4.0",
-        "concurrently": "^8.2.0",
-        "d3": "^7.8.5",
-        "json-server": "^0.17.3",
-        "lodash": "^4.17.21",
-        "material-ui-popup-state": "^5.0.9",
-        "mui": "^0.0.1",
-        "prop-types": "^15.8.1",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "react-query": "^3.39.3",
-        "react-router-dom": "^6.12.1",
-        "react-scripts": "5.0.1",
-        "reactflow": "^11.7.2",
-        "styled-components": "^6.0.0-rc.3",
-        "tailwindcss": "^3.3.2",
-        "types": "^0.1.1",
-        "venn.js": "^0.2.20",
-        "web-vitals": "^2.1.4",
-        "zustand": "^4.3.8"
-    },
-    "scripts": {
-        "start": "concurrently \"react-scripts start\" \"yarn serve-json\"",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
-        "serve-json": "yarn json-server db.json --routes routes.json --port 4000"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
-    "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-    "main": "index.js",
-    "author": "",
-    "license": "ISC",
-    "devDependencies": {
-        "autoprefixer": "^10.4.14",
-        "postcss": "^8.4.24",
-        "tailwindcss": "^3.3.2"
+      "autoprefixer": "^10.4.14",
+      "postcss": "^8.4.24",
+      "tailwindcss": "^3.3.2"
     }
 }
