@@ -8,6 +8,8 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 
+//custom hook
+import useFormatDate from '../../hooks/useFormatDate';
 
 const GalleryContainer = styled.div`
     display: flex;
@@ -61,6 +63,8 @@ const GalleryBox = () => {
         });
     };
 
+    const formatData = useFormatDate();
+
     useEffect(() => {
         if (!isLoading && initialData) {
             setImagesData(initialData);
@@ -78,11 +82,11 @@ const GalleryBox = () => {
                     {buttons.map((button) => (
                         <React.Fragment key={button}>
                             <section>
-                                <muiButton
+                                <button
                                     onClick={() => handleClick(button)} 
                                     className={`rounded-full px-2 py-1 text-black shadow mx-1 my-1 ${(activeButtons[button] === true)? 'bg-blue-500' : 'bg-white'}`}>
                                     {button}
-                                </muiButton>
+                                </button>
                             </section>
                         </React.Fragment>
                     ))}
@@ -105,7 +109,7 @@ const GalleryBox = () => {
                                 </span>
                             }
                             subtitle={
-                                <span>{image.time}</span>
+                                <span>{formatData(image.time)}</span>
                             }
                             position="bottom"
                         />
