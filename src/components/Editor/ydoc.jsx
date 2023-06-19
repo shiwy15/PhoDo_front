@@ -19,8 +19,8 @@ const wsProvider = new WebsocketProvider(
 );
 
 wsProvider.on('status', event => {
-    console.log(event)
-    console.log(event.status)
+    // console.log(event)
+    // console.log(event.status)
 })
 
 export default ydoc;
