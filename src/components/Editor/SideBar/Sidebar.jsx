@@ -42,6 +42,12 @@ export default () => {
         }
     }, [isLoading, initialData]);
 
+  //기본 노드용 onDragStart함수
+  const onDragStartDefault = (event, nodeType) => {
+    event.dataTransfer.setData('application/reactflow', nodeType);
+    event.dataTransfer.effectAllowed = 'move';
+  };
+
 
   const onDragStart = (event, nodeType, imageURL) => {
     
@@ -79,16 +85,15 @@ export default () => {
         <MenuItem>
           <Typography sx={{paddingRight: 3 }}>Side bar</Typography>
         </MenuItem>
-        <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />
-        <div className='fileUpload'><FileUpload/></div>
-        <div> <GallerySearch /></div>
+        
         <div> <TimeBar /> </div>
         <div> <TagButtons/> </div>
+        <div> <GallerySearch /></div>
 
         {/* 🌸 구분선 */}
         <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />
         {/* 🌸 이미지 모아볼 수 있는 미니 갤러리 */}
-         <ImageList cols={3} gap={6} sx={{ padding: '10px', height: '400px'}}>
+         <ImageList cols={3} gap={6} sx={{ padding: '10px', height: '250px'}}>
             {images && images.map((image, index) => (
                 <ImageListItem key={image.id} sx={{border: 'solid 1px white'}}>
                     <img 
@@ -109,6 +114,11 @@ export default () => {
         </ImageList>
         
         <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />
+        <MenuItem style={{display: 'flex', justifyContent: 'center'}}>
+          <div className="TextNode inline-block rounded bg-info px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out hover:bg-info-600 hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(84,180,211,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)]" onDragStart={(event) => onDragStartDefault(event, 'TextNode')} draggable>
+            Text Node
+          </div>
+        </MenuItem>  
             <Nodechangebar/>
          </MenuList>
         </Paper>
