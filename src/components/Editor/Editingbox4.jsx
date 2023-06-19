@@ -1,7 +1,5 @@
 import 'reactflow/dist/style.css';
-import './text-updater-node.css';
 import {useQuery} from "react-query";
-import TextUpdaterNode from './TextUpdaterNode.js';
 import React, { useEffect, useState, useRef ,useCallback } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
@@ -17,7 +15,9 @@ import ReactFlow, {
 import axios from "axios";
 
 const flowKey = 'example-flow';
-const nodeTypes = {textUpdater: TextUpdaterNode}
+const nodeTypes = {
+  
+}
 
 let id = 5;
 const getNodeId = () => `${id++}`;

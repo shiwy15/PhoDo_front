@@ -10,7 +10,7 @@ import {
   useNodes,
 } from 'reactflow';
 
-import ydoc from './ydoc';
+import ydoc from '../components/Editor/ydoc';
 import { edgesMap } from './useEdgesStateSynced';
 
 //🌵 NodesMap은 Nodes에 해당하는 교체를 다 여기서 해결함

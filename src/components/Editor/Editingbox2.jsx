@@ -1,17 +1,17 @@
 // import style sheets
 import 'reactflow/dist/style.css';
-import './text-updater-node.css';
+
 import './index.css';
 // import Node Types
-import TextNode from './TextNode';
-import PictureNode from './PictureNode.js';
+import TextNode from './Node/TextNode';
+import PictureNode from './Node/PictureNode.js';
 
 // import Component
 import Modal from './Modal';
 
 // 🍀 WebRTC setting
-import useNodesStateSynced, { nodesMap } from './useNodesStateSynced';
-import useEdgesStateSynced from './useEdgesStateSynced';
+import useNodesStateSynced, { nodesMap } from '../../hooks/useNodesStateSynced';
+import useEdgesStateSynced from '../../hooks/useEdgesStateSynced';
 
 // import React 
 import React, { useEffect, useState, useRef , useCallback } from 'react';
