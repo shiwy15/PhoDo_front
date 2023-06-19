@@ -48,7 +48,7 @@ const ImageUpload = () => {
     <div className='flex justify-center space-x-4 p-3'>
       <Paper component="form" sx={{ p: '2px', display: 'flex', width: 400, justifyContent: 'space-between' }}>
         <InputBase
-          ref={fileInputRef}
+          inputRef={fileInputRef}
           sx={{ display: 'none' }}
           type="file"
           accept="image/*"
