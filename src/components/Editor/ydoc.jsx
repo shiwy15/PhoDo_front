@@ -12,11 +12,14 @@ const ydoc = new Doc();
 //     signaling : ['ws://localhost:3000/newproject']
 // });
 
-new WebsocketProvider(
-    'ws://13.125.210.252:1234',
+const wsProvider = new WebsocketProvider(
+    'ws://localhost:1234',
     'REACTFLOW-COLLAB-EXAMPLE',
     ydoc
 );
 
+wsProvider.on('status', event => {
+    console.log(event.status)
+})
 
 export default ydoc;
