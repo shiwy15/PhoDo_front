@@ -104,7 +104,7 @@ const GalleryBox = () => {
                             title={
                                 <span>
                                     {Object.values(image.tags).map((tag, index) => {
-                                        return index < Object.values(image.tags).length - 1 ? `${tag}, ` : tag;
+                                        return index < Object.values(image.tags).length - 1 ? <p key={index}>`${tag}, `</p> : <p>tag</p>;
                                     })}
                                 </span>
                             }

@@ -3,7 +3,7 @@ import 'reactflow/dist/style.css';
 import './text-updater-node.css';
 import './index.css';
 // import Node Types
-import TextUpdaterNode from './TextUpdaterNode.js';
+import TextNode from './TextNode';
 import PictureNode from './PictureNode.js';
 
 // import Component
@@ -48,7 +48,7 @@ const proOptions = {
 };
 
 const flowKey = 'example-flow';
-const nodeTypes = {textUpdater: TextUpdaterNode, 
+const nodeTypes = {TextNode: TextNode, 
                   pix: PictureNode,
                 }
 
@@ -118,8 +118,9 @@ const Editingbox2 = () => {
         id: getNodeId(),
         type,
         position,
-        data: { label: `${type} node` , url: `${img}`},
+        data: { label: `${type}` , url: `${img}`},
       };
+
       //🌼 webrtc 전에 있는 코드, 개인 편집
       // setNodes((nds) => nds.concat(newNode)); 
       nodesMap.set(newNode.id, newNode);
@@ -157,7 +158,7 @@ const Editingbox2 = () => {
     </ReactFlow>
     </div>
     <Sidebar/>
-    <MenuBarR style={{ position: 'absolute', zIndex: 2147483647 }} />
+    <MenuBarR style={{ position: 'absolute', zIndex: 1000 }} />
     </>
   );
 };
