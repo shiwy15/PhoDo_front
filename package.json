@@ -40,7 +40,7 @@
         "zustand": "^4.3.8"
     },
     "scripts": {
-        "start": "concurrently \"react-scripts start\" \"yarn serve-json\"",        
+        "start": "react-scripts start\" \"yarn serve-json\" \"y-websocket-server\"",        
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
