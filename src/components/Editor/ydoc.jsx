@@ -13,7 +13,7 @@ const ydoc = new Doc();
 // });
 
 new WebsocketProvider(
-    'ws://localhost:1234',
+    'ws://13.125.210.252:1234',
     'REACTFLOW-COLLAB-EXAMPLE',
     ydoc
 );
