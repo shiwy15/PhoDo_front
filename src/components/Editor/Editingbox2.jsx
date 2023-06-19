@@ -132,7 +132,7 @@ const Editingbox2 = () => {
 
   return (
     <>
-    <div className= "wrapper" ref={reactFlowWrapper} style={{ height: '50vh'}}>
+    <div className= "wrapper" ref={reactFlowWrapper} style={{ height: '100vh'}}>
     <ReactFlow
       nodes={nodes}
       edges={edges}
