@@ -21,16 +21,8 @@ import MenuBarR from "../../components/Editor/MenuBarR";
 
 // import React Flow 
 import ReactFlow, {
-  ReactFlowProvider,
-  useNodesState,
-  useEdgesState,
-  addEdge,
-  useReactFlow,
-  Panel,
-  Controls,
-  MiniMap,
-  NodeToolbar,
-} from 'reactflow';
+  ReactFlowProvider, useNodesState, useEdgesState, addEdge,useReactFlow, Panel, Controls,
+  MiniMap, NodeToolbar } from 'reactflow';
 
 // import zustand
 import {create} from 'zustand';
