@@ -13,12 +13,13 @@ const ydoc = new Doc();
 // });
 
 const wsProvider = new WebsocketProvider(
-    'ws://localhost:1234',
-    'REACTFLOW-COLLAB-EXAMPLE',
+    'ws://13.125.210.252:1234',
+    'abc',
     ydoc
 );
 
 wsProvider.on('status', event => {
+    console.log(event)
     console.log(event.status)
 })
 
