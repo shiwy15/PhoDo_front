@@ -48,29 +48,32 @@ export default () => {
     event.dataTransfer.effectAllowed = 'move';
   };
 
-
-  const onDragStart = (event, nodeType, imageURL) => {
+  {/*편집창에서 Node데이터 이동의 시작점*/}
+  const onDragStart = (event, nodeType, imageURL, tags) => {
     
     console.log('🌸before drag event: ', event.dataTransfer);
-    
     event.dataTransfer.setData('application/reactflow', nodeType);
     event.dataTransfer.setData('data/imageurl', imageURL);
+    event.dataTransfer.setData('data/tags', tags);
     
     const afterData = event.dataTransfer.getData('application/reactflow');
     const afterimg = event.dataTransfer.getData('data/imageurl');
+    const afterTags = event.dataTransfer.getData('data/tags');
     // console.log('🍎 after drag event: ', event.dataTransfer);
     
     // afterData = event.dataTransfer.getData('application/reactflow');
     // const afterimg = event.dataTransfer.getData();
     console.log('👺 after data: ', afterData);
     // console.log('👺 after data: ', event.dataTransfer);
-    console.log('🌵 after img: ', afterimg);
+    // console.log('🌵 after img: ', afterimg);
+    console.log('🌵 afterTags: ', afterTags);
     
     event.dataTransfer.effectAllowed = 'move';
   }
 
   return (
     <div>
+      {/* sidebar css 부분 */}
       <Paper sx={{     
         position: 'fixed', 
         width: 270,
@@ -98,9 +101,9 @@ export default () => {
                 <ImageListItem key={image.id} sx={{border: 'solid 1px white'}}>
                     <img 
                         src={image.thumbnailUrl}
-                        className="dndnode"
+                        className="imgNode"
                         loading="lazy"
-                        onDragStart={(event) => onDragStart(event, 'pix', image.url)}
+                        onDragStart={(event) => onDragStart(event, 'pix',image.url, Object.values(image.tags))}
                         draggable
                         alt="Gallery Item"
                         style={{ height: '60px'}} />
@@ -115,7 +118,8 @@ export default () => {
         
         <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />
         <MenuItem style={{display: 'flex', justifyContent: 'center'}}>
-          <div className="TextNode inline-block rounded bg-info px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out hover:bg-info-600 hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(84,180,211,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)]" onDragStart={(event) => onDragStartDefault(event, 'TextNode')} draggable>
+          <div className="TextNode inline-block rounded bg-info px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out hover:bg-info-600 hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(84,180,211,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)]" 
+          onDragStart={(event) => onDragStartDefault(event, 'TextNode')} draggable>
             Text Node
           </div>
         </MenuItem>  
