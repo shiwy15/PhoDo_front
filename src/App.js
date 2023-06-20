@@ -12,6 +12,7 @@ import Editor4 from "./pages/Editor/Editor4.jsx"
 //react query practice set
 import Practice from "./pages/Practice/Practice.jsx"
 import Practice3 from "./pages/Practice/Practice3.jsx"
+import Voice from "./pages/Practice/voice.jsx"
 
 import { MainPage } from './pages/Main/Main.jsx'
 import Mypage from "./pages/Mypage/Mypage";
@@ -37,6 +38,7 @@ function App() {
         {/* react query sample */}
         <Route path="/practice" element={<Practice />} />
         <Route path="/practice3" element={<Practice3 />} />
+        <Route path="/voice" element={<Voice />} />
 
         {/* My page */}
         <Route path="/mypage" element={<Mypage />} />
