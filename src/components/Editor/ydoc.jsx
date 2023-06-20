@@ -13,15 +13,15 @@ const ydoc = new Doc();
 // });
 
 const wsProvider = new WebsocketProvider(
-    // 'ws://13.125.210.252:1234', //🔥 ec2 setting
-    'ws://localhost:1234', //🔥 ec2 setting
+    // 'ws://13.125.210.252:1234', //🔥 hojun ec2 setting
+    'ws://3.36.77.22:1234', //🔥 jinkyo ec2 setting
     'abc',
     ydoc
 );
 
 wsProvider.on('status', event => {
-    // console.log(event)
-    // console.log(event.status)
+    console.log(event)
+    console.log(event.status)
 })
 
 export default ydoc;
