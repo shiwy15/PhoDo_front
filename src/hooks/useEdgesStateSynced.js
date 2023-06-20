@@ -11,7 +11,7 @@ import {
   EdgeRemoveChange,
 } from 'reactflow';
 
-import ydoc from './ydoc';
+import ydoc from '../components/Editor/ydoc';
 
 export const edgesMap = ydoc.getMap('edges');
 

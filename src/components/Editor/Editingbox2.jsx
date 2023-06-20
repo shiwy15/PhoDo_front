@@ -1,17 +1,17 @@
 // import style sheets
 import 'reactflow/dist/style.css';
-import './text-updater-node.css';
+
 import './index.css';
 // import Node Types
-import TextUpdaterNode from './TextUpdaterNode.js';
-import PictureNode from './PictureNode.js';
+import TextNode from './Node/TextNode';
+import PictureNode from './Node/PictureNode.js';
 
 // import Component
 import Modal from './Modal';
 
 // 🍀 WebRTC setting
-import useNodesStateSynced, { nodesMap } from './useNodesStateSynced';
-import useEdgesStateSynced from './useEdgesStateSynced';
+import useNodesStateSynced, { nodesMap } from '../../hooks/useNodesStateSynced';
+import useEdgesStateSynced from '../../hooks/useEdgesStateSynced';
 
 // import React 
 import React, { useEffect, useState, useRef , useCallback } from 'react';
@@ -21,16 +21,8 @@ import MenuBarR from "../../components/Editor/MenuBarR";
 
 // import React Flow 
 import ReactFlow, {
-  ReactFlowProvider,
-  useNodesState,
-  useEdgesState,
-  addEdge,
-  useReactFlow,
-  Panel,
-  Controls,
-  MiniMap,
-  NodeToolbar,
-} from 'reactflow';
+  ReactFlowProvider, useNodesState, useEdgesState, addEdge,useReactFlow, Panel, Controls,
+  MiniMap, NodeToolbar } from 'reactflow';
 
 // import zustand
 import {create} from 'zustand';
@@ -48,7 +40,7 @@ const proOptions = {
 };
 
 const flowKey = 'example-flow';
-const nodeTypes = {textUpdater: TextUpdaterNode, 
+const nodeTypes = {TextNode: TextNode, 
                   pix: PictureNode,
                 }
 
@@ -90,6 +82,7 @@ const Editingbox2 = () => {
     event.dataTransfer.dropEffect = 'move';
   }, []);
 
+  //DragStart 후 편집창에 데이터 input하는 부분!
   const onDrop = useCallback(
     (event) => {
       event.preventDefault();
@@ -100,9 +93,9 @@ const Editingbox2 = () => {
       // Drag을 통한 이벤트 생성
       const type = event.dataTransfer.getData('application/reactflow');
       const img = event.dataTransfer.getData('data/imageurl');
+      const tags = event.dataTransfer.getData('data/tags');
       console.log('🌲Getting type ', type); // 🍎 drag start에서 가져온 type
       console.log('🌲Getting image ', img); // 🍎 drag start에서 가져온 image 
-
       //🥰 타입 확인 하기: 굳이 ? 
       if (typeof type === 'undefined' || !type) {
         return;
@@ -118,8 +111,9 @@ const Editingbox2 = () => {
         id: getNodeId(),
         type,
         position,
-        data: { label: `${type} node` , url: `${img}`},
+        data: { label: `${type}` , url: `${img}`, tags: `${tags}`},
       };
+
       //🌼 webrtc 전에 있는 코드, 개인 편집
       // setNodes((nds) => nds.concat(newNode)); 
       nodesMap.set(newNode.id, newNode);
@@ -157,7 +151,7 @@ const Editingbox2 = () => {
     </ReactFlow>
     </div>
     <Sidebar/>
-    <MenuBarR style={{ position: 'absolute', zIndex: 2147483647 }} />
+    <MenuBarR style={{ position: 'absolute', zIndex: 1000 }} />
     </>
   );
 };

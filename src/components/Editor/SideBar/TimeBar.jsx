@@ -13,8 +13,8 @@ function App() {
     const [end, endRef] = useState(null);
     
     return (
-        <div className='grid grid-rows-2 gap-4 container my-4'>
-            <div className='row1 hidden'>
+        <div className='grid gap-4 container my-4'>
+            <div className='row1'>
                 <Datepicker
                     controls={['calendar']}
                     select="range"
@@ -23,9 +23,8 @@ function App() {
                     calendarType="month"
                     pages={2}
                     touchUi={false}
+                    className='hidden'
                 />
-            </div>
-            <div className='row2'>
                 <div className="flex items-center justify-center">
                     <div className='col1 ml-6 '>
                         <Input

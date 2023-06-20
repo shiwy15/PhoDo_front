@@ -12,7 +12,9 @@ yarn add react-query
 yarn add @mui/material
 yarn add @emotion/react @emotion/styled
 npm install lodash
-@mui/icons-material
+npm install @mui/icons-material
+npm install tw-elements
+npm install -D tailwindcss postcss autoprefixer npx tailwindcss init -p
 
 //npm install @tanstack/react-query
 //npm install @tanstack/react-query-devtools
