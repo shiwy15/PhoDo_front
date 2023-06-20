@@ -60,6 +60,7 @@ const VoiceChat = () => {
 
     {/*🌿 User끼리 연결해주는 함수*/}
     function createPeerConnection(socketId) {
+      console.log('voice 연결 ')
       const peerConnection = new RTCPeerConnection({
         iceServers: [
           {
@@ -102,6 +103,7 @@ const VoiceChat = () => {
           socketRef.current.emit('offer', peerConnection.localDescription, socketId, nickname);
         }
       );
+      console.log('voice 연결 완료 ')
     }
 
     function handleOffer(socketId, offer) {
