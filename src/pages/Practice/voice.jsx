@@ -1,10 +1,10 @@
 import React from 'react'
-import VoiceChat from '../../components/Editor/voice/voice'
+import VoiceBar from '../../components/Editor/Voice/VoiceBar'
 
 function voice() {
   return (
     <div>
-      <VoiceChat />
+      <VoiceBar />
     </div>
   )
 }

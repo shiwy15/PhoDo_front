@@ -1,21 +1,38 @@
-npm install @tanstack/react-query
-npm install @tanstack/react-query-devtools
+//🙂진교 꺼 (많이 깔아서 죄송합니다.)
+//🍺http관련
+//npm install @tanstack/react-query
+//npm install @tanstack/react-query-devtools
 npm install react-router-dom
-yarn add styled-components
 yarn add axios
-npm install @heroicons/react
-npm install react-icons --save
-npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
+yarn add react-query
+
+//DB 및 통신 관련
 yarn global add json-server
 npm install --save-dev concurrently
-yarn add react-query
+npm install express
+npm install socket.io
+
+
+//🍺css 관련
+yarn add styled-components
+npm install @heroicons/react
+npm install react-icons --save
+npm install -D tailwindcss@latest postcss@latest autoprefixer@latest npx tailwindcss init -p
+npm install @mui/icons-material
 yarn add @mui/material
 yarn add @emotion/react @emotion/styled
-npm install lodash
-npm install @mui/icons-material
 npm install tw-elements
-npm install -D tailwindcss postcss autoprefixer npx tailwindcss init -p
+npm install socket.io-client
 
+//🍺달력 관련
+npm install -g @mobiscroll/cli
+mobiscroll config react
+
+//🍺경고창 해결용
+npm install --save-dev @babel/plugin-proposal-private-property-in-object
+
+
+// 호준이 꺼
 //npm install @tanstack/react-query
 //npm install @tanstack/react-query-devtools
 //npm install react-router-dom
