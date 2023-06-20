@@ -31,6 +31,11 @@ mobiscroll config react
 //🍺경고창 해결용
 npm install --save-dev @babel/plugin-proposal-private-property-in-object
 
+//⚠️모듈 정리 코드
+rm -rf node_modules
+rm package-lock.json yarn.lock
+npm cache clean -f
+npm install
 
 // 호준이 꺼
 //npm install @tanstack/react-query
