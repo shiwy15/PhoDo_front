@@ -15,6 +15,7 @@ import Practice3 from "./pages/Practice/Practice3.jsx"
 
 import { MainPage } from './pages/Main/Main.jsx'
 import Mypage from "./pages/Mypage/Mypage";
+import Myproject from "./pages/Myproject/Myproject";
 import { Routes, Route } from "react-router-dom"
 
 // import ForcedDirectedTree from "./pages/Editor/forcedTree.jsx"
@@ -40,6 +41,7 @@ function App() {
 
         {/* My page */}
         <Route path="/mypage" element={<Mypage />} />
+        <Route path="/myproject" element={<Myproject />} />
 
         {/* Main */}
         <Route path="/" element={<MainPage />} />
