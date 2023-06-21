@@ -40,7 +40,7 @@
         "zustand": "^4.3.8"
     },
     "scripts": {
-        "start": "concurrently \"react-scripts start\" \"y-websocket-server\"",
+        "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
