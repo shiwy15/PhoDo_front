@@ -3,9 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 //✉️소켓 통신용 import
 import io from 'socket.io-client';
 
-//💄css용 import
-import Typography from '@mui/material/Typography';
-
 const VoiceChat = () => {
   {/*🌿 user에게 전달받은 변수들을 저장하는 useRef, useState*/}
   const socketRef = useRef();
@@ -19,7 +16,7 @@ const VoiceChat = () => {
   useEffect(() => {
     console.log("check render")
     {/*🌿 클라이언트 측에서 Socket.IO를 사용하여 '3001'서버와 클라이언트 소켓 연결을 설정하는 부분 */}
-    socketRef.current = io("wss://phodo.store/ws:3001", { transports: ['websocket'] });  
+    socketRef.current = io("https://phodo.store/http:3001", { transports: ['websocket'] });  
     // socketRef.current = io("https://hyeontae.shop", { transports: ['websocket'] });  //socketRef에 현재 
 
     {/*🌿 연결이 안됐으면, 콘솔창에 에러 띄우기 */}
