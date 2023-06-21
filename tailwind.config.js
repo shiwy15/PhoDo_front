@@ -1,9 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{html,js}",
-    "./node_modules/tw-elements/dist/js/**/*.js"
+    "./src/**/*.{js,jsx,ts,tsx}",
   ],
-  plugins: [require("tw-elements/dist/plugin.cjs")],
-  darkMode: "class"
-};
+  theme: {
+    extend: {
+      zIndex: {
+        '1000': '1000',
+      }
+
+    },
+  },
+  plugins: [],
+}

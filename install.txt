@@ -15,7 +15,6 @@ npm install socket.io
 
 //🍺css 관련
 yarn add styled-components
-npm install @heroicons/react
 npm install react-icons --save
 npm install -D tailwindcss@latest postcss@latest autoprefixer@latest npx tailwindcss init -p
 npm install @mui/icons-material
@@ -23,6 +22,8 @@ yarn add @mui/material
 yarn add @emotion/react @emotion/styled
 npm install tw-elements
 npm install socket.io-client
+npm install --save-dev @types/tw-elements
+
 
 //🍺달력 관련
 npm install -g @mobiscroll/cli
