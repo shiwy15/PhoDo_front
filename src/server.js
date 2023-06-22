@@ -15,16 +15,38 @@ var fs = require('fs');
 var https = require('https');
 const app = express(); //socket-http용
 
-
 var options = {
-  key:fs.readFileSync('/certificate/key.pem'),
-  cert: fs.readFileSync('/certificate/cert.pem')
+  key:fs.readFileSync('../certificate/key.pem'),
+  cert: fs.readFileSync('../certificate/cert.pem')
 };
 
-var server = https.createServer(options, app);
-var io = require('socket.io')(server);
+// CORS 옵션 설정
+const corsOptions = {
+  origin: 'https://phodo.store', // 클라이언트 도메인을 명시적으로 지정하면 보안 상의 이유로 해당 도메인만 요청 허용 가능
+  methods: 'GET, POST',
+  allowedHeaders:  [
+    "Content-Type",
+    "Content-Length",
+    "Accept-Encoding",
+    "X-CSRF-Token",
+    "Authorization",
+    "accept",
+    "origin",
+    "Cache-Control",
+    "X-Requested-With"
+  ],  
+  credentials : true
+};
 
-const wsServer = SocketIO(server); //socket용
+app.use(cors(corsOptions))
+
+var server = https.createServer(options, app);
+// var io = require('socket.io')(server);
+
+const wsServer = SocketIO(server, {
+  cors : corsOptions
+}); //socket용
+
 
 
 /* ------------- ---------  위는 js 코드  ---  -------------------------- */
