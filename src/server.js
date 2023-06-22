@@ -1,13 +1,33 @@
-const express = require('express'); 
-const SocketIO = require("socket.io");
-const http = require("http");
+// const express = require('express'); 
+// const SocketIO = require("socket.io");
+// const http = require("http");
 
-const PORT = 3001;
+// const PORT = 3001;
+// const app = express(); //socket-http용
+
+// const httpServer = http.createServer(app); //socket용
+// const wsServer = SocketIO(httpServer); //socket용
+
+
+/* ------------- ---------  socket 코드  ---  -------------------------- */
+
+var fs = require('fs');
+var https = require('https');
 const app = express(); //socket-http용
 
-const httpServer = http.createServer(app); //socket용
-const wsServer = SocketIO(httpServer); //socket용
 
+var options = {
+  key:fs.readFileSync('/certificate/key.pem'),
+  cert: fs.readFileSync('/certificate/cert.pem')
+};
+
+var server = https.createServer(options, app);
+var io = require('socket.io')(server);
+
+const wsServer = SocketIO(server); //socket용
+
+
+/* ------------- ---------  위는 js 코드  ---  -------------------------- */
 
 /* ------------- ---------  socket 코드  ---  -------------------------- */
 // app.set("view engine", "pug"); //브라우저 보여주는 sorce코드 
