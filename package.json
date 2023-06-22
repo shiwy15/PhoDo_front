@@ -38,7 +38,7 @@
         "zustand": "^4.3.8"
     },
     "scripts": {
-        "start": "react-scripts start",
+        "start": "concurrently \"react-scripts start\" \"PORT=1234 npx y-websocket-server\"",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
