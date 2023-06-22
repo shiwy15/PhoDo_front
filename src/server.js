@@ -3,8 +3,8 @@ const SocketIO = require("socket.io");
 // const http = require("http");
 
 const PORT = 3001;
-// const app = express(); //socket-http용
-
+const app = express(); //socket-http용
+const cors = require('cors');
 // const httpServer = http.createServer(app); //socket용
 // const wsServer = SocketIO(httpServer); //socket용
 
@@ -13,7 +13,6 @@ const PORT = 3001;
 
 var fs = require('fs');
 var https = require('https');
-const app = express(); //socket-http용
 
 var options = {
   key:fs.readFileSync('../certificate/key.pem'),
