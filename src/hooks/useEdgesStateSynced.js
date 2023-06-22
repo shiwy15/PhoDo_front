@@ -15,17 +15,12 @@ import ydoc from '../components/Editor/ydoc';
 
 export const edgesMap = ydoc.getMap('edges');
 
-const initialEdges = 
-[
-  { id: 'e1-2', source: '1', target: '2' }
-];
-
 const isEdgeAddChange = (change) => change.type === 'add';
 const isEdgeRemoveChange = (change) => change.type === 'remove';
 const isEdgeResetChange = (change) => change.type === 'reset';
 
 function useNodesStateSynced() {
-  const [edges, setEdges] = useState(initialEdges);
+  const [edges, setEdges] = useState([]);
 
   const onEdgesChange = useCallback((changes) => {
     // 현재 바뀌는 edge들 
