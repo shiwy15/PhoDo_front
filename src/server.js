@@ -169,6 +169,6 @@ wsServer.on("connection", (socket) => {
 //   console.log(`Server started on port ${PORT}`);
 // });
 
-httpServer.listen(PORT,() => {
+server.listen(PORT,() => {
     console.log(`Server started on port ${PORT}`)});
 
