@@ -14,7 +14,7 @@ import useNodesStateSynced, { nodesMap } from '../../hooks/useNodesStateSynced';
 import useEdgesStateSynced from '../../hooks/useEdgesStateSynced';
 
 // import React 
-import React, { useEffect, useState, useRef , useCallback } from 'react';
+import React, { useState, useRef , useCallback } from 'react';
 import Sidebar from '../Editor/SideBar/Sidebar';
 import MenuBarR from "../../components/Editor/MenuBarR";
 import VoiceBar from "../../components/Editor/Voice/VoiceBar"
@@ -22,8 +22,8 @@ import VoiceBar from "../../components/Editor/Voice/VoiceBar"
 
 // import React Flow 
 import ReactFlow, {
-  ReactFlowProvider, useNodesState, useEdgesState, addEdge,useReactFlow, Panel, Controls,
-  MiniMap, NodeToolbar } from 'reactflow';
+  ReactFlowProvider, useReactFlow, Controls,
+  MiniMap} from 'reactflow';
 
 // import zustand
 import {create} from 'zustand';

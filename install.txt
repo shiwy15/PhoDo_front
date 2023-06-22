@@ -46,3 +46,4 @@ npm install
 //yarn add axios
 //npm install reactflow
 //yarn add tailwindcss
+//npm install react-icons --save
