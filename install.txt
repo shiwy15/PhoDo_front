@@ -23,6 +23,8 @@ yarn add @emotion/react @emotion/styled
 npm install tw-elements
 npm install socket.io-client
 npm install --save-dev @types/tw-elements
+yarn add react-tailwindcss-datepicker
+yarn add dayjs@1.11.6
 
 
 //🍺달력 관련
