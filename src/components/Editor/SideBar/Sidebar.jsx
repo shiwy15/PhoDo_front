@@ -96,24 +96,24 @@ export default () => {
         {/* 🌸 구분선 */}
         <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />
         {/* 🌸 이미지 모아볼 수 있는 미니 갤러리 */}
-         <ImageList cols={3} gap={6} sx={{ padding: '10px', height: '250px'}}>
-            {images && images.map((image, index) => (
-                <ImageListItem key={image.id} sx={{border: 'solid 1px white'}}>
-                    <img 
-                        src={image.thumbnailUrl}
-                        className="imgNode"
-                        loading="lazy"
-                        onDragStart={(event) => onDragStart(event, 'pix',image.url, Object.values(image.tags))}
-                        draggable
-                        alt="Gallery Item"
-                        style={{ height: '60px'}} />
-                            <span style={{ fontSize: '8px', padding:'2px'}}>
-                                {Object.values(image.tags).slice(0, 2).map((tag, index) => {
-                              return (index < Object.values(image.tags).length - 1 && index !== 1) ? `${tag}, ` : tag;
-                                })}
-                            </span>
-                </ImageListItem>
-            ))}    
+        <ImageList cols={3} gap={6} sx={{ padding: '10px', height: '250px'}}>
+          {images && images.map((image, index) => (
+            <ImageListItem key={image.id} sx={{border: 'solid 1px white'}}>
+              <img 
+                src={image.thumbnailUrl}
+                className="imgNode"
+                loading="lazy"
+                onDragStart={(event) => onDragStart(event, 'pix',image.url, Object.values(image.tags))}
+                draggable
+                alt="Gallery Item"
+                style={{ height: '60px'}} />
+              <span key={index} style={{ fontSize: '8px', padding:'2px'}}>
+                {Object.values(image.tags).slice(0, 2).map((tag, index) => {
+                return (index < Object.values(image.tags).length - 1 && index !== 1) ? `${tag}, ` : tag;
+                })}
+              </span>
+            </ImageListItem>
+          ))}    
         </ImageList>
         
         <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />

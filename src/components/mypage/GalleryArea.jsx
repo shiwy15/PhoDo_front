@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import 'tailwindcss/tailwind.css';
 import * as React from 'react';
 import { useState, useEffect } from 'react';
@@ -10,20 +9,6 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 //custom hook
 import useFormatDate from '../../hooks/useFormatDate';
-
-const GalleryContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    position: absolute;
-    left: 220px;
-    bottom:0px;
-    width: calc(100vw - 220px);
-    height: calc(100vh - 400px);
-    background-color: #F1E3E1;
-    border-top: solid 1px lightgray;
-    padding: 0 50px;
-`
 
 const fetchGallery = () => {
     return request({ url: 'api/gallery' });
@@ -76,7 +61,6 @@ const GalleryBox = () => {
     /* ---------------------------------------------------------------------------------- */
     return (
         <div>
-            <GalleryContainer>
             <div className='flex flex-wrap justify-center'> 보고싶은 사진의 tag를 선택하세요! </div>
                 <div className="button-box bg-purple-100 h-20 mb-2 rounded-lg shadow-lg flex flex-wrap justify-center items-center">
                     {buttons.map((button) => (
@@ -116,7 +100,6 @@ const GalleryBox = () => {
                         </ImageListItem>
                     ))}
                 </ImageList>
-            </GalleryContainer>
         </div>
     );
 };
