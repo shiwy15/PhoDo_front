@@ -40,7 +40,6 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 var server = https.createServer(options, app);
-// var io = require('socket.io')(server);
 
 const wsServer = SocketIO(server, {
   cors : corsOptions
