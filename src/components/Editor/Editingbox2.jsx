@@ -17,6 +17,7 @@ import useEdgesStateSynced from '../../hooks/useEdgesStateSynced';
 import React, { useState, useRef , useCallback } from 'react';
 import Sidebar from '../Editor/SideBar/Sidebar';
 import MenuBarR from "../../components/Editor/MenuBarR";
+import VoiceBar from "../../components/Editor/Voice/VoiceBar"
 
 
 // import React Flow 
@@ -151,7 +152,12 @@ const Editingbox2 = () => {
     </ReactFlow>
     </div>
     <Sidebar/>
-    <MenuBarR style={{ position: 'absolute', zIndex: 1000 }} />
+    <div style={{ position: 'absolute',left: '50px', top: '70px', zIndex: 100 }}>
+      <VoiceBar />
+    </div>
+    <div style={{ position: 'absolute', zIndex: 150 }}>
+      <MenuBarR />
+    </div>
     </>
   );
 };
