@@ -1,4 +1,4 @@
-# Phodo Front
+# Phodo Front 📷🗂️
 
 이 프로젝트는 사진 협업 툴입니다. front server는 react기반으로 되어 있으며 실시할 때 npm start로 하시면 됩니다!
 크게 두가지 기능이 있습니다. 
