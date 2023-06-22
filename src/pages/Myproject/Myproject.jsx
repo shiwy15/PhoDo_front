@@ -2,7 +2,7 @@ import * as React from 'react';
 
 //components
 import Header from "../../components/mypage/Header"
-import Sidebar from "../../components/mypage/Sidebar"
+import Sidebar from "../../components/mypage/SidebarL"
 import Projectenterbar from "../../components/myproject/Projectenterbar"
 
 function Myproject() {
