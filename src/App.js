@@ -47,6 +47,8 @@ function App() {
 
         {/* Main */}
         <Route path="/main" element={<MainPage />} />
+
+
       </Routes>
     </div>
   );
