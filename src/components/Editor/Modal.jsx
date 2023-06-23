@@ -10,7 +10,6 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import {useStore } from './Editingbox2';
 
-
 const Modal = () => {
     const [projectName, setProjectName] = useState('');
     const {setProjectId} =  useStore();
