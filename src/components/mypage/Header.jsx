@@ -11,8 +11,9 @@ export const Header = () => {
     <React.Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'space-between', backgroundColor:'white', width: '100vw', height: '60px' }}>
         <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+          <Link href="/Main">
           <img src="/name.png" alt="logo" className="h-10 w-auto" />
-
+          </Link>
           <Link href="/mypage" color="inherit" sx={{ ml: 2 }}>
             Mypage
           </Link>
@@ -26,9 +27,6 @@ export const Header = () => {
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <IconButton sx={{ ml: 1 }}>
             <LogoutIcon />
-          </IconButton>
-          <IconButton sx={{ ml: 1 }}>
-            <PhoneIcon />
           </IconButton>
           <Avatar variant="outlined" size="small" sx={{ ml: 1 }}>
             A
