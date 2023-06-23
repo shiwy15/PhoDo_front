@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Sidebar from '../Editor/SideBar/Sidebar';
 import MenuBarR from "../../components/Editor/MenuBarR";
-import VoiceBar from "../../components/Editor/Voice/VoiceBar";
+
 // 스타일 시트
 import 'reactflow/dist/style.css';
 import './index.css';
@@ -53,6 +53,8 @@ const Editingbox2 = () => {
   const ydoc = new Doc();
   console.log('ydoc created : ', ydoc)
 
+  let reconnectionAttempts = 0;
+  const MAX_RECONNECTION_ATTEMPTS = 5; // Set your limit
 
   const wsProvider = new WebsocketProvider(
     'wss://phodo.store/ws', // 🔥 요청을 보낼 웹소켓 서버
@@ -60,16 +62,29 @@ const Editingbox2 = () => {
     ydoc
   );
 
+  wsProvider.on('status', event => {
+    console.log(event);
+    console.log(event.status);
+    if (event.status === "disconnected") {
+      reconnectionAttempts++;
+      
+      if (reconnectionAttempts > MAX_RECONNECTION_ATTEMPTS) {
+        console.log("Max reconnection attempts reached");
+        wsProvider.disconnect(); // Disconnect the provider
+      }
+    } else if (event.status === "connected") {
+      reconnectionAttempts = 0; // Reset the counter on successful connection
+    }
+  })
+
+
   const nodesMap = ydoc.getMap('nodes');
   const edgesMap = ydoc.getMap('edges');
 
   const [edges, onEdgesChange, onConnect] = useEdgesStateSynced(ydoc);
   const [nodes, onNodesChange] = useNodesStateSynced(ydoc, edgesMap);
 
-  wsProvider.on('status', event => {
-    console.log(event)
-    console.log(event.status)
-  })
+
 
   /* * 
    * 🐬 아니셜라이징 세팅
@@ -159,7 +174,7 @@ const Editingbox2 = () => {
 
     <Sidebar/>
     <div style={{ position: 'absolute',left: '50px', top: '70px', zIndex: 100 }}>
-      <VoiceBar />
+      {/* <VoiceBar /> */}
     </div>
     <div style={{ position: 'absolute', zIndex: 150 }}>
       <MenuBarR />
