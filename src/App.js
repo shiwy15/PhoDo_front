@@ -27,7 +27,7 @@ function App() {
     <div className="App">
       <Routes>
         {/* login set */}
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgotpw" element={<Forgotpw />} />
         <Route path="/reset/:token" element={<Passwordchange />} />
@@ -46,7 +46,7 @@ function App() {
         <Route path="/myproject" element={<Myproject />} />
 
         {/* Main */}
-        <Route path="/" element={<MainPage />} />
+        <Route path="/main" element={<MainPage />} />
       </Routes>
     </div>
   );

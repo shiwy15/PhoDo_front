@@ -32,7 +32,7 @@ const postApply = (datas, url) => {
 
 const GalleryBox = () => {
     {/* 🌿 사용 변수들- tag btns 관련 */}
-    const buttonList = ['마케팅', '건설', '비즈니스', '화학', '에너지', '자재/장비', '운송', '과학', '컴퓨터', '재무', '통신', '직업/교육', '뉴스', '사회', '레퍼런스', '기타'];
+    const buttonList = ['마케팅', '건설/토목', '비즈니스', '화학', '에너지', '자재/장비', '운송', '과학', '컴퓨터', '재무', '통신', '직업/교육', '뉴스', '사회', '레퍼런스', '기타'];
     const [activeBtns, setActiveBtns] = useState({})
 
     {/* 🌿 갤러리에 렌더링 되는 데이터  */} 
@@ -45,7 +45,7 @@ const GalleryBox = () => {
     {/* 🌿 사용 변수들- 닐찌 입력 관련 */}  
     const [dates, setDates] = useState({ startDate: null, endDate: null }); 
 
-    {/* 🔴 사용 변수들- 중복선택 관련 , 사진 제거 관련*/}
+    {/* 🔴 사용 변수들- 중복선택 관련 , 사진 제거 관련 -> imgID기반 */}
     const [selectedImages, setSelectedImages] = useState([]);
     
     {/* 🌿 사용 변수들- 닐찌 입력 관련 함수 */}  
@@ -76,11 +76,10 @@ const GalleryBox = () => {
     {/* 🌿 post */}
     const mutation = useMutation(postApply, {
         onSuccess: (data) => {
-            setTargetImgData(data);
-            console.log('category post success', data);
+            console.log('post success', data);
         },
         onError: (error) => {
-            console.log('category post fail', error);
+            console.log('post fail', error);
         }
     });
 
@@ -89,6 +88,7 @@ const GalleryBox = () => {
         const datas = { tags : Object.keys(activeBtns), startDate: dates.startDate, endDate: dates.endDate};
         console.log('post sending:', datas);
         mutation.mutate(datas, 'api/galleryTags');
+        setTargetImgData(datas);
     };
 
     {/* 🌿 init 버튼 클릭 -> 변수들 초기화 하는 함수 */}
@@ -109,8 +109,31 @@ const GalleryBox = () => {
         });
     };
 
-    const deleteClick = () =>{
+    {/* ⚠️테스트 필요!⚠️ 🌿targetImgData에서 selectedImages에 있는 이미지 제외 후 남은 이미지 리스트를 반환하는 함수  */}
+    // const removeRender = () => {
+    // setTargetImgData((prevTargetImgData) => {
+    //     if (Array.isArray(prevTargetImgData)) {
+    //     const filteredData = prevTargetImgData.filter((image) => !selectedImages.includes(image._id));
+    //     console.log('Remaining images:', filteredData);
+    //     return filteredData;
+    //     } else {
+    //     console.log('prevTargetImgData is not an array:', prevTargetImgData);
+    //     return prevTargetImgData;
+    //     }
+    // });
+    // };
 
+    {/* 🌿삭제 버튼이 눌리면 실행되는 함수 - DB에 삭제 요청, 렌더링에서 빼기 */}
+    const deleteClick = () =>{
+        const datas = { id : Object.values(selectedImages)};
+        //무엇을 삭제할 건지 콘솔 확인
+        console.log('delete post sending:', datas);
+        //backend에 DB 데이터 삭제 요청
+        mutation.mutate(datas, '/api/galleryDelete');
+        //삭제요청 이미지를 갤러리 렌더링에서 제외
+        // const updatedData = removeRender();
+        // setTargetImgData(updatedData);
+        setTargetImgData(initData);
     }
 
     {/* 🌿 변수들이 변하면 재렌더링을 위한 hook*/}
@@ -184,13 +207,13 @@ const GalleryBox = () => {
             role="group">
                 <button
                 type="button"
-                onClick={() => tagBtnClick(buttonList[9])}
+                onClick={() => tagBtnClick(buttonList[8])}
                 className="button-className min-w-fit inline-block font-extrabold rounded-l text-inherit bg-neutral-50 px-6 pb-2 pt-2.5 text-lg uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
                 data-te-ripple-init
                 data-te-ripple-color="light">
-                {buttonList[9]}
+                {buttonList[8]}
                 </button>
-                {buttonList.slice(10, 16).map((btn) => (
+                {buttonList.slice(9, 15).map((btn) => (
                 <button
                     key={btn}
                     type="button"
@@ -203,11 +226,11 @@ const GalleryBox = () => {
                 ))}
                 <button
                     type="button"
-                    onClick={() => tagBtnClick(buttonList[17])}
+                    onClick={() => tagBtnClick(buttonList[15])}
                     className="button-className min-w-fit inline-block text-inherit rounded-r bg-neutral-50 px-6 pb-2 pt-2.5 text-lg uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
                     data-te-ripple-init
                     data-te-ripple-color="light">
-                    {buttonList[17]}
+                    {buttonList[15]}
                 </button>
             </div>
         </div>
