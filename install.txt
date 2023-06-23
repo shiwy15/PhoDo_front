@@ -25,11 +25,8 @@ npm install socket.io-client
 npm install --save-dev @types/tw-elements
 yarn add react-tailwindcss-datepicker
 yarn add dayjs@1.11.6
+yarn add react-tailwindcss-datepicker
 
-
-//🍺달력 관련
-npm install -g @mobiscroll/cli
-mobiscroll config react
 
 //🍺경고창 해결용
 npm install --save-dev @babel/plugin-proposal-private-property-in-object
