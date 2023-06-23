@@ -42,7 +42,9 @@ const ImageUpload = () => {
   {/* 🌿 upload버튼 함수 : mutation실행 */}
   const handleUpload = () => {
     const formData = new FormData();
-    formData.append('image', imgfiles);
+    imgfiles.forEach((file) => {
+      formData.append('image', file); // 각 파일을 FormData에 추가
+    });
     mutation.mutate(formData);
   };
 
