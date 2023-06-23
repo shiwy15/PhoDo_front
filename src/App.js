@@ -46,7 +46,8 @@ function App() {
         <Route path="/myproject" element={<Myproject />} />
 
         {/* Main */}
-        <Route path="/Main" element={<MainPage />} />
+        <Route path="/main" element={<MainPage />} />
+
 
       </Routes>
     </div>
