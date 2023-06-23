@@ -2,25 +2,19 @@ import { useCallback, useEffect, useState } from 'react';
 import {
   applyNodeChanges,
   getConnectedEdges,
-  // Node,
-  // NodeAddChange,
-  // NodeChange,
-  // NodeResetChange,
-  // OnNodesChange,
-  // useNodes,
 } from 'reactflow';
 
-import ydoc from '../components/Editor/ydoc';
-import { edgesMap } from './useEdgesStateSynced';
 
 //🌵 NodesMap은 Nodes에 해당하는 교체를 다 여기서 해결함
-export const nodesMap = ydoc.getMap('nodes')
+
 
 const isNodeAddChange = (change) => change.type === 'add';
 const isNodeResetChange = (change) => change.type === 'reset';
 
-function useNodesStateSynced() {
-  const [nodes, setNodes] = useState([]);
+export function useNodesStateSynced(ydoc, edgesMap) {
+  const nodesMap = ydoc.getMap('nodes');
+  console.log('nodes state🔥: ', ydoc)
+     const [nodes, setNodes] = useState([]);
 
   //🌸 콜백함수 array의 교체 된것을 하나하나 바꿔줌 
   const onNodesChanges = useCallback((changes) => {
