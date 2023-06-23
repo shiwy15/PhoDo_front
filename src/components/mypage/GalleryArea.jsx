@@ -35,12 +35,13 @@ const GalleryBox = () => {
     {/* 🌿 사용 변수들- tag btns 관련 */}
     const buttonList = ['마케팅', '건설', '비즈니스', '화학', '에너지', '자재/장비', '운송', '과학', '컴퓨터', '재무', '통신', '직업/교육', '뉴스', '사회', '레퍼런스', '기타'];
     const [activeBtns, setActiveBtns] = useState({})
+
+    {/* 🌿 갤러리에 렌더링 되는 데이터  */} 
+    const [targetImgData, setTargetImgData] = useState('')
+
     
     {/* 🌿 사용 변수들- 갤러리 입력 관련 */}   
     const formatData = useFormatDate();
-
-    {/* 🌿 갤러리에 렌더링 되는 데이터  */} 
-    const [targetImgData, setTargetImgData] = useState()
 
     {/* 🌿 사용 변수들- 닐찌 입력 관련 */}  
     const [dates, setDates] = useState({ startDate: null, endDate: null }); 
@@ -70,10 +71,11 @@ const GalleryBox = () => {
     {/* 🌿 get */}
     const { data: initData, isLoading, isError, error } = useQuery('imagesQuery', fetchGallery, {
         onSuccess: (data) => {
-            setTargetImgData(initData);
+            setTargetImgData(data);
             console.log('from /gallery', data);
         }
     });
+
 
     {/* 🌿 post */}
     const mutation = useMutation(postApply, {
@@ -101,23 +103,19 @@ const GalleryBox = () => {
     }
 
     {/* 🌿사진 클릭 시 중복 선택 실행되는 함수 */}
-    const selectImgsClick = (img) => {
+    const selectImgsClick = (img_id) => {
         setSelectImg((prevState) => {
-        const newState = { ...prevState, [img]: !prevState[img] };
+        const newState = { ...prevState, [img_id]: !prevState[img_id] };
         const selectImgs = Object.keys(newState).filter((key) => newState[key]);
+        console.log('selectImgs:', selectImgs.value)
         return selectImgs;
         });
     };
 
-    {/* 🌿 처음 갤러리 렌더링을 위한 hook*/}
-    useEffect(()=> {
-        setTargetImgData(initData);
-    })
-
     {/* 🌿 변수들이 변하면 재렌더링을 위한 hook*/}
     useEffect(() => {
         initTE({ Ripple, Input });
-    },[activeBtns, dates, targetImgData, selectImg]);
+    },[targetImgData, selectImg]);
 
     if(isLoading) {return <h2>Loading...</h2>}
     if(isError) {return <h2>{error.message}</h2>}
@@ -213,7 +211,7 @@ const GalleryBox = () => {
         </div>
         {/*🌿 태그 버튼 결과값 창 */}
         <div className='flex'>
-            <p className='min-w-fit ml-4 my-2 border-b-1 tracking-tight text-md text-purple-800 font-semibold'>선택된 태그 :</p>
+            <p className='min-w-fit ml-4 my-2 border-b-1 tracking-tight text-md text-purple-800 font-semibold'>선택된 카테고리 :</p>
             {Object.entries(activeBtns).filter(([key, value]) => value === true).map(([key]) => (
                 <p key={key} className='overflow-x-auto min-w-fit mx-1 ml-4 my-2 border-b-1 tracking-tight text-md text-purple-800 font-semibold'>
                     {key}
@@ -256,16 +254,16 @@ const GalleryBox = () => {
         <Divider />
         </div>
         {/*🌿이미지 갤러리 창*/ }
-        <div class="container mx-auto px-5 py-2 lg:px-16 lg:pt-12">
-            <ImageList sx={{ width: '100%', height: 450, gap: 16 }} cols={4} rowHeight={164}>
+        <div className="container mx-auto px-5 py-2 lg:px-16 lg:pt-12">
+            <ImageList sx={{ width: '100%', height: 450, gap: 16 }} cols={3} rowHeight={164}>
                 <React.Fragment>
                 {targetImgData?.data?.map((image) => (
-                    <ImageListItem key={image._id} >
+                    <ImageListItem key={image._id} onClick={() => selectImgsClick(image._id)}>
                     <img
+                        key={image._id}
                         src={`${image.url}?w=248&fit=crop&auto=format`}
                         alt='loading...'
                         loading="lazy"
-                        onClick={() => selectImgsClick(image)}
                           style={{
                             height: '100%',
                             width: '100%',
@@ -297,7 +295,7 @@ const GalleryBox = () => {
                 type="button"
                 data-te-ripple-init
                 data-te-ripple-color="light"
-                onClick={deleteImg}
+                onClick={()=>deleteImg()}
                 className="mx-4 inline-block bg-purple-700 rounded bg-primary px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
                 <span className="flex items-center">
                     delete
