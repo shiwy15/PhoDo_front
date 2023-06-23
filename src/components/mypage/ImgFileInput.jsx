@@ -78,7 +78,8 @@ const ImageUpload = () => {
       ))}
     </div>
     {/* 🌿 업로드 버튼 */}
-    <div className="flex flex-col mt-6 space-x-8 items-center">
+    <div className="flex flex-col mt-1 text-xs items-center">
+      <p className='mb-1'> 500MB이하 이미지만 됩니다 🙂</p>
       <button
         type="button"
         data-te-ripple-init

@@ -4,6 +4,8 @@ import { useQuery } from 'react-query'
 // //서버요청용
 import { request } from "../../utils/axios-utils"
 
+//css용
+import { Divider } from '@mui/material';
 
 //서버용 코드
 const fetchLikePhodo = () => {
@@ -35,28 +37,31 @@ const Sidebar = () => {
             data-te-sidenav-hidden="false"
             data-te-sidenav-position="absolute">
 
-        <div className="p-4">
-            <div className=" text-lg mb-4">My image</div>
-                <div>
-                    {likePhodo?.data?.map(like => {
-                        return (
-                            <div key={like.id}>
-                                <h2>
-                                    {like.id} : {like.name}
-                                </h2>
-                            </div>
-                        )
-                    })}
-                </div>
-        </div>
-
-        <hr className="border-gray-700" />
+            <div className="p-4">
+                <div className=" text-lg mb-4">My image</div>
+                    <div>
+                        {likePhodo?.data?.map(like => {
+                            return (
+                                <div key={like.id}>
+                                    <h2>
+                                        {like.id} : {like.name}
+                                    </h2>
+                                </div>
+                            )
+                        })}
+                    </div>
+            </div>
+            <div className='mx-4'>
+            <Divider />
+            </div>
         <div className="p-4">
             <div className=" text-lg mb-4">Project List</div>
-        </div>
-        <hr className="border-gray-700" />
-        <div className="p-4">
-            <div className="text-lg mb-4">My research</div>
+            </div>
+            <div className='mx-4'>
+                <Divider />
+            </div>
+            <div className="p-4">
+                <div className="text-lg mb-4">My research</div>
         </div>
                 
         </div>
