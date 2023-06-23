@@ -8,34 +8,38 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import {useStore } from './Editingbox2';
+import {request} from '../../utils/axios-utils'
+import { useNavigate } from 'react-router-dom';
 
-const Modal = () => {
-    const [projectName, setProjectName] = useState('');
-    const {setProjectId} =  useStore();
+
+const postProject = (data) => {
+    return request({url: 'project', method: 'POST', data })
+  }
+
+export const Modal = () => {
+    const navigate = useNavigate();
     const [showModal, setShowModal] = useState(true);
+    const [projectName, setProjectName] = useState("");
+    const [projectId, setProjectId] = useState(null);
 
-    useEffect(() => {
-        setShowModal(true);
-    }, []);
-
-    const handleInputChange = (e) => {
-        setProjectName(e.target.value);
+    
+    const handleProjectNameChange = (event) => {
+        setProjectName(event.target.value);
     };
 
     const handleSend = async () => {
         try {
-          console.log({ name: projectName });
-          const response = await axios.post(`${API.NPROJECT}`, { name: projectName });
-          console.log(response.data);
-          // Store the id returned by the response
-          setProjectId(response.data.id);
-          // Close the modal
-          setShowModal(false);
-        } catch (err) {
-          console.error(err);
+          const response = await postProject({name: projectName});
+          console.log(response);
+          const id = response.data.id;
+          setProjectId(id);
+          console.log(`Project created with ID: ${id}`);
+          navigate(`/newproject/${id}`);
+        } catch (error) {
+          console.error(error);
         }
       };
+    
 
     return (
         <Dialog
@@ -57,19 +61,19 @@ const Modal = () => {
                     type="text"
                     fullWidth
                     value={projectName}
-                    onChange={handleInputChange}
+                    onChange={handleProjectNameChange}
                 />
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => setShowModal(false)} color="primary">
                     Cancel
                 </Button>
-                <Button onClick={handleSend} color="primary" autoFocus>
+                <Button 
+                onClick={handleSend}
+                 color="primary" autoFocus>
                     Send
                 </Button>
             </DialogActions>
         </Dialog>
     );
-};
-
-export default Modal;
+}

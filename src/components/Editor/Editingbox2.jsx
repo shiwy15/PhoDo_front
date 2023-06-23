@@ -6,9 +6,6 @@ import './index.css';
 import TextNode from './Node/TextNode';
 import PictureNode from './Node/PictureNode.js';
 
-// import Component
-import Modal from './Modal';
-
 // 🍀 WebRTC setting
 import useNodesStateSynced from '../../hooks/useNodesStateSynced';
 import useEdgesStateSynced from '../../hooks/useEdgesStateSynced';
@@ -19,8 +16,6 @@ import Sidebar from '../Editor/SideBar/Sidebar';
 import MenuBarR from "../../components/Editor/MenuBarR";
 import VoiceBar from "../../components/Editor/Voice/VoiceBar"
 
-import {getDoc} from '../Editor/ydoc'
-
 // import React Flow 
 import ReactFlow, {
   ReactFlowProvider, useReactFlow, Controls,
@@ -28,6 +23,8 @@ import ReactFlow, {
 
 // import zustand
 import {create} from 'zustand';
+import { Doc } from 'yjs';
+import { WebsocketProvider } from 'y-websocket';
 
 // define the store
 export const useStore = create(set => ({
@@ -40,6 +37,7 @@ const proOptions = {
   account: 'paid-pro',
   hideAttribution: true,
 };
+const ydocs = new Map();
 
 const flowKey = 'example-flow';
 const nodeTypes = {TextNode: TextNode, 
@@ -53,31 +51,46 @@ const fitViewOptions = {
    padding: 3,
  };
 
+
+
+const getDoc = (room) => {
+  if (!ydocs.has(room)) {
+    const ydoc = new Doc();
+    const wsProviderURL = `wss://phodo.store/ws`;
+    console.log('Attempting to connect to server')
+
+    const wsProvider = new WebsocketProvider(
+        'wss://phodo.store/ws',
+        room,
+        ydoc
+    );
+    
+    wsProvider.on('status', event => {
+        console.log(event)
+        console.log(event.status)
+    })
+
+    ydocs.set(room, { ydoc, nodesMap: ydoc.getMap('nodes'), edgesMap: ydoc.getMap('edges') });
+}
+
+  return ydocs.get(room);
+}
+
+
 const Editingbox2 = () => {
   const {projectId} = useStore();
-
   const [nodesMap, setNodesMap] = useState(null);
   const [edgesMap, setEdgesMap] = useState(null);
 
   useEffect(() => {
     if(projectId) {
-      console.log('Project Id: ', projectId);
+      console.log(' 🍀Project Id in Editing Box2: ', projectId);
       const { ydoc, nodesMap, edgesMap } = getDoc(projectId);
       setNodesMap(nodesMap);
       setEdgesMap(edgesMap);
       console.log("ydoc: ", ydoc, "nodesMap: ", nodesMap, "edgesMap: ", edgesMap);
     }
   }, [projectId]);
-
-
-  useEffect(() => {
-    if(projectId){
-      console.log("Project Id: ", projectId); // Use projectId as per your requirement
-      const { ydoc, nodesMap, edgesMap } = getDoc(projectId); // Use getDoc function with projectId
-      console.log("ydoc: ", ydoc, "nodesMap: ", nodesMap, "edgesMap: ", edgesMap); // Use ydoc, nodesMap, edgesMap as per your requirement
-    }
-}, [projectId]);
-
    
   const reactFlowWrapper = useRef(null); // 큰 react flow wrapper
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
@@ -174,7 +187,6 @@ const Editingbox2 = () => {
 
 export default () => (
   <>
-  <Modal/>
   <ReactFlowProvider>
     <Editingbox2 />
   </ReactFlowProvider>

@@ -8,6 +8,7 @@ import Passwordchange from "./pages/Login/Passwordchange.jsx";
 
 import Editor2 from "./pages/Editor/Editor2.jsx"
 import Editor4 from "./pages/Editor/Editor4.jsx"
+import {Modal} from "./pages/Modal/Modal.jsx"
 
 //react query practice set
 import Practice from "./pages/Practice/Practice.jsx"
@@ -33,7 +34,8 @@ function App() {
         <Route path="/reset/:token" element={<Passwordchange />} />
 
         {/* editor set */}
-        <Route path="/newproject" element={<Editor2 />} />
+        <Route path="/modal" element={<Modal />} />
+        <Route path="/newproject/:projectId" element={<Editor2 />} />
         <Route path="/existingproject" element={<Editor4 />} />
 
         {/* react query sample */}

@@ -63,7 +63,7 @@ const MainFeaturedPost =() => {
                 </React.Fragment>
             ))}
             </Typography>
-            <Button variant="outlined" href="/newproject" sx={{color: 'white', borderColor: 'white', borderRadius: '50px'}}>
+            <Button variant="outlined" href="/modal" sx={{color: 'white', borderColor: 'white', borderRadius: '50px'}}>
             {post.linkText}
             </Button>
 
