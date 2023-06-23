@@ -12,16 +12,16 @@ const ydoc = new Doc();
 //     signaling : ['ws://localhost:3000/newproject']
 // });
 
-const wsProvider = new WebsocketProvider(
-    // 'ws://13.125.210.252:1234', //🔥 hojun ec2 setting
-    'wss://phodo.store/ws', //🔥 jinkyo ec2 setting
-    'Hotels',
-    ydoc
-);
+// const wsProvider = new WebsocketProvider(
+//     // 'ws://13.125.210.252:1234', //🔥 hojun ec2 setting
+//     'wss://phodo.store/ws', //🔥 jinkyo ec2 setting
+//     'Hotels',
+//     ydoc
+// );
 
-wsProvider.on('status', event => {
-    console.log(event)
-    console.log(event.status)
-})
+// wsProvider.on('status', event => {
+//     console.log(event)
+//     console.log(event.status)
+// })
 
 export default ydoc;
