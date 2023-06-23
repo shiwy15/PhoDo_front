@@ -38,11 +38,18 @@ const GalleryBox = () => {
     
     {/* 🌿 사용 변수들- 갤러리 입력 관련 */}   
     const formatData = useFormatDate();
+
     {/* 🌿 갤러리에 렌더링 되는 데이터  */} 
     const [targetImgData, setTargetImgData] = useState()
 
     {/* 🌿 사용 변수들- 닐찌 입력 관련 */}  
     const [dates, setDates] = useState({ startDate: null, endDate: null }); 
+
+    {/* 🔴 사용 변수들- 이미지 삭제요청관련 */}
+    const [deleteImg, setDeleteImg] = useState({})
+
+    {/* 🔴 사용 변수들- 중복선택 관련 */}
+    const [selectImg, setSelectImg] = useState({})
     
     {/* 🌿 사용 변수들- 닐찌 입력 관련 함수 */}  
     const handleValueChange = (newValue) => {
@@ -93,6 +100,15 @@ const GalleryBox = () => {
         setTargetImgData(initData)
     }
 
+    {/* 🌿사진 클릭 시 중복 선택 실행되는 함수 */}
+    const selectImgsClick = (img) => {
+        setSelectImg((prevState) => {
+        const newState = { ...prevState, [img]: !prevState[img] };
+        const selectImgs = Object.keys(newState).filter((key) => newState[key]);
+        return selectImgs;
+        });
+    };
+
     {/* 🌿 처음 갤러리 렌더링을 위한 hook*/}
     useEffect(()=> {
         setTargetImgData(initData);
@@ -101,7 +117,7 @@ const GalleryBox = () => {
     {/* 🌿 변수들이 변하면 재렌더링을 위한 hook*/}
     useEffect(() => {
         initTE({ Ripple, Input });
-    },[activeBtns, dates, targetImgData]);
+    },[activeBtns, dates, targetImgData, selectImg]);
 
     if(isLoading) {return <h2>Loading...</h2>}
     if(isError) {return <h2>{error.message}</h2>}
@@ -130,7 +146,7 @@ const GalleryBox = () => {
         {/* 🌿 태그 버튼 mapping 구간1 */}
         <div className="mx-4 mt-8 my-4 flex items-center justify-center">
             <div
-            className=" overflow-x-auto min-w-fit inline-flex font-extrabold text-purple-800 rounded-md shadow-[0_4px_9px_-4px_#cbcbcb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(251,251,251,0.3)] dark:hover:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)] dark:focus:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)] dark:active:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)]"
+            className="overflow-x-auto min-w-fit inline-flex font-extrabold text-purple-800 rounded-md shadow-[0_4px_9px_-4px_#cbcbcb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(251,251,251,0.3)] dark:hover:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)] dark:focus:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)] dark:active:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)]"
             role="group">
                 <button
                     type="button"
@@ -153,6 +169,7 @@ const GalleryBox = () => {
                 ))}
                 <button
                     type="button"
+                    onClick={() => tagBtnClick(buttonList[7])}
                     className="inline-block min-w-fit text-inherit rounded-r bg-neutral-50 px-6 pb-2 pt-2.5 text-lg uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
                     data-te-ripple-init
                     data-te-ripple-color="light">
@@ -240,14 +257,21 @@ const GalleryBox = () => {
         </div>
         {/*🌿이미지 갤러리 창*/ }
         <div class="container mx-auto px-5 py-2 lg:px-16 lg:pt-12">
-            <ImageList sx={{ width: '100%', height: 450, gap: 16 }} cols={4} rowHeight={180}>
+            <ImageList sx={{ width: '100%', height: 450, gap: 16 }} cols={4} rowHeight={164}>
+                <React.Fragment>
                 {targetImgData?.data?.map((image) => (
-                    <ImageListItem key={image._id}>
+                    <ImageListItem key={image._id} >
                     <img
                         src={`${image.url}?w=248&fit=crop&auto=format`}
                         alt='loading...'
                         loading="lazy"
-                        style={{ height: '100%', width: '100%', objectFit: 'cover' }}
+                        onClick={() => selectImgsClick(image)}
+                          style={{
+                            height: '100%',
+                            width: '100%',
+                            objectFit: 'cover',
+                            opacity: selectImg[image] ? '0.5' : '1',
+                            transition: 'opacity 0.3s ease-in-out', }}
                     />
                     <ImageListItemBar
                         title={
@@ -264,7 +288,21 @@ const GalleryBox = () => {
                     />
                     </ImageListItem>
                 ))}
+                </React.Fragment>
             </ImageList>
+        </div>
+        {/*🌿이미지 삭제 버튼 */ }
+        <div className='flex justify-end mr-8 mb-2'>
+            <button
+                type="button"
+                data-te-ripple-init
+                data-te-ripple-color="light"
+                onClick={deleteImg}
+                className="mx-4 inline-block bg-purple-700 rounded bg-primary px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+                <span className="flex items-center">
+                    delete
+                </span>
+            </button>
         </div>
     </div>
 
