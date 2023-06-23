@@ -1,50 +1,40 @@
-// import style sheets
-import 'reactflow/dist/style.css';
-
-import './index.css';
-// import Node Types
-import TextNode from './Node/TextNode';
-import PictureNode from './Node/PictureNode.js';
-
-// 🍀 WebRTC setting
-import useNodesStateSynced from '../../hooks/useNodesStateSynced';
-import useEdgesStateSynced from '../../hooks/useEdgesStateSynced';
-
-// import React 
+// 컴포넌트
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Sidebar from '../Editor/SideBar/Sidebar';
 import MenuBarR from "../../components/Editor/MenuBarR";
-import VoiceBar from "../../components/Editor/Voice/VoiceBar"
-
-// import React Flow 
-import ReactFlow, {
-  ReactFlowProvider, useReactFlow, Controls,
-  MiniMap} from 'reactflow';
-
-// import zustand
-import {create} from 'zustand';
+import VoiceBar from "../../components/Editor/Voice/VoiceBar";
+// 스타일 시트
+import 'reactflow/dist/style.css';
+import './index.css';
+// 노드 타입
+import TextNode from './Node/TextNode';
+import PictureNode from './Node/PictureNode.js';
+// 리액트 플로우 노드 
+import ReactFlow, { ReactFlowProvider, useReactFlow, Controls, MiniMap} from 'reactflow';
 import { Doc } from 'yjs';
 import { WebsocketProvider } from 'y-websocket';
 
-// define the store
-export const useStore = create(set => ({
-  projectId: null,
-  setProjectId: (id) => set({ projectId: id }),
-}));
+// 🍀 WebRTC setting
+import { useNodesStateSynced } from '../../hooks/useNodesStateSynced';
+import { useEdgesStateSynced } from '../../hooks/useEdgesStateSynced';
 
-//🐬 웹 알티시 테스팅
+
+import { useParams } from "react-router-dom";
+
+
+//🐬 과금버전 세팅
 const proOptions = {
   account: 'paid-pro',
   hideAttribution: true,
 };
-const ydocs = new Map();
 
-const flowKey = 'example-flow';
-const nodeTypes = {TextNode: TextNode, 
-                  pix: PictureNode,
-                }
+//🐬 노드 타입 세팅
+const nodeTypes = {
+  TextNode: TextNode, 
+  pix: PictureNode
+};
 
-// 적어도 100개는 만들지 않을거 아니야 ~ 
+//🐬 노드 아이디 세팅
 let id = 100; 
 const getNodeId = () => `${id++}`;
 const fitViewOptions = {
@@ -52,53 +42,45 @@ const fitViewOptions = {
  };
 
 
-
-const getDoc = (room) => {
-  if (!ydocs.has(room)) {
-    const ydoc = new Doc();
-    const wsProviderURL = `wss://phodo.store/ws`;
-    console.log('Attempting to connect to server')
-
-    const wsProvider = new WebsocketProvider(
-        'wss://phodo.store/ws',
-        room,
-        ydoc
-    );
-    
-    wsProvider.on('status', event => {
-        console.log(event)
-        console.log(event.status)
-    })
-
-    ydocs.set(room, { ydoc, nodesMap: ydoc.getMap('nodes'), edgesMap: ydoc.getMap('edges') });
-}
-
-  return ydocs.get(room);
-}
-
-
 const Editingbox2 = () => {
-  const {projectId} = useStore();
-  const [nodesMap, setNodesMap] = useState(null);
-  const [edgesMap, setEdgesMap] = useState(null);
+  const {projectId} = useParams();
+  /* * 
+   * 🐬 Ydoc 세팅 
+   * */
+  
+  console.log('projectId : ', projectId)
+  // 🐬 ydocument 생성
+  const ydoc = new Doc();
+  console.log('ydoc created : ', ydoc)
 
-  useEffect(() => {
-    if(projectId) {
-      console.log(' 🍀Project Id in Editing Box2: ', projectId);
-      const { ydoc, nodesMap, edgesMap } = getDoc(projectId);
-      setNodesMap(nodesMap);
-      setEdgesMap(edgesMap);
-      console.log("ydoc: ", ydoc, "nodesMap: ", nodesMap, "edgesMap: ", edgesMap);
-    }
-  }, [projectId]);
-   
+
+  const wsProvider = new WebsocketProvider(
+    'wss://phodo.store/ws', // 🔥 요청을 보낼 웹소켓 서버
+    projectId, // 🔥 프로젝트 아이디
+    ydoc
+  );
+
+  const nodesMap = ydoc.getMap('nodes');
+  const edgesMap = ydoc.getMap('edges');
+
+  const [edges, onEdgesChange, onConnect] = useEdgesStateSynced(ydoc);
+  const [nodes, onNodesChange] = useNodesStateSynced(ydoc, edgesMap);
+
+  wsProvider.on('status', event => {
+    console.log(event)
+    console.log(event.status)
+  })
+
+  /* * 
+   * 🐬 아니셜라이징 세팅
+   * */
+  
+
   const reactFlowWrapper = useRef(null); // 큰 react flow wrapper
-  const [reactFlowInstance, setReactFlowInstance] = useState(null);
   
   //🍀 webrtc 세팅
-  const [nodes, onNodesChange] = useNodesStateSynced();
-  const [edges, onEdgesChange, onConnect] = useEdgesStateSynced();
-  const { project, setViewport } = useReactFlow();
+  
+  const { project } = useReactFlow();
 
   // 🍀🌼 기존에 드래그와 동일, 근데 기존은 그냥 컴포넌트 밖에다 세팅이 되어있음
   const onDragOver = useCallback((event) => {
@@ -174,6 +156,7 @@ const Editingbox2 = () => {
 
     </ReactFlow>
     </div>
+
     <Sidebar/>
     <div style={{ position: 'absolute',left: '50px', top: '70px', zIndex: 100 }}>
       <VoiceBar />
