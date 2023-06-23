@@ -27,14 +27,14 @@ const Signupbox = () => {
             name,
             email,
             password
-        }).then(res => {
+        }).then((res) => {
             if (res.status === 200) {
                 setFormData({ ...formData, error: '', success: true });
-                navigate('/login');
-            }
-        }).catch(err => {
-            if (err.response) {
-                setFormData({ ...formData, error: err.response.data.error, success: false });
+                navigate('/');
+            } 
+        }).catch((err) => {
+            if (err.response && err.response.status === 400) {
+                setFormData({ ...formData, error: '이미 존재하는 이메일입니다.', success: false });
             } else {
                 setFormData({ ...formData, error: "An error occurred", success: false });
             }
@@ -99,9 +99,9 @@ const Signupbox = () => {
                 {error && <div className="text-red-500 mb-2 text-center">{error}</div>}
                 <p className="mt-8 text-xs font-light text-center text-gray-700">
                     {" "}
-                    Back to login page{" "}
+                    Back to {" "}
                     <a
-                        href="/login"
+                        href="/"
                         className="font-medium text-purple-600 hover:underline"
                     >
                         login page 
