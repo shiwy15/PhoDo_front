@@ -24,32 +24,29 @@ import { Divider } from '@mui/material';
 //🌿custom function
 const fetchGallery = () => {return request({ url: 'api/gallery' });}
 
-const postApply = (datas) => {
+const postApply = (datas, url) => {
     datas = JSON.stringify(datas)
     console.log('datas', datas)
-    return request({ url: 'api/galleryTags', method: 'POST', data: datas, headers: { 'Content-Type': 'application/json' } });
+    return request({ url:url , method: 'POST', data: datas, headers: { 'Content-Type': 'application/json' } });
 }
-
 
 const GalleryBox = () => {
     {/* 🌿 사용 변수들- tag btns 관련 */}
-    const buttonList = ['마케팅', '건설', '비즈니스', '화학', '에너지', '자재/장비', '운송', '과학', '컴퓨터', '재무', '통신', '직업/교육', '뉴스', '사회', '레퍼런스', '기타'];
+    const buttonList = ['마케팅', '건설/토목', '비즈니스', '화학', '에너지', '자재/장비', '운송', '과학', '컴퓨터', '재무', '통신', '직업/교육', '뉴스', '사회', '레퍼런스', '기타'];
     const [activeBtns, setActiveBtns] = useState({})
+
+    {/* 🌿 갤러리에 렌더링 되는 데이터  */} 
+    const [targetImgData, setTargetImgData] = useState('')
+
     
     {/* 🌿 사용 변수들- 갤러리 입력 관련 */}   
     const formatData = useFormatDate();
 
-    {/* 🌿 갤러리에 렌더링 되는 데이터  */} 
-    const [targetImgData, setTargetImgData] = useState()
-
     {/* 🌿 사용 변수들- 닐찌 입력 관련 */}  
     const [dates, setDates] = useState({ startDate: null, endDate: null }); 
 
-    {/* 🔴 사용 변수들- 이미지 삭제요청관련 */}
-    const [deleteImg, setDeleteImg] = useState({})
-
-    {/* 🔴 사용 변수들- 중복선택 관련 */}
-    const [selectImg, setSelectImg] = useState({})
+    {/* 🔴 사용 변수들- 중복선택 관련 , 사진 제거 관련 -> imgID기반 */}
+    const [selectedImages, setSelectedImages] = useState([]);
     
     {/* 🌿 사용 변수들- 닐찌 입력 관련 함수 */}  
     const handleValueChange = (newValue) => {
@@ -70,19 +67,19 @@ const GalleryBox = () => {
     {/* 🌿 get */}
     const { data: initData, isLoading, isError, error } = useQuery('imagesQuery', fetchGallery, {
         onSuccess: (data) => {
-            setTargetImgData(initData);
+            setTargetImgData(data);
             console.log('from /gallery', data);
         }
     });
 
+
     {/* 🌿 post */}
     const mutation = useMutation(postApply, {
         onSuccess: (data) => {
-            setTargetImgData(data);
-            console.log('category post success', data);
+            console.log('post success', data);
         },
         onError: (error) => {
-            console.log('category post fail', error);
+            console.log('post fail', error);
         }
     });
 
@@ -90,7 +87,8 @@ const GalleryBox = () => {
     const applyBtn = () => {
         const datas = { tags : Object.keys(activeBtns), startDate: dates.startDate, endDate: dates.endDate};
         console.log('post sending:', datas);
-        mutation.mutate(datas);
+        mutation.mutate(datas, 'api/galleryTags');
+        setTargetImgData(datas);
     };
 
     {/* 🌿 init 버튼 클릭 -> 변수들 초기화 하는 함수 */}
@@ -101,23 +99,48 @@ const GalleryBox = () => {
     }
 
     {/* 🌿사진 클릭 시 중복 선택 실행되는 함수 */}
-    const selectImgsClick = (img) => {
-        setSelectImg((prevState) => {
-        const newState = { ...prevState, [img]: !prevState[img] };
-        const selectImgs = Object.keys(newState).filter((key) => newState[key]);
-        return selectImgs;
+    const selectImgsClick = (imageId) => {
+        setSelectedImages((prevSelectedImages) => {
+        // 이미 선택된 이미지인지 확인
+        const isSelected = prevSelectedImages.includes(imageId);
+
+        if (isSelected) {return prevSelectedImages.filter((id) => id !== imageId);} // 이미 선택된 이미지일 경우 제거
+        else {return [...prevSelectedImages, imageId];}// 선택되지 않은 이미지일 경우 추가 
         });
     };
 
-    {/* 🌿 처음 갤러리 렌더링을 위한 hook*/}
-    useEffect(()=> {
+    {/* ⚠️테스트 필요!⚠️ 🌿targetImgData에서 selectedImages에 있는 이미지 제외 후 남은 이미지 리스트를 반환하는 함수  */}
+    // const removeRender = () => {
+    // setTargetImgData((prevTargetImgData) => {
+    //     if (Array.isArray(prevTargetImgData)) {
+    //     const filteredData = prevTargetImgData.filter((image) => !selectedImages.includes(image._id));
+    //     console.log('Remaining images:', filteredData);
+    //     return filteredData;
+    //     } else {
+    //     console.log('prevTargetImgData is not an array:', prevTargetImgData);
+    //     return prevTargetImgData;
+    //     }
+    // });
+    // };
+
+    {/* 🌿삭제 버튼이 눌리면 실행되는 함수 - DB에 삭제 요청, 렌더링에서 빼기 */}
+    const deleteClick = () =>{
+        const datas = { id : Object.values(selectedImages)};
+        //무엇을 삭제할 건지 콘솔 확인
+        console.log('delete post sending:', datas);
+        //backend에 DB 데이터 삭제 요청
+        mutation.mutate(datas, '/api/galleryDelete');
+        //삭제요청 이미지를 갤러리 렌더링에서 제외
+        // const updatedData = removeRender();
+        // setTargetImgData(updatedData);
         setTargetImgData(initData);
-    })
+    }
 
     {/* 🌿 변수들이 변하면 재렌더링을 위한 hook*/}
     useEffect(() => {
         initTE({ Ripple, Input });
-    },[activeBtns, dates, targetImgData, selectImg]);
+        console.log(selectedImages)
+    },[targetImgData, selectedImages]);
 
     if(isLoading) {return <h2>Loading...</h2>}
     if(isError) {return <h2>{error.message}</h2>}
@@ -184,13 +207,13 @@ const GalleryBox = () => {
             role="group">
                 <button
                 type="button"
-                onClick={() => tagBtnClick(buttonList[9])}
+                onClick={() => tagBtnClick(buttonList[8])}
                 className="button-className min-w-fit inline-block font-extrabold rounded-l text-inherit bg-neutral-50 px-6 pb-2 pt-2.5 text-lg uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
                 data-te-ripple-init
                 data-te-ripple-color="light">
-                {buttonList[9]}
+                {buttonList[8]}
                 </button>
-                {buttonList.slice(10, 16).map((btn) => (
+                {buttonList.slice(9, 15).map((btn) => (
                 <button
                     key={btn}
                     type="button"
@@ -203,17 +226,17 @@ const GalleryBox = () => {
                 ))}
                 <button
                     type="button"
-                    onClick={() => tagBtnClick(buttonList[17])}
+                    onClick={() => tagBtnClick(buttonList[15])}
                     className="button-className min-w-fit inline-block text-inherit rounded-r bg-neutral-50 px-6 pb-2 pt-2.5 text-lg uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
                     data-te-ripple-init
                     data-te-ripple-color="light">
-                    {buttonList[17]}
+                    {buttonList[15]}
                 </button>
             </div>
         </div>
         {/*🌿 태그 버튼 결과값 창 */}
         <div className='flex'>
-            <p className='min-w-fit ml-4 my-2 border-b-1 tracking-tight text-md text-purple-800 font-semibold'>선택된 태그 :</p>
+            <p className='min-w-fit ml-4 my-2 border-b-1 tracking-tight text-md text-purple-800 font-semibold'>선택된 카테고리 :</p>
             {Object.entries(activeBtns).filter(([key, value]) => value === true).map(([key]) => (
                 <p key={key} className='overflow-x-auto min-w-fit mx-1 ml-4 my-2 border-b-1 tracking-tight text-md text-purple-800 font-semibold'>
                     {key}
@@ -256,22 +279,23 @@ const GalleryBox = () => {
         <Divider />
         </div>
         {/*🌿이미지 갤러리 창*/ }
-        <div class="container mx-auto px-5 py-2 lg:px-16 lg:pt-12">
-            <ImageList sx={{ width: '100%', height: 450, gap: 16 }} cols={4} rowHeight={164}>
+        <div className="container mx-auto px-5 py-2 lg:px-16 lg:pt-12">
+            <ImageList sx={{ width: '100%', height: 450, gap: 16 }} cols={3} rowHeight={164}>
                 <React.Fragment>
                 {targetImgData?.data?.map((image) => (
-                    <ImageListItem key={image._id} >
+                    <ImageListItem key={image._id} onClick={() => selectImgsClick(image._id)}>
                     <img
+                        key={image._id}
                         src={`${image.url}?w=248&fit=crop&auto=format`}
                         alt='loading...'
                         loading="lazy"
-                        onClick={() => selectImgsClick(image)}
-                          style={{
+                            style={{
                             height: '100%',
                             width: '100%',
                             objectFit: 'cover',
-                            opacity: selectImg[image] ? '0.5' : '1',
-                            transition: 'opacity 0.3s ease-in-out', }}
+                            transition: 'opacity 0.3s ease-in-out',
+                            filter: selectedImages.includes(image._id) ? 'brightness(50%)' : 'brightness(100%)',
+                        }}
                     />
                     <ImageListItemBar
                         title={
@@ -297,7 +321,7 @@ const GalleryBox = () => {
                 type="button"
                 data-te-ripple-init
                 data-te-ripple-color="light"
-                onClick={deleteImg}
+                onClick={()=>deleteClick()}
                 className="mx-4 inline-block bg-purple-700 rounded bg-primary px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
                 <span className="flex items-center">
                     delete

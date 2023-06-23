@@ -29,7 +29,7 @@ const Loginbox = () => {
         })
         .then(res => {
             if (res.status === 200) {
-                navigate('/Mypage');
+                navigate('/Main');
             }
         })
         .catch(err => {
