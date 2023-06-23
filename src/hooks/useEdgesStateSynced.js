@@ -1,29 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
 import {
-  // Edge,
   applyEdgeChanges,
-  // OnEdgesChange,
-  // OnConnect,
-  // Connection,
-  // EdgeChange,
-  // EdgeAddChange,
-  // EdgeResetChange,
-  // EdgeRemoveChange,
 } from 'reactflow';
 
-import ydoc from '../components/Editor/ydoc';
-
-export const edgesMap = ydoc.getMap('edges');
+import {getDoc} from '../components/Editor/ydoc';
 
 const isEdgeAddChange = (change) => change.type === 'add';
 const isEdgeRemoveChange = (change) => change.type === 'remove';
 const isEdgeResetChange = (change) => change.type === 'reset';
 
-function useNodesStateSynced() {
+function useEdgesStateSynced(room) {
   const [edges, setEdges] = useState([]);
+  const {ydoc, edgesMap} = getDoc(room);
 
   const onEdgesChange = useCallback((changes) => {
-    // 현재 바뀌는 edge들 
     const currentEdges = Array.from(edgesMap.values()).filter((e) => e);
     const nextEdges = applyEdgeChanges(changes, currentEdges);
     changes.forEach((change) => {
@@ -33,7 +23,7 @@ function useNodesStateSynced() {
         edgesMap.set(change.id, nextEdges.find((n) => n.id === change.id));
       }
     });
-  }, []);
+  }, [ydoc]);
 
   const onConnect = useCallback((params) => {
     const { source, sourceHandle, target, targetHandle } = params;
@@ -43,7 +33,7 @@ function useNodesStateSynced() {
       id,
       ...params,
     });
-  }, []);
+  }, [ydoc]);
 
   useEffect(() => {
     const observer = () => {
@@ -54,9 +44,9 @@ function useNodesStateSynced() {
     edgesMap.observe(observer);
 
     return () => edgesMap.unobserve(observer);
-  }, [setEdges]);
+  }, [setEdges, ydoc]);
 
   return [edges, onEdgesChange, onConnect];
 }
 
-export default useNodesStateSynced;
+export default useEdgesStateSynced;

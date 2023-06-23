@@ -1,27 +1,26 @@
 import { Doc } from 'yjs';
-// For this example we use the WebrtcProvider to synchronize the document
-// between multiple clients. Other providers are available.
-// You can find a list here: https://docs.yjs.dev/ecosystem/connection-provider
-// import { WebrtcProvider } from 'y-webrtc';
 import { WebsocketProvider } from 'y-websocket';
 
+export const ydocs = new Map();
 
-const ydoc = new Doc();
+export function getDoc(room){
+    if (!ydocs.has(room)) {
+        const ydoc = new Doc();
+        const wsProvider = new WebsocketProvider(
+            'wss://phodo.store/ws',
+            room,
+            ydoc
+        );
+        
+        wsProvider.on('status', event => {
+            console.log(event)
+            console.log(event.status)
+        })
 
-// new WebrtcProvider('REACTFLOW-COLLAB-EXAMPLE', ydoc, {
-//     signaling : ['ws://localhost:3000/newproject']
-// });
+        ydocs.set(room, { ydoc, nodesMap: ydoc.getMap('nodes'), edgesMap: ydoc.getMap('edges') });
+    }
 
-const wsProvider = new WebsocketProvider(
-    // 'ws://13.125.210.252:1234', //🔥 hojun ec2 setting
-    'wss://phodo.store/ws', //🔥 jinkyo ec2 setting
-    'Hotels',
-    ydoc
-);
+    return ydocs.get(room);
+}
 
-wsProvider.on('status', event => {
-    console.log(event)
-    console.log(event.status)
-})
-
-export default ydoc;
+// export default getDoc;

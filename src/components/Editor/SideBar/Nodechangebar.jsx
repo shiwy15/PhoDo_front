@@ -1,26 +1,30 @@
 import React, {useState, useEffect} from 'react';
 
 import { Box, Typography, TextField, MenuItem } from '@mui/material';
-import {nodesMap} from '../../../hooks/useNodesStateSynced';
-// import useNodesStateSynced from '../../../hooks/useEdgesStateSynced';
+// import {nodesMap} from '../../../hooks/useNodesStateSynced';
+import useNodesStateSynced from '../../../hooks/useEdgesStateSynced';
 
 function Nodechangebar(){
 
   const [nodeName, setNodeName] = useState("Change Node name");
+  const { nodesMap } = useNodesStateSynced(); // call the hook here
 
   useEffect(() => {
-    // This is your map iteration code 
-    nodesMap.forEach((node, nodeId) => {
-      if (node.selected === true) {
-        node.data = {
+    // Check that nodesMap is defined
+    if (nodesMap) {
+      nodesMap.forEach((node, nodeId) => {
+        if (node.selected === true) {
+          node.data = {
             ...node.data,
-            label: nodeName
-        };
-        nodesMap.set(nodeId, node);
-        console.log('rerendering');
-      }
-    });
-  }, [nodeName]);
+            label: nodeName,
+          };
+          nodesMap.set(nodeId, node);
+          console.log('rerendering');
+        }
+      });
+    }
+  }, [nodeName, nodesMap]);
+  
 
     return (
         <Box display="flex" justifyContent="center" alignItems="center" sx={{ padding: '5px' }}> 

@@ -10,15 +10,16 @@ import PictureNode from './Node/PictureNode.js';
 import Modal from './Modal';
 
 // 🍀 WebRTC setting
-import useNodesStateSynced, { nodesMap } from '../../hooks/useNodesStateSynced';
+import useNodesStateSynced from '../../hooks/useNodesStateSynced';
 import useEdgesStateSynced from '../../hooks/useEdgesStateSynced';
 
 // import React 
-import React, { useState, useRef , useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Sidebar from '../Editor/SideBar/Sidebar';
 import MenuBarR from "../../components/Editor/MenuBarR";
 import VoiceBar from "../../components/Editor/Voice/VoiceBar"
 
+import {getDoc} from '../Editor/ydoc'
 
 // import React Flow 
 import ReactFlow, {
@@ -52,14 +53,31 @@ const fitViewOptions = {
    padding: 3,
  };
 
-//////////////////
-  // 🍀🌼 기존에 드래그와 동일, 근데 기존은 그냥 컴포넌트 밖에다 세팅이 되어있음
-  // const onDragOver = useCallback((event) => {
-  //   event.preventDefault();
-  //   event.dataTransfer.dropEffect = 'move';
-  // }, []);
-
 const Editingbox2 = () => {
+  const {projectId} = useStore();
+
+  const [nodesMap, setNodesMap] = useState(null);
+  const [edgesMap, setEdgesMap] = useState(null);
+
+  useEffect(() => {
+    if(projectId) {
+      console.log('Project Id: ', projectId);
+      const { ydoc, nodesMap, edgesMap } = getDoc(projectId);
+      setNodesMap(nodesMap);
+      setEdgesMap(edgesMap);
+      console.log("ydoc: ", ydoc, "nodesMap: ", nodesMap, "edgesMap: ", edgesMap);
+    }
+  }, [projectId]);
+
+
+  useEffect(() => {
+    if(projectId){
+      console.log("Project Id: ", projectId); // Use projectId as per your requirement
+      const { ydoc, nodesMap, edgesMap } = getDoc(projectId); // Use getDoc function with projectId
+      console.log("ydoc: ", ydoc, "nodesMap: ", nodesMap, "edgesMap: ", edgesMap); // Use ydoc, nodesMap, edgesMap as per your requirement
+    }
+}, [projectId]);
+
    
   const reactFlowWrapper = useRef(null); // 큰 react flow wrapper
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
@@ -68,14 +86,6 @@ const Editingbox2 = () => {
   const [nodes, onNodesChange] = useNodesStateSynced();
   const [edges, onEdgesChange, onConnect] = useEdgesStateSynced();
   const { project, setViewport } = useReactFlow();
-
-  // 🌼 기존 세팅: 엣지 새로 생성
-  // const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
-
-  // 🌼 기존 세팅: 노드끌어서 생성, 첫 시작
-  //   const onConnectStart = useCallback((_, {nodeId}) => {
-  //    connectingNodeId.current = nodeId;
-  // }, []);
 
   // 🍀🌼 기존에 드래그와 동일, 근데 기존은 그냥 컴포넌트 밖에다 세팅이 되어있음
   const onDragOver = useCallback((event) => {
@@ -164,7 +174,7 @@ const Editingbox2 = () => {
 
 export default () => (
   <>
-  {/* <Modal/> */}
+  <Modal/>
   <ReactFlowProvider>
     <Editingbox2 />
   </ReactFlowProvider>
