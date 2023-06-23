@@ -44,7 +44,7 @@ function Myproject() {
   React.useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get('https://hyeontae.shop');
+        const response = await axios.get('https://hyeontae.shop/project');
         setProjects(response.data);
         console.log(response)
       } catch (error) {
