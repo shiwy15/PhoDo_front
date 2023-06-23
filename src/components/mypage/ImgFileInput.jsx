@@ -32,7 +32,7 @@ const ImageUpload = () => {
 
   {/* 🌿 input창을 통해 입력된 이미지의 url을 보여주는 함수 */}
   const handleFileInputChange = (e) => {
-    setImgfiles(e.target.files);
+    setImgfiles(Array.from(e.target.files)); // 배열 형태로 파일들을 저장
     setImgMeta(Array.from(e.target.files).map((file) => ({
       url: URL.createObjectURL(file),
       name: file.name,
