@@ -90,6 +90,7 @@ const GalleryBox = () => {
 
     const mutationDelete = useMutation(postDelte, {
         onSuccess: (data) => {
+            setTargetImgData(initData)
             console.log('post success', data);
         },
         onError: (error) => {
@@ -108,7 +109,6 @@ const GalleryBox = () => {
     const initBtn = () => {
         setActiveBtns({});
         setDates({ startDate: null, endDate: null });
-        setTargetImgData(initData)
     }
 
     {/* 🌿사진 클릭 시 중복 선택 실행되는 함수 */}
@@ -311,19 +311,7 @@ const GalleryBox = () => {
                         }}
                     />
                     <ImageListItemBar
-{/*                         title={
-                            <span className='flex'>
-                                {Object.values(image.category).map((cate, index,array) => {
-                                            const isLast = index === array.length - 1;
-                                            return (
-                                            <React.Fragment key={index}>
-                                                <p>{cate}</p>
-                                                {!isLast && <p>,</p>}
-                                            </React.Fragment>
-                                            );
-                                })}
-                            </span>
-                        } */}
+
                         subtitle={
                             <span>{formatData(image.time)}</span>
                         }
