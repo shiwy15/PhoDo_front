@@ -53,7 +53,7 @@ const ImageUpload = () => {
   }, [imgfiles]);
 
   return (
-  <div className="p-4 shadow-4 rounded-lg w-full m-4 h-80" style={{ backgroundColor: 'hsl(0, 0%, 94%)' }}>
+  <div className="p-4 shadow-4 rounded-lg w-full m-4 h-4/12" style={{ backgroundColor: 'hsl(0, 0%, 94%)' }}>
     <h2 className="text-2xl font-semibold pb-6 relative top-0 text-center">Input your Photo</h2>
     {/* 🌿input창 */}
     <div className="mb-3">
