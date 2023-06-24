@@ -163,7 +163,7 @@ const GalleryBox = () => {
         {/* 🌿 제목 및 '새프로젝트 버튼' 구간*/}
         <div className='flex flex-wrap mt-16 m-2 p-4 justify-between'>
             <p className='mt-6 tracking-tight text-3xl text-purple-800 font-semibold'>My Gallery </p>
-             <Link to="/newproject">
+             <Link to="/modal">
                 <button
                     type="button"
                     data-te-ripple-init
