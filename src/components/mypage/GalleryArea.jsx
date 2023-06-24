@@ -80,6 +80,7 @@ const GalleryBox = () => {
     {/* 🌿 post */}
     const mutationApply = useMutation(postApply, {
         onSuccess: (data) => {
+            setTargetImgData(data);
             console.log('post success', data);
         },
         onError: (error) => {
@@ -101,7 +102,6 @@ const GalleryBox = () => {
         const datas = { tags : Object.keys(activeBtns), startDate: dates.startDate, endDate: dates.endDate};
         console.log('post sending:', datas);
         mutationApply.mutate(datas);
-        setTargetImgData(datas);
     };
 
     {/* 🌿 init 버튼 클릭 -> 변수들 초기화 하는 함수 */}
@@ -313,8 +313,14 @@ const GalleryBox = () => {
                     <ImageListItemBar
                         title={
                             <span className='flex'>
-                                {image.category.slice(0,2).map((category, index) => {
-                                    return index < 1 ? <p key={index}> {category },  </p> : <p>{ category} </p>;
+                                {Object.values(image.category).map((cate, index,array) => {
+                                            const isLast = index === array.length - 1;
+                                            return (
+                                            <React.Fragment key={index}>
+                                                <p>{cate}</p>
+                                                {!isLast && <p>,</p>}
+                                            </React.Fragment>
+                                            );
                                 })}
                             </span>
                         }
