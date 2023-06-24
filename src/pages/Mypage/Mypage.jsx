@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-//components
+// components
 import Header from "../../components/mypage/Header"
 import SidebarL from "../../components/mypage/SidebarL"
 import GalleryArea from '../../components/mypage/GalleryArea';
 import ImgFileInput from '../../components/mypage/ImgFileInput';
 import DetailShow from "../../components/mypage/DetailShow"
 
-function Mypage() {
+const Mypage = () =>{
   return (
 <div className="Mypage">
   <div className="fixed top-0 h-16"><Header /></div>

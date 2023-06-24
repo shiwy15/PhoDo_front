@@ -311,6 +311,19 @@ const GalleryBox = () => {
                         }}
                     />
                     <ImageListItemBar
+                        title={
+                            <span className='flex'>
+                                {Object.values(image.categories).map((category, index,array) => {
+                                    const isLast = index === array.length - 1;
+                                    return (
+                                    <React.Fragment key={index}>
+                                        <p>{category}</p>
+                                        {!isLast && <p>,</p>}
+                                    </React.Fragment>
+                                    );
+                                })}
+                            </span>
+                        }
 
                         subtitle={
                             <span>{formatData(image.time)}</span>

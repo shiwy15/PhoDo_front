@@ -1,8 +1,16 @@
 {
+    "members" : [
+        {"1" : "dohee"},
+        {"2" : "hyeontae"},
+        {"3" : "hojun"},
+        {"4" : "yongseo"},
+        {"5" : "jinkyo"}
+    ],
+
   "project": [
     {
       "_id": "1",
-      "name": " 평택 1기 프로젝트",
+      "name": " 철도 00구간 안전 검사",
       "image" : "https://live.lge.co.kr/wp-content/uploads/2023/01/%ED%85%8C%EB%84%A4%EC%8B%9C_%EC%8D%B8%EB%84%A4%EC%9D%BC.jpg",
       "time" : "2020-05-08",
       "like" : false
@@ -16,7 +24,7 @@
     },
     {
       "_id": "3",
-      "name": " 무주 1기 프로젝트",
+      "name": " 00건설 기계 점검 기록",
       "image" : "http://jecheon.grandculture.net/Image?localName=jecheon&id=GC033P3256&t=middle",
       "time" : "2022-05-08",
       "like" : false
@@ -26,13 +34,13 @@
       "name": " 이천 1기 프로젝트",
       "image" : "http://jecheon.grandculture.net/Image?localName=jecheon&id=GC033P4343&t=middle",
       "time" : "2022-09-10",
-      "like" : false
+      "like" : true
     },
     {
       "_id": "5",
       "name": "부서 세미나",
       "image" : "http://www.energydaily.co.kr/news/photo/201904/98178_55311_1646.jpg",
-      "time" : "2023-03-13",
+      "time" : "2020-03-13",
       "like" : true
     },
     {
@@ -44,14 +52,14 @@
     },
     {
       "_id": "7",
-      "name": "사내 등반",
-      "image" : "http://eactive.co.kr/wp-content/uploads/kboard_thumbnails/1/202004/5e8d61d01e7b36423511.jpg",
+      "name": "2022결산 서류 정리",
+      "image" : "https://t1.daumcdn.net/cfile/tistory/9982DF3D5B21B85524",
       "time" : "2022-01-15",
       "like" : false
     },
     {
       "_id": "8",
-      "name": "신년회",
+      "name": "종로2가 도로 포장",
       "image" : "http://www.daehannews.kr/data/photos/20200104/art_15799282713928_2a4e02.jpg",
       "time" : "2023-01-08",
       "like" : false
@@ -61,6 +69,13 @@
       "name": "시안 프로젝트",
       "image" : "https://me.go.kr/minister/file/preview.do?thumbYn=N&fileId=219408&fileSeq=1",
       "time" : "2019-06-20",
+      "like" : false
+    },    
+    {
+      "_id": "10",
+      "name": "사내안전교육",
+      "image" : "https://me.go.kr/minister/file/preview.do?thumbYn=N&fileId=219408&fileSeq=1",
+      "time" : "2023-06-28",
       "like" : false
     }
   ],

@@ -1,4 +1,5 @@
 {
+    "/api/members": "/members",
   "/api/project": "/project",
   "/api/gallery": "/gallery",
   "/api/galleryTags": "/galleryTags",

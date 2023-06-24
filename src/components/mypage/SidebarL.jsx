@@ -1,27 +1,56 @@
 import React, { useEffect } from 'react';
-import { useQuery } from 'react-query'
+import { useQuery } from 'react-query';
 
-// //서버요청용
+//서버요청용
 import { request } from "../../utils/axios-utils"
 
 //css용
 import { Divider } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { HiStar } from 'react-icons/hi';
+import { HiChevronRight } from 'react-icons/hi'; 
+import { HiUserCircle } from 'react-icons/hi';
+
 
 //서버용 코드
 const fetchProject = () => {
   return request({ url: 'api/project'})
 }
 
+const fetchMembers = () => {
+  return request({ url: 'api/members'})
+}
+
+// const membersData = [
+//         {"1" : "jinkyo"},
+//         {"2" : "yongseo"},
+//         {"3" : "hojun"},
+//         {"4" : "hyeontae"},
+//         {"5" : "dohee"}
+//     ]
+
 const Sidebar = () => {
     // useQuery를 사용하여 fetchLikePhoto 함수를 호출하고, 그 결과를 콘솔에 출력
-    const { data : projectData, isLoading, isError, error, isFetching } = useQuery('projectList', fetchProject,{
+    const { data : projectData} = useQuery('projectList', fetchProject,{
         // onSuccess: (data) => {console.log('sidebar get success', data)},
         // retry:5,
-        // retryDelay:500,
-        // staleTime:1000*60,
-        // cacheTime:1000*300,
-        // refetchOnWindowFocus:true
+        // retryDelay:500
     });
+
+    const { data : membersData } = useQuery('membersData', fetchMembers,{
+        // onSuccess: (data) => {console.log('sidebar get success', data)},
+        // retry:5,
+        // retryDelay:500
+    });
+
+    
+    {/* 🐼 즐겨찾기 해놓은 프로젝트 3개까지 표시 */}
+    const likedProjects = projectData?.data?.filter(project => project.like).slice(0, 3);
+
+    {/* 🐼 날짜 빠른 순으로 3개 표시 */}
+    const recentProjects = projectData?.data?.sort((a, b) => new Date(b.time) - new Date(a.time)).slice(0, 3);
+
+
 
     return (
         <div
@@ -32,23 +61,69 @@ const Sidebar = () => {
             data-te-sidenav-position="absolute">
 
             <div className="p-4">
-                <div className="text-lg mb-4">My image</div>
-                    <div>
-                    {/* 여기에는 Project의 like가 true인 것만 표시 */}
+                {/* 🐼즐겨찾기 해놓은 프로젝트 리스트*/}
+                <div className="text-lg mb-4 my-2 text-center bg-violet-100 p-1 rounded-lg ">
+                    즐겨찾는 프로젝트</div>
+                <div>
+                    
                     {
-                        projectData && projectData.keys().map((project) => {
-                        return (
-                            <p key={project._id}>{project.name}</p>
-                            )
-                        })
+                        likedProjects?.map((project) => (
+                        <div key={project._id}>
+                            <Link to={`/${project._id}`}>
+                                <div className="flex items-center">
+                                    <HiStar size={24} color="gold" className="mr-1" />
+                                    <div className="flex flex-col">
+                                        <p className="my-1">{project.name}</p>
+                                        <p className='ml-4 text-sm text-gray-500'>{new Date(project.time).toLocaleDateString()}</p>
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
+                        ))
                     }
-                    </div>
-            </div>
-            <div className='mx-4'>
-                <Divider />
-            </div>
+                </div>
+                <div className='mx-4 my-4'><Divider /></div>
+            
+                {/* 🐼 최신 프로젝트 리스트*/}
+                <div className="text-lg mb-4 my-2 text-center bg-violet-100 p-1 rounded-lg">
+                    최신 프로젝트</div>
+                {
+                    recentProjects?.map((project) => (
+                        <div key={project._id} >
+                            <Link to={`/${project._id}`}>
+                                <div className="flex items-center">
+                                    <HiChevronRight size={24} color="violet" />
+                                    <div className="flex flex-col">
+                                        <p className="my-1">{project.name}</p>
+                                        <p className='ml-4 text-sm text-gray-500'>{new Date(project.time).toLocaleDateString()}</p>
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
+                    ))
+                }
 
-                
+            <div className='mx-4 my-4'><Divider /></div>
+            
+            {/* 🐼  접속 멤버 목록 리스트 : demo*/}
+            <div className="text-lg mb-4 my-2 text-center bg-violet-100 p-1 rounded-lg">
+                멤버 목록</div>
+                <div className="p-4">
+                    <ul>
+                        {membersData?.data?.map((member, index) => {
+                            const memberId = Object.keys(member)[0];
+                            const memberName = member[memberId];
+                            return (
+                                <li key={index} className="flex items-center mb-2">
+                                    <HiUserCircle size={24} className="mr-2" color="gray"/>
+                                    <span>{memberName}</span>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </div>
+
+            </div>
         </div>
     );
 };
