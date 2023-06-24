@@ -311,7 +311,7 @@ const GalleryBox = () => {
                         }}
                     />
                     <ImageListItemBar
-                        title={
+{/*                         title={
                             <span className='flex'>
                                 {Object.values(image.category).map((cate, index,array) => {
                                             const isLast = index === array.length - 1;
@@ -323,7 +323,7 @@ const GalleryBox = () => {
                                             );
                                 })}
                             </span>
-                        }
+                        } */}
                         subtitle={
                             <span>{formatData(image.time)}</span>
                         }
