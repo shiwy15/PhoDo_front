@@ -24,10 +24,14 @@ import { Divider } from '@mui/material';
 //🌿custom function
 const fetchGallery = () => {return request({ url: 'api/gallery' });}
 
-const postApply = (datas, url) => {
-    datas = JSON.stringify(datas)
+const postApply = (datas) => {
     console.log('datas', datas)
-    return request({ url:url , method: 'POST', data: datas, headers: { 'Content-Type': 'application/json' } });
+    return request({ url:'/api/galleryTags' , method: 'POST', data: datas, headers: { 'Content-Type': 'application/json' } });
+}
+
+const postDelte = (datas) => {
+    console.log('datas', datas)
+    return request({ url:'/api/galleryDelete' , method: 'POST', data: datas, headers: { 'Content-Type': 'application/json' } });
 }
 
 const GalleryBox = () => {
@@ -74,7 +78,16 @@ const GalleryBox = () => {
 
 
     {/* 🌿 post */}
-    const mutation = useMutation(postApply, {
+    const mutationApply = useMutation(postApply, {
+        onSuccess: (data) => {
+            console.log('post success', data);
+        },
+        onError: (error) => {
+            console.log('post fail', error);
+        }
+    });
+
+    const mutationDelete = useMutation(postDelte, {
         onSuccess: (data) => {
             console.log('post success', data);
         },
@@ -87,7 +100,7 @@ const GalleryBox = () => {
     const applyBtn = () => {
         const datas = { tags : Object.keys(activeBtns), startDate: dates.startDate, endDate: dates.endDate};
         console.log('post sending:', datas);
-        mutation.mutate(datas, 'api/galleryTags');
+        mutationApply.mutate(datas);
         setTargetImgData(datas);
     };
 
@@ -129,7 +142,7 @@ const GalleryBox = () => {
         //무엇을 삭제할 건지 콘솔 확인
         console.log('delete post sending:', datas);
         //backend에 DB 데이터 삭제 요청
-        mutation.mutate(datas, '/api/galleryDelete');
+        mutationDelete.mutate(datas);
         //삭제요청 이미지를 갤러리 렌더링에서 제외
         // const updatedData = removeRender();
         // setTargetImgData(updatedData);
@@ -140,7 +153,7 @@ const GalleryBox = () => {
     useEffect(() => {
         initTE({ Ripple, Input });
         console.log(selectedImages)
-    },[targetImgData, selectedImages]);
+    },[targetImgData || selectedImages]);
 
     if(isLoading) {return <h2>Loading...</h2>}
     if(isError) {return <h2>{error.message}</h2>}
@@ -300,8 +313,8 @@ const GalleryBox = () => {
                     <ImageListItemBar
                         title={
                             <span className='flex'>
-                                {Object.values(image.tags).slice(0,2).map((tag, index) => {
-                                    return index < 1 ? <p key={index}> {tag },  </p> : <p>{ tag} </p>;
+                                {image.category.slice(0,2).map((category, index) => {
+                                    return index < 1 ? <p key={index}> {category },  </p> : <p>{ category} </p>;
                                 })}
                             </span>
                         }
