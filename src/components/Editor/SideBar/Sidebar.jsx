@@ -114,7 +114,7 @@ export default () => {
             Text Node
           </div>
         </MenuItem>  
-        <Nodechangebar/>
+            <Nodechangebar/>
          </MenuList>
         </Paper>
     </div>

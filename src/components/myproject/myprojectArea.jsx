@@ -97,7 +97,7 @@ const MyProjectArea = () => {
                 <div className=' flex flex-col justify-center items-center'>
                     <ImageList sx={{ width: '95%', height: '224px'}} cols={5}>
                         {recentProjects && recentProjects.map((project) => (
-                            <Link to={`/${project._id}`}>
+                            <Link to={`project/${project._id}`}>
                                 <ImageListItem key={project._id} sx={{ margin: '5px' }} >
                                     <img
                                         src={`${project.image}?w=248&fit=crop&auto=format`}
@@ -128,7 +128,7 @@ const MyProjectArea = () => {
             <div className=' flex flex-col justify-center items-center'>
                 <ImageList sx={{ width: '95%', height: '224px'}} cols={5}>
                     {projectData && projectData?.data?.sort((a, b) => new Date(a.time) - new Date(b.time)).map((project) => (
-                        <Link to={`/${project._id}`}>
+                        <Link to={`project/${project._id}`}>
                             <ImageListItem key={project._id} sx={{ margin: '5px' }} >
                                 <img
                                     src={`${project.image}?w=248&fit=crop&auto=format`}

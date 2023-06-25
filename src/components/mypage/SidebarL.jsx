@@ -61,7 +61,7 @@ const Sidebar = () => {
                     {
                         likedProjects?.map((project) => (
                         <div key={project._id}>
-                            <Link to={`/${project._id}`}>
+                            <Link to={`project/${project._id}`}>
                                 <div className="flex items-center">
                                     <HiStar size={24} color="gold" className="mr-1" />
                                     <div className="flex flex-col">
@@ -82,7 +82,7 @@ const Sidebar = () => {
                 {
                     recentProjects?.map((project) => (
                         <div key={project._id} >
-                            <Link to={`/${project._id}`}>
+                            <Link to={`project/${project._id}`}>
                                 <div className="flex items-center">
                                     <HiChevronRight size={24} color="violet" />
                                     <div className="flex flex-col">
