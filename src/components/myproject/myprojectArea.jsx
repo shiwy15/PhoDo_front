@@ -12,7 +12,7 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 
-
+import { useNavigate } from 'react-router-dom';
 //서버요청용
 import { useQuery } from 'react-query'
 import { request } from "../../utils/axios-utils"
@@ -24,6 +24,7 @@ const fetchProject = () => {
 
 const MyProjectArea = () => {
     const [searchTerm, setSearchTerm] = useState('');
+    const navigate = useNavigate();
 
     {/* 🐼 project GET hook */}
     const { data : projectData} = useQuery('projectList', fetchProject,{
@@ -97,7 +98,7 @@ const MyProjectArea = () => {
                 <div className=' flex flex-col justify-center items-center'>
                     <ImageList sx={{ width: '95%', height: '224px'}} cols={5}>
                         {recentProjects && recentProjects.map((project) => (
-                            <Link to={`project/${project._id}`}>
+                         <a href={`newproject/${project._id}`}>
                                 <ImageListItem key={project._id} sx={{ margin: '5px' }} >
                                     <img
                                         src={`${project.image}?w=248&fit=crop&auto=format`}
@@ -112,7 +113,7 @@ const MyProjectArea = () => {
                                         position="below"
                                     />
                                 </ImageListItem>
-                            </Link>
+                                </a>
                         ))}
                     </ImageList>
                 </div>
