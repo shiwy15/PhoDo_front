@@ -28,6 +28,7 @@ const Loginbox = () => {
             withCredentials: true
         })
         .then(res => {
+            console.log(res);
             if (res.status === 200) {
                 navigate('/Main');
             }
