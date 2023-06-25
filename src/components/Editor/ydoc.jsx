@@ -13,9 +13,9 @@ const ydoc = new Doc();
 // });
 
 const wsProvider = new WebsocketProvider(
-    // 'ws://13.125.210.252:1234', //🔥 hojun ec2 setting
+    // 'ws://13.125.210.252:1234', //🔥 hojun ec2 settin
     'wss://phodo.store/ws', //🔥 jinkyo ec2 setting
-    'Hotels',
+    '',
     ydoc
 );
 

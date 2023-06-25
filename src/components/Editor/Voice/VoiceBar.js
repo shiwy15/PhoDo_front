@@ -78,7 +78,7 @@ const VoiceChat = () => {
           audio.srcObject = event.streams[0];
           audio.controls = true;  // Add this line
           audio.autoplay = true;
-          console.log(audio)
+          audio.style.display = 'none';
           document.body.appendChild(audio);
       };
 
@@ -124,6 +124,7 @@ const VoiceChat = () => {
       audio.srcObject = event.streams[0];
       audio.controls = true;  // Add this line
       audio.autoplay = true;
+      audio.style.display = 'none';
       document.body.appendChild(audio);
     };
 
