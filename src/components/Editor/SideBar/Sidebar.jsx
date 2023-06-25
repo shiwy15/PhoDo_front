@@ -224,7 +224,7 @@ export default () => {
             이미지 노드 <p className='text-xs'>편집창에 끌어다 놓아보세요!</p></div>
         <ImageList cols={3} gap={6} sx={{ padding: '10px', height: '250px'}}>
           {images && images?.data?.map((image, index) => (
-            <ImageListItem key={image.id} className ='max-h-22' sx={{ border: 'solid 1px white' }}>
+            <ImageListItem key={image.id} className ='max-h-22'>
               <img 
                 src={image.thumbnailUrl}
                 className="imgNode max-h-16 "
