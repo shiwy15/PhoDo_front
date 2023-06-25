@@ -53,7 +53,7 @@ const ImageUpload = () => {
   }, [imgfiles]);
 
   return (
-  <div className="p-4 shadow-4 rounded-lg w-full m-4 h-80" style={{ backgroundColor: 'hsl(0, 0%, 94%)' }}>
+  <div className="p-4 shadow-4 rounded-lg w-full m-4 h-4/12" style={{ backgroundColor: 'hsl(0, 0%, 94%)' }}>
     <h2 className="text-2xl font-semibold pb-6 relative top-0 text-center">Input your Photo</h2>
     {/* 🌿input창 */}
     <div className="mb-3">
@@ -78,8 +78,7 @@ const ImageUpload = () => {
       ))}
     </div>
     {/* 🌿 업로드 버튼 */}
-    <div className="flex flex-col mt-1 text-xs items-center">
-      <p className='mb-1'> 500MB이하 이미지만 됩니다 🙂</p>
+    <div className="flex flex-col mt-4 text-xs items-center">
       <button
         type="button"
         data-te-ripple-init

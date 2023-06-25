@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 // 🌿 http통신용 import
@@ -8,6 +8,7 @@ import { request } from "../../utils/axios-utils"
 
 // 🌿 custom hook
 import useFormatDate from '../../hooks/useFormatDate';
+import { useDetailStore } from '../store';
 
 // 🌿 css용 import 
 import {
@@ -51,6 +52,10 @@ const GalleryBox = () => {
 
     {/* 🔴 사용 변수들- 중복선택 관련 , 사진 제거 관련 -> imgID기반 */}
     const [selectedImages, setSelectedImages] = useState([]);
+
+    {/* 🔴  제일 최근에 클릭한 이미지가 detailshow에 보이도 도록 하는 hook*/}
+    const selectRef = useRef();
+    const detailTransfer = useDetailStore(state => state.changeRCImg);
     
     {/* 🌿 사용 변수들- 닐찌 입력 관련 함수 */}  
     const handleValueChange = (newValue) => {
@@ -121,6 +126,12 @@ const GalleryBox = () => {
         else {return [...prevSelectedImages, imageId];}// 선택되지 않은 이미지일 경우 추가 
         });
     };
+
+    {/* 🌿사진 클릭 시 detailshow에 image데이터 전달하는 함수 */}
+    const detailClick = (image) => {
+        selectRef.current = image;
+        detailTransfer(image)
+    }
 
     {/* ⚠️테스트 필요!⚠️ 🌿targetImgData에서 selectedImages에 있는 이미지 제외 후 남은 이미지 리스트를 반환하는 함수  */}
     // const removeRender = () => {
@@ -296,7 +307,10 @@ const GalleryBox = () => {
             <ImageList sx={{ width: '100%', height: 450, gap: 16 }} cols={3} rowHeight={164}>
                 <React.Fragment>
                 {targetImgData?.data?.map((image) => (
-                    <ImageListItem key={image._id} onClick={() => selectImgsClick(image._id)}>
+                    <ImageListItem key={image._id} onClick={() => {
+                        selectImgsClick(image._id)
+                        detailClick(image);
+                        }}>
                     <img
                         key={image._id}
                         src={`${image.url}?w=248&fit=crop&auto=format`}
@@ -311,6 +325,19 @@ const GalleryBox = () => {
                         }}
                     />
                     <ImageListItemBar
+                        title={
+                            <span className='flex'>
+                                {Object.values(image.categories).map((category, index,array) => {
+                                    const isLast = index === array.length - 1;
+                                    return (
+                                    <React.Fragment key={index}>
+                                        <p>{category}</p>
+                                        {!isLast && <p>,</p>}
+                                    </React.Fragment>
+                                    );
+                                })}
+                            </span>
+                        }
 
                         subtitle={
                             <span>{formatData(image.time)}</span>
