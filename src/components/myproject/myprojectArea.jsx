@@ -54,7 +54,7 @@ const MyProjectArea = () => {
                 {/* 🌿 제목 */}
                 <p className='mt-6 tracking-tight text-3xl text-purple-800 font-semibold'>My Project </p>
                 {/* 🌿 검색창 */}
-                <div class="relative -ml-4 mt-5 flex w-8/12 h-12 flex-wrap items-stretch ">
+                <div className="relative -ml-4 mt-5 flex w-8/12 h-12 flex-wrap items-stretch ">
                     <input
                     type="search"
                     className="relative -mr-0.5 -ml-2 block min-w-0 flex-auto rounded-l-3xl border border-solid border-neutral-300 bg-transparent bg-clip-padding px-5 py-2 text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-purple-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"

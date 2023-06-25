@@ -65,7 +65,7 @@ const Sidebar = () => {
                                 <div className="flex items-center">
                                     <HiStar size={24} color="gold" className="mr-1" />
                                     <div className="flex flex-col">
-                                        <p className="my-1">{project.name}</p>
+                                        <p className="my-1 text-white">{project.name}</p>
                                         <p className='ml-4 text-sm text-gray-500'>{new Date(project.time).toLocaleDateString()}</p>
                                     </div>
                                 </div>
@@ -86,7 +86,7 @@ const Sidebar = () => {
                                 <div className="flex items-center">
                                     <HiChevronRight size={24} color="violet" />
                                     <div className="flex flex-col">
-                                        <p className="my-1">{project.name}</p>
+                                        <p className="my-1 text-white">{project.name}</p>
                                         <p className='ml-4 text-sm text-gray-500'>{new Date(project.time).toLocaleDateString()}</p>
                                     </div>
                                 </div>
