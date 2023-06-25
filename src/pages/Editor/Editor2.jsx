@@ -1,12 +1,10 @@
-import React, {useEffect} from "react";
 import Header from '../../components/mypage/Header';
-import { useParams } from "react-router-dom";
 import Editingbox2 from "../../components/Editor/Editingbox2";
 
 function Editor2() {
     return (
         <div className="edit">
-            <Header />
+            <Header className="fixed top-0 left-0 right-0" />
             <Editingbox2/>
         </div>
     )
