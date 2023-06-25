@@ -17,7 +17,7 @@ import { WebsocketProvider } from 'y-websocket';
 // 🍀 WebRTC setting
 import { useNodesStateSynced } from '../../hooks/useNodesStateSynced';
 import { useEdgesStateSynced } from '../../hooks/useEdgesStateSynced';
-
+import  VoiceChat  from './Voice/VoiceBar'
 
 import { useParams } from "react-router-dom";
 
@@ -174,7 +174,7 @@ const Editingbox2 = () => {
 
     <Sidebar/>
     <div style={{ position: 'absolute',left: '50px', top: '70px', zIndex: 100 }}>
-      {/* <VoiceBar /> */}
+      <VoiceChat />
     </div>
     <div style={{ position: 'absolute', zIndex: 150 }}>
       <MenuBarR />
