@@ -56,12 +56,12 @@ function DetailShow() {
         카테고리: 
       </span>
           <span className="inline-block text-md">
-        {Object.values(imageData.categories).map((category, index) => (
+          {imageData.categories && Object.values(imageData.categories).map((category, index) => (
             <span key={index}>{category}{index < Object.values(imageData.categories).length - 1 ? ', ' : ''}</span>
         ))}
         </span>
       <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200 ">
-        태그들 : {Object.values(imageData.tags).map((tag, index) => (
+      태그들 : {imageData.tags && Object.values(imageData.tags).map((tag, index) => (
             <span key={index}>{tag}{index < Object.values(imageData.tags).length - 1 ? ', ' : ''}</span>
           ))}
       </p>

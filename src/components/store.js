@@ -1,7 +1,7 @@
 // import zustand
 import {create} from 'zustand';
 import { devtools, persist } from 'zustand/middleware'
-
+import phodo from './name.png'
 // define the store
 export const useStore = create(set => ({
   projectId: null,
@@ -12,7 +12,7 @@ export const useStore = create(set => ({
 
 {/* 🐼mypage detailshow 용 ⬇️*/}
 let detailStore = (set) => ({
-  recentImg :'',
+  recentImg : phodo,
   changeRCImg : (img) =>
     set((state) => ({ recentImg : img}))
 })
