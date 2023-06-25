@@ -1,80 +1,101 @@
-// import style sheets
-import 'reactflow/dist/style.css';
-
-import './index.css';
-// import Node Types
-import TextNode from './Node/TextNode';
-import PictureNode from './Node/PictureNode.js';
-
-// import Component
-
-// 🍀 WebRTC setting
-import useNodesStateSynced, { nodesMap } from '../../hooks/useNodesStateSynced';
-import useEdgesStateSynced from '../../hooks/useEdgesStateSynced';
-
-// import React 
-import React, { useState, useRef , useCallback } from 'react';
+// 컴포넌트
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Sidebar from '../Editor/SideBar/Sidebar';
 import MenuBarR from "../../components/Editor/MenuBarR";
-import VoiceBar from "../../components/Editor/Voice/VoiceBar"
+
+// 스타일 시트
+import 'reactflow/dist/style.css';
+import './index.css';
+// 노드 타입
+import TextNode from './Node/TextNode';
+import PictureNode from './Node/PictureNode.js';
+// 리액트 플로우 노드 
+import ReactFlow, { ReactFlowProvider, useReactFlow, Controls, MiniMap} from 'reactflow';
+import { Doc } from 'yjs';
+import { WebsocketProvider } from 'y-websocket';
+
+// 🍀 WebRTC setting
+import { useNodesStateSynced } from '../../hooks/useNodesStateSynced';
+import { useEdgesStateSynced } from '../../hooks/useEdgesStateSynced';
+import  VoiceChat  from './Voice/VoiceBar'
+
+import { useParams } from "react-router-dom";
 
 
-// import React Flow 
-import ReactFlow, {
-  ReactFlowProvider, useReactFlow, Controls,
-  MiniMap} from 'reactflow';
-
-// import zustand
-import {create} from 'zustand';
-
-// define the store
-// export const useStore = create(set => ({
-//   projectId: null,
-//   setProjectId: (id) => set({ projectId: id }),
-// }));
-
-//🐬 웹 알티시 테스팅
+//🐬 과금버전 세팅
 const proOptions = {
   account: 'paid-pro',
   hideAttribution: true,
 };
 
-const flowKey = 'example-flow';
-const nodeTypes = {TextNode: TextNode, 
-                  pix: PictureNode,
-                }
+//🐬 노드 타입 세팅
+const nodeTypes = {
+  TextNode: TextNode, 
+  pix: PictureNode
+};
 
-// 적어도 100개는 만들지 않을거 아니야 ~ 
+//🐬 노드 아이디 세팅
 let id = 100; 
 const getNodeId = () => `${id++}`;
 const fitViewOptions = {
    padding: 3,
  };
 
-//////////////////
-  // 🍀🌼 기존에 드래그와 동일, 근데 기존은 그냥 컴포넌트 밖에다 세팅이 되어있음
-  // const onDragOver = useCallback((event) => {
-  //   event.preventDefault();
-  //   event.dataTransfer.dropEffect = 'move';
-  // }, []);
 
 const Editingbox2 = () => {
-   
+  const {projectId} = useParams();
+  /* * 
+   * 🐬 Ydoc 세팅 
+   * */
+  
+  console.log('projectId : ', projectId)
+  // 🐬 ydocument 생성
+  const ydoc = new Doc();
+  console.log('ydoc created : ', ydoc)
+
+  let reconnectionAttempts = 0;
+  const MAX_RECONNECTION_ATTEMPTS = 5; // Set your limit
+
+  const wsProvider = new WebsocketProvider(
+    'wss://phodo.store/ws', // 🔥 요청을 보낼 웹소켓 서버
+    projectId, // 🔥 프로젝트 아이디
+    ydoc
+  );
+
+  wsProvider.on('status', event => {
+    console.log(event);
+    console.log(event.status);
+    if (event.status === "disconnected") {
+      reconnectionAttempts++;
+      
+      if (reconnectionAttempts > MAX_RECONNECTION_ATTEMPTS) {
+        console.log("Max reconnection attempts reached");
+        wsProvider.disconnect(); // Disconnect the provider
+      }
+    } else if (event.status === "connected") {
+      reconnectionAttempts = 0; // Reset the counter on successful connection
+    }
+  })
+
+
+  const nodesMap = ydoc.getMap('nodes');
+  const edgesMap = ydoc.getMap('edges');
+
+  const [edges, onEdgesChange, onConnect] = useEdgesStateSynced(ydoc);
+  const [nodes, onNodesChange] = useNodesStateSynced(ydoc, edgesMap);
+
+
+
+  /* * 
+   * 🐬 아니셜라이징 세팅
+   * */
+  
+
   const reactFlowWrapper = useRef(null); // 큰 react flow wrapper
-  const [reactFlowInstance, setReactFlowInstance] = useState(null);
   
   //🍀 webrtc 세팅
-  const [nodes, onNodesChange] = useNodesStateSynced();
-  const [edges, onEdgesChange, onConnect] = useEdgesStateSynced();
-  const { project, setViewport } = useReactFlow();
-
-  // 🌼 기존 세팅: 엣지 새로 생성
-  // const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
-
-  // 🌼 기존 세팅: 노드끌어서 생성, 첫 시작
-  //   const onConnectStart = useCallback((_, {nodeId}) => {
-  //    connectingNodeId.current = nodeId;
-  // }, []);
+  
+  const { project } = useReactFlow();
 
   // 🍀🌼 기존에 드래그와 동일, 근데 기존은 그냥 컴포넌트 밖에다 세팅이 되어있음
   const onDragOver = useCallback((event) => {
@@ -150,9 +171,10 @@ const Editingbox2 = () => {
 
     </ReactFlow>
     </div>
+
     <Sidebar/>
     <div style={{ position: 'absolute',left: '50px', top: '70px', zIndex: 100 }}>
-      <VoiceBar />
+      <VoiceChat />
     </div>
     <div style={{ position: 'absolute', zIndex: 150 }}>
       <MenuBarR />
@@ -163,7 +185,6 @@ const Editingbox2 = () => {
 
 export default () => (
   <>
-  {/* <Modal/> */}
   <ReactFlowProvider>
     <Editingbox2 />
   </ReactFlowProvider>

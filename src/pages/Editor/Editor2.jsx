@@ -12,8 +12,7 @@ function Editor2() {
     return (
         <div className="edit">
             <Header />
-            {/* {projectId} project created! */}
-            <Editingbox2 projectId={projectId}/>
+            <Editingbox2 projectId={projectId}/>ㄴ
         </div>
     )
 }

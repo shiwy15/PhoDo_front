@@ -19,6 +19,7 @@ import Typography from '@mui/material/Typography';
 import GallerySearch from './GallerySearch';
 import TimeBar from './TimeBar';
 import TagButtons from './TagButtons';
+import Nodechangebar from './Nodechangebar';
 
 const fetchGallery = () => {
   return request({ url: 'api/gallery' });
@@ -113,6 +114,7 @@ export default () => {
             Text Node
           </div>
         </MenuItem>  
+        <Nodechangebar/>
          </MenuList>
         </Paper>
     </div>
