@@ -13,7 +13,7 @@ const ydoc = new Doc();
 // });
 
 const wsProvider = new WebsocketProvider(
-    // 'ws://13.125.210.252:1234', //🔥 hojun ec2 setting
+    // 'ws://13.125.210.252:1234', //🔥 hojun ec2 settin
     'ws://13.125.217.253:1234', //🔥 jinkyo ec2 setting
     'Hotels',
     ydoc
