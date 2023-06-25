@@ -21,7 +21,7 @@ const Forgotpwbox = () => {
         setFormData({ ...formData, [text]: e.target.value });
     };
 
-    console.log(formData); //🔥 testing
+    // console.log(formData); //🔥 testing
 
     const handleSubmit = e => {
         e.preventDefault();

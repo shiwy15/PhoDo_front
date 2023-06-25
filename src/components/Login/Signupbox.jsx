@@ -15,7 +15,7 @@ const Signupbox = () => {
 
     const { name, email, password, error } = formData;
 
-    console.log('signup:  ', formData); //🔥 testing
+    // console.log('signup:  ', formData); //🔥 testing
     
     const handleChange = text => e => {
         setFormData({ ...formData, [text]: e.target.value });

@@ -13,7 +13,7 @@ const Loginbox = () => {
 
     const { email, password, error } = formData;
 
-    console.log(formData); //🔥 testing
+    // console.log(formData); //🔥 testing
     
     const handleChange = text => e => {
         setFormData({ ...formData, [text]: e.target.value });
