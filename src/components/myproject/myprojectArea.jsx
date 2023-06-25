@@ -19,7 +19,7 @@ import { request } from "../../utils/axios-utils"
 
 //서버용 코드
 const fetchProject = () => {
-  return request({ url: 'api/project'})
+  return request({ url: 'project'})
 }
 
 const MyProjectArea = () => {

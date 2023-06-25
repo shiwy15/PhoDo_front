@@ -14,20 +14,12 @@ import { HiUserCircle } from 'react-icons/hi';
 
 //서버용 코드
 const fetchProject = () => {
-  return request({ url: 'api/project'})
+  return request({ url: 'project'})
 }
 
-const fetchMembers = () => {
-  return request({ url: 'api/members'})
-}
-
-// const membersData = [
-//         {"1" : "jinkyo"},
-//         {"2" : "yongseo"},
-//         {"3" : "hojun"},
-//         {"4" : "hyeontae"},
-//         {"5" : "dohee"}
-//     ]
+// const fetchMembers = () => {
+//   return request({ url: 'api/members'})
+// }
 
 const Sidebar = () => {
     // useQuery를 사용하여 fetchLikePhoto 함수를 호출하고, 그 결과를 콘솔에 출력
@@ -37,11 +29,11 @@ const Sidebar = () => {
         // retryDelay:500
     });
 
-    const { data : membersData } = useQuery('membersData', fetchMembers,{
-        // onSuccess: (data) => {console.log('sidebar get success', data)},
-        // retry:5,
-        // retryDelay:500
-    });
+    // const { data : membersData } = useQuery('membersData', fetchMembers,{
+    //     // onSuccess: (data) => {console.log('sidebar get success', data)},
+    //     // retry:5,
+    //     // retryDelay:500
+    // });
 
     
     {/* 🐼 즐겨찾기 해놓은 프로젝트 3개까지 표시 */}
@@ -106,7 +98,7 @@ const Sidebar = () => {
             <div className='mx-4 my-4'><Divider /></div>
             
             {/* 🐼  접속 멤버 목록 리스트 : demo*/}
-            <div className="text-lg mb-4 my-2 text-center bg-violet-100 p-1 rounded-lg">
+            {/* <div className="text-lg mb-4 my-2 text-center bg-violet-100 p-1 rounded-lg">
                 멤버 목록</div>
                 <div className="p-4">
                     <ul>
@@ -121,7 +113,7 @@ const Sidebar = () => {
                             );
                         })}
                     </ul>
-                </div>
+                </div> */}
 
             </div>
         </div>
