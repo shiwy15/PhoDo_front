@@ -150,7 +150,7 @@ const Editingbox2 = () => {
 
     </ReactFlow>
     </div>
-    <Sidebar/>
+    <Sidebar style={{zIndex:0}}/>
     <div style={{ position: 'absolute',left: '50px', top: '70px', zIndex: 100 }}>
       <VoiceBar />
     </div>
