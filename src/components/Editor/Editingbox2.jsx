@@ -83,8 +83,8 @@ const Editingbox2 = () => {
     });
       // 🌟 Fetch nodes from the API
 // 🌟 Fetch project data from the API
-  axios.get(`http://localhost:4000/project/${projectId}`)
-  // axios.get(`https://hyeontae.shop/project/${projectId}`)
+  // axios.get(`http://localhost:4000/project/${projectId}`)
+  axios.get(`https://hyeontae.shop/project/${projectId}`)
   .then((res) => {
     const data = res.data; 
     console.log(res.data);
