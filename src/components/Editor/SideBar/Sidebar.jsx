@@ -26,7 +26,7 @@ import Typography from '@mui/material/Typography';
 import useFormatDate from "../../../hooks/useFormatDate";
 
 /** 기능component import **/
-import Nodechangebar from './Nodechangebar';
+// import Nodechangebar from './Nodechangebar';
 
 const fetchGallery = () => {
   return request({ url: 'api/gallery' });
@@ -249,7 +249,7 @@ export default () => {
             Text Node
           </div>
         </MenuItem>  
-            <Nodechangebar/>
+            {/* <Nodechangebar/> */}
          </MenuList>
         </Paper>
     </div>
