@@ -36,8 +36,9 @@ const nodeTypes = {
 };
 
 //🐬 노드 아이디 세팅
-let id = 100; 
+let id = Math.floor(Math.random() * (10000 - 100 + 1)) + 100;
 const getNodeId = () => `${id++}`;
+
 const fitViewOptions = {
    padding: 3,
  };
@@ -80,8 +81,8 @@ const Editingbox2 = () => {
     });
       // 🌟 Fetch nodes from the API
 // 🌟 Fetch project data from the API
-  // axios.get(`http://localhost:4000/project/${projectId}`)
-  axios.get(`https://hyeontae.shop/project/${projectId}`)
+  axios.get(`http://localhost:4000/project/${projectId}`)
+  // axios.get(`https://hyeontae.shop/project/${projectId}`)
   .then((res) => {
     const data = res.data; 
     console.log(res.data);
