@@ -9,6 +9,7 @@ import './index.css';
 // 노드 타입
 import TextNode from './Node/TextNode';
 import PictureNode from './Node/PictureNode.js';
+
 // 리액트 플로우 노드 
 import ReactFlow, { ReactFlowProvider, useReactFlow, Controls, MiniMap} from 'reactflow';
 import { Doc } from 'yjs';
@@ -23,7 +24,8 @@ import { useParams } from "react-router-dom";
 import axios from 'axios';
 import * as awarenessProtocol from 'y-protocols/awareness.js'
 
-//🐬 과금버전 세팅
+
+//🐬 웹 알티시 테스팅
 const proOptions = {
   account: 'paid-pro',
   hideAttribution: true,
