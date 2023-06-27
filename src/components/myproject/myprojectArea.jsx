@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
+
+// 🌿 custom hook
+import useFormatDate from '../../hooks/useFormatDate';
+
 //css관련
 import { Link } from 'react-router-dom';
 import { Divider } from '@mui/material';
@@ -22,9 +26,11 @@ const fetchProject = () => {
   return request({ url: 'project'})
 }
 
+
 const MyProjectArea = () => {
     const [searchTerm, setSearchTerm] = useState('');
-    const navigate = useNavigate();
+    const formatData = useFormatDate();
+
 
     {/* 🐼 project GET hook */}
     const { data : projectData} = useQuery('projectList', fetchProject,{
@@ -33,19 +39,12 @@ const MyProjectArea = () => {
         // retryDelay:500
     });
 
-    {/* 🐼 검색창 버튼*/}
-    const handleSearch = () => {
-        console.log('Handle search:', searchTerm);
-        // Define what should happen when the search is handled
-    };
-
     {/* 🐼 날짜 빠른 순으로 3개 표시 */}
     const recentProjects = projectData?.data?.sort((a, b) => new Date(b.time) - new Date(a.time)).slice(0, 5);
 
-
-
     useEffect(()=> {
         initTE({ Ripple });
+        console.log('Handle search:', searchTerm);
     },[])
     
     return (
@@ -53,7 +52,7 @@ const MyProjectArea = () => {
             {/* 🌿 제목 및 '새프로젝트 버튼' 구간*/}
             <div className='flex flex-wrap mt-16 m-2 p-4 justify-between'>
                 {/* 🌿 제목 */}
-                <p className='mt-6 tracking-tight text-3xl text-purple-800 font-semibold'>My Project </p>
+                <p className='mt-6 tracking-tight text-3xl text-purple-800 font-semibold mr-2'>My Project </p>
                 {/* 🌿 검색창 */}
                 <div className="relative -ml-4 mt-5 flex w-8/12 h-12 flex-wrap items-stretch ">
                     <input
@@ -69,7 +68,7 @@ const MyProjectArea = () => {
                     className="relative z-[2] rounded-r-3xl border-2 border-primary px-6 py-2 text-xs font-medium uppercase text-primary transition duration-150 ease-in-out hover:bg-purple hover:bg-opacity-5 focus:outline-none focus:ring-0"
                     type="button"
                     id="button-addon3"
-                    onClick={handleSearch}
+                    onClick={()=>{}}
                     data-te-ripple-init>
                     Search
                     </button>
@@ -90,11 +89,26 @@ const MyProjectArea = () => {
                     </button>
                 </Link>
             </div>
+            {/* 🌿 검색결과 */}
+            <div className="flex items-center justify-start bg-violet-200 rounded-xl px-4 w-5/6 pt-1 pb-1 h-16 mx-auto overflow-x-auto mb-4">
+                <h3 className='mr-2 text-xl min-w-fit'>검색 결과 : </h3>
+                {
+                    projectData?.data?.filter(project => project.name === searchTerm).map(project => (
+                        
+                        <a key={project._id} href={`newproject/${project._id}`} className='flex mx-2 items-center justify-start border  px-4 py-1 bg-violet-800 text-white rounded-full min-w-fit'>
+                            <p key={project._id} className='text-xl'>{`${project.name}`}</p>
+                            <p key={project._id} className='text-md ml-1 mt-1' >{` by ${formatData(project.time)}`}</p>
+                        </a>
+                    ))
+                }
+            </div>
+
+
             <Divider />
 
             {/* 🐼최근 참여한 프로젝트 리스트 */}
             <div className='h-80'>
-                <h2 className="text-2xl pl-2 font-semibold m-6 text-gray-600 text-left">최근 참여한 프로젝트</h2>
+                <h2 className="text-2xl pl-2 font-semibold ml-6 mt-6 text-gray-600 text-left">최근 참여한 프로젝트</h2>
                 <div className=' flex flex-col justify-center items-center'>
                     <ImageList sx={{ width: '95%', height: '224px'}} cols={5}>
                         {recentProjects && recentProjects.map((project) => (
@@ -129,7 +143,7 @@ const MyProjectArea = () => {
             <div className=' flex flex-col justify-center items-center'>
                 <ImageList sx={{ width: '95%', height: '224px'}} cols={5}>
                     {projectData && projectData?.data?.sort((a, b) => new Date(a.time) - new Date(b.time)).map((project) => (
-                        <Link to={`project/${project._id}`}>
+                        <a href={`newproject/${project._id}`}>
                             <ImageListItem key={project._id} sx={{ margin: '5px' }} >
                                 <img
                                     src={`${project.image}?w=248&fit=crop&auto=format`}
@@ -144,7 +158,7 @@ const MyProjectArea = () => {
                                     position="below"
                                 />
                             </ImageListItem>
-                        </Link>
+                        </a>
                     ))}
                 </ImageList>
             </div>
