@@ -11,7 +11,7 @@ const VoiceChat = () => {
   const peersRef = useRef({});
   const localStreamRef = useRef();
   const controlsRef = useRef();
-  const [members, setMembers] = useState([]);
+  // const [members, setMembers] = useState([]);
   const { projectId } = useParams();
   const [userList, setUserList] = useState([]);
 
@@ -57,9 +57,15 @@ const VoiceChat = () => {
     });
 
     socketRef.current.on('new_user', (user) => {
-      setUserList(prevUserList => [...prevUserList, user]);
+      setUserList(prevUserList => {
+        if (!prevUserList.some(u => u.nickname === user.nickname)) {
+          return [...prevUserList, user];
+        } else {
+          return prevUserList;
+        }
+      });
     });
-
+    
     {/*🌿 User끼리 연결해주는 함수*/}
     function createPeerConnection(socketId) {
       console.log('voice 연결 ')
