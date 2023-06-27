@@ -1,6 +1,5 @@
 // 컴포넌트
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import Sidebar from '../Editor/SideBar/Sidebar';
 import MenuBarR from "../../components/Editor/MenuBarR";
 
 // 스타일 시트
@@ -175,7 +174,7 @@ const Editingbox2 = () => {
 
   return (
     <>
-    <div className= "wrapper" ref={reactFlowWrapper} style={{ height: '100vh'}}>
+    <div className= "wrapper" ref={reactFlowWrapper} style={{Index:0, height: '100vh'}}>
     <ReactFlow
       nodes={nodes}
       edges={edges}
@@ -189,19 +188,17 @@ const Editingbox2 = () => {
       style= {{background : '#F3B0C3', position:'relative'}} 
       fitView
       fitViewOptions={fitViewOptions}>
-      <Controls position='top-left'/>
+      <Controls position='top-left' style={{top:'60px'}} />
       <MiniMap pannable position='bottom-left'/>
-
+    <div style={{zIndex: 150 }}>
+      <MenuBarR />
+    </div>
     </ReactFlow>
     </div>
-
-    <Sidebar/>
     <div style={{ position: 'absolute',left: '50px', top: '70px', zIndex: 100 }}>
       <VoiceChat />
     </div>
-    <div style={{ position: 'absolute', zIndex: 150 }}>
-      <MenuBarR />
-    </div>
+
     </>
   );
 };

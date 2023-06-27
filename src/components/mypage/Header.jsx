@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 import { useUserStore } from '../store';
 import {request} from '../../utils/axios-utils';
 
-export const Header = () => {
+const Header = () => {
   const navigate = useNavigate();
   const userEmail = useUserStore(state => state.userEmail);
 
@@ -36,9 +36,9 @@ export const Header = () => {
       console.log('Error during logout:', error);
     }
   };
-
+  
   return (
-    <React.Fragment>
+    <div className='fixed top-0' style={{zIndex: 200}}>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'space-between', backgroundColor:'white', width: '100vw', height: '60px' }}>
         <div style={{ display: 'flex', alignItems: 'flex-end' }}>
           <Link to="/Main">
@@ -65,7 +65,7 @@ export const Header = () => {
           </Avatar>
         </div>
       </Toolbar>
-    </React.Fragment>
+    </div>
   )
 }
 export default Header;
