@@ -222,24 +222,24 @@ const VoiceChat = () => {
   
 
   return (
-  <div className='p-4 rounded shadow-md' style={{ minWidth: '350px', height: '100px' }}>
-    <div className="flex items-center">
-      
-      <div className="flex-none overflow-x-auto p-1 rounded whitespace-nowrap"  style={{ height: '80px', minWidth: '120px' }}>
-          <ul id="members" className="m-0 p-0 inline-block" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap' }}>
-            {userList.map((user, index) => (
-              <li key={index} className="inline-block mr-2">
-                <img src="/realTimeUser.png" alt="User icon" style={{ width: '17px', height: '17px' }} />
-                <p>{user.nickname}</p>
-              </li>
-            ))}
-          </ul>
-      </div>
-      <div ref={controlsRef} className="flex-none p-1 rounded overflow-x-auto whitespace-nowrap" style={{ height: '32px', minWidth: '120px' }}>
-        {/* Mute button will be appended here */}
+    <div className='p-4 rounded' style={{ minWidth: '350px', height: '70px' }}>
+      <div className="flex items-center">
+        
+        <div className="flex-none overflow-x-auto p-1 rounded whitespace-nowrap"  style={{ height: '60px', minWidth: '100px' }}>
+            <ul id="members" className="m-0 p-0 inline-block" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap' }}>
+              {userList.map((user, index) => (
+                <li key={index} className="inline-block mr-2"  style={{marginTop: '10px'}}>
+                  <img src="/realTimeUser.png" alt="User icon" style={{ width: '17px', height: '17px', marginLeft : '4px' }} />
+                  <p>{user.nickname}</p>
+                </li>
+              ))}
+            </ul>
+        </div>
+        <div ref={controlsRef} className="flex-none p-1 rounded overflow-x-auto whitespace-nowrap" style={{ height: '32px', minWidth: '120px' }}>
+          {/* Mute button will be appended here */}
+        </div>
       </div>
     </div>
-  </div>
   );
 };
 
