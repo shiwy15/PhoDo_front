@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 //✉️소켓 통신용 import
 import io from 'socket.io-client';
+import { useUserStore } from '../../store';
 
 const VoiceChat = () => {
   {/*🌿 user에게 전달받은 변수들을 저장하는 useRef, useState*/}
@@ -10,7 +12,9 @@ const VoiceChat = () => {
   const localStreamRef = useRef();
   const controlsRef = useRef();
   const [members, setMembers] = useState([]);
+  const { projectId } = useParams();
 
+  const nickname = useUserStore(state => state.userName) // 주스탄드 스토어...?
 
 {/* 🌿초기 렌더링때 실행되는 hook */}
   useEffect(() => {
@@ -22,6 +26,9 @@ const VoiceChat = () => {
     {/*🌿 연결이 안됐으면, 콘솔창에 에러 띄우기 */}
     socketRef.current.on('connect_error', (err) => {
     console.log(`Connect error due to ${err.message}`);});
+
+    {/*🌿 방 이름 : projectId, 닉네임 : 로컬스토리지에 저장된 userName */}
+    joinRoom(projectId, nickname)
 
     {/*🌿 'accept_join'이벤트를 수신 대기하다가 on되면, 안의 콜백 함수 호출
     setMembers(users): 이 부분은 React의 상태를 업데이트
@@ -97,7 +104,7 @@ const VoiceChat = () => {
       .then(offer => {
           return peerConnection.setLocalDescription(offer);})
       .then(() => {
-          const nickname = document.getElementById('nickname').value;
+          // const nickname = document.getElementById('nickname').value;
           socketRef.current.emit('offer', peerConnection.localDescription, socketId, nickname);
         }
       );
@@ -174,6 +181,7 @@ const VoiceChat = () => {
   }, []);
 
   const joinRoom = (roomName, nickname) => {
+    console.log()
     console.log("joinRoom function called with roomName:", roomName, "and nickname:", nickname); // 추가
 
     navigator.mediaDevices.getUserMedia({ audio: true, video: false })
@@ -202,26 +210,17 @@ const VoiceChat = () => {
   };
 
   return (
-  <div className='p-4 bg-white rounded shadow-md' style={{ width: '790px', height: '60px' }}>
+  <div className='p-4 rounded shadow-md' style={{ minWidth: '350px', height: '60px' }}>
     <div className="flex items-center">
-      <div className="flex items-center text-md">
-        <p className="mr-2 text-md">VoiceChat:</p>
-        <input className="w-full h-8 p-1 border mr-2 border-gray-300 rounded text-md" id="room" type="text" placeholder=" room name" />
-        <input className="w-full h-8 p-1 border mr-2 border-gray-300 rounded text-md" id="nickname" type="text" placeholder=" your nickname" />
-        <button className="px-2 py-1 h-8 text-md text-white bg-blue-500 rounded hover:bg-blue-600" id="join" onClick={() => joinRoom(document.getElementById('room').value, document.getElementById('nickname').value)}>
-            Join
-        </button>
-      </div>
-      <p className="mx-2">with:</p>
-      <div className="flex-none overflow-x-auto p-1 bg-gray-100 rounded whitespace-nowrap" style={{ height: '32px', width: '120px' }}>
+      
+      <div className="flex-none overflow-x-auto p-1 rounded whitespace-nowrap"  style={{ height: '32px', minWidth: '120px' }}>
         <ul id="members" className="m-0 p-0 inline-block">
             {members.map((member, index) => (
                 <li key={index} className="inline-block mr-2">{member.nickname}</li>
             ))}
         </ul>
       </div>
-      <p className="mx-2">quiet:</p>
-      <div ref={controlsRef} className="flex-none p-1 bg-gray-100 rounded overflow-x-auto whitespace-nowrap" style={{ height: '32px', width: '120px' }}>
+      <div ref={controlsRef} className="flex-none p-1 rounded overflow-x-auto whitespace-nowrap" style={{ height: '32px', minWidth: '120px' }}>
         {/* Mute button will be appended here */}
       </div>
     </div>

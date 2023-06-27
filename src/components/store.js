@@ -32,8 +32,11 @@ export const useDetailStore = create(detailStore)
 {/* 🐼login시 받아온 email 공유 용 ⬇️*/}
 let userStore = (set) => ({
   userEmail : '',
+  userName  : '',
   setUserEmail : (email) => 
-    set((state) => ({ userEmail : email}))
+    set((state) => ({ userEmail : email})),
+  setUserName : (name) => 
+    set((state) => ({ userName : name}))
 })
 
 userStore = devtools(userStore)
