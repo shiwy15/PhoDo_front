@@ -13,9 +13,18 @@ import { Link } from 'react-router-dom';
 import { useUserStore } from '../store';
 import {request} from '../../utils/axios-utils';
 
+//🐼redirecting
+import {useContext} from 'react';
+import { UserContext } from "../../App";
+
 const Header = () => {
   const navigate = useNavigate();
   const userEmail = useUserStore(state => state.userEmail);
+  const userName = useUserStore(state => state.userName);
+
+  {/*🐼 userData 담아서 다른 컴포턴트와 공유할 수 있는 hook*/}
+  const { user, setUser } = useContext(UserContext);
+
 
   const handleLogout = async () => {
     try {
@@ -28,6 +37,7 @@ const Header = () => {
       // If the request was successful, navigate to '/'
       if (response.status === 200) {
         console.log('log out!')
+        setUser({ loggedIn: false });
         navigate('/');
       } else {
         console.log('Logout failed');
@@ -56,13 +66,14 @@ const Header = () => {
         </div>
         
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <span>환영합니다! {userEmail}님</span>
+          <span className='text-xl'>  환영합니다! {userName} 님</span>
+
           <IconButton sx={{ ml: 1 }} onClick={handleLogout}>
             <LogoutIcon/>
           </IconButton>
-          <Avatar variant="outlined" size="small" sx={{ ml: 1 }}>
+          {/* <Avatar variant="outlined" size="small" sx={{ ml: 1 }}>
             A
-          </Avatar>
+          </Avatar> */}
         </div>
       </Toolbar>
     </div>

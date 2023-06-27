@@ -15,45 +15,65 @@ import Practice from "./pages/Practice/Practice.jsx"
 import Practice3 from "./pages/Practice/Practice3.jsx"
 import Test from "./pages/Practice/Test.jsx"
 
+
+//page component
 import { MainPage } from './pages/Main/Main.jsx'
 import Mypage from "./pages/Mypage/Mypage";
 import Myproject from "./pages/Myproject/Myproject";
-import { Routes, Route } from "react-router-dom"
 
-// import ForcedDirectedTree from "./pages/Editor/forcedTree.jsx"
-// import VennDiagram from "./pages/Editor/venndiagram.jsx"
+//routing
+import { Routes, Route } from "react-router-dom";
+import { createContext, useState, useEffect } from "react";
+import ProtectedRoutes from "./pages/Login/ProtectedRoutes.jsx";
+
+export const UserContext = createContext();
+
+
 
 function App() {
+  const [user, setUser] = useState(
+    //UserContext
+    JSON.parse(localStorage.getItem("user")) || { loggedIn: false }
+  );
+
+  
+  // useEffect(() => {
+  //   localStorage.setItem("user", JSON.stringify(user));
+  // }, [user]);
+
   return (
     <div className="App">
-      <Routes>
-        {/* login set */}
-        <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forgotpw" element={<Forgotpw />} />
-        <Route path="/reset/:token" element={<Passwordchange />} />
+      <UserContext.Provider value={{ user, setUser }}>
+        <Routes>
+          {/* login set */}
+          <Route path="/" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgotpw" element={<Forgotpw />} />
+          <Route path="/reset/:token" element={<Passwordchange />} />
+          
+          <Route element={<ProtectedRoutes />}>
+            {/* editor set */}
+            <Route path="/modal" element={<Modal />} />
+            <Route path="/newproject/:projectId" element={<Editor2 />} />
+            <Route path="/existingproject" element={<Editor4 />} />
 
-        {/* editor set */}
-        <Route path="/modal" element={<Modal />} />
-        <Route path="/newproject/:projectId" element={<Editor2 />} />
-        <Route path="/existingproject" element={<Editor4 />} />
+            {/* react query sample */}
+            <Route path="/practice" element={<Practice />} />
+            <Route path="/practice3" element={<Practice3 />} />
+            <Route path="/Test" element={<Test />} />
 
-        {/* react query sample */}
-        <Route path="/practice" element={<Practice />} />
-        <Route path="/practice3" element={<Practice3 />} />
-        <Route path="/Test" element={<Test />} />
+            {/* My page */}
+            <Route path="/mypage" element={<Mypage />} />
+            <Route path="/myproject" element={<Myproject />} />
 
-        {/* My page */}
-        <Route path="/mypage" element={<Mypage />} />
-        <Route path="/myproject" element={<Myproject />} />
-
-        {/* Main */}
-        <Route path="/main" element={<MainPage />} />
-
-
-      </Routes>
+            {/* Main */}
+            <Route path="/main" element={<MainPage />} />
+            <Route path="/*" element={<MainPage />} />
+          </Route>
+        </Routes>
+      </UserContext.Provider>
     </div>
-  );
+    );
 }
 
 export default App;
