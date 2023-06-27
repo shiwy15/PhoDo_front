@@ -196,8 +196,8 @@ const VoiceChat = () => {
       const muteButtonImage = document.createElement('img');
       muteButtonImage.src = '/onmic.png';
 
-      muteButtonImage.style.width = '20px';
-      muteButtonImage.style.height = '20px';
+      muteButtonImage.style.width = '17px';
+      muteButtonImage.style.height = '17px';
 
       muteButton.appendChild(muteButtonImage);
       muteButton.onclick = toggleMute
@@ -222,14 +222,14 @@ const VoiceChat = () => {
   
 
   return (
-  <div className='p-4 rounded shadow-md' style={{ minWidth: '350px', height: '60px' }}>
+  <div className='p-4 rounded shadow-md' style={{ minWidth: '350px', height: '100px' }}>
     <div className="flex items-center">
       
-      <div className="flex-none overflow-x-auto p-1 rounded whitespace-nowrap"  style={{ height: '50px', minWidth: '120px' }}>
+      <div className="flex-none overflow-x-auto p-1 rounded whitespace-nowrap"  style={{ height: '80px', minWidth: '120px' }}>
           <ul id="members" className="m-0 p-0 inline-block" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap' }}>
             {userList.map((user, index) => (
               <li key={index} className="inline-block mr-2">
-                <img src="/realTimeUser.png" alt="User icon" style={{ width: '20px', height: '20px' }} />
+                <img src="/realTimeUser.png" alt="User icon" style={{ width: '17px', height: '17px' }} />
                 <p>{user.nickname}</p>
               </li>
             ))}
