@@ -12,10 +12,10 @@ import { Link } from 'react-router-dom';
 //store 호출용
 import { useUserStore } from '../store';
 
-export const Header = () => {
+const Header = () => {
   const userEmail = useUserStore(state => state.userEmail)
   return (
-    <React.Fragment>
+    <div className='fixed top-0' style={{zIndex: 200}}>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'space-between', backgroundColor:'white', width: '100vw', height: '60px' }}>
         <div style={{ display: 'flex', alignItems: 'flex-end' }}>
           <Link to="/Main">
@@ -42,7 +42,7 @@ export const Header = () => {
           </Avatar>
         </div>
       </Toolbar>
-    </React.Fragment>
+    </div>
   )
 }
 export default Header;
