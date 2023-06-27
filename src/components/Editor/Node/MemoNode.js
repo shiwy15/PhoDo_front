@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function MemoNode({ data, isConnectable }) {
+const MemoNode =({ data, isConnectable }) => {
 
   const [content, setContent] = useState(data.content);
 

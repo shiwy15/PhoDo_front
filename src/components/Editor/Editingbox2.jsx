@@ -6,8 +6,13 @@ import MenuBarR from "../../components/Editor/MenuBarR";
 import 'reactflow/dist/style.css';
 import './index.css';
 // 노드 타입
-import TextNode from './Node/TextNode';
+import MemoNode from './Node/MemoNode';
 import PictureNode from './Node/PictureNode.js';
+import TaskNameNode from './Node/TaskNameNode';
+import TextNode1 from './Node/TextNode';
+import TextNode2 from './Node/TextNode2';
+import TextNode3 from './Node/TextNode3';
+
 
 // 리액트 플로우 노드 
 import ReactFlow, { ReactFlowProvider, useReactFlow, Controls, MiniMap} from 'reactflow';
@@ -32,7 +37,11 @@ const proOptions = {
 
 //🐬 노드 타입 세팅
 const nodeTypes = {
-  TextNode: TextNode, 
+  MemoNode : MemoNode,
+  TaskNameNode : TaskNameNode,
+  TextNode1: TextNode1, 
+  TextNode2 : TextNode2,
+  TextNode3 , TextNode3,
   pix: PictureNode
 };
 

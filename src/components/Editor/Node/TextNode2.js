@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 import { Handle, Position } from 'reactflow';
 
-function textNode2({ data, isConnectable }) {
+function TextNode2({ data, isConnectable }) {
   const [title, setTitle] = useState(data.title);
   const [content, setContent] = useState(data.content);
 
@@ -52,4 +52,4 @@ function textNode2({ data, isConnectable }) {
   );
 }
 
-export default textNode2;
+export default TextNode2;

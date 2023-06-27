@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 import { Handle, Position } from 'reactflow';
 
-function tasknameNode({ data, isConnectable }) {
+const TasknameNode = ({ data, isConnectable }) => {
   const [title, setTitle] = useState(data.title);
   const [date, setDate] = useState(data.date);
   const [text, setText] = useState(data.label);
@@ -78,4 +78,4 @@ function tasknameNode({ data, isConnectable }) {
   );
 }
 
-export default tasknameNode;
+export default TasknameNode;
