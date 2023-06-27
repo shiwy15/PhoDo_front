@@ -75,7 +75,7 @@ export const Modal = () => {
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => navigate('/Main')} color="primary">
+                <Button onClick={() => navigate('/main')} color="primary">
                     Cancel
                 </Button>
                 <Button 
