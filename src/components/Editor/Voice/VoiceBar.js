@@ -13,6 +13,7 @@ const VoiceChat = () => {
   const controlsRef = useRef();
   const [members, setMembers] = useState([]);
   const { projectId } = useParams();
+  const [userList, setUserList] = useState([]);
 
   const nickname = useUserStore(state => state.userName) // 주스탄드 스토어...?
 
@@ -57,10 +58,7 @@ const VoiceChat = () => {
     });
 
     socketRef.current.on('new_user', (user) => {
-        const li = document.createElement('li');
-        li.textContent = user.nickname;
-        const membersList = document.getElementById('members'); // Assuming 'members' is the id of the ul element
-        membersList.appendChild(li);
+      setUserList(prevUserList => [...prevUserList, user]);
     });
 
     {/*🌿 User끼리 연결해주는 함수*/}
@@ -214,11 +212,11 @@ const VoiceChat = () => {
     <div className="flex items-center">
       
       <div className="flex-none overflow-x-auto p-1 rounded whitespace-nowrap"  style={{ height: '32px', minWidth: '120px' }}>
-        <ul id="members" style={{display: 'flex', flexDirection: 'row', flexWrap: 'nowrap'}} className="m-0 p-0 inline-block">
-            {members.map((member, index) => (
-                <li key={index} className="inline-block mr-2">{member.nickname}</li>
+          <ul id="members" className="m-0 p-0 inline-block" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap' }}>
+            {userList.map((user, index) => (
+              <li key={index} className="inline-block mr-2">{user.nickname}</li>
             ))}
-        </ul>
+          </ul>
       </div>
       <div ref={controlsRef} className="flex-none p-1 rounded overflow-x-auto whitespace-nowrap" style={{ height: '32px', minWidth: '120px' }}>
         {/* Mute button will be appended here */}
