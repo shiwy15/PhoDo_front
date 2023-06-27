@@ -13,7 +13,6 @@ const ProtectedRoutes = () => {
   const location = useLocation();
   const isAuth = useAuth();
 
-  console.log('isAuth:', isAuth)
   return isAuth ? (
     <Outlet />
   ) : (

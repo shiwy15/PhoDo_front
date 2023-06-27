@@ -5,16 +5,7 @@ import Header from '../../components/mypage/Header'
 import MainPost from '../../components/Main/MainPost'
 import { ExampleCard } from '../../components/Main/exampleCard'
 
-import { UserContext } from "../../App";
-
 export const MainPage =() => {
-
-  //🐼로그인 상태 확인용
-  const { user } = useContext(UserContext);
-    useEffect(() => {
-        console.log('main user.loggedIn',user, user.loggedIn)
-    });
-
 
     return (
     <div>

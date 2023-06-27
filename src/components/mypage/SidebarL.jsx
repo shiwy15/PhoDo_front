@@ -61,7 +61,7 @@ const Sidebar = () => {
                     {
                         likedProjects?.map((project) => (
                         <div key={project._id}>
-                            <Link to={`project/${project._id}`}>
+                            <a href={`newproject/${project._id}`}>
                                 <div className="flex items-center">
                                     <HiStar size={24} color="gold" className="mr-1" />
                                     <div className="flex flex-col">
@@ -69,7 +69,7 @@ const Sidebar = () => {
                                         <p className='ml-4 text-sm text-gray-500'>{new Date(project.time).toLocaleDateString()}</p>
                                     </div>
                                 </div>
-                            </Link>
+                            </a>
                         </div>
                         ))
                     }
@@ -82,7 +82,7 @@ const Sidebar = () => {
                 {
                     recentProjects?.map((project) => (
                         <div key={project._id} >
-                            <Link to={`project/${project._id}`}>
+                            <a href={`newproject/${project._id}`}>
                                 <div className="flex items-center">
                                     <HiChevronRight size={24} color="violet" />
                                     <div className="flex flex-col">
@@ -90,7 +90,7 @@ const Sidebar = () => {
                                         <p className='ml-4 text-sm text-gray-500'>{new Date(project.time).toLocaleDateString()}</p>
                                     </div>
                                 </div>
-                            </Link>
+                            </a>
                         </div>
                     ))
                 }
