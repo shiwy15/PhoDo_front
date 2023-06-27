@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 //✉️소켓 통신용 import
 import io from 'socket.io-client';
-import useUserStore from '../../../store.js'
+import { useUserStore } from '../../store';
 
 const VoiceChat = () => {
   {/*🌿 user에게 전달받은 변수들을 저장하는 useRef, useState*/}
