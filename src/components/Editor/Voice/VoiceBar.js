@@ -52,8 +52,9 @@ const VoiceChat = () => {
       handleIceCandidate(remoteSocketId, ice);
     });
 
-    socketRef.current.on('leave_room', (socketId, nickname) => {
+    socketRef.current.on('leave_room', (socketId, nickname, userList) => {
       closePeerConnection(socketId);
+      setUserList(userList)
     });
 
     socketRef.current.on('new_user', (user) => {
