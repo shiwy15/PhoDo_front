@@ -214,7 +214,7 @@ const VoiceChat = () => {
     <div className="flex items-center">
       
       <div className="flex-none overflow-x-auto p-1 rounded whitespace-nowrap"  style={{ height: '32px', minWidth: '120px' }}>
-        <ul id="members" className="m-0 p-0 inline-block">
+        <ul id="members" style={{display: 'flex', flexDirection: 'row', flexWrap: 'nowrap'}} className="m-0 p-0 inline-block">
             {members.map((member, index) => (
                 <li key={index} className="inline-block mr-2">{member.nickname}</li>
             ))}
