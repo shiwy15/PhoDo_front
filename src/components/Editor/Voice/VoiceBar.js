@@ -32,10 +32,9 @@ const VoiceChat = () => {
     joinRoom(projectId, nickname)
 
     {/*🌿 'accept_join'이벤트를 수신 대기하다가 on되면, 안의 콜백 함수 호출
-    setMembers(users): 이 부분은 React의 상태를 업데이트
     users 배열의 각 요소에 대해 반복하며, 각 사용자의 socketId를 사용하여 createPeerConnection 함수를 호출 */}
     socketRef.current.on('accept_join', (users) => {
-    setMembers(users);
+    setUserList(users);
     users.forEach(user => {
     createPeerConnection(user.socketId);
       });
