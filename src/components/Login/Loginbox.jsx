@@ -1,23 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { API } from "../../utils/config";
-
+import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../store'
 
-//🐼redirecting
-import {useContext} from 'react';
-import { UserContext } from "../../App";
-import { useLocation, useNavigate } from "react-router";
-
 const Loginbox = () => {
-    {/*🐼 userData 담아서 다른 컴포턴트와 공유할 수 있는 hook*/}
-    const { user, setUser } = useContext(UserContext);
-
-    {/* 디라이렉팅 관련 hook */}
     const navigate = useNavigate();
-    const location = useLocation();
-
-
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -26,9 +14,8 @@ const Loginbox = () => {
 
     const { email, password, error } = formData;
 
-    // {/* 🌿 store에 있는 함수를 불러옵니다. */}
+    {/* 🌿 store에 있는 함수를 불러옵니다. */}
     const setUserEmail = useUserStore(state => state.setUserEmail)
-    const setUserName  = useUserStore(state => state.setUserName)
 
     // console.log(formData); //🔥 testing
     
@@ -38,11 +25,6 @@ const Loginbox = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-
-        if (user.loggedIn) return navigate('/main');   //🐼로그인 상태라면 함수 종료
-        
-        if (location.state?.from) {navigate(location.state.from);}; //로그인안해서 된거면 원래 page로 리다이렉팅 
-        
         axios.post(`${API.LOGIN}`, {
             email,
             password
@@ -52,12 +34,10 @@ const Loginbox = () => {
         .then(res => {
             console.log(res);
             if (res.status === 200) {
-                // {/* 🌿 post 성공한다면 email값을 store에 저장합시다. */}
+                {/* 🌿 post 성공한다면 email값을 store에 저장합시다. */}
                 setUserEmail(formData.email)
-                setUserName(res.data.user.name)
-                setUser({ loggedIn: true });
                 
-                navigate('/main');
+                navigate('/Main');
             }
         })
         .catch(err => {
