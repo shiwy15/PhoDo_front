@@ -193,8 +193,10 @@ const VoiceChat = () => {
       localStreamRef.current = stream;
       const localAudioTrack = stream.getAudioTracks()[0];
       const muteButton = document.createElement('button');
-      muteButton.textContent = 'Mute';
-      muteButton.onclick = toggleMute;
+      const muteButtonImage = document.createElement('img');
+      muteButtonImage.src = '/onmic.png';
+      muteButton.appendChild(muteButtonImage);
+      muteButton.onclick = toggleMute
       controlsRef.current.appendChild(muteButton);
 
       socketRef.current.emit('join_room', roomName, nickname);
@@ -207,11 +209,13 @@ const VoiceChat = () => {
   const toggleMute = () => {
     const localAudioTrack = localStreamRef.current.getAudioTracks()[0];
     if (localAudioTrack) {
-    localAudioTrack.enabled = !localAudioTrack.enabled;
-    const muteButton = controlsRef.current.querySelector('button');
-    muteButton.textContent = localAudioTrack.enabled ? 'Mute' : 'Unmute';
+      localAudioTrack.enabled = !localAudioTrack.enabled;
+      const muteButton = controlsRef.current.querySelector('button');
+      const muteButtonImage = muteButton.querySelector('img'); // assuming you've added an img element inside the button
+      muteButtonImage.src = localAudioTrack.enabled ? '/onmic.png' : '/offmic.png';
     }
   };
+  
 
   return (
   <div className='p-4 rounded shadow-md' style={{ minWidth: '350px', height: '60px' }}>
@@ -220,7 +224,10 @@ const VoiceChat = () => {
       <div className="flex-none overflow-x-auto p-1 rounded whitespace-nowrap"  style={{ height: '32px', minWidth: '120px' }}>
           <ul id="members" className="m-0 p-0 inline-block" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap' }}>
             {userList.map((user, index) => (
-              <li key={index} className="inline-block mr-2">{user.nickname}</li>
+              <li key={index} className="inline-block mr-2">
+                <img src="/realTimeUser.png" alt="User icon" style={{ width: '30px', height: '30px' }} />
+                <p>{user.nickname}</p>
+              </li>
             ))}
           </ul>
       </div>
