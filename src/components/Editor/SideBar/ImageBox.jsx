@@ -147,7 +147,7 @@ const ImageBox = () => {
         borderTopRightRadius: 0,
         borderBottomRightRadius: 0,
         color: 'rgb(255,255,255)'}}>
-      <MenuList dense>
+        <MenuList dense>
           {/* 🌿 Edit box제목 */}
           <h2 className="text-2xl mt-1 font-semibold relative top-0 text-center text-violet-600">이미지</h2>
           {/* 🌸 구분선 */}
@@ -244,7 +244,7 @@ const ImageBox = () => {
           </div>
         </MenuItem>  
             <Nodechangebar/> */}
-         </MenuList>
+        </MenuList>
         </Paper>
     </div>
   );
