@@ -95,10 +95,10 @@ const MyProjectArea = () => {
                 {
                     projectData?.data?.filter(project => project.name === searchTerm).map(project => (
                         
-                        <a key={project._id} href={`newproject/${project._id}`} className='flex mx-2 items-center justify-start border  px-4 py-1 bg-violet-800 text-white rounded-full min-w-fit'>
+                        <Link to={`/newproject/${project._id}`} key={project._id} className='flex mx-2 items-center justify-start border  px-4 py-1 bg-violet-800 text-white rounded-full min-w-fit'>
                             <p key={project._id} className='text-xl'>{`${project.name}`}</p>
                             <p key={project._id} className='text-md ml-1 mt-1' >{` by ${formatData(project.time)}`}</p>
-                        </a>
+                        </Link>
                     ))
                 }
             </div>
@@ -112,7 +112,7 @@ const MyProjectArea = () => {
                 <div className=' flex flex-col justify-center items-center'>
                     <ImageList sx={{ width: '95%', height: '224px'}} cols={5}>
                         {recentProjects && recentProjects.map((project) => (
-                         <a href={`newproject/${project._id}`}>
+                         <Link to={`/newproject/${project._id}`}>
                                 <ImageListItem key={project._id} sx={{ margin: '5px' }} >
                                     <img
                                         src={`${project.image}?w=248&fit=crop&auto=format`}
@@ -127,7 +127,7 @@ const MyProjectArea = () => {
                                         position="below"
                                     />
                                 </ImageListItem>
-                                </a>
+                                </Link>
                         ))}
                     </ImageList>
                 </div>
@@ -143,7 +143,7 @@ const MyProjectArea = () => {
             <div className=' flex flex-col justify-center items-center'>
                 <ImageList sx={{ width: '95%', height: '224px'}} cols={5}>
                     {projectData && projectData?.data?.sort((a, b) => new Date(a.time) - new Date(b.time)).map((project) => (
-                        <a href={`newproject/${project._id}`}>
+                        <Link to ={`newproject/${project._id}`}>
                             <ImageListItem key={project._id} sx={{ margin: '5px' }} >
                                 <img
                                     src={`${project.image}?w=248&fit=crop&auto=format`}
@@ -158,7 +158,7 @@ const MyProjectArea = () => {
                                     position="below"
                                 />
                             </ImageListItem>
-                        </a>
+                        </Link>
                     ))}
                 </ImageList>
             </div>
