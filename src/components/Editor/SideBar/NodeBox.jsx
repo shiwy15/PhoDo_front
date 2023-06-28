@@ -24,14 +24,14 @@ const NodeBox =() => {
       <Paper sx={{     
         width: 420,
         height: '100vh',
-        backgroundColor: 'rgba(211,211,211,0.7)',
+        backgroundColor: 'rgba(255,255,255,0.5)',
         borderTopRightRadius: 0,
         borderBottomRightRadius: 0,
         color: 'rgb(255,255,255)'}}>
       <MenuList dense>
         {/* 🌿 Edit box제목 */}
         <h2 className="text-2xl mt-1 font-bold relative top-0 text-center text-violet-600"> 노드 박스 </h2>
-        <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />
+        <Divider variant="middle" sx={{ padding:'8px', borderColor: 'purple' }} />
         <div className="text-2xl ml-5 mt-2 text-violet-600 p-1 rounded-lg font-bold">
            Text</div>
         <MenuItem sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -66,7 +66,7 @@ const NodeBox =() => {
             <div>업무/담당자</div>
           </div>
         </MenuItem>
-        <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />
+        <Divider variant="middle" sx={{ padding:'8px', borderColor: 'purple' }} />
         <div className="text-2xl ml-5 mt-2 text-violet-600 p-1 rounded-lg font-bold">
           Memo</div>
         <div className='flex ml-1'>  

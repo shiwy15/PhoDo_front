@@ -44,12 +44,12 @@ const Header = () => {
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'space-between', backgroundColor:'white', width: '100vw', height: '60px' }}>
         <div style={{ display: 'flex', alignItems: 'flex-end' }}>
           <Link to="/Main">
-          <img src="/name.png" alt="logo" className="h-10 w-auto" />
+          <img src="/name.png" alt="logo" className="h-12 w-auto" />
           </Link>
-          <Link to="/mypage" color="inherit" className="mx-2 border-purple-300 border rounded-full px-1" >
-            Mypage
+          <Link to="/mypage" color="inherit" className="ml-10 border-purple-700 border rounded px-3" style={{ fontSize: '22px', fontWeight: 'bold', borderRadius: '8px', borderWidth: '3px', backgroundColor: 'orange'}}>
+            My page
           </Link>
-          <Link to="/myproject" color="inherit" className="mx-2 border-purple-300 border rounded-full px-1" >
+          <Link to="/myproject" color="inherit" className="ml-4 border-purple-700 border rounded px-3" style={{ fontSize: '22px', fontWeight: 'bold', borderRadius: '8px', borderWidth: '3px', backgroundColor: 'orange'}}>
             My project
           </Link>
           {/* <Link href="/myphodo" color="inherit" sx={{ ml: 2 }}>
@@ -58,7 +58,7 @@ const Header = () => {
         </div>
         
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <span className='text-xl'>  환영합니다! {userName} 님</span>
+          <span className='text-2xl'>  환영합니다! {userName} 님</span>
 
           <IconButton sx={{ ml: 1 }} onClick={handleLogout}>
             <LogoutIcon/>
