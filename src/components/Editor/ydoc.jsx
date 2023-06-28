@@ -1,9 +1,10 @@
-// import { Doc } from 'yjs';
-//우리는 소켓연결할 것입니다.
-// import { WebsocketProvider } from 'y-websocket';
+import { Doc } from 'yjs';
+
+export function createNewDoc() {
+  return new Doc();
+}
 
 
-// const ydoc = new Doc();
 
 
 // const wsProvider = new WebsocketProvider(
@@ -18,5 +19,3 @@
 //     console.log(event)
 //     console.log(event.status)
 // })
-
-// export default ydoc;

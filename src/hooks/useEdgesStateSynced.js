@@ -31,6 +31,8 @@ export function useEdgesStateSynced(ydoc) {
 
     edgesMap.set(id, {
       id,
+      type: 'coloredge', 
+      // animated: true,
       ...params,
     });
   }, []);

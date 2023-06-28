@@ -64,6 +64,7 @@ function TextNode2({ id, selected, data, isConnectable }) {
           value={data.title}
           onChange={onTitleChange}
           className="input-box"
+          style={{fontSize: '15pt'}}
         />
       </div>
       <div>
@@ -74,6 +75,7 @@ function TextNode2({ id, selected, data, isConnectable }) {
           onChange={onContentChange}
           className="input-box overflow-auto"
           rows={5}
+          style={{fontSize: '15pt'}}
         ></textarea>
       </div>
       <Handle type="source" position={Position.Right} id="right" isConnectable={isConnectable} />
