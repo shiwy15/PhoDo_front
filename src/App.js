@@ -12,7 +12,6 @@ import {Modal} from "./pages/Modal/Modal.jsx"
 
 //react query practice set
 import Practice from "./pages/Practice/Practice.jsx"
-import Practice3 from "./pages/Practice/Practice3.jsx"
 import Test from "./pages/Practice/Test.jsx"
 
 import { MainPage } from './pages/Main/Main.jsx'
@@ -40,7 +39,6 @@ function App() {
 
         {/* react query sample */}
         <Route path="/practice" element={<Practice />} />
-        <Route path="/practice3" element={<Practice3 />} />
         <Route path="/Test" element={<Test />} />
 
         {/* My page */}
