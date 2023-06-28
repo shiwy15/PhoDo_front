@@ -1,27 +1,77 @@
 // 이 내용은 text node!
 
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Handle, Position } from 'reactflow';
+import { nodesMap } from '../Editingbox2';
+// import { useUpdateNodeInternals } from 'reactflow';
 
-function TextNode3({ data, isConnectable }) {
+function TextNode3({ id, selected, data, isConnectable }) {
   const [title, setTitle] = useState(data.title);
   const [date, setDate] = useState(data.date);
-  const [text, setText] = useState(data.label);
+  const [content, setContent] = useState(data.content);
+  // const updateNodeInternals = useUpdateNodeInternals();
 
   const onTitleChange = useCallback((evt) => {
     setTitle(evt.target.value);
-    console.log(evt.target.value);
   }, []);
+  
+  useEffect(() => {
+    // This is your map iteration code 
+    nodesMap.forEach((node, nodeId) => {
+      if (node.selected === true) {
+        node.data = {
+            ...node.data,
+            title: title
+        };
+        nodesMap.set(nodeId, node);
+        // updateNodeInternals(nodeId);  // Trigger re-render of this node.
+        // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
+      }
+    });
+  }, [title]);
+
 
   const onDateChange = useCallback((evt) => {
     setDate(evt.target.value);
-    console.log(evt.target.value);
   }, []);
 
-  const onTextChange = useCallback((evt) => {
-    setText(evt.target.value);
-    console.log(evt.target.value);
+  useEffect(() => {
+    // This is your map iteration code 
+    nodesMap.forEach((node, nodeId) => {
+      if (node.selected === true) {
+        node.data = {
+            ...node.data,
+            date: date
+        };
+        nodesMap.set(nodeId, node);
+        // updateNodeInternals(nodeId);  // Trigger re-render of this node.
+        // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
+      }
+    });
+  }, [date]);
+
+
+
+
+
+  const onContentChange = useCallback((evt) => {
+    setContent(evt.target.value);
   }, []);
+  
+  useEffect(() => {
+    // This is your map iteration code 
+    nodesMap.forEach((node, nodeId) => {
+      if (node.selected === true) {
+        node.data = {
+            ...node.data,
+            content: content
+        };
+        nodesMap.set(nodeId, node);
+        // updateNodeInternals(nodeId);  // Trigger re-render of this node.
+        // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
+      }
+    });
+  }, [content]);
 
   return (
     <div className="textNode3 bg-white px-5 py-2 rounded-lg" style={{ border: '2px solid black', paddingTop: '25px' }}>
@@ -32,7 +82,7 @@ function TextNode3({ data, isConnectable }) {
         <input
           type="text"
           id="title"
-          value={title}
+          value={data.title}
           onChange={onTitleChange}
           className="input-box"
         />
@@ -42,7 +92,7 @@ function TextNode3({ data, isConnectable }) {
         <input
           type="text"
           id="date"
-          value={date}
+          value={data.date}
           onChange={onDateChange}
           className="input-box"
         />
@@ -51,8 +101,8 @@ function TextNode3({ data, isConnectable }) {
         <label htmlFor="text" style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: 'Arial', marginLeft: '5px'}}>내용</label>
         <textarea
           id="text"
-          value={text}
-          onChange={onTextChange}
+          value={data.content}
+          onChange={onContentChange}
           rows={5}
           className="input-box overflow-auto"
         ></textarea>

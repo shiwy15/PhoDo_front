@@ -1,11 +1,9 @@
 import { useEffect, useCallback, useState } from 'react';
 import { Handle, Position, NodeResizer } from 'reactflow';
-import { useUpdateNodeInternals } from 'reactflow';
 import {nodesMap} from './../Editingbox2'
 
 const MemoNode = ({ id, data, selected }) => {
   const [memo, setMemo] = useState(data.memo);
-  const updateNodeInternals = useUpdateNodeInternals();
 
   const onMemoChange = useCallback((evt) => {
     setMemo(evt.target.value);
@@ -22,7 +20,7 @@ const MemoNode = ({ id, data, selected }) => {
         nodesMap.set(nodeId, node);
         console.log('노드는 ', node);
         console.log('바뀌고 있어 이건 확실해');
-        updateNodeInternals(nodeId);  // Trigger re-render of this node.
+        // updateNodeInternals(nodeId);  // Trigger re-render of this node.
         // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
       }
     });

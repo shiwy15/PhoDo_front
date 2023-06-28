@@ -3,12 +3,10 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Handle, Position } from 'reactflow';
 import { nodesMap } from '../Editingbox2';
-import { useUpdateNodeInternals } from 'reactflow';
 
 function TextNode2({ id, selected, data, isConnectable }) {
   const [title, setTitle] = useState(data.title);
   const [content, setContent] = useState(data.content);
-  const updateNodeInternals = useUpdateNodeInternals();
 
   const onTitleChange = useCallback((evt) => {
     setTitle(evt.target.value);
@@ -23,9 +21,7 @@ function TextNode2({ id, selected, data, isConnectable }) {
             title: title
         };
         nodesMap.set(nodeId, node);
-        console.log('노드는 ', node);
-        console.log('바뀌고 있어 이건 확실해');
-        updateNodeInternals(nodeId);  // Trigger re-render of this node.
+        // updateNodeInternals(nodeId);  // Trigger re-render of this node.
         // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
       }
     });
@@ -47,7 +43,7 @@ function TextNode2({ id, selected, data, isConnectable }) {
         nodesMap.set(nodeId, node);
         console.log('노드는 ', node);
         console.log('바뀌고 있어 이건 확실해');
-        updateNodeInternals(nodeId);  // Trigger re-render of this node.
+        // updateNodeInternals(nodeId);  // Trigger re-render of this node.
         // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
       }
     });

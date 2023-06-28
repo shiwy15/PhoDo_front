@@ -15,7 +15,7 @@ import TextNode3 from './Node/TextNode3';
 
 
 // 리액트 플로우 노드 
-import ReactFlow, { ReactFlowProvider, useReactFlow, Controls, MiniMap} from 'reactflow';
+import ReactFlow, { ReactFlowProvider, useReactFlow, Controls, MiniMap, Background, BackgroundVariant} from 'reactflow';
 import { Doc } from 'yjs';
 import { WebsocketProvider } from 'y-websocket';
 
@@ -159,6 +159,7 @@ const Editingbox2 = () => {
       const memo = event.dataTransfer.getData('data/memo');
       const title = event.dataTransfer.getData('data/title');
       const content = event.dataTransfer.getData('data/content');
+      const date = event.dataTransfer.getData('data/date');
       console.log(':evergreen_tree:Getting type ', type); // :apple: drag start에서 가져온 type
       console.log(':evergreen_tree:Getting image ', img); // :apple: drag start에서 가져온 image 
       if (typeof type === 'undefined' || !type) {
@@ -175,8 +176,8 @@ const Editingbox2 = () => {
         id: getNodeId(),
         type,
         position,
-        data: { label: `${type}` , url: `${img}`, tags: `${tags}`, memo: `${memo}`, title: `${title}`
-                , content: `${content}`},
+        data: { label: `${type}` , url: `${img}`, tags: `${tags}`, memo: `${memo}`, 
+                title: `${title}`, content: `${content}`, date: `${date}`},
       };
 
       nodesMap.set(newNode.id, newNode);
@@ -199,11 +200,13 @@ const Editingbox2 = () => {
       onDragOver={onDragOver}
       proOptions={proOptions}
       nodeTypes={nodeTypes}
-      style= {{background : '#F3B0C3', position:'relative'}} 
+      style={{ background: '#E5E5E5', position: 'relative' }}
       fitView
       fitViewOptions={fitViewOptions}>
       <Controls position='top-left' style={{top:'60px'}} />
       <MiniMap pannable position='bottom-left'/>
+      <Background id="1" gap={30} color="#ffffff" variant={BackgroundVariant.Cross} />
+      <Background id="2" gap={300} offset={1} color="#ffffff" variant={BackgroundVariant.Lines} />
     <div style={{zIndex: 150 }}>
       <MenuBarR />
     </div>
