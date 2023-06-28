@@ -5,8 +5,13 @@ import { useParams } from 'react-router-dom';
 import io from 'socket.io-client';
 import { useUserStore } from '../../store';
 
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import { deepOrange, deepPurple } from '@mui/material/colors';
+import AddReactionIcon from '@mui/icons-material/AddReaction';
+
 const VoiceChat = () => {
-  {/*🌿 user에게 전달받은 변수들을 저장하는 useRef, useState*/}
+  /*🌿 user에게 전달받은 변수들을 저장하는 useRef, useState*/
   const socketRef = useRef();
   const peersRef = useRef({});
   const localStreamRef = useRef();
@@ -14,15 +19,18 @@ const VoiceChat = () => {
   // const [members, setMembers] = useState([]);
   const { projectId } = useParams();
   const [userList, setUserList] = useState([]);
-
   const nickname = useUserStore(state => state.userName) // 주스탄드 스토어...?
+
+  //voice avatar
+  const avatarList = ['/member1.png','/member2.png','/member3.png','/member4.png', '/member1.png']
 
 {/* 🌿초기 렌더링때 실행되는 hook */}
   useEffect(() => {
     console.log("check render")
     {/*🌿 클라이언트 측에서 Socket.IO를 사용하여 '3001'서버와 클라이언트 소켓 연결을 설정하는 부분 */}
     // socketRef.current = io("wss://phodo.store/vc/", { transports: ['websocket'] });  
-    socketRef.current = io("wss://hyeontae.shop/ws");  //socketRef에 현재 
+    // socketRef.current = io("wss://hyeontae.shop/ws");  //socketRef에 현재 
+    socketRef.current = io("ws://localhost:4000/ws");  //socketRef에 현재 
 
     {/*🌿 연결이 안됐으면, 콘솔창에 에러 띄우기 */}
     socketRef.current.on('connect_error', (err) => {
@@ -222,23 +230,44 @@ const VoiceChat = () => {
   
 
   return (
-    <div className='p-4 rounded' style={{ minWidth: '350px', height: '70px' }}>
-      <div className="flex items-center">
-        
-        <div className="flex-none overflow-x-auto p-1 rounded whitespace-nowrap"  style={{ height: '60px', minWidth: '100px' }}>
-            <ul id="members" className="m-0 p-0 inline-block" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap' }}>
-              {userList.map((user, index) => (
-                <li key={index} className="inline-block mr-2"  style={{marginTop: '10px'}}>
-                  <img src="/realTimeUser.png" alt="User icon" style={{ width: '17px', height: '17px', marginLeft : '4px' }} />
-                  <p>{user.nickname}</p>
-                </li>
-              ))}
-            </ul>
-        </div>
+    <div className='p-4 rounded-2xl' style={{ 'marginLeft': 20 , 'marginTop': 10, minWidth: '400px', height: '130px', 'backgroundColor' : 'white', 'border': 'solid 3px rgba(0,0,0,0.2)'}}>
+      <div className='flex'>
+        <p className='text-xl text-purple-950'>프로젝트 참여자 목록</p>
         <div ref={controlsRef} className="flex-none p-1 rounded overflow-x-auto whitespace-nowrap" style={{ height: '32px', minWidth: '120px' }}>
           {/* Mute button will be appended here */}
         </div>
       </div>
+        {/*user 아바타 - 아이디 표시 */}
+    <Stack direction="row" spacing={2}>
+      {userList.map((user, index) => (
+      <div key={index} style={{ position: 'relative', display: 'inline-block' }}>
+          <img src={avatarList[index]} alt={`Avatar of ${user.nickname}`} className='w-16 object-cover' style={{ zIndex: 0 }} />
+          <p style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              margin: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.4)',
+              color: 'white',
+              zIndex: 5,
+              width: '100%',
+              padding: '1',
+              fontSize: '1.4em', 
+              whiteSpace: 'nowrap', 
+              overflowX: 'hidden' 
+          }}>
+              {user.nickname}
+          </p>
+      </div>
+
+
+      ))}
+    </Stack>
+
+
+              
+
+
     </div>
   );
 };

@@ -19,7 +19,6 @@ const Header = () => {
   const userName = useUserStore(state => state.userName);
 
 
-
   const handleLogout = async () => {
     try {
       // Make a GET request to the logout endpoint

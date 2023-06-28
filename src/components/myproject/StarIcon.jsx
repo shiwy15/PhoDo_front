@@ -14,21 +14,30 @@ const StarIcon = ({ defProject, deflike }) => {
   const project = defProject;
   const [like, setLike] = useState(deflike);
 
-  {/* 🌿 post */}
+  /* 🌿 post */
   const mutationLike = useMutation(patchLike, {
-      onSuccess: (data) => {
-          // console.log('patch success', data);
-      },
-      onError: (error) => {
-          console.log('patch fail', error);
-      }
+    onSuccess: (data) => {
+      // console.log('patch success', data);
+    },
+    onError: (error) => {
+      console.log('patch fail', error);
+    },
+    retry: false, // Disable automatic retries
   });
 
-  const handleClick = () => {
-    setLike(!like);
-    console.log(project, like)
-    mutationLike.mutate({projectId: project, isLike:like});
+
+  const handleClick = (event) => {
+    event.stopPropagation(); // Prevent event bubbling
+
+    setLike(prevLike => {
+      const newLike = !prevLike;
+      console.log(project, newLike);
+      mutationLike.mutate({projectId: project, isLike: newLike});
+      return newLike;
+    });
   };
+
+
 
   return like ? (
     <HiStar
