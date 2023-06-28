@@ -1,77 +1,56 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
+// import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import '../../../src/index.css'
 
-
-const MainFeaturedPost =() => {
+const MainFeaturedPost = () => {
   const post = {
     title: 'Photo 업무를 함께 DO!',
-    description: '서로 어떻게 공유하느냐가 업무 효율을 좌우합니다.\n프로젝트 멤버들에게 일일이 묻고 물어 저 멀리 자료를 찾아 삼만리를 떠나던 과거는 이제 안녕!\nPhoDo는 효율이 중요한 당신을 위한 사진 중심 협업 사이트입니다.',
-    image: '/mainImg.jpg',
-    imageText: '',
+    description: '서로 어떻게 공유하느냐가 업무 효율을 좌우합니다.\n프로젝트 멤버들에게 일일이 묻고 물어 저 멀리 자료를 찾아 삼만리를 떠나던 과거는 이제 안녕!',
+    description2: 'PhoDo는 효율이 중요한 당신을 위한 사진 중심 협업 사이트입니다.',
     linkText: 'Project 만들기',
   };
 
   return (
-    <Paper
+    <Box
       sx={{
         position: 'relative',
-        backgroundColor: 'grey.800',
-        color: '#fff',
-        mb: 4,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundImage: `url(${post.image})`,
-        margin: '30px 40px  20px 40px',
-        borderRadius: '20px'
+        color: '#ffffff',
+        height: '400px',
+        width: '1200px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        background: 'transparent',
       }}
     >
-      {/* Increase the priority of the hero background image */}
-      {<img style={{ display: 'none'}} src={post.image} alt={post.imageText} />}
-      <Box
-        sx={{
-          position: 'absolute',
-          top: 0,
-          bottom: 0,
-          right: 0,
-          left: 0,
-          backgroundColor: 'rgba(0,0,0,.3)',
-          margin: '5px'
-        }}
-      />
-      <Grid container>
-        <Grid item md={10}>
-          <Box
-            sx={{
-              position: 'relative',
-              p: { xs: 3, md: 8 },
-              pr: { md: 2 },
-            }}
-          >
-            <Typography variant="h2" color="inherit" gutterBottom sx={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}>
-              {post.title}
-            </Typography>
-            <Typography variant="h6" color="inherit" paragraph sx={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}>
-            {post.description.split('\n').map((line, index) => (
-                <React.Fragment key={index}>
-                {line}
-                <br />
-                </React.Fragment>
-            ))}
-            </Typography>
-            <Button variant="outlined" href="/modal" sx={{color: 'white', borderColor: 'white', borderRadius: '50px'}}>
+      <Box>
+        <Box sx={{marginY: '10px'}}>
+          <Typography variant="IBM Plex Sans KR" color="black" gutterBottom sx={{ fontSize: '90px', fontWeight: 'bold'}}>
+          <span style={{ color: '#8F44AD' }}>Photo</span> 업무를 함께 DO!
+          </Typography>
+        </Box>
+        <Typography variant="IBM Plex Sans KR" color="black" paragraph sx={{ fontSize: '30px', fontWeight: 'bold' }}>
+          {post.description.split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              <br />
+            </React.Fragment>
+          ))}
+        </Typography>
+        <Typography variant="IBM Plex Sans KR" color="black" gutterBottom sx={{ fontSize: '40px', fontWeight: 'bold' }}>
+        PhoDo는 효율이 중요한 당신을 위한 <span style={{ color: '#FF9300'}}>사진 중심 협업 사이트</span>입니다.
+        </Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '40px'}}>
+          <Button variant="IBM Plex Sans KR" href="/modal" sx={{ color: 'white', fontSize: '30px', fontWeight: 'bold', bgcolor: '#8F44AD', borderColor: 'black', borderRadius: '10px' }}>
             {post.linkText}
-            </Button>
-
-          </Box>
-        </Grid>
-      </Grid>
-    </Paper>
+          </Button>
+        </Box>
+      </Box>
+    </Box>
   );
-}
+};
 
 export default MainFeaturedPost;

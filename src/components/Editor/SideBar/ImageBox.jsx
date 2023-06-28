@@ -149,12 +149,12 @@ const ImageBox = () => {
         color: 'rgb(255,255,255)'}}>
         <MenuList dense>
           {/* 🌿 Edit box제목 */}
-          <h2 className="text-2xl mt-1 font-semibold relative top-0 text-center text-violet-600">이미지</h2>
+          <h2 className="text-2xl mt-1 font-bold relative top-0 text-center text-violet-600">이미지 박스</h2>
           {/* 🌸 구분선 */}
           <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />
           {/* 🌿 카테고리 버튼 리스트 */}
-          <div className="text-xl ml-4 mt-2 text-violet-600 p-1 rounded-lg ">
-            카테고리 버튼</div>
+          <div className="text-2xl font-bold ml-5 mt-2 text-violet-600 p-1 rounded-lg ">
+            카테고리</div>
           {/* 🌿 태그 버튼 mapping 구간 */}
           <div>
             {buttonGroups.map((group, groupIndex) => (
@@ -214,9 +214,9 @@ const ImageBox = () => {
         {/* 🌸 구분선 */}
         <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />
         {/* 🌸 이미지 모아볼 수 있는 미니 갤러리 */}
-        <div className="text-xl ml-4 mt-2 text-violet-600 p-1 rounded-lg ">
+        <div className="text-2xl font-bold ml-5 mt-2 text-violet-600 p-1 rounded-lg ">
             이미지 노드 <p className='text-lg'>편집창에 끌어다 놓아보세요!</p></div>
-        <ImageList cols={2} gap={8} sx={{ padding: '10px', height: '400px'}}>
+        <ImageList cols={2} gap={8} sx={{ padding: '10px', height: '600px'}}>
           {images && images?.data?.map((image, index) => (
             <ImageListItem key={image.id}>
               <img 
