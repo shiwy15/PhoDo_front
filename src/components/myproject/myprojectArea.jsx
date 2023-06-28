@@ -123,7 +123,7 @@ const MyProjectArea = () => {
                                     />
                                     <ImageListItemBar
                                         title={project.name}
-                                        subtitle={<span>by: {project.time}</span>}
+                                        subtitle={<span> by {formatData(project.time)}</span>}
                                         position="below"
                                     />
                                 </ImageListItem>
@@ -143,7 +143,7 @@ const MyProjectArea = () => {
             <div className=' flex flex-col justify-center items-center'>
                 <ImageList sx={{ width: '95%', height: '224px'}} cols={5}>
                     {projectData && projectData?.data?.sort((a, b) => new Date(a.time) - new Date(b.time)).map((project) => (
-                        <Link to ={`newproject/${project._id}`}>
+                        <Link to ={`/newproject/${project._id}`}>
                             <ImageListItem key={project._id} sx={{ margin: '5px' }} >
                                 <img
                                     src={`${project.image}?w=248&fit=crop&auto=format`}
@@ -154,7 +154,7 @@ const MyProjectArea = () => {
                                 />
                                 <ImageListItemBar
                                     title={project.name}
-                                    subtitle={<span>by: {project.time}</span>}
+                                    subtitle={<span> by {formatData(project.time)}</span>}
                                     position="below"
                                 />
                             </ImageListItem>
