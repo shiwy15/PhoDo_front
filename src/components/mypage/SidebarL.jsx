@@ -6,11 +6,9 @@ import { request } from "../../utils/axios-utils"
 
 //css용
 import { Divider } from '@mui/material';
-import { Link } from 'react-router-dom';
 import { HiStar } from 'react-icons/hi';
 import { HiChevronRight } from 'react-icons/hi'; 
-import { HiUserCircle } from 'react-icons/hi';
-
+import { Link } from 'react-router-dom';
 
 //서버용 코드
 const fetchProject = () => {
