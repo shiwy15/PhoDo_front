@@ -212,7 +212,7 @@ const Editingbox2 = () => {
       style={{ background: '#E5E5E5', position: 'relative' }}
       fitView
       fitViewOptions={fitViewOptions}>
-      <Controls position='top-left' style={{top:'60px'}} />
+      <Controls position='top-left' style={{top:'68px'}} />
       <MiniMap pannable position='bottom-left'/>
       <Background id="1" gap={30} color="#ffffff" variant={BackgroundVariant.Cross} />
       <Background id="2" gap={300} offset={1} color="#ffffff" variant={BackgroundVariant.Lines} />

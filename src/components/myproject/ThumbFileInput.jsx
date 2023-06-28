@@ -6,7 +6,6 @@ import { request } from "../../utils/axios-utils";
 
 // 🌿서버요청용 custom 함수
 const addImgFile = async (data) => {
-  console.log(data)
   const response = await request({ url: '/project/thumbnail', method: 'PATCH', data: data });
   return response;
 };
@@ -39,6 +38,7 @@ const ThumbFileInput = ({projectId, defThumb}) => {
     const formData = new FormData();
     formData.append('thumbnail', thumbnail);
     formData.append('projectId', projectId);
+    console.log(' 썸네일 전달받는 PjtID',projectId)
     mutation.mutate(formData);
   };
 

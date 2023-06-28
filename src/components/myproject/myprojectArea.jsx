@@ -54,8 +54,10 @@ const MyProjectArea = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const formatData = useFormatDate();
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [currentProjectId, setCurrentProjectId] = useState(null);
+    const [currentDefThumb, setCurrentDefThumb] = useState(null);
+
 
     {/* 🐼 project GET hook */}
     const { data : projectData} = useQuery('projectList', fetchProject,{
@@ -67,6 +69,11 @@ const MyProjectArea = () => {
     {/* 🐼 날짜 빠른 순으로 3개 표시 */}
     const recentProjects = projectData?.data?.sort((a, b) => new Date(b.time) - new Date(a.time)).slice(0, 5);
 
+    const handleOpen = (projectId, defThumb) => {
+    setCurrentProjectId(projectId);
+    setCurrentDefThumb(defThumb);
+    setOpen(true);
+    };
 
 
     return (
@@ -154,26 +161,23 @@ const MyProjectArea = () => {
                                     {/* 🐼썸네일 수정 버튼 : modal띄우기*/}
                                     <button
                                         type="button"
-                                        onClick={handleOpen}
+                                        onClick={() => handleOpen(project._id, project.image)}
                                         class=" mr-3 inline-block rounded bg-violet-800 px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] whitespace-nowrap">
                                         썸네일 변경
                                     </button>
-                                            <Modal
-                                            open={open}
-                                            onClose={handleClose}
-                                            slotProps={{ backdrop: { style: { backgroundColor: 'rgba(0, 0, 0, 0.1)' } } }} 
-                                            aria-labelledby="modal-modal-title"
-                                            aria-describedby="modal-modal-description"
-                                            >
-                                            <Box sx={style}>
+                                        <Modal
+                                        open={open}
+                                        onClose={handleClose}
+                                        slotProps={{ backdrop: { style: { backgroundColor: 'rgba(0, 0, 0, 0.1)' } } }}
+                                        aria-labelledby="modal-modal-title"
+                                        aria-describedby="modal-modal-description"
+                                        >
+                                        <Box sx={style}>
+                                            {open && <ThumbFileInput projectId={currentProjectId} defThumb={currentDefThumb} />}
+                                            <button className='justify-self-end' onClick={() => setOpen(false)}>닫기</button>
+                                        </Box>
+                                        </Modal>
 
-                                                <ThumbFileInput projectId={project._id} defThumb={project.image}/>
-                                                {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                                    Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                                                </Typography> */}
-                                                <button className='' onClick={()=>{setOpen(!open)}}>닫기</button>
-                                            </Box>
-                                            </Modal>
                                     {/* 🐼\좋아요 아이콘 - true면 빨간색. false면 투명색 */}
                                     <StarIcon defProject={project._id} deflike={project.like} />
 
@@ -211,17 +215,30 @@ const MyProjectArea = () => {
                                 position="below"
                             />
                             </Link>
-                            <div className="flex justify-center items-center px-4 mb-2">
-                                {/* 🐼썸네일 수정 버튼 : modal띄우기*/}
-                                <button
-                                    type="button"
-                                    class=" mr-3 inline-block rounded bg-violet-800 px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] whitespace-nowrap"> 
-                                    썸네일 변경
-                                </button>
-                                {/* 🐼\좋아요 아이콘 - true면 빨간색. false면 투명색 */}
-                                <StarIcon defProject={project._id} deflike={project.like} />
+                                <div className="flex justify-center items-center px-4">
+                                    {/* 🐼썸네일 수정 버튼 : modal띄우기*/}
+                                    <button
+                                        type="button"
+                                        onClick={handleOpen}
+                                        class=" mr-3 inline-block rounded bg-violet-800 px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] whitespace-nowrap">
+                                        썸네일 변경
+                                    </button>
+                                        <Modal
+                                        open={open}
+                                        onClose={handleClose}
+                                        slotProps={{ backdrop: { style: { backgroundColor: 'rgba(0, 0, 0, 0.1)' } } }}
+                                        aria-labelledby="modal-modal-title"
+                                        aria-describedby="modal-modal-description"
+                                        >
+                                        <Box sx={style}>
+                                            {open && <ThumbFileInput projectId={currentProjectId} defThumb={currentDefThumb} />}
+                                            <button className='justify-self-end' onClick={() => setOpen(false)}>닫기</button>
+                                        </Box>
+                                        </Modal>
+                                    {/* 🐼\좋아요 아이콘 - true면 빨간색. false면 투명색 */}
+                                    <StarIcon defProject={project._id} deflike={project.like} />
 
-                            </div>
+                                </div>
                         </ImageListItem>
                     ))}
                 </ImageList>
