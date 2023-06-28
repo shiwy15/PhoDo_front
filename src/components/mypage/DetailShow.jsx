@@ -61,7 +61,7 @@ function DetailShow() {
         ))}
         </span>
       <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200 ">
-      태그들 : {imageData.tags && Object.values(imageData.tags).map((tag, index) => (
+      추가 정보 : {imageData.tags && Object.values(imageData.tags).map((tag, index) => (
             <span key={index}>{tag}{index < Object.values(imageData.tags).length - 1 ? ', ' : ''}</span>
           ))}
       </p>
@@ -75,28 +75,32 @@ function DetailShow() {
     <div className="relative mt-2 flex w-fit h-4 flex-wrap justify-center item-center">
         <input
         type="text"
-        className="relative -mr-0.5 -ml-2 block min-w-0 flex-auto rounded-md border border-solid border-neutral-300 bg-transparent bg-clip-padding px-5 py-2 text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-purple-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-        placeholder=" 추가하고 싶은 태그를 입력하세요."
+        className="relative -mr-0.5 -ml-2 block min-w-0 flex-auto rounded-md border border-solid border-neutral-300 bg-transparent bg-clip-padding px-5 py-2 text-md font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-purple-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+        placeholder=" 추가하고 싶은 카테고리를 입력하세요."
         aria-label="input"
         aria-describedby="button-addon3"
         ref={inputRef}/>
+      <div style={{ display: 'flex' }}>
+        <button
+            className="relative z-[2] px-1 w-min-fit h-min-fit my-2 mx-2 border-2 rounded-md border-primary py-2 text-md font-medium uppercase text-primary transition duration-150 ease-in-out hover:bg-purple hover:bg-opacity-5 focus:outline-none focus:ring-0"
+            type="button"
+            id="button-addon3"
+            onClick={addTag}
+            data-te-ripple-init
+        >
+            카테고리 추가
+        </button>
 
         <button
-        className="relative z-[2] my-2 mx-2 border-2 rounded-md border-primary px-6 py-2 text-xs font-medium uppercase text-primary transition duration-150 ease-in-out hover:bg-purple hover:bg-opacity-5 focus:outline-none focus:ring-0"
-        type="button"
-        id="button-addon3"
-        onClick={addTag}
-        data-te-ripple-init>
-        태그추가
+          className="relative z-[2] px-1 w-min-fit h-min-fit my-2 mx-2 border-2 rounded-md border-primary py-2 text-md font-medium uppercase text-primary transition duration-150 ease-in-out hover:bg-purple hover:bg-opacity-5 focus:outline-none focus:ring-0"
+          type="button"
+          id="button-addon3"
+          onClick={addTag}
+          data-te-ripple-init
+        >
+          카테고리 삭제
         </button>
-        <button
-        className="relative z-[2] mx-2 my-2 border-2 rounded-md border-primary px-6 py-2 text-xs font-medium uppercase text-primary transition duration-150 ease-in-out hover:bg-purple hover:bg-opacity-5 focus:outline-none focus:ring-0"
-        type="button"
-        id="button-addon3"
-        onClick={addTag}
-        data-te-ripple-init>
-        태그삭제
-        </button>
+      </div>
     </div>
     </div>
   </div>

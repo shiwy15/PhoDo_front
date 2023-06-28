@@ -40,6 +40,5 @@ let userStore = (set) => ({
 })
 
 userStore = devtools(userStore)
-userStore = persist(userStore, { name: 'userEmail' })
 
 export const useUserStore = create(userStore)
