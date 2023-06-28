@@ -1,21 +1,58 @@
 // title & content
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Handle, Position } from 'reactflow';
+import { nodesMap } from '../Editingbox2';
+import { useUpdateNodeInternals } from 'reactflow';
 
-function TextNode2({ data, isConnectable }) {
+function TextNode2({ id, selected, data, isConnectable }) {
   const [title, setTitle] = useState(data.title);
   const [content, setContent] = useState(data.content);
+  const updateNodeInternals = useUpdateNodeInternals();
 
   const onTitleChange = useCallback((evt) => {
     setTitle(evt.target.value);
-    console.log(evt.target.value);
   }, []);
+
+  useEffect(() => {
+    // This is your map iteration code 
+    nodesMap.forEach((node, nodeId) => {
+      if (node.selected === true) {
+        node.data = {
+            ...node.data,
+            title: title
+        };
+        nodesMap.set(nodeId, node);
+        console.log('노드는 ', node);
+        console.log('바뀌고 있어 이건 확실해');
+        updateNodeInternals(nodeId);  // Trigger re-render of this node.
+        // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
+      }
+    });
+  }, [title]);
+
 
   const onContentChange = useCallback((evt) => {
     setContent(evt.target.value);
-    console.log(evt.target.value);
   }, []);
+
+  useEffect(() => {
+    // This is your map iteration code 
+    nodesMap.forEach((node, nodeId) => {
+      if (node.selected === true) {
+        node.data = {
+            ...node.data,
+            content: content
+        };
+        nodesMap.set(nodeId, node);
+        console.log('노드는 ', node);
+        console.log('바뀌고 있어 이건 확실해');
+        updateNodeInternals(nodeId);  // Trigger re-render of this node.
+        // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
+      }
+    });
+  }, [content]);
+
 
   return (
     <div className="textNode2 bg-white px-5 py-2 rounded-lg" style={{ border: '2px solid black', paddingTop: '25px' }}>
@@ -26,7 +63,7 @@ function TextNode2({ data, isConnectable }) {
         <input
           type="text"
           id="title"
-          value={title}
+          value={data.title}
           onChange={onTitleChange}
           className="input-box"
         />
@@ -35,7 +72,7 @@ function TextNode2({ data, isConnectable }) {
         <label htmlFor="content" style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: 'Arial', marginLeft: '5px'}}>내용</label>
         <textarea
           id="content"
-          value={content}
+          value={data.content}
           onChange={onContentChange}
           className="input-box overflow-auto"
           rows={5}

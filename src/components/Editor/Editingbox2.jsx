@@ -158,6 +158,7 @@ const Editingbox2 = () => {
       const tags = event.dataTransfer.getData('data/tags');
       const memo = event.dataTransfer.getData('data/memo');
       const title = event.dataTransfer.getData('data/title');
+      const content = event.dataTransfer.getData('data/content');
       console.log(':evergreen_tree:Getting type ', type); // :apple: drag start에서 가져온 type
       console.log(':evergreen_tree:Getting image ', img); // :apple: drag start에서 가져온 image 
       if (typeof type === 'undefined' || !type) {
@@ -174,7 +175,8 @@ const Editingbox2 = () => {
         id: getNodeId(),
         type,
         position,
-        data: { label: `${type}` , url: `${img}`, tags: `${tags}`, memo: `${memo}`, title: `${title}`},
+        data: { label: `${type}` , url: `${img}`, tags: `${tags}`, memo: `${memo}`, title: `${title}`
+                , content: `${content}`},
       };
 
       nodesMap.set(newNode.id, newNode);
