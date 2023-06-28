@@ -30,6 +30,9 @@ const ImageUpload = () => {
     }
   });
 
+  const isLoading = mutation.isLoading; // 로딩 상태 가져오기
+
+
   {/* 🌿 input창을 통해 입력된 이미지의 url을 보여주는 함수 */}
   const handleFileInputChange = (e) => {
     setImgfiles(Array.from(e.target.files)); // 배열 형태로 파일들을 저장
@@ -54,7 +57,13 @@ const ImageUpload = () => {
 
   return (
   <div className="p-4 shadow-4 rounded-lg w-full m-4 h-4/12" style={{ backgroundColor: 'hsl(0, 0%, 94%)' }}>
-    <h2 className="text-2xl font-semibold pb-6 relative top-0 text-center">사진을 넣어주세요</h2>
+    <h2 className="text-2xl font-semibold pb-4 relative top-0 text-center">사진을 넣어주세요</h2>
+    {/* 로딩 아이콘 추가 */}
+    {isLoading && (
+        <div className="flex items-center justify-center z-[500]">
+            <p className='text-md text-yellow-400'>결과를 가져오고 있어요!🙂</p>
+        </div>
+    )}
     {/* 🌿input창 */}
     <div className="mb-3">
       <label 
@@ -69,6 +78,7 @@ const ImageUpload = () => {
         onChange={handleFileInputChange}
         multiple />
     </div>
+
     {/* 🌿 입력된 이미지의 리스트를 보여주는 창 */}
     <div className="w-full h-24 bg-neutral-200 overflow-auto flex flex-col">
       {imgMeta.map((file, index) => (
