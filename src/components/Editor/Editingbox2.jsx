@@ -89,62 +89,62 @@ const Editingbox2 = () => {
   const {projectId} = useParams();  
   
 
-  const wsProvider = new WebsocketProvider(
-    // 'ws://localhost:1234', // :fire: 요청을 보낼 웹소켓 서버
-    'wss://phodo.store/ws', // 🔥 요청을 보낼 웹소켓 서버
-    projectId, // :fire: 프로젝트 아이디
-    ydoc, // :fire: 새롭게 전달 받을 도큐먼트 
-    wsOpts
-  );
+//   const wsProvider = new WebsocketProvider(
+//     // 'ws://localhost:1234', // :fire: 요청을 보낼 웹소켓 서버
+//     'wss://phodo.store/ws', // 🔥 요청을 보낼 웹소켓 서버
+//     projectId, // :fire: 프로젝트 아이디
+//     ydoc, // :fire: 새롭게 전달 받을 도큐먼트 
+//     wsOpts
+//   );
   
 
-  useEffect(() => {
-    wsProvider.connect();
-    wsProvider.on('status', event => {
-      console.log(event);
-      console.log(event.status);
-      if (event.status === "connecting") {
-        console.log("Disconnected, stopping reconnection attempts");
-        wsProvider.disconnect(); // Stop the connection attempts
-      } else if (event.status === "connected") {
-        console.log("Successfully connected");
-      }
-    });
-      // :star2: Fetch nodes from the API
-// :star2: Fetch project data from the API
-  // axios.get(`http://localhost:4000/project/${projectId}`)
-  axios.get(`https://hyeontae.shop/project/${projectId}`)
-  .then((res) => {
-    const data = res.data; 
-    console.log(res.data);
+//   useEffect(() => {
+//     wsProvider.connect();
+//     wsProvider.on('status', event => {
+//       console.log(event);
+//       console.log(event.status);
+//       if (event.status === "connecting") {
+//         console.log("Disconnected, stopping reconnection attempts");
+//         wsProvider.disconnect(); // Stop the connection attempts
+//       } else if (event.status === "connected") {
+//         console.log("Successfully connected");
+//       }
+//     });
+//       // :star2: Fetch nodes from the API
+// // :star2: Fetch project data from the API
+//   // axios.get(`http://localhost:4000/project/${projectId}`)
+//   axios.get(`https://hyeontae.shop/project/${projectId}`)
+//   .then((res) => {
+//     const data = res.data; 
+//     console.log(res.data);
 
-    // Check if nodes data exists and is an array
-    if (data.node && Array.isArray(data.node)) {
-      // Loop over nodes array and set each node in the nodesMap
-      data.node.forEach(node => {
-        if (node && node.id) {
-          nodesMap.set(node.id, node);
-        }
-      });
-    } else {
-      console.log("No nodes data received or it is not an array.");
-    }
+//     // Check if nodes data exists and is an array
+//     if (data.node && Array.isArray(data.node)) {
+//       // Loop over nodes array and set each node in the nodesMap
+//       data.node.forEach(node => {
+//         if (node && node.id) {
+//           nodesMap.set(node.id, node);
+//         }
+//       });
+//     } else {
+//       console.log("No nodes data received or it is not an array.");
+//     }
 
-    // Check if edges data exists and is an array
-    if (data.edge && Array.isArray(data.edge)) {
-      // Loop over edges array and set each edge in the edgesMap
-      data.edge.forEach(edge => {
-        if (edge && edge.id) {
-          edgesMap.set(edge.id, edge);
-          console.log(edgesMap);
-        }
-      });
-    } else {
-      console.log("No edges data received or it is not an array.");
-    }
-  })
-  .catch((err) => console.error(err)); // Use console.error to log errors
-  }, []);
+//     // Check if edges data exists and is an array
+//     if (data.edge && Array.isArray(data.edge)) {
+//       // Loop over edges array and set each edge in the edgesMap
+//       data.edge.forEach(edge => {
+//         if (edge && edge.id) {
+//           edgesMap.set(edge.id, edge);
+//           console.log(edgesMap);
+//         }
+//       });
+//     } else {
+//       console.log("No edges data received or it is not an array.");
+//     }
+//   })
+//   .catch((err) => console.error(err)); // Use console.error to log errors
+//   }, []);
   
 
   const [edges, onEdgesChange, onConnect] = useEdgesStateSynced(ydoc);
