@@ -42,8 +42,8 @@ const CategoryTuto =() => {
   };
 
   return (
-  <div className="p-4 shadow-4 rounded-3xl m-4" style={{ backgroundColor: 'hsl(0, 0%, 94%)' }}>
-<div className="flex justify-center items-center h-96 w-1/2 relative overflow-hidden mx-auto">
+  <div className="shadow-4 border  border-black	" style={{'backgroundColor' : '#CC97FA'}}>
+<div className="flex justify-center items-center h-64 w-1/2 relative overflow-hidden mx-auto">
                     {/* 로딩 아이콘 추가 */}
                 {isLoading && (
                     <div className="absolute inset-0 flex items-center justify-center z-[500]">
@@ -67,10 +67,8 @@ const CategoryTuto =() => {
         />
     ) : (
         // div를 부모 요소의 높이로 채움
-        <label htmlFor="imageInput" className="flex flex-col items-center justify-center h-full w-full bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue hover:bg-blue hover:text-white cursor-pointer">
-            <svg className="w-6 h-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path d="M10 4a2 2 0 00-2 2v4a2 2 0 104 0V6a2 2 0 00-2-2zm0 12a6 6 0 01-6-6h2a4 40 108 0h2a6 6 0 01-6-6z" />
-            </svg>
+        <label htmlFor="imageInput" className="flex flex-col items-center justify-center h-48 w-full bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue hover:bg-blue hover:text-white cursor-pointer">
+
             <span className="ml-2 text-2xl leading-normal">
                 사진을 넣어보세요!
             </span>
@@ -89,7 +87,7 @@ const CategoryTuto =() => {
     }}
 >
     <Paper elevation={3}>
-    <div>태그 결과</div>
+    <div className='text-center text-xl'>태그 결과</div>
     <div className='text-lg m-1 px-2'>
         {tags?.map((tag, index) => (
             <span key={index}>{tag} </span>
@@ -97,7 +95,7 @@ const CategoryTuto =() => {
     </div>
 </Paper>
 <Paper elevation={3}>
-    <div>카테고리 결과</div>
+    <div className='text-center text-xl'>카테고리 결과</div>
     <div className='text-lg m-1 px-2'>
         {category?.map((cate, index) => (
             <span key={index}>{cate} </span>
