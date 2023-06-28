@@ -1,8 +1,7 @@
 import { Doc } from 'yjs';
 //우리는 소켓연결할 것입니다.
 
-const ydoc = new Doc();
-export default ydoc;
+export const ydoc = new Doc();
 
 
 
