@@ -102,7 +102,7 @@ const TasknameNode = ({ id, selected, data, isConnectable }) => {
           <label htmlFor="text" style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: 'Arial'}}>진행사항</label>
           <textarea
             id="text"
-            value={content}
+            value={data.content}
             onChange={onContentChange}
             rows={8}
             className="input-box overflow-auto"
