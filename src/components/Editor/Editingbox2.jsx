@@ -15,11 +15,11 @@ import TextNode3 from './Node/TextNode3';
 
 
 // 리액트 플로우 노드 
-import ReactFlow, { ReactFlowProvider, useReactFlow, Controls, MiniMap} from 'reactflow';
+import ReactFlow, { ReactFlowProvider, useReactFlow, Controls, MiniMap, Background, BackgroundVariant} from 'reactflow';
 import { Doc } from 'yjs';
 import { WebsocketProvider } from 'y-websocket';
 
-// 🍀 WebRTC setting
+// :four_leaf_clover: WebRTC setting
 import { useNodesStateSynced } from '../../hooks/useNodesStateSynced';
 import { useEdgesStateSynced } from '../../hooks/useEdgesStateSynced';
 import  VoiceChat  from './Voice/VoiceBar'
@@ -29,13 +29,13 @@ import axios from 'axios';
 import * as awarenessProtocol from 'y-protocols/awareness.js'
 
 
-//🐬 웹 알티시 테스팅
+//:dolphin: 웹 알티시 테스팅
 const proOptions = {
   account: 'paid-pro',
   hideAttribution: true,
 };
 
-//🐬 노드 타입 세팅
+//:dolphin: 노드 타입 세팅
 const nodeTypes = {
   MemoNode : MemoNode,
   TaskNameNode : TaskNameNode,
@@ -45,7 +45,7 @@ const nodeTypes = {
   pix: PictureNode
 };
 
-//🐬 노드 아이디 세팅
+//:dolphin: 노드 아이디 세팅
 let id = Math.floor(Math.random() * (10000 - 100 + 1)) + 100;
 const getNodeId = () => `${id++}`;
 
@@ -54,9 +54,11 @@ const fitViewOptions = {
  };
 
    /* * 
-   * 🐬 Ydoc 세팅 
+   * :dolphin: Ydoc 세팅 
    * */
-const ydoc = new Doc();
+export const ydoc = new Doc();
+export const nodesMap = ydoc.getMap('nodes');
+export const edgesMap = ydoc.getMap('edges');
 
 const wsOpts = {
   connect: false,
@@ -69,13 +71,12 @@ const Editingbox2 = () => {
   
 
   const wsProvider = new WebsocketProvider(
-    'wss://phodo.store/ws', // 🔥 요청을 보낼 웹소켓 서버
-    projectId, // 🔥 프로젝트 아이디
-    ydoc, // 🔥 새롭게 전달 받을 도큐먼트 
+    'ws://localhost:1234', // :fire: 요청을 보낼 웹소켓 서버
+    projectId, // :fire: 프로젝트 아이디
+    ydoc, // :fire: 새롭게 전달 받을 도큐먼트 
     wsOpts
   );
-  const nodesMap = ydoc.getMap('nodes');
-  const edgesMap = ydoc.getMap('edges');
+  
 
   useEffect(() => {
     wsProvider.connect();
@@ -89,8 +90,8 @@ const Editingbox2 = () => {
         console.log("Successfully connected");
       }
     });
-      // 🌟 Fetch nodes from the API
-// 🌟 Fetch project data from the API
+      // :star2: Fetch nodes from the API
+// :star2: Fetch project data from the API
   // axios.get(`http://localhost:4000/project/${projectId}`)
   axios.get(`https://hyeontae.shop/project/${projectId}`)
   .then((res) => {
@@ -130,14 +131,14 @@ const Editingbox2 = () => {
   const [nodes, onNodesChange] = useNodesStateSynced(ydoc, edgesMap);
 
   /* * 
-   * 🐬 아니셜라이징 세팅
+   * :dolphin: 아니셜라이징 세팅
    * */
   
   const reactFlowWrapper = useRef(null); // 큰 react flow wrapper
   
   const { project } = useReactFlow();
 
-  // 🍀🌼 기존에 드래그와 동일, 근데 기존은 그냥 컴포넌트 밖에다 세팅이 되어있음
+  // 🍀:blossom: 기존에 드래그와 동일, 근데 기존은 그냥 컴포넌트 밖에다 세팅이 되어있음
   const onDragOver = useCallback((event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
@@ -148,15 +149,19 @@ const Editingbox2 = () => {
     (event) => {
       event.preventDefault();
 
-      //🐤 여기서 아무래도 current 세팅을 해주는 것 같은 데 확인 해봐야할 것 같음
+      //:baby_chick: 여기서 아무래도 current 세팅을 해주는 것 같은 데 확인 해봐야할 것 같음
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
       
       // Drag을 통한 이벤트 생성
       const type = event.dataTransfer.getData('application/reactflow');
       const img = event.dataTransfer.getData('data/imageurl');
       const tags = event.dataTransfer.getData('data/tags');
-      console.log('🌲Getting type ', type); // 🍎 drag start에서 가져온 type
-      console.log('🌲Getting image ', img); // 🍎 drag start에서 가져온 image 
+      const memo = event.dataTransfer.getData('data/memo');
+      const title = event.dataTransfer.getData('data/title');
+      const content = event.dataTransfer.getData('data/content');
+      const date = event.dataTransfer.getData('data/date');
+      console.log(':evergreen_tree:Getting type ', type); // :apple: drag start에서 가져온 type
+      console.log(':evergreen_tree:Getting image ', img); // :apple: drag start에서 가져온 image 
       if (typeof type === 'undefined' || !type) {
         return;
       }
@@ -171,7 +176,8 @@ const Editingbox2 = () => {
         id: getNodeId(),
         type,
         position,
-        data: { label: `${type}` , url: `${img}`, tags: `${tags}`},
+        data: { label: `${type}` , url: `${img}`, tags: `${tags}`, memo: `${memo}`, 
+                title: `${title}`, content: `${content}`, date: `${date}`},
       };
 
       nodesMap.set(newNode.id, newNode);
@@ -194,11 +200,13 @@ const Editingbox2 = () => {
       onDragOver={onDragOver}
       proOptions={proOptions}
       nodeTypes={nodeTypes}
-      style= {{background : '#F3B0C3', position:'relative'}} 
+      style={{ background: '#E5E5E5', position: 'relative' }}
       fitView
       fitViewOptions={fitViewOptions}>
       <Controls position='top-left' style={{top:'60px'}} />
       <MiniMap pannable position='bottom-left'/>
+      <Background id="1" gap={30} color="#ffffff" variant={BackgroundVariant.Cross} />
+      <Background id="2" gap={300} offset={1} color="#ffffff" variant={BackgroundVariant.Lines} />
     <div style={{zIndex: 150 }}>
       <MenuBarR />
     </div>
