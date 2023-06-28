@@ -17,10 +17,10 @@ import { WebsocketProvider } from 'y-websocket';
 // 🍀 WebRTC setting
 import { useNodesStateSynced } from '../../hooks/useNodesStateSynced';
 import { useEdgesStateSynced } from '../../hooks/useEdgesStateSynced';
-import  VoiceChat  from './Voice/VoiceBar'
+import  VoiceChat  from './Voice/VoiceBar';
 
+//email전송용
 import { useParams } from "react-router-dom";
-
 
 //🐬 과금버전 세팅
 const proOptions = {

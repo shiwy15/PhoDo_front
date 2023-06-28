@@ -22,6 +22,7 @@ const fetchProject = () => {
 const Sidebar = () => {
     // useQuery를 사용하여 fetchLikePhoto 함수를 호출하고, 그 결과를 콘솔에 출력
     const { data : projectData} = useQuery('projectList', fetchProject,{
+        refetchInterval : 5*1000
         // onSuccess: (data) => {console.log('sidebar get success', data)},
         // retry:5,
         // retryDelay:500
