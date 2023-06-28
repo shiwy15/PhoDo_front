@@ -34,7 +34,7 @@ export default function TutorialFlow() {
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
   return (
-    <div style={{ width: '30vw', height: '30vh' }}>
+  <div style={{ width: '38vw', height: '43vh', border: 'solid 1px rgba(0,0,0,1)', marginLeft: '15px' }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
