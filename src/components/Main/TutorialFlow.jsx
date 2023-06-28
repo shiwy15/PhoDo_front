@@ -42,7 +42,7 @@ export default function TutorialFlow() {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
-        style={{background :"#2e2938"  }}
+        style={{background :"#d09aff"  }}
       >
         <Controls />
          <Background id="1" gap={20} />
