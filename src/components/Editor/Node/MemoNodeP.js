@@ -41,8 +41,8 @@ const MemoNodeP = ({ id, data, selected }) => {
         <NodeResizer
           color="#ff0071"
           isVisible={selected}
-          minWidth={200}
-          minHeight={200}
+          minWidth={300}
+          minHeight={300}
           style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0 }}
           handleStyle={handleStyle}
         >
@@ -98,6 +98,7 @@ const MemoNodeP = ({ id, data, selected }) => {
               backgroundColor: '#FFA7C2',
               marginTop: '5px',
               color: 'black',
+              fontSize: '20pt'
             }}
           >
             

@@ -88,6 +88,7 @@ function TextNode3({ id, selected, data, isConnectable }) {
           value={data.title}
           onChange={onTitleChange}
           className="input-box"
+          style={{fontSize: '15pt'}}
         />
       </div>
       <div>
@@ -98,6 +99,7 @@ function TextNode3({ id, selected, data, isConnectable }) {
           value={data.date}
           onChange={onDateChange}
           className="input-box"
+          style={{fontSize: '15pt'}}
         />
       </div>
       <div>
@@ -108,6 +110,7 @@ function TextNode3({ id, selected, data, isConnectable }) {
           onChange={onContentChange}
           rows={5}
           className="input-box overflow-auto"
+          style={{fontSize: '15pt'}}
         ></textarea>
       </div>
       <Handle type="source" position={Position.Right} id="right" isConnectable={isConnectable} />
