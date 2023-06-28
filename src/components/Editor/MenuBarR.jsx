@@ -60,7 +60,7 @@ const MenuBar = () => {
       </div>
       {/* 🌿 두번쨰 list -> image box */}
       <div className='second my-4 '>
-        <Button onClick={toggleDrawer2} sx={{ color: 'white', fontSize: '1.4rem' }}>노드 박스</Button>
+        <Button onClick={toggleDrawer2} sx={{ color: 'white', fontSize: '1.4rem' }}>노드<br/>박스</Button>
           <Divider sx={{ backgroundColor: 'white', marginY: '12px', marginLeft: '8px', marginRight: '8px' }} />
         <Drawer
           anchor="right"
