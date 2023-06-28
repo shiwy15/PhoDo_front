@@ -143,7 +143,7 @@ const ImageBox = () => {
       <Paper sx={{     
         width: 420,
         height: '100vh',
-        backgroundColor: 'rgba(211,211,211,0.7)',
+        backgroundColor: 'rgba(255,255,255,0.5)',
         borderTopRightRadius: 0,
         borderBottomRightRadius: 0,
         color: 'rgb(255,255,255)'}}>
@@ -151,7 +151,7 @@ const ImageBox = () => {
           {/* 🌿 Edit box제목 */}
           <h2 className="text-2xl mt-1 font-bold relative top-0 text-center text-violet-600">이미지 박스</h2>
           {/* 🌸 구분선 */}
-          <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />
+          <Divider variant="middle" sx={{ padding:'8px', borderColor: 'purple' }} />
           {/* 🌿 카테고리 버튼 리스트 */}
           <div className="text-2xl font-bold ml-5 mt-2 text-violet-600 p-1 rounded-lg ">
             카테고리</div>
@@ -212,7 +212,7 @@ const ImageBox = () => {
             </div>
 
         {/* 🌸 구분선 */}
-        <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />
+        <Divider variant="middle" sx={{ padding:'8px', borderColor: 'purple' }} />
         {/* 🌸 이미지 모아볼 수 있는 미니 갤러리 */}
         <div className="text-2xl font-bold ml-5 mt-2 text-violet-600 p-1 rounded-lg ">
             이미지 노드 <p className='text-lg'>편집창에 끌어다 놓아보세요!</p></div>
