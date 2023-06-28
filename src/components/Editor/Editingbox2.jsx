@@ -17,6 +17,9 @@ import TextNode1 from './Node/TextNode';
 import TextNode2 from './Node/TextNode2';
 import TextNode3 from './Node/TextNode3';
 
+//엣지 타입
+import ConnectionLine from './Edge/ConnectionLine'
+import CustomEdge from './Edge/CustomEdge';
 
 // 리액트 플로우 노드 
 import ReactFlow, { ReactFlowProvider, useReactFlow, Controls, MiniMap, Background, BackgroundVariant} from 'reactflow';
@@ -53,6 +56,12 @@ const nodeTypes = {
   pix: PictureNode
 };
 
+//
+const edgeTypes = {
+  coloredge : CustomEdge
+}
+
+
 //:dolphin: 노드 아이디 세팅
 let id = Math.floor(Math.random() * (10000 - 100 + 1)) + 100;
 const getNodeId = () => `${id++}`;
@@ -62,8 +71,8 @@ const fitViewOptions = {
  };
 
    /* * 
-   * :dolphin: Ydoc 세팅 
-   * */
+    * Ydoc 세팅 
+    * */
 export const ydoc = new Doc();
 export const nodesMap = ydoc.getMap('nodes');
 export const edgesMap = ydoc.getMap('edges');
@@ -204,11 +213,13 @@ const Editingbox2 = () => {
       edges={edges}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
+      connectionLineComponent={ConnectionLine}
       onConnect={onConnect}
       onDrop={onDrop}
       onDragOver={onDragOver}
       proOptions={proOptions}
       nodeTypes={nodeTypes}
+      edgeTypes={edgeTypes}
       style={{ background: '#E5E5E5', position: 'relative' }}
       fitView
       fitViewOptions={fitViewOptions}>
