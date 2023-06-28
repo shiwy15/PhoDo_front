@@ -1,26 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { Handle, Position, NodeResizer } from 'reactflow';
 import { useUpdateNodeInternals } from 'reactflow';
-import {ydoc , nodesMap, edgesMap } from './../Editingbox2'
-import { useNodesStateSynced } from '../../../hooks/useNodesStateSynced';
-import { useEdgesStateSynced } from '../../../hooks/useEdgesStateSynced';
+import {nodesMap} from './../Editingbox2'
 
 const MemoNode = ({ id, data, selected }) => {
-  // const { memo } = data ;  // Destructure memo and id from data.
-  const [content, setContent] = useState(data.memo);
-  const [nodes, onNodesChange] = useNodesStateSynced(ydoc, edgesMap);
+  const [memo, setMemo] = useState(data.memo);
   const updateNodeInternals = useUpdateNodeInternals();
 
-  const onContentChange = (evt) => {
-    
-    const newContent = evt.target.value;
-    setContent(newContent);
-    console.log('Id Changed: ', id);
-    console.log('changing to: ' , evt.target.value);
-    updateNodeInternals(id);  // Trigger re-render of this node.
-    // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: newContent } } : node));
-    updateNodeInternals(id);  // Trigger re-render of this node.
-  };
+  const onMemoChange = useCallback((evt) => {
+    setMemo(evt.target.value);
+  }, []);
 
   useEffect(() => {
     // This is your map iteration code 
@@ -28,7 +17,7 @@ const MemoNode = ({ id, data, selected }) => {
       if (node.selected === true) {
         node.data = {
             ...node.data,
-            memo: content
+            memo: memo
         };
         nodesMap.set(nodeId, node);
         console.log('노드는 ', node);
@@ -37,7 +26,7 @@ const MemoNode = ({ id, data, selected }) => {
         // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
       }
     });
-  }, [content]);
+  }, [memo]);
 
   const handleStyle = {
     background: 'red', // 핸들의 배경색 설정
@@ -97,7 +86,8 @@ const MemoNode = ({ id, data, selected }) => {
         <div className="content" style={{ padding: '20px', flex: '1' }}>
           <textarea
             id="content"
-            onChange={onContentChange}
+            value={data.memo}
+            onChange={onMemoChange}
             className="overflow-auto"
             rows={1}
             style={{
@@ -111,7 +101,7 @@ const MemoNode = ({ id, data, selected }) => {
               color: 'black',
             }}
           >
-            {data.memo}
+            
             </textarea>
         </div>
       </div>
