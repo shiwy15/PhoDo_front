@@ -36,6 +36,8 @@ import axios from 'axios';
 import * as awarenessProtocol from 'y-protocols/awareness.js'
 
 
+import ydoc from './ydoc'
+
 //:dolphin: 웹 알티시 테스팅
 const proOptions = {
   account: 'paid-pro',
@@ -73,7 +75,7 @@ const fitViewOptions = {
    /* * 
     * Ydoc 세팅 
     * */
-export const ydoc = new Doc();
+// export const ydoc = new Doc();
 export const nodesMap = ydoc.getMap('nodes');
 export const edgesMap = ydoc.getMap('edges');
 
@@ -88,8 +90,8 @@ const Editingbox2 = () => {
   
 
   const wsProvider = new WebsocketProvider(
-    // 'ws://localhost:1234', // :fire: 요청을 보낼 웹소켓 서버
-    'wss://phodo.store/ws', // 🔥 요청을 보낼 웹소켓 서버
+    'ws://localhost:1234', // :fire: 요청을 보낼 웹소켓 서버
+    // 'wss://phodo.store/ws', // 🔥 요청을 보낼 웹소켓 서버
     projectId, // :fire: 프로젝트 아이디
     ydoc, // :fire: 새롭게 전달 받을 도큐먼트 
     wsOpts
