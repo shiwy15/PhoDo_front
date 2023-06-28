@@ -16,6 +16,7 @@ const Loginbox = () => {
 
     {/* 🌿 store에 있는 함수를 불러옵니다. */}
     const setUserEmail = useUserStore(state => state.setUserEmail)
+    const setUserName  = useUserStore(state => state.setUserName)
 
     // console.log(formData); //🔥 testing
     
@@ -36,7 +37,8 @@ const Loginbox = () => {
             if (res.status === 200) {
                 {/* 🌿 post 성공한다면 email값을 store에 저장합시다. */}
                 setUserEmail(formData.email)
-                
+                setUserName(res.data.user.name)
+
                 navigate('/Main');
             }
         })

@@ -16,7 +16,6 @@ import {request} from '../../utils/axios-utils';
 
 const Header = () => {
   const navigate = useNavigate();
-  const userEmail = useUserStore(state => state.userEmail);
   const userName = useUserStore(state => state.userName);
 
 
