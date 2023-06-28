@@ -3,6 +3,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { Handle, Position } from 'reactflow';
 import { nodesMap } from '../Editingbox2';
 
+import './index.css';
 
 function TextNode({ data, isConnectable }) {
   const [title, setTitle] = useState(data.title);

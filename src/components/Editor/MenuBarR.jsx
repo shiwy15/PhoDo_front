@@ -72,7 +72,7 @@ const MenuBar = () => {
       {/* 🌿 첫번째 list -> image box */}
       <div className='place-content-start first my-4 mx-auto'>
         <Button
-          onClick={toggleDrawer2}
+          onClick={toggleDrawer1}
           sx={{
               color: 'white',
               display: 'flex',
