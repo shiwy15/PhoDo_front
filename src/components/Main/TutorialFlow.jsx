@@ -20,18 +20,29 @@ const initialNodes = [
  ];
 
  const initialEdges = [
+    {id: 'e1-2', source: '1', target: '4', style: {stroke: 'red', strokeWidth: 4}, animated: true }
   ];
 
 export default function TutorialFlow() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
-  const nodeTypes = {
-    pix: PictureNode,
-    sample: TextNode
-  }
-
-  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
+  
+    const nodeTypes = {
+      pix: PictureNode,
+      sample: TextNode,
+    };
+  
+    const onConnect = useCallback((params) => {
+      const { source, sourceHandle, target, targetHandle } = params;
+      const id = `e-${source}${sourceHandle || ''}-${target}${targetHandle || ''}`;
+      setEdges((eds) =>
+        addEdge(
+          { ...params, style: { stroke: 'red', strokeWidth: 4 }, animated: true },
+          eds
+        )
+      );
+    }, [setEdges]);
 
   return (
   <div style={{ width: '38vw', height: '43vh', border: 'solid 1px rgba(0,0,0,1)', marginLeft: '15px' }}>
