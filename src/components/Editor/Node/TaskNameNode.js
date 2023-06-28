@@ -83,7 +83,7 @@ const TasknameNode = ({ id, selected, data, isConnectable }) => {
           value={data.title}
           onChange={onTitleChange}
           className="input-box"
-          style={{ marginLeft: '20px' }}
+          style={{ marginLeft: '20px', fontSize: '15pt' }}
         />
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -94,7 +94,7 @@ const TasknameNode = ({ id, selected, data, isConnectable }) => {
           value={data.date}
           onChange={onDateChange}
           className="input-box"
-          style={{ marginLeft: '20px' }}
+          style={{ marginLeft: '20px', fontSize: '15pt' }}
         />
       </div>
       <div>
@@ -106,6 +106,7 @@ const TasknameNode = ({ id, selected, data, isConnectable }) => {
             onChange={onContentChange}
             rows={8}
             className="input-box overflow-auto"
+            style={{fontSize: '15pt'}}
           ></textarea>
         </div>
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '5px' }}>

@@ -8,7 +8,7 @@ import './index.css';
 // 노드 타입
 import MemoNode from './Node/MemoNode';
 import MemoNodeB from './Node/MemoNodeB';
-import MemoNodeG from './Node/MemoNodeG';
+import MemoNodeG from './Node/MemoNodeG'; 
 import MemoNodeP from './Node/MemoNodeP';
 import MemoNodeV from './Node/MemoNodeV';
 import PictureNode from './Node/PictureNode.js';
@@ -222,7 +222,7 @@ const Editingbox2 = () => {
       proOptions={proOptions}
       nodeTypes={nodeTypes}
       edgeTypes={edgeTypes}
-      style={{ background: '#E5E5E5', position: 'relative' }}
+      style={{ background: '#CCCCCC', position: 'relative' }}
       fitView
       fitViewOptions={fitViewOptions}>
       <Controls position='top-left' style={{top:'60px'}} />
