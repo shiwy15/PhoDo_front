@@ -35,8 +35,8 @@ import { useParams } from "react-router-dom";
 import axios from 'axios';
 import * as awarenessProtocol from 'y-protocols/awareness.js'
 
-
-import ydoc from './ydoc'
+import {createNewDoc } from './ydoc'
+import { create } from 'd3';
 
 //:dolphin: 웹 알티시 테스팅
 const proOptions = {
@@ -75,7 +75,7 @@ const fitViewOptions = {
    /* * 
     * Ydoc 세팅 
     * */
-// export const ydoc = new Doc();
+export const ydoc = createNewDoc();
 export const nodesMap = ydoc.getMap('nodes');
 export const edgesMap = ydoc.getMap('edges');
 
