@@ -19,7 +19,6 @@ const MainFeaturedPost = () => {
         position: 'relative',
         color: '#ffffff',
         height: '400px',
-        width: '1200px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -46,7 +45,7 @@ const MainFeaturedPost = () => {
         PhoDo는 효율이 중요한 당신을 위한 <span style={{ color: '#FF9300'}}>사진 중심 협업 사이트</span>입니다.
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '40px'}}>
-          <Button variant="IBM Plex Sans KR" href="/modal" sx={{ border: '4px solid black', color: 'white', fontSize: '30px', fontWeight: 'bold', bgcolor: '#8F44AD', borderColor: 'black', borderRadius: '10px' }}>
+          <Button variant="IBM Plex Sans KR" href="/modal" sx={{ border: '4px solid black', 'marginRight':'25px', color: 'white', fontSize: '30px', fontWeight: 'bold', bgcolor: '#8F44AD', borderColor: 'black', borderRadius: '10px' }}>
             {post.linkText}
           </Button>
         </Box>

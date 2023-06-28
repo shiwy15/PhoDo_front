@@ -15,8 +15,6 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 //서버요청용
@@ -28,6 +26,8 @@ import StarIcon from './StarIcon'
 
 //thumbnail 변경용
 import ThumbFileInput from './ThumbFileInput'
+
+
 
 initTE({Ripple });
 
@@ -53,10 +53,11 @@ const fetchProject = () => {
 const MyProjectArea = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const formatData = useFormatDate();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
     const [currentProjectId, setCurrentProjectId] = useState(null);
     const [currentDefThumb, setCurrentDefThumb] = useState(null);
+
 
 
     {/* 🐼 project GET hook */}
@@ -122,7 +123,7 @@ const MyProjectArea = () => {
             <div className="flex items-center justify-start bg-violet-200 rounded-xl px-4 w-5/6 pt-1 pb-1 h-16 mx-auto overflow-x-auto mb-4">
                 <h3 className='mr-2 text-xl min-w-fit'>검색 결과 : </h3>
                 {
-                    projectData?.data?.filter(project => project.name === searchTerm).map(project => (
+                    projectData?.data?.filter(project => project.name === searchTerm || project._id === searchTerm).map(project => (
                         
                         <Link to={`/newproject/${project._id}`} key={project._id} className='flex mx-2 items-center justify-start border  px-4 py-1 bg-violet-800 text-white rounded-full min-w-fit'>
                             <p key={project._id} className='text-xl'>{`${project.name}`}</p>
@@ -162,7 +163,7 @@ const MyProjectArea = () => {
                                     <button
                                         type="button"
                                         onClick={() => handleOpen(project._id, project.image)}
-                                        class=" mr-3 inline-block rounded bg-violet-800 px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] whitespace-nowrap">
+                                        className=" mr-3 inline-block rounded bg-violet-800 px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] whitespace-nowrap">
                                         썸네일 변경
                                     </button>
                                         <Modal
@@ -220,7 +221,7 @@ const MyProjectArea = () => {
                                     <button
                                         type="button"
                                         onClick={handleOpen}
-                                        class=" mr-3 inline-block rounded bg-violet-800 px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] whitespace-nowrap">
+                                        className=" mr-3 inline-block rounded bg-violet-800 px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] whitespace-nowrap">
                                         썸네일 변경
                                     </button>
                                         <Modal
