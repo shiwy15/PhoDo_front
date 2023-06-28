@@ -209,7 +209,7 @@ const Editingbox2 = () => {
       onDragOver={onDragOver}
       proOptions={proOptions}
       nodeTypes={nodeTypes}
-      style={{ background: '#E5E5E5', position: 'relative' }}
+      style={{ background: '#CCCCCC', position: 'relative' }}
       fitView
       fitViewOptions={fitViewOptions}>
       <Controls position='top-left' style={{top:'60px'}} />
