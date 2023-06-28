@@ -40,5 +40,6 @@ let userStore = (set) => ({
 })
 
 userStore = devtools(userStore)
+userStore = persist(userStore, { name: 'userStore' })
 
 export const useUserStore = create(userStore)
