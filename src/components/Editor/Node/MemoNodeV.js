@@ -2,7 +2,7 @@ import { useEffect, useCallback, useState } from 'react';
 import { Handle, Position, NodeResizer } from 'reactflow';
 import {nodesMap} from './../Editingbox2'
 
-const MemoNode = ({ id, data, selected }) => {
+const MemoNodeV = ({ id, data, selected }) => {
   const [memo, setMemo] = useState(data.memo);
 
   const onMemoChange = useCallback((evt) => {
@@ -51,11 +51,11 @@ const MemoNode = ({ id, data, selected }) => {
         </NodeResizer>
       </div>
       <div
-        className="memoNodeY"
+        className="memoNodeV"
         style={{
           position: 'relative',
-          background: '#F2E173',
-          background: 'linear-gradient(-150deg, transparent 1.5em, #F2E173 0)',
+          background: '#B195EE',
+          background: 'linear-gradient(-150deg, transparent 1.5em, #B195EE 0)',
           width: '100%',
           height: '100%',
           padding: '10px',
@@ -95,7 +95,7 @@ const MemoNode = ({ id, data, selected }) => {
               height: '100%',
               border: 'none',
               outline: 'none',
-              backgroundColor: '#F2E173',
+              backgroundColor: '#B195EE',
               marginTop: '5px',
               color: 'black',
             }}
@@ -108,4 +108,4 @@ const MemoNode = ({ id, data, selected }) => {
   );
 };
 
-export default MemoNode;
+export default MemoNodeV;

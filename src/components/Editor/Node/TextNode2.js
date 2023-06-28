@@ -9,7 +9,8 @@ function TextNode2({ id, selected, data, isConnectable }) {
   const [content, setContent] = useState(data.content);
 
   const onTitleChange = useCallback((evt) => {
-    setTitle(evt.target.value);
+    const normalizedTitle = evt.target.value.normalize('NFKD');
+    setTitle(normalizedTitle);
   }, []);
 
   useEffect(() => {
@@ -29,7 +30,8 @@ function TextNode2({ id, selected, data, isConnectable }) {
 
 
   const onContentChange = useCallback((evt) => {
-    setContent(evt.target.value);
+    const normalizedContent = evt.target.value.normalize('NFKD');
+    setContent(normalizedContent);
   }, []);
 
   useEffect(() => {

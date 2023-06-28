@@ -12,7 +12,8 @@ function TextNode3({ id, selected, data, isConnectable }) {
   // const updateNodeInternals = useUpdateNodeInternals();
 
   const onTitleChange = useCallback((evt) => {
-    setTitle(evt.target.value);
+    const normalizedTitle = evt.target.value.normalize('NFKD');
+    setTitle(normalizedTitle);
   }, []);
   
   useEffect(() => {
@@ -32,7 +33,8 @@ function TextNode3({ id, selected, data, isConnectable }) {
 
 
   const onDateChange = useCallback((evt) => {
-    setDate(evt.target.value);
+    const normalizedDate = evt.target.value.normalize('NFKD');
+    setDate(normalizedDate);
   }, []);
 
   useEffect(() => {
@@ -55,7 +57,8 @@ function TextNode3({ id, selected, data, isConnectable }) {
 
 
   const onContentChange = useCallback((evt) => {
-    setContent(evt.target.value);
+    const normalizedContent = evt.target.value.normalize('NFKD');
+    setContent(normalizedContent);
   }, []);
   
   useEffect(() => {

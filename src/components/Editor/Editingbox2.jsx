@@ -7,6 +7,10 @@ import 'reactflow/dist/style.css';
 import './index.css';
 // 노드 타입
 import MemoNode from './Node/MemoNode';
+import MemoNodeB from './Node/MemoNodeB';
+import MemoNodeG from './Node/MemoNodeG';
+import MemoNodeP from './Node/MemoNodeP';
+import MemoNodeV from './Node/MemoNodeV';
 import PictureNode from './Node/PictureNode.js';
 import TaskNameNode from './Node/TaskNameNode';
 import TextNode1 from './Node/TextNode';
@@ -38,6 +42,10 @@ const proOptions = {
 //:dolphin: 노드 타입 세팅
 const nodeTypes = {
   MemoNode : MemoNode,
+  MemoNodeB : MemoNodeB,
+  MemoNodeG : MemoNodeG,
+  MemoNodeP : MemoNodeP,
+  MemoNodeV : MemoNodeV,
   TaskNameNode : TaskNameNode,
   TextNode1: TextNode1, 
   TextNode2 : TextNode2,
