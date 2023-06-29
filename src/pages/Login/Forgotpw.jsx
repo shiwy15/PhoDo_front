@@ -1,11 +1,13 @@
 import React from "react";
+import { Container, Row, Col } from "react-bootstrap";
+
 import Forgotpwbox from "../../components/Login/Forgotpwbox";
 
 function Forgotpw() {
     return (
-        <div className="login">
+        <Container fluid className="project-section h-screen">
             <Forgotpwbox/>
-        </div>
+        </Container>
     )
 }
 export default Forgotpw; 

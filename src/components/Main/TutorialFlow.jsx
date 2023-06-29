@@ -46,7 +46,11 @@ export default function TutorialFlow() {
     }, [setEdges]);
 
   return (
-  <div style={{ width: '100%', height: '100%', border: 'solid 1px rgba(0,0,0,1)', wordBreak: 'break-word' }}>
+    <div style={{ 
+      width: '100%', 
+      height: '100%', 
+      paddingBottom: '20px', 
+    }}>      
       <ReactFlow
         nodes={nodes}
         edges={edges}

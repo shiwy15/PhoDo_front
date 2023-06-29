@@ -1,39 +1,52 @@
 import React, { useEffect, useContext } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+
+import homeLogo from "../../Assets/home-main.svg";
+import Type from "../../components/Main/Type";
+import Type2 from "../../components/Main/Type2";
 
 //component
-import Header from '../../components/mypage/Header';
-import MainPost from '../../components/Main/MainPost';
-import TutorialFlow from '../../components/Main/TutorialFlow';
-import Typography from '@mui/material/Typography';
-import CategoryTuto from '../../components/Main/CategoryTuto';
+import TutoFlow from '../../components/Main/TutoFlow';
 
 export const MainPage =() => {
+  return (
+    <section>
+      <Container fluid className="home-section" id="home">
+        <Container className="home-content">
+          <Row>
+            <Col md={7} className="home-header">
+              <h1 style={{ paddingBottom: 15 }} className="heading">
+                Photo 업무를 함께 DO!{" "}
+                <span className="wave" role="img" aria-labelledby="wave">
+                  📸
+                </span>
+              </h1>
 
-    return (
-   <div>
-      <Header className="fixed top-0 w-full z-50" />
-      <div className="flex justify-center">
-        <div className="w-11/12">
-          <div className="mt-8 mb-32" style={{ marginTop: '100px' }}>
-            <MainPost />
-          </div>
-          <div className="flex mt-8">
-            <div className="w-1/2 h-84 m-8 text-center mb-2">
-              <Typography gutterBottom variant="h5" >사진을 넣어 카테고리로 정리해보세요!</Typography>
-              <CategoryTuto />
-            </div>
-            <div className=" w-1/2 m-8 text-center">
-              <Typography gutterBottom variant="h5">업무흐름을 만들어보세요!</Typography>
-              <TutorialFlow />
-            </div>
+              <h1 className="heading-name">
+                
+                <strong className="main-name"> 업무 현황을 한눈에!</strong>
+              </h1>
 
-          </div>
+              <div style={{ padding: 50, textAlign: "left" }}>
+                <Type />
+                <Type2 />
+              </div>
+            </Col>
 
-        </div>
-        
-      </div>
-    </div>
-
-
-    )
+            <Col md={5} style={{ paddingBottom: 20 }}>
+              <img
+                src={homeLogo}
+                alt="home pic"
+                className="img-fluid"
+                style={{ maxHeight: "450px" }}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </Container>
+        <Container className="home-content">
+          <TutoFlow />
+        </Container>
+    </section>
+  )
 }
