@@ -9,6 +9,7 @@ import Passwordchange from "./pages/Login/Passwordchange.jsx";
 import Editor2 from "./pages/Editor/Editor2.jsx"
 import Editor4 from "./pages/Editor/Editor4.jsx"
 import {Modal} from "./pages/Modal/Modal.jsx"
+import Report from "./pages/Report/Report.jsx"
 
 //react query practice set
 import Practice from "./pages/Practice/Practice.jsx"
@@ -47,6 +48,9 @@ function App() {
 
         {/* Main */}
         <Route path="/main" element={<MainPage />} />
+
+        {/* Main */}
+        <Route path="/report/:projectId" element={<Report />} />
 
 
       </Routes>
