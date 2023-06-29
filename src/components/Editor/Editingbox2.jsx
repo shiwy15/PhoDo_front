@@ -36,7 +36,7 @@ import axios from 'axios';
 import * as awarenessProtocol from 'y-protocols/awareness.js'
 
 import {createNewDoc } from './ydoc'
-import { create } from 'd3';
+
 
 //:dolphin: 웹 알티시 테스팅
 const proOptions = {

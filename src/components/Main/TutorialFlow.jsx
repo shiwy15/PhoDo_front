@@ -13,8 +13,8 @@ import TextNode from './SampleNode';
 
 
 const initialNodes = [
-  { id: '1', position: { x: 30, y: 50 }, type: 'sample', data: { label: '공사 전' } },
-  { id: '2', position: { x: 100, y: 200 }, type: 'sample', data: { label: '공사 중' } },
+  { id: '1', position: { x: 30, y: 50 }, data: { label: '공사 전' } },
+  { id: '2', position: { x: 100, y: 200 }, data: { label: '공사 중' } },
   { id: '4', position: {x: 300, y: 20}, type: 'pix', width: 10, height: 10,
   data: {url:'https://velog.velcdn.com/images/hodee/post/26d2b93c-8588-4848-8020-55a6fc347f96/image.png'}}
  ];
