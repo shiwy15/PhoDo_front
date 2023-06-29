@@ -149,7 +149,7 @@ const ImageBox = () => {
         color: 'rgb(255,255,255)'}}>
         <MenuList dense>
           {/* 🌿 Edit box제목 */}
-          <h2 className="text-2xl mt-1 font-bold relative top-0 text-center text-violet-600">이미지 박스</h2>
+          <h2 className="text-3xl mt-1 font-bold relative top-0 text-center text-violet-600">이미지 박스</h2>
           {/* 🌸 구분선 */}
           <Divider variant="middle" sx={{ padding:'8px', borderColor: 'purple' }} />
           {/* 🌿 카테고리 버튼 리스트 */}

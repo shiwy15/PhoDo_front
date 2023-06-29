@@ -103,7 +103,7 @@ const CategoryTuto =() => {
     </div>
 </Paper>
 
-\</Box>
+</Box>
 
 
 
