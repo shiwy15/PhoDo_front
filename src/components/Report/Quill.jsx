@@ -4,6 +4,9 @@ import 'react-quill/dist/quill.snow.css';
 import ImageResize from 'quill-image-resize-module-react';
 import { pdfExporter } from "quill-to-pdf";
 import { saveAs } from "file-saver";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
+
 import './../../index.css'
 
 Quill.register('modules/ImageResize', ImageResize);
@@ -40,13 +43,19 @@ const QuillEditor = () => {
     const editorRef = useRef(null);
 
 
-    const exportAsPDF = async () => {
-        const delta = editorRef.current?.editor?.getContents(); // gets the Quill delta
-        console.log('delta: ', delta)
-        const pdfAsBlob = await pdfExporter.generatePdf(delta, config); // converts to PDF
-        console.log('pdfasblob: ', pdfAsBlob)
-        saveAs(pdfAsBlob, "pdf-export.pdf"); // downloads from the browser
-};
+    const exportAsPDF = () => {
+        const editor = document.querySelector('.ql-editor');
+        html2canvas(editor, {scale : 2}).then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const imgProps= pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save("download.pdf");
+        });
+    };
+    
     
 
     return (
@@ -62,7 +71,6 @@ const QuillEditor = () => {
             onChange={setValue}
             modules={modules}
             ref={editorRef}
-            
         />
         
         </div>
