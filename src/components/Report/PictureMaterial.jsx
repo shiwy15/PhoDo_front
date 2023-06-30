@@ -2,7 +2,7 @@ import React, { useState,  useEffect } from 'react'
 import { render } from 'react-dom';
 import { useParams } from 'react-router-dom';
 import Gallery from "react-photo-gallery";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+// import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {photos} from './data'
 import { request } from "../../utils/axios-utils"
 
