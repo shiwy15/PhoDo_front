@@ -270,6 +270,10 @@ button:focus {
 
 .home-section {
   position: relative;
+  overflow-y: auto !important;
+  overflow: auto !important;
+  top: 0px;
+  bottom: 0px;
   z-index: -1;
   background-image: var(--image-gradient), url(./Assets/home-bg.jpg);
   background-position: top center;
@@ -459,10 +463,14 @@ button:focus {
 }
 
 /* --------- */
-/* Projects */
+/* Mypage, Projects */
 /* --------- */
 .project-section {
+  overflow-y: auto !important;
+  overflow: auto !important; 
   position: fixed !important;
+  top: 0px;
+  bottom: 0px;
   padding-top : 64px;
   padding-bottom: 30px !important;
   background-image: var(--image-gradient), url(./Assets/home-bg.jpg);}
@@ -473,6 +481,23 @@ button:focus {
   padding-left: 25px !important;
   padding-right: 25px !important;
   height: auto !important;
+}
+
+
+.gallery-imgCard {
+  font-size: 4.5em !important;
+  height: 175px !important;
+  margin: 10px !important;
+  padding: 10px !important;
+  opacity: 0.93 !important;
+  border: 1.7px solid rgba(200, 137, 230, 0.637) !important;
+  vertical-align: middle !important;
+  text-align: center !important;
+  border-radius: 5px !important;
+  display: table !important;
+  box-shadow: 4px 5px 4px 3px rgba(89, 4, 168, 0.137) !important;
+  overflow: hidden !important;
+  transition: all 0.4s ease 0s !important;
 }
 
 .project-card-view {

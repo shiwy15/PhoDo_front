@@ -8,9 +8,8 @@ import Paper from '@mui/material/Paper';
 import {AiFillPicture, AiFillFileAdd} from "react-icons/ai";
 
 const addImgFile = async (image) => {
+    console.log('image:', image)
   const response = await request({ url: 'api/test', method: 'post', data: image });
-  console.log(response?.data?.tags);
-  console.log(response?.data?.category)
   return response;
 }
 
@@ -35,11 +34,15 @@ const CategoryTuto =() => {
 
 
     const handleImageChange = (e) => {
-        setImage(URL.createObjectURL(e.target.files[0]));
-        setFile(e.target.files[0]);
-        const formData = new FormData();
-        formData.append('image', file);
-        mutation.mutate(formData);
+        try {
+            setImage(URL.createObjectURL(e.target.files[0]));
+            setFile(e.target.files[0]);
+            const formData = new FormData();
+            formData.append('image', e.target.files[0]);
+            mutation.mutate(formData);
+        } catch (error) {
+            console.error("Error uploading image:", error);
+        }
     };
 
   return (
@@ -59,24 +62,29 @@ const CategoryTuto =() => {
             
         />
     {image ? (
-        <Box
-            sx={{
-                display: 'flex',
-                flexWrap: 'nowrap',
-                borderRadius : '5px',
-                '& > :not(style)': {
-                    m: 3,
-                    width: '50%',
-                    height: 110,
-                    marginX : 'auto',
-                    borderRadius : '5px',},}}>
-        <img
-            src={image}
-            alt="Preview"
-            className="w-32 h-32 object-cover cursor-pointer"
-            onClick={() => document.getElementById("imageInput").click()}
-        />
-        </Box>
+<Box
+    sx={{
+        display: 'flex',
+        flexWrap: 'nowrap',
+        borderRadius: '5px',
+        height: '110px', // Box의 높이를 고정값으로 설정
+        '& > :not(style)': {
+            m: 3,
+            width: '50%',
+            height: '110px', // 이미지의 높이를 고정값으로 설정
+            marginX: 'auto',
+            borderRadius: '5px',
+        },
+    }}
+>
+    <img
+        src={image}
+        alt="Preview"
+        className="w-32 h-32 cursor-pointer"
+        style={{ objectFit: 'contain', height: '110px' }} // object-fit을 contain으로 설정하고 높이를 고정값으로 설정
+        onClick={() => document.getElementById("imageInput").click()}
+    />
+</Box>
     ) : (
         <Box
             sx={{
@@ -111,23 +119,22 @@ const CategoryTuto =() => {
             },
         }}
     >
-        <Paper elevation={3}>
-            <div className='text-center text-xl font-bold'>태그 결과</div>
-            <div className='text-lg mx-1 px-2'>
-                {tags?.map((tag, index) => (
-                    <span key={index}>{tag} </span>
-                ))}
-            </div>
-        </Paper>
-        <Paper elevation={3}>
-            <div className='text-center text-xl font-bold'>카테고리 결과</div>
-            <div className='text-lg mx-1 px-2'>
-                {category?.map((cate, index) => (
-                    <span key={index}>{cate} </span>
-                ))}
-            </div>
-        </Paper>
-
+    <Paper elevation={3} style={{ height: '100px' }}>
+        <div className='text-center text-xl font-bold'>태그 결과</div>
+        <div className='relative text-md mx-1 px-2' style={{ height: '80px', overflowY: 'auto', paddingY : '2px' }}>
+            {tags?.map((tag, index) => (
+                <span key={index}>{tag} </span>
+            ))}
+        </div>
+    </Paper>
+    <Paper elevation={3} style={{ height: '100px' }}>
+        <div className='text-center text-xl font-bold'>카테고리 결과</div>
+        <div className='text-md mx-1 px-2' style={{ height: '80px', overflowY: 'auto' }}>
+            {category?.map((cate, index) => (
+                <span key={index}>{cate} </span>
+            ))}
+        </div>
+    </Paper>
     </Box>
 
 

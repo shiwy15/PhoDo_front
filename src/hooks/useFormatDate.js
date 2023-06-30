@@ -1,10 +1,17 @@
 import React from 'react'
-
 import { useCallback } from 'react';
 
 const useFormatDate = () => {
     const formatDate = useCallback((isoString) => {
+        if (!isoString) {
+            return "날짜 데이터 없음";
+        }
+
         const date = new Date(isoString);
+
+        if (isNaN(date.getTime())) {
+            return "날짜 데이터 없음";
+        }
 
         const year = date.getFullYear();
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -19,3 +26,4 @@ const useFormatDate = () => {
 };
 
 export default useFormatDate;
+
