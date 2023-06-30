@@ -18,12 +18,13 @@ const PictureMaterial = () => {
                     method: 'get',
                     url: `/project/images/${projectId}`,
                 });
-    
+                console.log(response);
                 const convertedData = await Promise.all(
                     response.data.urls.map(async item => {
                         // Fetch image and convert to blob
                         const imageResponse = await fetch(item.url);
                         const blob = await imageResponse.blob();
+                        console.log('blob: ',  blob)
     
                         return new Promise((resolve, reject) => {
                             let reader = new FileReader();
