@@ -40,4 +40,6 @@ let userStore = (set) => ({
 })
 
 userStore = devtools(userStore)
+userStore = persist(userStore, { name: 'mypage_clicked' })
+
 export const useUserStore = create(userStore)

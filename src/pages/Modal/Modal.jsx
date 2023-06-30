@@ -11,6 +11,7 @@ import {request} from '../../utils/axios-utils'
 import { useNavigate } from 'react-router-dom';
 
 import { usePjtFromModalStore } from '../../components/store'
+import { Container, Row, Col } from "react-bootstrap";
 
 
 {/* 🌿서버에 post보내는 함수 */}
@@ -52,12 +53,13 @@ export const Modal = () => {
     
 
     return (
-        <Dialog
+        <Container fluid className="home-section" id="home">
+            <Dialog
             open={showModal}
             onClose={() => setShowModal(false)}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
-        >
+            >
             <DialogTitle id="alert-dialog-title">{"새 프로젝트 이름을 써주세요! 👨🏻‍💼"}</DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-description">
@@ -85,5 +87,6 @@ export const Modal = () => {
                 </Button>
             </DialogActions>
         </Dialog>
+    </Container>
     );
 }

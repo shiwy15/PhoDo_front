@@ -46,13 +46,13 @@ const StarIcon = ({ defProject, deflike }) => {
       onClick={handleClick}
       style={{ 
         cursor: 'pointer',
-        filter: 'drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.3))'
+        filter: 'drop-shadow(2px 2px 3px rgba(255, 255, 255, 0.3))'
       }}
     />
   ) : (
     <HiOutlineStar
       size={36}
-      color='rgba(0,0,0,0.3)'
+      color='rgba(255,255,255)'
       aria-label='즐겨찾기'
       onClick={handleClick}
       style={{ cursor: 'pointer' }}

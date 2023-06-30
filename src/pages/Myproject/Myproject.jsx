@@ -2,14 +2,13 @@ import React from 'react';
 import Container from "react-bootstrap/Container";
 
 // components
-import SidebarL from "../../components/mypage/SidebarL";
-import MyProjectArea  from '../../components/myproject/myprojectArea';
+import MyProjectArea2  from '../../components/myproject/MyprojectArea2';
 
 const Myproject = () => {
   return (
     <Container fluid className="project-section ">
 
-        <MyProjectArea />
+        <MyProjectArea2 />
     </Container>
   );
 };

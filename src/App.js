@@ -30,7 +30,7 @@ import Mypage from "./pages/Mypage/Mypage";
 import Myproject from "./pages/Myproject/Myproject";
 import { BrowserRouter, Routes, Route , Navigate} from "react-router-dom";
 
-import Navbar from './components/Navbar'
+import Navbar from './components/form/Navbar'
 // import ForcedDirectedTree from "./pages/Editor/forcedTree.jsx"
 // import VennDiagram from "./pages/Editor/venndiagram.jsx"
 
