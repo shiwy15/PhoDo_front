@@ -5,8 +5,8 @@ import Loginbox from "../../components/Login/Loginbox";
 
 function Login() {
     return (
-        <Container fluid className="project-section h-screen">
-                <Loginbox />
+        <Container fluid className="project-section">
+                <Loginbox className='b-8' />
         </Container>
     )
 }

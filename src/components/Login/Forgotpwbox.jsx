@@ -59,7 +59,7 @@ const Forgotpwbox = () => {
                     </div>
                 </form>
 
-                <p className="mt-8 text-xs font-light text-center text-gray-700">
+                <p className="mt-8 text-lg font-light text-center text-gray-700">
                     {" "}
                     Back to login page{" "}
                     <a

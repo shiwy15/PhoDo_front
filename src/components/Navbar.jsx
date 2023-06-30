@@ -3,8 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom";
-import { CgGitFork } from "react-icons/cg";
-import { ImBlog } from "react-icons/im";
+
 import {
   AiOutlineHome,
   AiOutlineFundProjectionScreen,
@@ -12,14 +11,15 @@ import {
   AiOutlinePartition,
   AiOutlineExport
 } from "react-icons/ai";
-
-
-
 import { CgFileDocument } from "react-icons/cg";
+
+import { useUserStore } from "./store";
 
 function NavBar() {
   const [expand, updateExpanded] = useState(false);
   const [navColour, updateNavbar] = useState(false);
+
+  const userName  = useUserStore(state => state.userName)
 
   useEffect(() => {
     const scrollHandler = () => {
@@ -50,6 +50,10 @@ function NavBar() {
         <Navbar.Brand href="/" className="d-flex text-white">
           <h2>PhoDo</h2>
         </Navbar.Brand>
+
+          <Navbar.Text className="ml-auto text-white">
+            {userName? ( <strong>{userName}</strong>) : ''}
+          </Navbar.Text>
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
           onClick={() => {

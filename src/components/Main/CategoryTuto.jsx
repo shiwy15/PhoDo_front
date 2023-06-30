@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { request } from "../../utils/axios-utils"
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import {AiFillPicture} from "react-icons/ai";
+import {AiFillPicture, AiFillFileAdd} from "react-icons/ai";
 
 const addImgFile = async (image) => {
   const response = await request({ url: 'api/test', method: 'post', data: image });
@@ -67,7 +67,7 @@ const CategoryTuto =() => {
                 '& > :not(style)': {
                     m: 3,
                     width: '50%',
-                    height: 100,
+                    height: 110,
                     marginX : 'auto',
                     borderRadius : '5px',},}}>
         <img
@@ -83,53 +83,52 @@ const CategoryTuto =() => {
                 display: 'flex',
                 flexWrap: 'nowrap',
                 '& > :not(style)': {
-                    m: 3,
-                    width: '50%',
-                    height: 128,
+                    width: '100%',
+                    height: 110,
                     marginX : 'auto'
                 },
             }}
         >
         <label
             htmlFor="imageInput"
-            className="flex text-black items-center justify-center bg-white shadow-lg tracking-wide border hover:cursor-pointer"
-            style={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            className="w-full flex  flex-col text-black items-center justify-center bg-white shadow-lg tracking-wide border hover:cursor-pointer"
+            style={{ fontWeight: 'bold', alignItems: 'center', justifyContent: 'center' }}
         >
-            <AiFillPicture style={{ fontSize: '50px' }}/>
+            <AiFillFileAdd className='flex my-auto mx-20' style={{ fontSize: '50px' }}/>
         </label>
         </Box>
 
         )}
     </div>
-    <Box
-    sx={{
-        display: 'flex',
-        flexWrap: 'nowrap', 
-        '& > :not(style)': {
-            m: 3,
-            width: '50%',
-            height: 128,
-        },
-    }}
->
-    <Paper elevation={3}>
-    <div className='text-center text-xl font-bold'>태그 결과</div>
-    <div className='text-lg m-1 px-2'>
-        {tags?.map((tag, index) => (
-            <span key={index}>{tag} </span>
-        ))}
-    </div>
-</Paper>
-<Paper elevation={3}>
-    <div className='text-center text-xl font-bold'>카테고리 결과</div>
-    <div className='text-lg m-1 px-2'>
-        {category?.map((cate, index) => (
-            <span key={index}>{cate} </span>
-        ))}
-    </div>
-</Paper>
+        <Box
+        sx={{
+            display: 'flex',
+            flexWrap: 'nowrap', 
+            '& > :not(style)': {
+                m : 2,
+                width: '50%',
+                height: 105,
+            },
+        }}
+    >
+        <Paper elevation={3}>
+            <div className='text-center text-xl font-bold'>태그 결과</div>
+            <div className='text-lg mx-1 px-2'>
+                {tags?.map((tag, index) => (
+                    <span key={index}>{tag} </span>
+                ))}
+            </div>
+        </Paper>
+        <Paper elevation={3}>
+            <div className='text-center text-xl font-bold'>카테고리 결과</div>
+            <div className='text-lg mx-1 px-2'>
+                {category?.map((cate, index) => (
+                    <span key={index}>{cate} </span>
+                ))}
+            </div>
+        </Paper>
 
-</Box>
+    </Box>
 
 
 
