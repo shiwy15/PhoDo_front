@@ -1,3 +1,5 @@
+// eslint-disable-next-line 
+
 import React, { useState, useEffect, useRef } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -50,7 +52,7 @@ AiFillFileAdd
 } from "react-icons/ai";
 
 //컴포넌트 import
-import ImgFileInput from './ImgFileInput';
+import ImgFileInput from '../form/ImgFileInput';
 
 const style = {
     zIndex: 500,
@@ -452,7 +454,7 @@ export default function MiniDrawer() {
         </List>
         </Drawer>
         <div className='11/12 mx-auto'>
-      <Box component="main" sx={{ flexGrow: 1, px: 3 }}>
+            <Box component="main" sx={{ flexGrow: 1, px: 3 }}>
         <DrawerHeader />
         {/* 🌿 제목 및 '새프로젝트 버튼' 구간*/}
         <div className='flex flex-wrap mx-4 px-4 justify-between mb-4'>
@@ -649,7 +651,7 @@ export default function MiniDrawer() {
             </ImageList>
         </div>
       </Box>
-      </div>
+        </div>
     </Box>
     </>
   );

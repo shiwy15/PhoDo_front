@@ -18,11 +18,11 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 
 //서버요청용
-import { useQuery } from 'react-query'
-import { request } from "../../utils/axios-utils"
+import { useQuery } from 'react-query';
+import { request } from "../../utils/axios-utils";
 
 //좋아요 변경용
-import StarIcon from './StarIcon'
+import StarIcon from './StarIcon';
 
 //thumbnail 변경용
 import ThumbFileInput from './ThumbFileInput'
@@ -53,8 +53,8 @@ const fetchProject = () => {
 const MyProjectArea = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const formatData = useFormatDate();
-    const [open, setOpen] = useState(false);
-    const handleClose = () => setOpen(false);
+    const [thumnailOpen, setThumnailOpen] = useState(false);
+    const thumbHandleClose = () => setThumnailOpen(false);
     const [currentProjectId, setCurrentProjectId] = useState(null);
     const [currentDefThumb, setCurrentDefThumb] = useState(null);
 
@@ -70,10 +70,10 @@ const MyProjectArea = () => {
     {/* 🐼 날짜 빠른 순으로 3개 표시 */}
     const recentProjects = projectData?.data?.sort((a, b) => new Date(b.time) - new Date(a.time)).slice(0, 5);
 
-    const handleOpen = (projectId, defThumb) => {
+    const ThumbHandleOpen = (projectId, defThumb) => {
     setCurrentProjectId(projectId);
     setCurrentDefThumb(defThumb);
-    setOpen(true);
+    setThumnailOpen(true);
     };
 
 
@@ -162,20 +162,20 @@ const MyProjectArea = () => {
                                     {/* 🐼썸네일 수정 버튼 : modal띄우기*/}
                                     <button
                                         type="button"
-                                        onClick={() => handleOpen(project._id, project.image)}
+                                        onClick={() => ThumbHandleOpen(project._id, project.image)}
                                         className=" mr-3 inline-block rounded bg-violet-800 px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] whitespace-nowrap">
                                         썸네일 변경
                                     </button>
                                         <Modal
-                                        open={open}
-                                        onClose={handleClose}
+                                        open={thumnailOpen}
+                                        onClose={thumbHandleClose}
                                         slotProps={{ backdrop: { style: { backgroundColor: 'rgba(0, 0, 0, 0.1)' } } }}
                                         aria-labelledby="modal-modal-title"
                                         aria-describedby="modal-modal-description"
                                         >
                                         <Box sx={style}>
-                                            {open && <ThumbFileInput projectId={currentProjectId} defThumb={currentDefThumb} />}
-                                            <button className='justify-self-end' onClick={() => setOpen(false)}>닫기</button>
+                                            {thumnailOpen && <ThumbFileInput projectId={currentProjectId} defThumb={currentDefThumb} />}
+                                            <button className='justify-self-end' onClick={() => setThumnailOpen(false)}>닫기</button>
                                         </Box>
                                         </Modal>
 
@@ -220,20 +220,20 @@ const MyProjectArea = () => {
                                     {/* 🐼썸네일 수정 버튼 : modal띄우기*/}
                                     <button
                                         type="button"
-                                        onClick={handleOpen}
+                                        onClick={ThumbHandleOpen}
                                         className=" mr-3 inline-block rounded bg-violet-800 px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] whitespace-nowrap">
                                         썸네일 변경
                                     </button>
                                         <Modal
-                                        open={open}
-                                        onClose={handleClose}
+                                        open={thumnailOpen}
+                                        onClose={thumbHandleClose}
                                         slotProps={{ backdrop: { style: { backgroundColor: 'rgba(0, 0, 0, 0.1)' } } }}
                                         aria-labelledby="modal-modal-title"
                                         aria-describedby="modal-modal-description"
                                         >
                                         <Box sx={style}>
-                                            {open && <ThumbFileInput projectId={currentProjectId} defThumb={currentDefThumb} />}
-                                            <button className='justify-self-end' onClick={() => setOpen(false)}>닫기</button>
+                                            {thumnailOpen && <ThumbFileInput projectId={currentProjectId} defThumb={currentDefThumb} />}
+                                            <button className='justify-self-end' onClick={() => setThumnailOpen(false)}>닫기</button>
                                         </Box>
                                         </Modal>
                                     {/* 🐼\좋아요 아이콘 - true면 빨간색. false면 투명색 */}

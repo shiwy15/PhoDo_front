@@ -13,7 +13,7 @@ import {
 } from "react-icons/ai";
 import { CgFileDocument } from "react-icons/cg";
 
-import { useUserStore } from "./store";
+import { useUserStore } from "../store";
 
 function NavBar() {
   const [expand, updateExpanded] = useState(false);
@@ -68,7 +68,11 @@ function NavBar() {
           <Nav className="ms-auto" defaultActiveKey="#home">
             <Nav.Item>
               <Nav.Link as={Link} to="/" onClick={() => updateExpanded(false)}>
-                <AiOutlineHome style={{ marginBottom: "2px" }} /> Home
+                  <span style={{ display: 'flex', alignItems: 'center' }}>
+
+                <AiOutlineHome style={{ marginBottom: "2px", marginRight: "2px" }} /> Home
+                  </span>
+
               </Nav.Link>
             </Nav.Item>
 
@@ -78,7 +82,10 @@ function NavBar() {
                 to="/mypage"
                 onClick={() => updateExpanded(false)}
               >
-                <AiOutlineUser style={{ marginBottom: "2px" }} /> Mypage
+                <span style={{ display: 'flex', alignItems: 'center' }}>
+
+                <AiOutlineUser style={{ marginBottom: "2px", marginRight: "2px" }} /> Mypage
+                </span>
               </Nav.Link>
             </Nav.Item>
 
@@ -88,20 +95,26 @@ function NavBar() {
                 to="/myproject"
                 onClick={() => updateExpanded(false)}
               >
+                <span style={{ display: 'flex', alignItems: 'center' }}>
+
                 <AiOutlineFundProjectionScreen
-                  style={{ marginBottom: "2px" }}
+                  style={{ marginBottom: "2px", marginRight: "2px" }}
                 />{" "}
                 Myproject
+                </span>
               </Nav.Link>
             </Nav.Item>
 
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to="/FlowChart"
+                to="/modal"
                 onClick={() => updateExpanded(false)}
               >
-                <AiOutlinePartition style={{ marginBottom: "2px" }} /> FlowChart
+                <span style={{ display: 'flex', alignItems: 'center' }}>
+
+                <AiOutlinePartition style={{ marginBottom: "2px", marginRight: "2px" }} /> FlowChart
+              </span>
               </Nav.Link>
             </Nav.Item>
 
@@ -111,7 +124,9 @@ function NavBar() {
                 to="/Editor"
                 onClick={() => updateExpanded(false)}
               >
-                <CgFileDocument style={{ marginBottom: "2px" }} /> Editor
+                <span style={{ display: 'flex', alignItems: 'center' }}>
+                <CgFileDocument style={{ marginBottom: "2px", marginRight: "2px" }} /> Editor
+                </span>
               </Nav.Link>
             </Nav.Item>
 
@@ -121,7 +136,9 @@ function NavBar() {
                 to="/Login"
                 onClick={() => updateExpanded(false)}
               >
-                <AiOutlineExport style={{ marginBottom: "2px" }} /> Login/out
+                <span style={{ display: 'flex', alignItems: 'center' }}>
+                <AiOutlineExport style={{ marginBottom: "2px", marginRight: "2px" }} /> Login/out
+                </span>
               </Nav.Link>
             </Nav.Item>
 
