@@ -46,7 +46,7 @@ const QuillEditor = () => {
     useEffect(() => {
         // Fetch the initial content from the server
         request({
-            method: 'post',
+            method: 'get',
             url: `/project/report/${projectId}`,
         })
         .then(res => {
