@@ -53,25 +53,7 @@ function App() {
       <Navbar />
       <ScrollToTop />
       <Routes>
-          
-
-        {/* Main */}
         <Route path="/report/:projectId" element={<Report />} />
-
-
-          {/* editor set */}
-          {/* <Route path="/modal" element={<Modal />} />
-          <Route path="/newproject/:projectId" element={<Editor2 />} />
-          <Route path="/existingproject" element={<Editor4 />} /> */}
-
-          {/* react query sample */}
-          {/* <Route path="/practice" element={<Practice />} />
-          <Route path="/Test" element={<Test />} /> */}
-
-          
-          {/* 
-          <Route path="/myproject" element={<Myproject />} /> */}
-
           {/* Main */}
           <Route path="/" element={<MainPage />} />
           {/* login set */}
@@ -81,6 +63,17 @@ function App() {
           <Route path="/reset/:token" element={<Passwordchange />} />
           {/* My page */}
           <Route path="/mypage" element={<Mypage />} />
+
+          {/* editor set */}
+          <Route path="/modal" element={<Modal />} />
+          <Route path="/newproject/:projectId" element={<Editor2 />} />
+          <Route path="/existingproject" element={<Editor4 />} />
+
+          {/* react query sample */}
+          <Route path="/practice" element={<Practice />} />
+          <Route path="/Test" element={<Test />} />
+
+          <Route path="/myproject" element={<Myproject />} /> 
           <Route path="*" element={<Navigate to="/"/>} />
         </Routes>
     </div>
