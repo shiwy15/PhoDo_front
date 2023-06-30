@@ -9,7 +9,7 @@ import DetailShow from "../../components/mypage/DetailShow"
 
 const Mypage = () =>{
   return (
-    <Container fluid className="project-section">
+    <Container fluid className="project-section ">
       <GalleryArea2/>
     </Container>
   );

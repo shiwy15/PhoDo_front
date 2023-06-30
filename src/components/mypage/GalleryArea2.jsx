@@ -303,7 +303,7 @@ export default function MiniDrawer() {
     if(isError) {return <h2>{error.message}</h2>}
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex' }}  >
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar sx = {{paddingTop: '80px', backgroundColor: '#14131B'}}>
@@ -441,6 +441,7 @@ export default function MiniDrawer() {
       <Box component="main" sx={{ flexGrow: 1, px: 3 }}>
         <DrawerHeader />
         {/* 🌿 제목 및 '새프로젝트 버튼' 구간*/}
+        <div className='ml-16 w-10/12'>
         <div className='flex flex-wrap mx-4 px-4 justify-between mb-4'>
             <p className=' tracking-tight text-3xl text-white font-semibold'>Gallery </p>
              <Link to="/modal">
@@ -590,12 +591,15 @@ export default function MiniDrawer() {
                 </button>
             </div>
         </div>
-                {/*🌿이미지 갤러리 창*/ }
-        <div className="container mx-auto px-5 py-2 lg:px-16 lg:pt-12">
-            <ImageList sx={{ width: '100%', height: 450, gap: 16 }} cols={3} rowHeight={164}>
+        {/*🌿이미지 갤러리 창*/ }
+        <div style={{backgroundColor: 'rgba(255,255,255,0.1)'}} className="container mx-auto rounded-md shadow-xl my-4 py-2 lg:px-16 lg:pt-12">
+            <ImageList sx={{ width: '100%', gap: 16 }} cols={4} rowHeight={200}>
                 <React.Fragment>
                 {targetImgData?.data?.map((image) => (
-                    <ImageListItem key={image._id} onClick={() => {
+                    <ImageListItem 
+                    key={image._id} 
+                    className='gallery-imgCard'
+                    onClick={() => {
                         selectImgsClick(image._id)
                         detailClick(image);
                         }}>
@@ -605,37 +609,32 @@ export default function MiniDrawer() {
                         alt='loading...'
                         loading="lazy"
                             style={{
-                            height: '100%',
+                            height: '180px',
                             width: '100%',
                             objectFit: 'cover',
                             transition: 'opacity 0.3s ease-in-out',
                             filter: selectedImages.includes(image._id) ? 'brightness(50%)' : 'brightness(100%)',
                         }}
                     />
-                    <ImageListItemBar
-                        title={
-                            <span className='flex'>
-                                {Object.values(image.categories).map((category, index,array) => {
-                                    const isLast = index === array.length - 1;
-                                    return (
-                                    <React.Fragment key={index}>
-                                        <p>{category}</p>
-                                        {!isLast && <p>,</p>}
-                                    </React.Fragment>
-                                    );
-                                })}
-                            </span>
-                        }
-
-                        subtitle={
-                            <span>{formatData(image.time)}</span>
-                        }
-                        position="bottom"
-                    />
+                    <div>
+                        <span className=' text-white flex text-sm'>
+                            {Object.values(image.categories).map((category, index,array) => {
+                                const isLast = index === array.length - 1;
+                                return (
+                                    <div>
+                                        <p key={index}># {category}</p>
+                                        {!isLast && <p></p>}
+                                    </div>
+                                );
+                            })}
+                        </span>
+                        <span className='text-white flex items-start text-sm'>{formatData(image.time)}</span>
+                   </div>
                     </ImageListItem>
                 ))}
                 </React.Fragment>
             </ImageList>
+        </div>
         </div>
       </Box>
     </Box>
