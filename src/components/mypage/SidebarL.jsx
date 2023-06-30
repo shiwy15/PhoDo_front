@@ -46,7 +46,8 @@ const Sidebar = () => {
     return (
         <div
             id="sidenavL"
-            className="fixed left-0 w-60 h-screen -translate-x-full overflow-hidden bg-white shadow-[0_4px_12px_0_rgba(0,0,0,0.07),_0_2px_4px_rgba(0,0,0,0.05)] data-[te-sidenav-hidden='false']:translate-x-0 dark:bg-zinc-800"
+            className="relative left-0 w-60 h-screen -translate-x-full overflow-hidden shadow-[0_4px_12px_0_rgba(0,0,0,0.07),_0_2px_4px_rgba(0,0,0,0.05)] data-[te-sidenav-hidden='false']:translate-x-0 dark:bg-zinc-800"
+            style={{backgroundColor : '#202123'}}
             data-te-sidenav-init
             data-te-sidenav-hidden="false"
             data-te-sidenav-position="absolute">

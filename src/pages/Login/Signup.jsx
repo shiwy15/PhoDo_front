@@ -1,11 +1,13 @@
 import React from "react";
+import { Container, Row, Col } from "react-bootstrap";
+
 import Signupbox from "../../components/Login/Signupbox";
 
 function Signup() {
     return (
-        <div className="login">
+        <Container fluid className="project-section h-screen">
             <Signupbox/>
-        </div>
+        </Container>
     )
 }
 export default Signup;
