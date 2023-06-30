@@ -19,7 +19,7 @@ const PictureMaterial = () => {
                     method: 'get',
                     url: `/project/images/${projectId}`,
                 });
-                console.log(response);
+                console.log('urls: ', response.data.urls);
     
                 const convertedData = response.data.urls.map(item => ({
                     src: item,
@@ -35,7 +35,7 @@ const PictureMaterial = () => {
         };
     
         fetchData();
-    }, [ ]);
+    }, [ projectId ]);
     
 
     return (
