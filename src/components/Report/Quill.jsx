@@ -28,14 +28,6 @@ const modules = {
 };
 
 
-const config = {
-    styles: {
-        header_1: {
-            font: 'IBM Plex Sans KR', // default is 'Helvetica-Bold'
-            fontSize: 18 // default is 16
-        }
-    }
-};
 
 const QuillEditor = () => {
     let { projectId } = useParams();
@@ -57,6 +49,7 @@ const QuillEditor = () => {
                  <p>${res.data.presenter}</p>
                 <div>${res.data.content}</div>
             `;
+            
 
             // Update the editor's content when the response is received
             setValue(contentHtml);
@@ -70,6 +63,7 @@ const QuillEditor = () => {
         const editor = document.querySelector('.ql-editor');
         html2canvas(editor, {scale : 2}).then((canvas) => {
             const imgData = canvas.toDataURL('image/png');
+            console.log(imgData)
             const pdf = new jsPDF('p', 'mm', 'a4');
             const imgProps= pdf.getImageProperties(imgData);
             const pdfWidth = pdf.internal.pageSize.getWidth();
