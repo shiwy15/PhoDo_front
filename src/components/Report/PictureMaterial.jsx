@@ -22,12 +22,13 @@ const PictureMaterial = () => {
                 console.log(response);
     
                 const convertedData = response.data.urls.map(item => ({
-                    src: item.url,
+                    src: item,
                     width: Math.floor(Math.random() * 4) + 2, // random number between 2 and 5
                     height: Math.floor(Math.random() * 4) + 2 // random number between 2 and 5
                 }));
-                console.log(convertedData);
+                
                 setConvertedPhotos(convertedData);
+                console.log(convertedData);
             } catch (err) {
                 console.error(err);
             }
