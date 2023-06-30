@@ -10,8 +10,9 @@ const PictureMaterial = () => {
     let { projectId } = useParams();
     const [convertedPhotos, setConvertedPhotos] = useState([]);
 
+
     useEffect(() => {
-        const fetchDataAndConvertImages = async () => {
+        const fetchData = async () => {
             try {
                 // Fetch the initial content from the server
                 const response = await request({
@@ -19,36 +20,21 @@ const PictureMaterial = () => {
                     url: `/project/images/${projectId}`,
                 });
                 console.log(response);
-                const convertedData = await Promise.all(
-                    response.data.urls.map(async item => {
-                        // Fetch image and convert to blob
-                        const imageResponse = await fetch(item.url);
-                        const blob = await imageResponse.blob();
-                        console.log('blob: ',  blob)
     
-                        return new Promise((resolve, reject) => {
-                            let reader = new FileReader();
-                            reader.onloadend = function() {
-                                resolve({
-                                    src: reader.result,
-                                    width: Math.floor(Math.random() * 4) + 2, // random number between 2 and 5
-                                    height: Math.floor(Math.random() * 4) + 2 // random number between 2 and 5
-                                });
-                            };
-                            reader.onerror = reject;
-                            reader.readAsDataURL(blob);
-                        });
-                    })
-                );
-    
+                const convertedData = response.data.urls.map(item => ({
+                    src: item.url,
+                    width: Math.floor(Math.random() * 4) + 2, // random number between 2 and 5
+                    height: Math.floor(Math.random() * 4) + 2 // random number between 2 and 5
+                }));
+
                 setConvertedPhotos(convertedData);
             } catch (err) {
                 console.error(err);
             }
         };
     
-        fetchDataAndConvertImages();
-    }, []);
+        fetchData();
+    }, [ ]);
     
 
     return (
