@@ -450,11 +450,11 @@ export default function MiniDrawer() {
             </ListItem>
           ))}
         </List>
-      </Drawer>
+        </Drawer>
+        <div className='11/12 mx-auto'>
       <Box component="main" sx={{ flexGrow: 1, px: 3 }}>
         <DrawerHeader />
         {/* 🌿 제목 및 '새프로젝트 버튼' 구간*/}
-        <div className='ml-16 w-10/12'>
         <div className='flex flex-wrap mx-4 px-4 justify-between mb-4'>
             <p className=' tracking-tight text-3xl text-white font-semibold'>Gallery </p>
              <Link to="/modal">
@@ -622,7 +622,7 @@ export default function MiniDrawer() {
                         alt='loading...'
                         loading="lazy"
                             style={{
-                            height: '180px',
+                            height: '20vh',
                             width: '100%',
                             objectFit: 'cover',
                             transition: 'opacity 0.3s ease-in-out',
@@ -648,8 +648,8 @@ export default function MiniDrawer() {
                 </React.Fragment>
             </ImageList>
         </div>
-        </div>
       </Box>
+      </div>
     </Box>
     </>
   );
