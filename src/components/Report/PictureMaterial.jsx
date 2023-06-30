@@ -16,7 +16,7 @@ const PictureMaterial = () => {
                 // Fetch the initial content from the server
                 const response = await request({
                     method: 'get',
-                    url: `/project/image/${projectId}`,
+                    url: `/project/images/${projectId}`,
                 });
     
                 const convertedData = await Promise.all(
