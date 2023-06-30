@@ -1,10 +1,11 @@
 import { useMutation } from 'react-query';
 import React, { useState } from 'react';
-import styled from 'styled-components'
+
 //서버요청용
 import { request } from "../../utils/axios-utils"
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
+import {AiFillPicture, AiFillFileAdd} from "react-icons/ai";
 
 const addImgFile = async (image) => {
   const response = await request({ url: 'api/test', method: 'post', data: image });
@@ -14,12 +15,12 @@ const addImgFile = async (image) => {
 }
 
 const CategoryTuto =() => {
-  const [image, setImage] = useState('');  //미리보여주기용
-  const [file, setFile] = useState(null); //사진데이터 전송용
-  const [tags, setTags] = useState(null); // 추가된 상태 변수
-  const [category, setCategory] = useState(null);
+    const [image, setImage] = useState('');  //미리보여주기용
+    const [file, setFile] = useState(null); //사진데이터 전송용
+    const [tags, setTags] = useState(null); // 추가된 상태 변수
+    const [category, setCategory] = useState(null);
 
-  const mutation = useMutation(addImgFile, {
+    const mutation = useMutation(addImgFile, {
     onSuccess: (data) => {
         console.log('image upload success');
         setTags(data?.data?.tags);
@@ -33,77 +34,101 @@ const CategoryTuto =() => {
     const isLoading = mutation.isLoading; // 로딩 상태 가져오기
 
 
-  const handleImageChange = (e) => {
-    setImage(URL.createObjectURL(e.target.files[0]));
-    setFile(e.target.files[0]);
-    const formData = new FormData();
-    formData.append('image', file);
-    mutation.mutate(formData);
-  };
+    const handleImageChange = (e) => {
+        setImage(URL.createObjectURL(e.target.files[0]));
+        setFile(e.target.files[0]);
+        const formData = new FormData();
+        formData.append('image', file);
+        mutation.mutate(formData);
+    };
 
   return (
-  <div className="shadow-4 border  border-black	" style={{'backgroundColor' : '#CC97FA'}}>
-<div className="flex justify-center items-center h-64 w-1/2 relative overflow-hidden mx-auto">
-                    {/* 로딩 아이콘 추가 */}
-                {isLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center z-[500]">
-                        <p className='text-3xl text-yellow-400'>결과를 가져오고 있어요!🙂</p>
-                    </div>
-                )}
-    <input
-        type="file"
-        className="hidden"
-        id="imageInput"
-        accept="image/*"
-        onChange={handleImageChange}
-    />
+    <div>
+        <div className="flex justify-center items-center relative  mx-auto">
+            {isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center z-[500]">
+                <p className='text-3xl text-yellow-400' aria-labelledby="wave">결과를 가져오고 있어요!🙂</p>
+            </div>
+            )}
+        <input
+            type="file"
+            hidden
+            id="imageInput"
+            accept="image/*"
+            onChange={handleImageChange}
+            
+        />
     {image ? (
-        // 이미지를 부모 요소의 높이에 맞게 채움
+        <Box
+            sx={{
+                display: 'flex',
+                flexWrap: 'nowrap',
+                borderRadius : '5px',
+                '& > :not(style)': {
+                    m: 3,
+                    width: '50%',
+                    height: 110,
+                    marginX : 'auto',
+                    borderRadius : '5px',},}}>
         <img
             src={image}
             alt="Preview"
-            className="h-full w-full object-cover cursor-pointer"
+            className="w-32 h-32 object-cover cursor-pointer"
             onClick={() => document.getElementById("imageInput").click()}
         />
+        </Box>
     ) : (
-        // div를 부모 요소의 높이로 채움
-        <label htmlFor="imageInput" className="flex flex-col items-center justify-center h-48 w-full bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue hover:bg-blue hover:text-white cursor-pointer">
-
-            <span className="ml-2 text-2xl leading-normal">
-                사진을 넣어보세요!
-            </span>
+        <Box
+            sx={{
+                display: 'flex',
+                flexWrap: 'nowrap',
+                '& > :not(style)': {
+                    width: '100%',
+                    height: 110,
+                    marginX : 'auto'
+                },
+            }}
+        >
+        <label
+            htmlFor="imageInput"
+            className="w-full flex  flex-col text-black items-center justify-center bg-white shadow-lg tracking-wide border hover:cursor-pointer"
+            style={{ fontWeight: 'bold', alignItems: 'center', justifyContent: 'center' }}
+        >
+            <AiFillFileAdd className='flex my-auto mx-20' style={{ fontSize: '50px' }}/>
         </label>
-    )}
-</div>
-<Box
-    sx={{
-        display: 'flex',
-        flexWrap: 'nowrap', // 변경된 부분
-        '& > :not(style)': {
-            m: 3,
-            width: '50%',
-            height: 128,
-        },
-    }}
->
-    <Paper elevation={3}>
-    <div className='text-center text-xl'>태그 결과</div>
-    <div className='text-lg m-1 px-2'>
-        {tags?.map((tag, index) => (
-            <span key={index}>{tag} </span>
-        ))}
-    </div>
-</Paper>
-<Paper elevation={3}>
-    <div className='text-center text-xl'>카테고리 결과</div>
-    <div className='text-lg m-1 px-2'>
-        {category?.map((cate, index) => (
-            <span key={index}>{cate} </span>
-        ))}
-    </div>
-</Paper>
+        </Box>
 
-</Box>
+        )}
+    </div>
+        <Box
+        sx={{
+            display: 'flex',
+            flexWrap: 'nowrap', 
+            '& > :not(style)': {
+                m : 2,
+                width: '50%',
+                height: 105,
+            },
+        }}
+    >
+        <Paper elevation={3}>
+            <div className='text-center text-xl font-bold'>태그 결과</div>
+            <div className='text-lg mx-1 px-2'>
+                {tags?.map((tag, index) => (
+                    <span key={index}>{tag} </span>
+                ))}
+            </div>
+        </Paper>
+        <Paper elevation={3}>
+            <div className='text-center text-xl font-bold'>카테고리 결과</div>
+            <div className='text-lg mx-1 px-2'>
+                {category?.map((cate, index) => (
+                    <span key={index}>{cate} </span>
+                ))}
+            </div>
+        </Paper>
+
+    </Box>
 
 
 

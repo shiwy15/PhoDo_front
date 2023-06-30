@@ -8,7 +8,6 @@ import { CardActionArea } from '@mui/material';
 import image1 from './factory_inital.png'
 
 //components
-import Header from "../../components/mypage/Header"
 import Sidebar from "../../components/mypage/SidebarL"
 import Projectenterbar from "../../components/myproject/Projectenterbar"
 import axios from 'axios';
@@ -59,7 +58,6 @@ function Myproject() {
 
   return (
     <div className= "Myproject">
-      <div className="fixed top-0 h-16"><Header /></div>
       <div className="fixed w-60 left-0"> < Sidebar /> </div>
       
       <div className="fixed right-0 w-96 h-screen bg-white shadow-[0_4px_12px_0_rgba(0,0,0,0.07),_0_2px_4px_rgba(0,0,0,0.05)] dark:bg-zinc-800">
