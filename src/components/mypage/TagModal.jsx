@@ -85,8 +85,9 @@ const TagModal = ({ showModal, setShowModal, selectedImage }) => {
     await request({
       method: 'delete',
       url: `/api/category`,
-      data: { imageID: selectedImage?._id , delCategory: tagToDelete.text }
+      data: { imageId: selectedImage?._id , delCategory: tagToDelete.text }
     });
+    console.log('🔥🔥🔥🔥🔥', selectedImage?._id  , tagToDelete.text );
     setTags(tags.filter((tag, index) => index !== i));
   };
 
@@ -94,7 +95,7 @@ const TagModal = ({ showModal, setShowModal, selectedImage }) => {
     await request({
       method: 'post',
       url: `/api/category`,
-      data: { imageID: selectedImage?._id , newCategory: tag.text }
+      data: { imageId: selectedImage?._id , newCategory: tag.text }
     });
     setTags([...tags, tag]);
   };
