@@ -11,8 +11,7 @@ const PictureMaterial = () => {
         여기에는 사진 재료와 export 버튼 그리고 api로 생성하는 버튼!
 
     <div className="max-w-sm rounded overflow-hidden shadow-lg">
-        <img className="w-full" src="https://www.cleverfiles.com/howto/wp-content/uploads/2018/03/minion.jpg"
-         alt="Sunset in the mountains" draggable='true'/>
+        <img className="w-full" src="https://www.cleverfiles.com/howto/wp-content/uploads/2018/03/minion.jpg" draggable='true'/>
             <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2">예시 이미지</div>
             </div>

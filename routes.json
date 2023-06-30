@@ -5,5 +5,6 @@
   "/:resource/:id/show": "/:resource/:id",
   "/posts/:category": "/posts?category=:category",
   "/articles\\?id=:id": "/posts/:id",
-  "/project/:projectid" : "/existing"
+  "/project/:projectid" : "/existing",
+  "/report/:projectid" : "/gpt"
 }

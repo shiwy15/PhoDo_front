@@ -1,12 +1,11 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect} from 'react';
+import { useParams } from 'react-router-dom';
 import ReactQuill, {Quill} from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import ImageResize from 'quill-image-resize-module-react';
-import { pdfExporter } from "quill-to-pdf";
-import { saveAs } from "file-saver";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
-
+import { request } from "../../utils/axios-utils"
 import './../../index.css'
 
 Quill.register('modules/ImageResize', ImageResize);
@@ -39,9 +38,33 @@ const config = {
 };
 
 const QuillEditor = () => {
+    let { projectId } = useParams();
+    console.log('project Id: ', projectId);
     const [value, setValue] = useState('');
     const editorRef = useRef(null);
 
+    useEffect(() => {
+        // Fetch the initial content from the server
+        request({
+            method: 'post',
+            url: `/project/report/${projectId}`,
+        })
+        .then(res => {
+            console.log(res.data);
+            // Structure the HTML based on the response
+            const contentHtml = `
+                 <h2>${res.data.title}</h2>
+                 <p>${res.data.presenter}</p>
+                <div>${res.data.content}</div>
+            `;
+
+            // Update the editor's content when the response is received
+            setValue(contentHtml);
+        })
+        .catch(err => {
+            console.error(err);
+        });
+}, []); // The empty array causes this useEffe
 
     const exportAsPDF = () => {
         const editor = document.querySelector('.ql-editor');
@@ -54,9 +77,7 @@ const QuillEditor = () => {
             pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
             pdf.save("download.pdf");
         });
-    };
-    
-    
+    };    
 
     return (
         <div>
