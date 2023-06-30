@@ -5,10 +5,10 @@ function Report() {
     return (
         <div className="edit">
             <div className ="edit absolute left-0 h-screen w-1/2"
-                 style={{paddingTop: '60px'}}>
+                 style={{marginTop: '60px'}}>
                 <QuillEditor/>
             </div>
-            <div className ="picture absolute right-0 w-1/2" style={{paddingTop: '60px'}}>
+            <div className ="picture absolute right-0 w-1/2" style={{marginTop: '60px'}}>
                 <PictureMaterial/>
             </div>
 
