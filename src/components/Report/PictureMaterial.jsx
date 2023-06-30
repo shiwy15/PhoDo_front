@@ -26,7 +26,7 @@ const PictureMaterial = () => {
                     width: Math.floor(Math.random() * 4) + 2, // random number between 2 and 5
                     height: Math.floor(Math.random() * 4) + 2 // random number between 2 and 5
                 }));
-
+                console.log(convertedData);
                 setConvertedPhotos(convertedData);
             } catch (err) {
                 console.error(err);
