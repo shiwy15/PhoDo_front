@@ -20,6 +20,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { HiStar } from 'react-icons/hi';
 import Modal from '@mui/material/Modal';
+import TagModal from './TagModal.jsx';
 
 
 import { Link } from 'react-router-dom';
@@ -156,6 +157,15 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function MiniDrawer() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    
+    {/* 🌿🌿 모달 관련 변수들 */}
+    const [showModal, setShowModal] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const openModal = (image) => {
+        setSelectedImage(image)
+        setShowModal(showModal=> !showModal);
+    }
+
 
     {/* 🌿 사용 변수들- tag btns 관련 */}
     const buttonList = ['마케팅', '건설/토목', '비즈니스', '화학', '에너지', '자재/장비', '운송', '과학', '컴퓨터', '재무', '통신', '직업/교육', '뉴스', '사회', '레퍼런스', '기타'];
@@ -303,7 +313,10 @@ export default function MiniDrawer() {
     if(isError) {return <h2>{error.message}</h2>}
 
   return (
+    <>
+    <TagModal showModal={showModal} setShowModal={setShowModal} selectedImage={selectedImage}/>
     <Box sx={{ display: 'flex' }}  >
+        
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar sx = {{paddingTop: '80px', backgroundColor: '#14131B'}}>
@@ -600,9 +613,9 @@ export default function MiniDrawer() {
                     key={image._id} 
                     className='gallery-imgCard'
                     onClick={() => {
-                        selectImgsClick(image._id)
-                        detailClick(image);
+                        openModal(image)
                         }}>
+
                     <img
                         key={image._id}
                         src={`${image.url}?w=248&fit=crop&auto=format`}
@@ -638,5 +651,6 @@ export default function MiniDrawer() {
         </div>
       </Box>
     </Box>
+    </>
   );
 }
