@@ -86,8 +86,7 @@ const wsOpts = {
 };
 
 const Editingbox2 = () => {
-  const {projectId} = useParams();  
-  
+  const {projectId} = useParams(); 
 
   const wsProvider = new WebsocketProvider(
     // 'ws://localhost:1234', // :fire: 요청을 보낼 웹소켓 서버
@@ -109,6 +108,7 @@ const Editingbox2 = () => {
         console.log("Successfully connected");
       }
     });
+    // ydoc = createNewDoc();
       // :star2: Fetch nodes from the API
 // :star2: Fetch project data from the API
   // axios.get(`http://localhost:4000/project/${projectId}`)
@@ -116,6 +116,8 @@ const Editingbox2 = () => {
   .then((res) => {
     const data = res.data; 
     console.log(res.data);
+    nodesMap.clear();
+    edgesMap.clear();
 
     // Check if nodes data exists and is an array
     if (data.node && Array.isArray(data.node)) {
@@ -145,7 +147,9 @@ const Editingbox2 = () => {
   .catch((err) => console.error(err)); // Use console.error to log errors
   return () => {
     wsProvider.disconnect();
-    console.log('dismount!')
+    console.log('dismount!');
+    ydoc = createNewDoc();
+    
   };
 }, []);
   
