@@ -33,6 +33,8 @@ import { BrowserRouter, Routes, Route , Navigate} from "react-router-dom";
 import Navbar from './components/form/Navbar'
 // import ForcedDirectedTree from "./pages/Editor/forcedTree.jsx"
 // import VennDiagram from "./pages/Editor/venndiagram.jsx"
+import RedirectToProject from './pages/Redirect/RedirectToProject'
+
 
 function App() {
   const [load, upadateLoad] = useState(true);
@@ -61,6 +63,7 @@ function App() {
           <Route path="/forgotpw" element={<Forgotpw />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/reset/:token" element={<Passwordchange />} />
+
           {/* My page */}
           <Route path="/mypage" element={<Mypage />} />
 
@@ -69,6 +72,9 @@ function App() {
           <Route path="/newproject/:projectId" element={<Editor2 />} />
           <Route path="/existingproject" element={<Editor4 />} />
 
+          {/* redirect set  */}
+          <Route path="/project/:useremail/:projectId" element={<RedirectToProject />} />
+          
           {/* react query sample */}
           <Route path="/practice" element={<Practice />} />
           <Route path="/Test" element={<Test />} />

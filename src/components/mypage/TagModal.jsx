@@ -154,13 +154,13 @@ const TagModal = ({ showModal, setShowModal, selectedImage }) => {
       {showModal ? (
         
         <Background onClick={closeModal} ref={modalRef}>
-          <animated.div style={animation}>
+          {/* <animated.div style={animation}> */}
             <ModalWrapper showModal={showModal}>
               <ModalImg src={selectedImage?.url} alt='selected image' />
               <ModalContent>
-                <h1>⚒️태그 관리⚒️</h1>
+                <h1>⚒️카테고리 관리⚒️</h1>
                 {/* <p>Image Id: {selectedImage?._id} </p> */}
-                <h6>태그를 추가하려면 아래에 적어 엔터를 눌러보세요! </h6>
+                <h6>카테고리를 추가하려면 아래에 적어 엔터를 눌러보세요! </h6>
                 <ReactTags
                   tags={tags}
                   handleDelete={handleDelete}
@@ -168,16 +168,16 @@ const TagModal = ({ showModal, setShowModal, selectedImage }) => {
                   handleDrag={handleDrag}
                   handleTagClick={handleTagClick}
                   inputFieldPosition="bottom"
+                  placeholder="추가할 태그를 적어보세요!"
                   autocomplete
                 />  
-                <p>Image categories: 
+                {/* <p>Image categories: 
                   {selectedImage?.categories 
                     ? Object.values(selectedImage.categories).join(', ') 
                     : 'No categories'
                   }
-                </p>
+                </p> */}
           
-                <p>Image categories: {selectedImage?.time} </p>
 
                 
               </ModalContent>
@@ -186,7 +186,7 @@ const TagModal = ({ showModal, setShowModal, selectedImage }) => {
                 onClick={() => setShowModal(prev => !prev)}
               />
             </ModalWrapper>
-          </animated.div>
+          {/* </animated.div> */}
         </Background>
       ) : null
       }
