@@ -1,0 +1,31 @@
+/* style.css */
+
+.myTag {
+    background-color: #E0E0E0;
+    border-radius: 20px;
+    padding: 5px 10px;
+    display: inline-flex;
+    align-items: center;
+    margin: 3px;
+  }
+  
+  .myTagRemove {
+    background-color: purple !important; 
+    border-radius: 70% !important;
+    margin-left: 10px!important ;
+    padding: 1px 8px !important; /* Change this value to reduce the size of the button */
+
+    cursor: pointer !important;
+    font-size: 13px !important;  /* Adjust this value to change the size of the button */
+  }
+  .tagInputFieldClass {
+    /* Styles for the tagInputFieldClass */
+    margin-top: 30px !important; /* Or any other value that works for you */
+
+    /* background-color: purple !important;  */
+  }
+  .tagInput:focus {
+    /* Styles for the tagInputFieldClass */
+    border-color:  #dcd0ff !important;
+    /* background-color: purple !important;  */
+  }

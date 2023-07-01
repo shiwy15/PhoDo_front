@@ -46,11 +46,12 @@ const PictureMaterial = () => {
     
 
     return (
-        <div className='text-center'>
-        <h1>Flowchart 내부의 사진들</h1>
-        {/* <Gallery photos={convertedPhotos}/>  */}
-        <Gallery photos={photos}/>
-
+        <div className='text-center' style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <h1>Flowchart 내부의 사진들</h1>
+            <div style={{maxHeight: 'calc(100vh - 60px)', overflowY: 'auto'}}>
+                {/* <Gallery photos={convertedPhotos}/>  */}
+                <Gallery photos={photos}/>
+            </div>
         </div>
     );
 };

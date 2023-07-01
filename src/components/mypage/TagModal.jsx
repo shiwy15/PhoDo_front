@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 import { WithContext as ReactTags } from 'react-tag-input';
 import { request } from "../../utils/axios-utils"
-
+import './style.css'
 
 const Background = styled.div`
   width: 100%;
@@ -158,9 +158,9 @@ const TagModal = ({ showModal, setShowModal, selectedImage }) => {
             <ModalWrapper showModal={showModal}>
               <ModalImg src={selectedImage?.url} alt='selected image' />
               <ModalContent>
-                <h1>⚒️카테고리 관리⚒️</h1>
+                <h3>카테고리 관리</h3>
                 {/* <p>Image Id: {selectedImage?._id} </p> */}
-                <h6>카테고리를 추가하려면 아래에 적어 엔터를 눌러보세요! </h6>
+                {/* <h4>카테고리를 추가하려면 아래에 적어 <br/> Enter를 눌러보세요! </h4> */}
                 <ReactTags
                   tags={tags}
                   handleDelete={handleDelete}
@@ -170,16 +170,20 @@ const TagModal = ({ showModal, setShowModal, selectedImage }) => {
                   inputFieldPosition="bottom"
                   placeholder="추가할 태그를 적어보세요!"
                   autocomplete
-                />  
-                {/* <p>Image categories: 
-                  {selectedImage?.categories 
-                    ? Object.values(selectedImage.categories).join(', ') 
-                    : 'No categories'
-                  }
-                </p> */}
-          
+                  classNames={{
+                    tags: 'tagsClass',
+                    tagInput: 'tagInputClass',
+                    tagInputField: 'tagInputFieldClass',
+                    selected: 'selectedClass',
+                    tag: 'myTag',
+                    remove: 'myTagRemove',
+                    suggestions: 'suggestionsClass',
+                    activeSuggestion: 'activeSuggestionClass'
+                  }}
 
-                
+                />  
+           
+               
               </ModalContent>
               <CloseModalButton
                 aria-label='Close modal'
