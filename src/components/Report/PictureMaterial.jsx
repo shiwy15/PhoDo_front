@@ -47,7 +47,7 @@ const PictureMaterial = () => {
             responseType: 'blob',
         })
             .then((response) => {
-                const blob = new Blob([response.data.data], { type: 'application/zip' });
+                const blob = new Blob([response.data], { type: 'application/zip' });
                 saveAs(blob, 'images.zip');
             })
             .catch((error) => console.error('There was an error!', error));
