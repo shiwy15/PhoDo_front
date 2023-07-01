@@ -28,11 +28,9 @@ import Test from "./pages/Practice/Test.jsx"
 import { MainPage } from './pages/Main/Main.jsx'
 import Mypage from "./pages/Mypage/Mypage";
 import Myproject from "./pages/Myproject/Myproject";
-import { BrowserRouter, Routes, Route , Navigate} from "react-router-dom";
+import { BrowserRouter, Routes, Route ,Navigate} from "react-router-dom";
 
 import Navbar from './components/form/Navbar'
-// import ForcedDirectedTree from "./pages/Editor/forcedTree.jsx"
-// import VennDiagram from "./pages/Editor/venndiagram.jsx"
 import RedirectToProject from './pages/Redirect/RedirectToProject'
 
 
@@ -52,14 +50,15 @@ function App() {
     <BrowserRouter>
       <Preloader load={load} />
       <div className="App">
-      <Navbar />
+      {/* <Navbar /> */}
       <ScrollToTop />
       <Routes>
-        <Route path="/report/:projectId" element={<Report />} />
+        
           {/* Main */}
-          <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<Login />}  />
+          <Route path="/main" element={<MainPage />} />
           {/* login set */}
-          <Route path="/Login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/forgotpw" element={<Forgotpw />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/reset/:token" element={<Passwordchange />} />
@@ -72,6 +71,9 @@ function App() {
           <Route path="/newproject/:projectId" element={<Editor2 />} />
           <Route path="/existingproject" element={<Editor4 />} />
 
+          {/* report set */}
+          <Route path="/report/:projectId" element={<Report />} />
+
           {/* redirect set  */}
           <Route path="/project/:useremail/:projectId" element={<RedirectToProject />} />
           
@@ -80,7 +82,7 @@ function App() {
           <Route path="/Test" element={<Test />} />
 
           <Route path="/myproject" element={<Myproject />} /> 
-          <Route path="*" element={<Navigate to="/"/>} />
+          <Route path="*" element={<Navigate to="/Main"/>} />
         </Routes>
     </div>
     </BrowserRouter>

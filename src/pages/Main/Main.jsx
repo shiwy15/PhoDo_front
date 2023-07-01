@@ -7,9 +7,12 @@ import Type2 from "../../components/Main/Type2";
 
 //component
 import TutoFlow from '../../components/Main/TutoFlow';
+import NavBar from "../../components/form/Navbar";
 
 export const MainPage =() => {
   return (
+    <>
+    <NavBar/>
     <section>
       <Container fluid className="home-section" id="home">
         <Container className="home-content">
@@ -48,5 +51,6 @@ export const MainPage =() => {
           <TutoFlow />
         </Container>
     </section>
+    </>
   )
 }

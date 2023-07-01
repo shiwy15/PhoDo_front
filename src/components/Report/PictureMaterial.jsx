@@ -10,38 +10,46 @@ const PictureMaterial = () => {
     let { projectId } = useParams();
     const [convertedPhotos, setConvertedPhotos] = useState([]);
 
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Fetch the initial content from the server
-                const response = await request({
-                    method: 'get',
-                    url: `/project/images/${projectId}`,
-                });
-                console.log('urls: ', response.data.urls);
+    // 🧞‍♂️ 받는 용
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             // Fetch the initial content from the server
+    //             const response = await request({
+    //                 method: 'get',
+    //                 url: `/project/images/${projectId}`,
+    //             });
+    //             console.log('urls: ', response.data.urls);
     
-                const convertedData = response.data.urls.map(item => ({
-                    src: item,
-                    width: Math.floor(Math.random() * 4) + 2, // random number between 2 and 5
-                    height: Math.floor(Math.random() * 4) + 2 // random number between 2 and 5
-                }));
+    //             const convertedData = response.data.urls.map(item => ({
+    //                 src: item,
+    //                 width: Math.floor(Math.random() * 4) + 2, // random number between 2 and 5
+    //                 height: Math.floor(Math.random() * 4) + 2 // random number between 2 and 5
+    //             }));
                 
-                setConvertedPhotos(convertedData);
-                console.log(convertedData);
-            } catch (err) {
-                console.error(err);
-            }
-        };
+    //             setConvertedPhotos(convertedData);
+    //             console.log(convertedData);
+    //         } catch (err) {
+    //             console.error(err);
+    //         }
+    //     };
     
-        fetchData();
-    }, [ projectId ]);
+    //     fetchData();
+    // }, [ projectId ]);
+
+    // 🧞‍♂️ 테스트용
+
+
+
+
+
     
 
     return (
         <div className='text-center'>
-        여기에는 사진 재료와 export 버튼 그리고 api로 생성하는 버튼!
-        <Gallery photos={convertedPhotos}/>
+        <h1>Flowchart 내부의 사진들</h1>
+        {/* <Gallery photos={convertedPhotos}/>  */}
+        <Gallery photos={photos}/>
 
         </div>
     );

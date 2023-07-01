@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { usePjtFromModalStore } from '../../components/store'
 import { Container, Row, Col } from "react-bootstrap";
-
+import NavBar from '../../components/form/Navbar';
 
 {/* 🌿서버에 post보내는 함수 */}
 const postProject = (data) => {
@@ -53,6 +53,8 @@ export const Modal = () => {
     
 
     return (
+        <>
+        <NavBar/>
         <Container fluid className="home-section" id="home">
             <Dialog
             open={showModal}
@@ -88,5 +90,6 @@ export const Modal = () => {
             </DialogActions>
         </Dialog>
     </Container>
+    </>
     );
 }

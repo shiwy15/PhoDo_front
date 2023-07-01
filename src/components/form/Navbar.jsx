@@ -3,6 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom";
+import {request } from "./../../utils/axios-utils"
 
 import {
   AiOutlineHome,
@@ -39,6 +40,9 @@ function NavBar() {
     };
   }, []);
 
+
+
+
   return (
     <Navbar
       expanded={expand}
@@ -67,7 +71,7 @@ function NavBar() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto" defaultActiveKey="#home">
             <Nav.Item>
-              <Nav.Link as={Link} to="/" onClick={() => updateExpanded(false)}>
+              <Nav.Link as={Link} to="/main" onClick={() => updateExpanded(false)}>
                   <span style={{ display: 'flex', alignItems: 'center' }}>
 
                 <AiOutlineHome style={{ marginBottom: "2px", marginRight: "2px" }} /> Home
@@ -84,7 +88,7 @@ function NavBar() {
               >
                 <span style={{ display: 'flex', alignItems: 'center' }}>
 
-                <AiOutlineUser style={{ marginBottom: "2px", marginRight: "2px" }} /> Mypage
+                <AiOutlineUser style={{ marginBottom: "2px", marginRight: "2px" }} /> Gallery
                 </span>
               </Nav.Link>
             </Nav.Item>
@@ -121,11 +125,11 @@ function NavBar() {
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to="/Editor"
+                to="/main"
                 onClick={() => updateExpanded(false)}
               >
                 <span style={{ display: 'flex', alignItems: 'center' }}>
-                <CgFileDocument style={{ marginBottom: "2px", marginRight: "2px" }} /> Editor
+                <CgFileDocument style={{ marginBottom: "2px", marginRight: "2px" }} /> Report
                 </span>
               </Nav.Link>
             </Nav.Item>
@@ -134,10 +138,23 @@ function NavBar() {
               <Nav.Link
                 as={Link}
                 to="/Login"
-                onClick={() => updateExpanded(false)}
+                onClick={async () => {
+                  updateExpanded(false);
+                  try {
+                      const response = await request({
+                          method: 'get',
+                          url: '/logout',
+                      });
+                      console.log(response);
+                      // handle response here
+                  } catch (error) {
+                      console.error('There was an error!', error);
+                      // handle error here
+                  }
+                }}
               >
                 <span style={{ display: 'flex', alignItems: 'center' }}>
-                <AiOutlineExport style={{ marginBottom: "2px", marginRight: "2px" }} /> Login/out
+                <AiOutlineExport style={{ marginBottom: "2px", marginRight: "2px" }} /> Logout
                 </span>
               </Nav.Link>
             </Nav.Item>
