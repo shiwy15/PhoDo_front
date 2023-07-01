@@ -1,5 +1,6 @@
 // 이 내용은 text node!
 
+import { textAlign } from '@mui/system';
 import { useState, useEffect, useCallback } from 'react';
 import { Handle, Position } from 'reactflow';
 import { nodesMap } from '../Editingbox2';
@@ -72,7 +73,7 @@ const TasknameNode = ({ id, selected, data, isConnectable }) => {
   }, []);
 
   return (
-    <div className="tasknameNode bg-white px-5 py-2 rounded-lg" style={{ width: '350px', border: '2px solid black', paddingTop: '25px', display: 'flex', flexDirection: 'column' }}>
+    <div className="tasknameNode bg-white px-4 py-2 pt-4 rounded-lg" style={{ width: '350px', border: '2px solid black', paddingTop: '25px', display: 'flex', flexDirection: 'column' }}>
       <Handle className="w-4 h-4" type="target" position={Position.Top} id="top" isConnectable={isConnectable} />
       <Handle type="target" position={Position.Left} id="left" isConnectable={isConnectable} />
       <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -98,8 +99,8 @@ const TasknameNode = ({ id, selected, data, isConnectable }) => {
         />
       </div>
       <div>
-        <div style={{ display: isFolded ? 'none' : 'block', marginTop: '15px'}}>
-          <label htmlFor="text" style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: 'Arial'}}>진행사항</label>
+        <div style={{ display: isFolded ? 'none' : 'block', marginTop: '15px', textAlign: 'left'}}>
+          <label htmlFor="text" style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: 'Arial', }}>진행사항</label>
           <textarea
             id="text"
             value={data.content}
@@ -110,7 +111,7 @@ const TasknameNode = ({ id, selected, data, isConnectable }) => {
           ></textarea>
         </div>
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '5px' }}>
-        <button onClick={toggleFold} style={{ backgroundColor: '#7429C7', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}>
+        <button onClick={toggleFold} style={{ fontSize: '20px', fontWeight: 'bold', backgroundColor: 'navy', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}>
           {isFolded ? '펼치기' : '숨기기'}
         </button>
       </div>

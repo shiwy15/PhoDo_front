@@ -87,6 +87,7 @@ const wsOpts = {
 
 const Editingbox2 = () => {
   const {projectId} = useParams();  
+  const { fitView } = useReactFlow();
   
 
   const wsProvider = new WebsocketProvider(
@@ -205,7 +206,9 @@ const Editingbox2 = () => {
     
   );
 
-
+  useEffect(() => {
+    fitView({ duration: 400 });
+  }, [nodes, fitView]);
 
   return (
     <>
