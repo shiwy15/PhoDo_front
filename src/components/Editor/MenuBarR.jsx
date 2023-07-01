@@ -67,14 +67,14 @@ const MenuBar = () => {
   }
 
   return (
-    <div className='grid' style={{textAlign: 'center',  position: 'fixed', top: '64px', right: 0, width: MenuboxWidth, height: '100%', zIndex: 150, backgroundColor: '#8F44AD', boxShadow: '0px 0px 8px rgba(0, 0, 0, 0.3)' }}>
+    <div className='grid' style={{textAlign: 'center',  position: 'fixed', top: '64px', right: 0, width: MenuboxWidth, height: '100%', zIndex: 150, backgroundColor: '#E6E6E6', boxShadow: '0px 0px 8px rgba(0, 0, 0, 0.3)' }}>
       <div className='topPosition justify-items-start'>
       {/* 🌿 첫번째 list -> image box */}
       <div className='place-content-start first my-4 mx-auto'>
         <Button
           onClick={toggleDrawer1}
           sx={{
-              color: 'white',
+              color: '#23173B',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -83,7 +83,7 @@ const MenuBar = () => {
           <HiPhoto className="h-16 w-16 text-white mx-auto transition duration-150 ease-in-out hover:text-yellow-400  focus:text-purple-800 active:text-purple-800 "/>
           <p>이미지 박스</p>
           </Button>
-          <Divider sx={{ backgroundColor: 'white', marginY: '12px', marginLeft: '8px', marginRight: '8px' }} />
+          {/* <Divider sx={{ backgroundColor: 'white', marginY: '12px', marginLeft: '8px', marginRight: '8px' }} /> */}
         <Drawer
           anchor="right"
           open={open1}
@@ -105,7 +105,7 @@ const MenuBar = () => {
         <Button
           onClick={toggleDrawer2}
           sx={{
-              color: 'white',
+              color: '#23173B',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',

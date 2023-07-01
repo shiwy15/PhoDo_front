@@ -222,13 +222,13 @@ const Editingbox2 = () => {
       proOptions={proOptions}
       nodeTypes={nodeTypes}
       edgeTypes={edgeTypes}
-      style={{ background: '#CCCCCC', position: 'relative' }}
+      style={{ background: '#23173B', position: 'relative' }}
       fitView
       fitViewOptions={fitViewOptions}>
       <Controls position='top-left' style={{top:'68px'}} />
       <MiniMap pannable position='bottom-left'/>
-      <Background id="1" gap={30} color="#ffffff" variant={BackgroundVariant.Cross} />
-      <Background id="2" gap={300} offset={1} color="#ffffff" variant={BackgroundVariant.Lines} />
+      <Background id="1" gap={30} color="#6F6F6F" variant={BackgroundVariant.Cross} />
+      <Background id="2" gap={300} offset={1} color="#6F6F6F" variant={BackgroundVariant.Lines} />
     <div style={{zIndex: 150 }}>
       <MenuBarR />
     </div>
