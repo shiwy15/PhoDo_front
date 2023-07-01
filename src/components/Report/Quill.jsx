@@ -34,6 +34,8 @@ const QuillEditor = () => {
     console.log('project Id: ', projectId);
     const [value, setValue] = useState('');
     const editorRef = useRef(null);
+    const [projectName, setProjectName] = useState(''); // added this line
+
 
     useEffect(() => {
         // Fetch the initial content from the server
@@ -59,6 +61,20 @@ const QuillEditor = () => {
         });
 }, []); // The empty array causes this useEffe
 
+    useEffect(() => {
+        // Fetch the project name
+        request({
+            method: 'get',
+            url: `/project/name/${projectId}`,
+        })
+        .then(res => {
+            setProjectName(res.data.name); // assuming the response has a "name" field
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    }, []);
+
     const exportAsPDF = () => {
         const editor = document.querySelector('.ql-editor');
         html2canvas(editor, {scale : 2}).then((canvas) => {
@@ -75,9 +91,9 @@ const QuillEditor = () => {
 
     return (
         <div>
-        <h1 className='flex-auto text-center'> 프로젝트 이름  </h1>
+        <h1 className='flex-auto text-center'> {projectName}  </h1>
         <button className="button" onClick={exportAsPDF}>
-            PDF로 출력해보세요! 
+            PDF로 출력해보세요!
           </button>
         <ReactQuill 
             theme="snow" 
