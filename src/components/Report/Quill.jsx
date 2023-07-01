@@ -75,9 +75,9 @@ const QuillEditor = () => {
 
     return (
         <div>
-        <h1 className='flex-auto text-center'> 여기가 보고서용 </h1>
+        <h1 className='flex-auto text-center'> 프로젝트 이름  </h1>
         <button className="button" onClick={exportAsPDF}>
-            Export as pdf
+            PDF로 출력해보세요! 
           </button>
         <ReactQuill 
             theme="snow" 
