@@ -17,6 +17,7 @@
         "concurrently": "^8.2.0",
         "d3": "^7.8.5",
         "dayjs": "1.11.6",
+        "file-saver": "^2.0.5",
         "html2canvas": "^1.4.1",
         "install": "^0.13.0",
         "json-server": "^0.17.3",

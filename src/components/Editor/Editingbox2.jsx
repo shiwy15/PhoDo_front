@@ -105,12 +105,12 @@ const Editingbox2 = () => {
       console.log(event);
       console.log(event.status);
       if (event.status === "connecting") {
-        console.log("Disconnected, stopping reconnection attempts");
-        wsProvider.disconnect(); // Stop the connection attempts
+        console.log("Connecting to WebSocket...");
       } else if (event.status === "connected") {
         console.log("Successfully connected");
       }
     });
+    // ydoc = createNewDoc();
       // :star2: Fetch nodes from the API
 // :star2: Fetch project data from the API
   // axios.get(`http://localhost:4000/project/${projectId}`)
@@ -118,6 +118,8 @@ const Editingbox2 = () => {
   .then((res) => {
     const data = res.data; 
     console.log(res.data);
+    nodesMap.clear();
+    edgesMap.clear();
 
     // Check if nodes data exists and is an array
     if (data.node && Array.isArray(data.node)) {
@@ -145,7 +147,13 @@ const Editingbox2 = () => {
     }
   })
   .catch((err) => console.error(err)); // Use console.error to log errors
-  }, []);
+  return () => {
+    wsProvider.disconnect();
+    console.log('dismount!');
+    ydoc = createNewDoc();
+    
+  };
+}, []);
   
 
   const [edges, onEdgesChange, onConnect] = useEdgesStateSynced(ydoc);

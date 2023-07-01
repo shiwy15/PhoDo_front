@@ -5,6 +5,8 @@ import Gallery from "react-photo-gallery";
 // import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {photos} from './data'
 import { request } from "../../utils/axios-utils"
+import { saveAs } from 'file-saver';
+
 
 const PictureMaterial = () => {
     let { projectId } = useParams();
@@ -37,8 +39,19 @@ const PictureMaterial = () => {
     //     fetchData();
     // }, [ projectId ]);
 
-    // 🧞‍♂️ 테스트용
-
+    
+    const handleDownload = () => {
+        request({
+            url: `/project/zipimage/${projectId}`, // Replace with your zip file path
+            method: 'GET',
+            responseType: 'blob',
+        })
+            .then((response) => {
+                const blob = new Blob([response.data], { type: 'application/zip' });
+                saveAs(blob, 'images.zip');
+            })
+            .catch((error) => console.error('There was an error!', error));
+    };
 
 
 
@@ -46,10 +59,15 @@ const PictureMaterial = () => {
     
 
     return (
-        <div className='text-center'>
-        <div className="flowchart_title">Flowchart 내부의 사진들</div>
-        {/* <Gallery photos={convertedPhotos}/>  */}
-        <Gallery photos={photos}/>
+        <div className='text-center' style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <h1 className='text-white'>Flowchart 내부의 사진들</h1>
+            <button onClick={handleDownload} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                Download Zip
+            </button>
+            <div style={{maxHeight: 'calc(100vh - 60px)', overflowY: 'auto'}}>
+                {/* <Gallery photos={convertedPhotos}/>  */}
+                <Gallery photos={photos}/>
+            </div>
 
         </div>
     );

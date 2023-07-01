@@ -170,10 +170,44 @@ export default function MiniDrawer() {
 
 
     {/* 🌿 사용 변수들- tag btns 관련 */}
-    const buttonList = ['마케팅', '건설/토목', '비즈니스', '화학', '에너지', '자재/장비', '운송', '과학', '컴퓨터', '재무', '통신', '직업/교육', '뉴스', '사회', '레퍼런스', '기타'];
-    const [activeBtns, setActiveBtns] = useState({})
+    // 기존 변수들
+    // const buttonList = ['마케팅', '건설/토목', '비즈니스', '화학', '에너지', '자재/장비', '운송', '과학', '컴퓨터', '재무', '통신', '직업/교육', '뉴스', '사회', '레퍼런스', '기타'];
+    const [buttonList, setButtonList] = useState(null);
+    const buttonPerGroup = 8;
+    const [buttonGroups, setButtonGroups] = useState([]);
 
+    const [activeBtns, setActiveBtns] = useState({})
     
+    //using effect!
+    useEffect(() => {
+        request({
+            method: 'get',
+            url: '/api/category',
+        })
+            .then(response => {
+                if (response.data !== null) { // checking if data is not null
+                    setButtonList(response.data);
+                } else {
+                    console.log('nothing~')
+                }
+            })
+            .catch(error => {
+                console.error('There was an error retrieving the data!', error);
+            });
+    }, []);
+    
+    useEffect(() => {
+        if (buttonList) {
+          const newButtonGroups = [];
+          for (let i = 0; i < buttonList.length; i += buttonPerGroup) {
+            newButtonGroups.push(buttonList.slice(i, i + buttonPerGroup));
+          }
+          setButtonGroups(newButtonGroups);
+        }
+      }, [buttonList]); // This will run whenever buttonList changes
+    
+
+
     {/* 🌿 갤러리에 렌더링 되는 데이터  */} 
     const [targetImgData, setTargetImgData] = useState('')
 
@@ -478,79 +512,38 @@ export default function MiniDrawer() {
         <Typography variant="h6" color='white' noWrap component="div" sx={{ margin: 1, marginLeft : 4, textAlign: 'left' }}>
             내 카테고리 버튼
         </Typography>
-        {/* 🌿 태그 버튼 mapping 구간1 */}
-        <div className="mx-4 mt-8 my-4 flex items-center justify-center">
-            <div
-            className="overflow-x-auto min-w-fit inline-flex font-extrabold text-purple-800 rounded-md shadow-[0_4px_9px_-4px_#cbcbcb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(251,251,251,0.3)] dark:hover:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)] dark:focus:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)] dark:active:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)]"
-            role="group">
+        {/* 🌿 태그 버튼 mapping 구간 */}
+
+                {buttonGroups.length > 0 ? (
+        buttonGroups.map((group, index) => (
+            <div key={index} className="mx-4 my-4 flex items-center justify-center">
+            <div className="overflow-x-auto min-w-fit inline-flex font-extrabold text-purple-800 rounded-md shadow-[0_4px_9px_-4px_#cbcbcb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(251,251,251,0.3)] dark:hover:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)] dark:focus:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)] dark:active:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)]">
+                {group.map((btn) => (
                 <button
+                    key={btn}
                     type="button"
-                    onClick={() => tagBtnClick(buttonList[0])}
+                    onClick={() => tagBtnClick(btn)}
                     className="inline-block min-w-fit font-extrabold rounded-l text-inherit bg-neutral-50 px-6 pb-2 pt-2.5 text-lg uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
                     data-te-ripple-init
                     data-te-ripple-color="light">
-                    {buttonList[0]}
-                </button>
-                {buttonList.slice(1, 7).map((btn) => (
-                <button
-                    key={btn}
-                    type="button"
-                    onClick={() => tagBtnClick(btn)}
-                    className="inline-block min-w-fit text-inherit bg-neutral-50 px-6 pb-2 pt-2.5 text-lg uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
-                    data-te-ripple-init
-                    data-te-ripple-color="light">
                     {btn}
                 </button>
                 ))}
-                <button
-                    type="button"
-                    onClick={() => tagBtnClick(buttonList[7])}
-                    className="inline-block min-w-fit text-inherit rounded-r bg-neutral-50 px-6 pb-2 pt-2.5 text-lg uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
-                    data-te-ripple-init
-                    data-te-ripple-color="light">
-                    {buttonList[7]}
-                </button>
             </div>
-        </div>
-        {/* 🌿 태그 버튼 mapping 구간2 */}
-        <div className="mx-4 mb-4 flex items-center justify-center">
-            <div
-            className=" overflow-x-auto inline-flex font-extrabold text-purple-800 rounded-md shadow-[0_4px_9px_-4px_#cbcbcb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(251,251,251,0.3)] dark:hover:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)] dark:focus:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)] dark:active:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)]"
-            role="group">
-                <button
-                type="button"
-                onClick={() => tagBtnClick(buttonList[8])}
-                className="button-className min-w-fit inline-block font-extrabold rounded-l text-inherit bg-neutral-50 px-6 pb-2 pt-2.5 text-lg uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
-                data-te-ripple-init
-                data-te-ripple-color="light">
-                {buttonList[8]}
-                </button>
-                {buttonList.slice(9, 15).map((btn) => (
-                <button
-                    key={btn}
-                    type="button"
-                    onClick={() => tagBtnClick(btn)}
-                    className="button-className min-w-fit inline-block text-inherit bg-neutral-50 px-6 pb-2 pt-2.5 text-lg uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
-                    data-te-ripple-init
-                    data-te-ripple-color="light">
-                    {btn}
-                </button>
-                ))}
-                <button
-                    type="button"
-                    onClick={() => tagBtnClick(buttonList[15])}
-                    className="button-className min-w-fit inline-block text-inherit rounded-r bg-neutral-50 px-6 pb-2 pt-2.5 text-lg uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
-                    data-te-ripple-init
-                    data-te-ripple-color="light">
-                    {buttonList[15]}
-                </button>
             </div>
-        </div>
+        ))
+        ) : (
+            <p className="text-white text-lg">사진을 올려 AI가 생성해주는 카테고리를 만들어보세요!</p>
+        )}
+
+
+
+
         {/*🌿 태그 버튼 결과값 창 */}
         <div className='flex'>
-            <p className='min-w-fit ml-4 my-2 border-b-1 tracking-tight text-md text-white font-semibold'>선택된 카테고리 :</p>
+            <p className='min-w-fit ml-4 my-2 border-b-1 tracking-tight text-xl text-white font-semibold'>선택된 카테고리 :</p>
             {Object.entries(activeBtns).filter(([key, value]) => value === true).map(([key]) => (
-                <p key={key} className='overflow-x-auto min-w-fit mx-1 ml-4 my-2 border-b-1 tracking-tight text-md text-purple-800 font-semibold'>
+                <p key={key} className='overflow-x-auto min-w-fit mx-1 ml-4 my-2 border-b-1 tracking-tight text-xl text-white  font-semibold'>
                     {key}
                 </p>
             ))}

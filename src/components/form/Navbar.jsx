@@ -51,7 +51,7 @@ function NavBar() {
       className={navColour ? "sticky" : "navbar"}
     >
       <Container >
-        <Navbar.Brand href="/" className="d-flex text-white">
+        <Navbar.Brand href="/main" className="d-flex text-white">
           <h2>PhoDo</h2>
         </Navbar.Brand>
 
