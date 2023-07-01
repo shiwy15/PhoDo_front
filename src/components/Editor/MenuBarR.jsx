@@ -5,6 +5,7 @@ import ImageBox from './SideBar/ImageBox';
 import NodeBox from './SideBar/NodeBox';
 
 import { HiEnvelope, HiQuestionMarkCircle, HiPhoto, HiMiniPencilSquare } from "react-icons/hi2";
+import {HiOutlineDocumentText} from "react-icons/hi";
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -12,7 +13,7 @@ import Modal from '@mui/material/Modal';
 import  InputSubscription  from '../Editor/SideBar/InputSubscription'
 
 //email전송용
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 const MenuboxWidth = '100px'
 
 const style = {
@@ -35,6 +36,7 @@ const MenuBar = () => {
 
     //이메일 전송용
   const {projectId} = useParams();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
 
@@ -65,6 +67,10 @@ const MenuBar = () => {
   const handleOpen = () => {
     setOpen(true);
   }
+
+  const makeReport = () => {
+    navigate(`/report/${projectId}`);
+  };
 
   return (
     <div className='grid' style={{textAlign: 'center',  position: 'fixed', top: '64px', right: 0, width: MenuboxWidth, height: '100%', zIndex: 150, backgroundColor: '#E6E6E6', boxShadow: '0px 0px 8px rgba(0, 0, 0, 0.3)' }}>
@@ -163,6 +169,14 @@ const MenuBar = () => {
               <HiEnvelope className="h-16 w-16 text-white mx-auto transition duration-150 ease-in-out hover:text-yellow-400  focus:text-purple-800 active:text-purple-800 " />
               <p className='text-white text-lg'>초대하기</p>
             </button>
+            <div className='self-center'>
+            <button
+              type="button"
+              onClick={() => makeReport()}>
+              <HiOutlineDocumentText className="h-16 w-16 text-white mx-auto transition duration-150 ease-in-out hover:text-yellow-400  focus:text-purple-800 active:text-purple-800 " />
+              <p className='text-white text-lg'>보고서 작성</p>
+            </button>
+          </div>
           </div>
           <Modal
           open={open}
@@ -179,6 +193,7 @@ const MenuBar = () => {
           </Modal>
 
         {/*설명서 기능 */}
+        
         {/* <div className='self-center'><HiQuestionMarkCircle /></div> */}
         </div>
       </div>
