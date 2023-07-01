@@ -168,7 +168,7 @@ const TagModal = ({ showModal, setShowModal, selectedImage }) => {
                   handleDrag={handleDrag}
                   handleTagClick={handleTagClick}
                   inputFieldPosition="bottom"
-                  placeholder="추가할 태그를 적어보세요!"
+                  placeholder="추가할 카테고리!"
                   autocomplete
                   classNames={{
                     tags: 'tagsClass',
