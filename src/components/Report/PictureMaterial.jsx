@@ -47,7 +47,7 @@ const PictureMaterial = () => {
 
     return (
         <div className='text-center'>
-        <h1>Flowchart 내부의 사진들</h1>
+        <div className="flowchart_title">Flowchart 내부의 사진들</div>
         {/* <Gallery photos={convertedPhotos}/>  */}
         <Gallery photos={photos}/>
 
