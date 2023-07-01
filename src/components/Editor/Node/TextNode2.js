@@ -53,10 +53,10 @@ function TextNode2({ id, selected, data, isConnectable }) {
 
 
   return (
-    <div className="textNode2 bg-white px-5 py-2 rounded-lg" style={{ border: '2px solid black', paddingTop: '25px' }}>
+    <div className="textNode2 bg-white px-4 py-3 pt-4 rounded-lg" style={{ border: '2px solid black', paddingTop: '25px' }}>
       <Handle className="w-4 h-4" type="target" position={Position.Top} id="top" isConnectable={isConnectable} />
       <Handle type="target" position={Position.Left} id="left" isConnectable={isConnectable} />
-      <div>
+      <div style={{textAlign: 'left'}}>
         <label htmlFor="title" style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: 'Arial', marginLeft: '5px'}}>제목</label>
         <input
           type="text"
@@ -67,7 +67,7 @@ function TextNode2({ id, selected, data, isConnectable }) {
           style={{fontSize: '15pt'}}
         />
       </div>
-      <div>
+      <div style={{textAlign: 'left'}}>
         <label htmlFor="content" style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: 'Arial', marginLeft: '5px'}}>내용</label>
         <textarea
           id="content"

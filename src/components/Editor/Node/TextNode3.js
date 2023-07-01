@@ -77,10 +77,10 @@ function TextNode3({ id, selected, data, isConnectable }) {
   }, [content]);
 
   return (
-    <div className="textNode3 bg-white px-5 py-2 rounded-lg" style={{ border: '2px solid black', paddingTop: '25px' }}>
+    <div className="textNode3 bg-white px-4 py-3 pt-4 rounded-lg" style={{ border: '2px solid black', paddingTop: '25px' }}>
       <Handle className="w-4 h-4" type="target" position={Position.Top} id="top" isConnectable={isConnectable} />
       <Handle type="target" position={Position.Left} id="left" isConnectable={isConnectable} />
-      <div>
+      <div style={{ textAlign: 'left' }}>
         <label htmlFor="title" style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: 'Arial', marginLeft: '5px'}}>제목</label>
         <input
           type="text"
@@ -91,7 +91,7 @@ function TextNode3({ id, selected, data, isConnectable }) {
           style={{fontSize: '15pt'}}
         />
       </div>
-      <div>
+      <div style={{ textAlign: 'left' }}>
         <label htmlFor="date" style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: 'Arial', marginLeft: '5px'}}>날짜</label>
         <input
           type="text"
@@ -102,7 +102,7 @@ function TextNode3({ id, selected, data, isConnectable }) {
           style={{fontSize: '15pt'}}
         />
       </div>
-      <div>
+      <div style={{ textAlign: 'left' }}>
         <label htmlFor="text" style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: 'Arial', marginLeft: '5px'}}>내용</label>
         <textarea
           id="text"
