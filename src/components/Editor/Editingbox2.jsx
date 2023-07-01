@@ -104,8 +104,7 @@ const Editingbox2 = () => {
       console.log(event);
       console.log(event.status);
       if (event.status === "connecting") {
-        console.log("Disconnected, stopping reconnection attempts");
-        wsProvider.disconnect(); // Stop the connection attempts
+        console.log("Connecting to WebSocket...");
       } else if (event.status === "connected") {
         console.log("Successfully connected");
       }
@@ -144,7 +143,11 @@ const Editingbox2 = () => {
     }
   })
   .catch((err) => console.error(err)); // Use console.error to log errors
-  }, []);
+  return () => {
+    wsProvider.disconnect();
+    console.log('dismount!')
+  };
+}, []);
   
 
   const [edges, onEdgesChange, onConnect] = useEdgesStateSynced(ydoc);
