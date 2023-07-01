@@ -7,7 +7,7 @@ function RedirectToProject() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`/project/${useremail}/${projectId}`, {withCredentials: true})
+    axios.get(`https://hyeontae.shop/project/${useremail}/${projectId}`, {withCredentials: true})
       .then((response) => {
         // do something with response if necessary
         navigate(`/newproject/${projectId}`);
