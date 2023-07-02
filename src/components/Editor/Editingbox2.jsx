@@ -148,9 +148,9 @@ const Editingbox2 = () => {
   })
   .catch((err) => console.error(err)); // Use console.error to log errors
   return () => {
-    wsProvider.disconnect();
+    // wsProvider.disconnect();
     console.log('dismount!');
-    ydoc = createNewDoc();
+    // ydoc = createNewDoc();
     
   };
 }, []);
