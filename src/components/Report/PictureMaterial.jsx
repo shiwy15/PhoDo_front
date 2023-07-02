@@ -13,31 +13,31 @@ const PictureMaterial = () => {
     const [convertedPhotos, setConvertedPhotos] = useState([]);
 
     // 🧞‍♂️ 받는 용
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             // Fetch the initial content from the server
-    //             const response = await request({
-    //                 method: 'get',
-    //                 url: `/project/images/${projectId}`,
-    //             });
-    //             console.log('urls: ', response.data.urls);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Fetch the initial content from the server
+                const response = await request({
+                    method: 'get',
+                    url: `/project/images/${projectId}`,
+                });
+                console.log('urls: ', response.data.urls);
     
-    //             const convertedData = response.data.urls.map(item => ({
-    //                 src: item,
-    //                 width: Math.floor(Math.random() * 4) + 2, // random number between 2 and 5
-    //                 height: Math.floor(Math.random() * 4) + 2 // random number between 2 and 5
-    //             }));
+                const convertedData = response.data.urls.map(item => ({
+                    src: item,
+                    width: Math.floor(Math.random() * 4) + 2, // random number between 2 and 5
+                    height: Math.floor(Math.random() * 4) + 2 // random number between 2 and 5
+                }));
                 
-    //             setConvertedPhotos(convertedData);
-    //             console.log(convertedData);
-    //         } catch (err) {
-    //             console.error(err);
-    //         }
-    //     };
+                setConvertedPhotos(convertedData);
+                console.log(convertedData);
+            } catch (err) {
+                console.error(err);
+            }
+        };
     
-    //     fetchData();
-    // }, [ projectId ]);
+        fetchData();
+    }, [ projectId ]);
 
     
     const handleDownload = () => {
@@ -65,8 +65,8 @@ const PictureMaterial = () => {
                 Download Zip
             </button>
             <div style={{maxHeight: 'calc(100vh - 60px)', overflowY: 'auto'}}>
-                {/* <Gallery photos={convertedPhotos}/>  */}
-                <Gallery photos={photos}/>
+                <Gallery photos={convertedPhotos}/> 
+                {/* <Gallery photos={photos}/> */}
             </div>
 
         </div>
