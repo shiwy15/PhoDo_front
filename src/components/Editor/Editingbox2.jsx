@@ -75,7 +75,7 @@ const fitViewOptions = {
    /* * 
     * Ydoc 세팅 
     * */
-export const ydoc = createNewDoc();
+let ydoc = createNewDoc();
 export const nodesMap = ydoc.getMap('nodes');
 export const edgesMap = ydoc.getMap('edges');
 
