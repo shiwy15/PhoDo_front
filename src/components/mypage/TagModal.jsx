@@ -148,6 +148,12 @@ const TagModal = ({ showModal, setShowModal, selectedImage }) => {
     [keyPress]
   );
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
+};
+
+
   return (
     <div className='TagModal-section'>
     
@@ -158,8 +164,9 @@ const TagModal = ({ showModal, setShowModal, selectedImage }) => {
             <ModalWrapper showModal={showModal}>
               <ModalImg src={selectedImage?.url} alt='selected image' />
               <ModalContent>
-                <h3>카테고리 관리</h3>
-                {/* <p>Image Id: {selectedImage?._id} </p> */}
+                <h3>사진 관리 </h3>
+                {selectedImage?.location && <p>장소: {selectedImage.location} </p>}
+                {selectedImage?.time && <p>시간: {formatDate(selectedImage.time)} </p>}
                 {/* <h4>카테고리를 추가하려면 아래에 적어 <br/> Enter를 눌러보세요! </h4> */}
                 <ReactTags
                   tags={tags}
