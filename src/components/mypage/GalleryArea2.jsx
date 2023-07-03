@@ -156,6 +156,24 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+function formatDate(dateString) {
+  const date = new Date(dateString);
+
+  if (isNaN(date)) { // check if date is invalid
+      return ''; // return an empty string
+  }
+
+  const year = date.getFullYear();
+  // getMonth() returns month index starting from 0, so we need to add 1
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}년 ${month}월 ${day}일`;
+}
+
+
+
+
 export default function MiniDrawer() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -256,12 +274,26 @@ export default function MiniDrawer() {
     };
 
     {/* 🌿 get */}
-    const { data: initData, isLoading, isError, error } = useQuery('imagesQuery', fetchGallery, {
-        onSuccess: (data) => {
-            setTargetImgData(data);
-            console.log('from /gallery', data);
-        }
+    const { data: initData, isLoading, isError, error, refetch } = useQuery('imagesQuery', fetchGallery, {
+      onSuccess: (data) => {
+          setTargetImgData(data);
+          console.log('from /gallery', data);
+      },
+      retry: false, // don't retry on failure
+      refetchOnMount: false, // don't refetch every time the component is mounted
+      refetchOnWindowFocus: false, // don't refetch when window gets focus
     });
+
+    // Periodic fetching
+    useEffect(() => {
+      const intervalId = setInterval(() => {
+          refetch();
+      }, 3000);
+
+      // Cleanup function to clear the interval when the component unmounts
+      return () => clearInterval(intervalId);
+    }, [refetch]);
+
 
 
     {/* 🌿 post */}
@@ -645,7 +677,7 @@ export default function MiniDrawer() {
                         }}
                     />
                     <div>
-                        <div className='text-white flex text-sm'>
+                          <div style={{ overflowX: 'auto', whiteSpace: 'nowrap' }}>
                             {Object.values(image.categories).map((category, index) => {
                                 return (
                                     <button
@@ -658,8 +690,10 @@ export default function MiniDrawer() {
                                     </button>
                                 );
                             })}
-                        </div>
-                        <span className='text-white flex items-start text-sm'>{formatData(image.time)}</span>
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'flex-end', fontWeight: 'bold' }}>
+                            <span className='text-white text-sm'>{formatDate(image.time)}</span>
+                          </div>
                    </div>
                     </ImageListItem>
                 ))}
