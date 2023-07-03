@@ -9,7 +9,7 @@ const Myproject = () => {
   return (
     <>
     <NavBar/>
-    <Container fluid className="project-section ">
+    <Container fluid className="project-section">
         <MyProjectArea2 />
     </Container>
     </>

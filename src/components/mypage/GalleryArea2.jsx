@@ -541,18 +541,18 @@ export default function GalleryArea2() {
         </List>
       </Drawer>
 
-        <div className='11/12 mx-auto'>
-            <Box component="main" sx={{ flexGrow: 1, px: 3 }}>
+      <div className='w-8/12 mx-auto'>
+        <Box component="main" sx={{ flexGrow: 1, px: 3 }}>
         <DrawerHeader />
         {/* 🌿 제목 및 '이미지 업로드 버튼' 구간*/}
-        <div className='flex flex-wrap mx-4 px-4 justify-between mb-4'>
+        <div className='flex justify-between mb-4'>
             <p className=' tracking-tight text-3xl text-white font-semibold'>Gallery </p>
                 <button
                     type="button"
                     data-te-ripple-init
                     data-te-ripple-color="light"
                     onClick={imgUploadHandleOpen}
-                    className="inline-block bg-purple-700 rounded mr-8 px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] ">
+                    className="inline-block bg-purple-700 rounded mr-8 px-6 w-max-24 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] ">
                     <span className="flex items-center">
                         <AiOutlineUpload size={24} color="white" className="mr-1" />
                         사진 업로드
