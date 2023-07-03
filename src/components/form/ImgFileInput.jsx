@@ -5,16 +5,18 @@ import Box from '@mui/material/Box';
 // 🌿서버요청용 import
 import { request } from "../../utils/axios-utils";
 import {AiFillFileAdd} from "react-icons/ai";
+import {useMypageRenderStore} from '../store'
+
 
 // 🌿서버요청용 custom 함수
 const addImgFile = async (ImgData) => {
   const response = await request({ url: 'api/upload', method: 'post', data: ImgData });
-  console.log(response?.data?.tags);
+  console.log('image Upload message',response)
   return response;
 };
 
+const ImageUpload = ({ onClose }) => {
 
-const ImageUpload = ({ imgUploadHandleClose }) => {
   {/* 🌿 입력된 이미지들을 담는 변수 */}
   const [imgfiles, setImgfiles] = useState([]);
   const [imgMeta, setImgMeta] = useState([]);
@@ -22,11 +24,24 @@ const ImageUpload = ({ imgUploadHandleClose }) => {
   {/* 🌿 response로 받은 tag를 담는 변수 */}
   const [tags, setTags] = useState();
 
+  //usestore로 창이 닫혔는지 전달하는 함수
+  const RenderRequest = useMypageRenderStore(state => state.RenderRequest)
+  const setRenderRequest = useMypageRenderStore(state => state.setRenderRequest)
+
+
+
   {/* 🌿 입력된 이미지를 post로 보내는 함수 */}
   const mutation = useMutation(addImgFile, {
     onSuccess: (data) => {
       console.log('image upload success');
       setTags(data?.data?.tags); // 응답에서 태그를 설정
+      
+      //업로드 버튼이 눌려지면 
+      if (onClose) {
+          setRenderRequest(!RenderRequest)
+          onClose();
+      }
+        
     },
     onError: (error) => {
       console.log('image upload fail:', error);
@@ -59,7 +74,6 @@ const handleDragOver = (e) => {
     e.preventDefault();
 };
 
-  {/* 🌿 upload버튼 함수 : mutation실행 */}
   const handleUpload = () => {
     const formData = new FormData();
     imgfiles.forEach((file) => {
@@ -74,7 +88,7 @@ const handleDragOver = (e) => {
   }, [imgfiles]);
 
   return (
-  <div className="flex justify-center flex-col items-center p-4 shadow-4 rounded-lg w-full m-4 h-4/12">
+  <div className="flex justify-center flex-col items-center p-4 shadow-4 rounded-lg w-full h-4/12">
     <h2 className="text-2xl font-semibold pb-4 relative top-0 text-center">사진을 넣어주세요</h2>
 
     {/* 🌿input창 */}
@@ -86,29 +100,30 @@ const handleDragOver = (e) => {
       onChange={handleFileInputChange}
       multiple />
       {imgMeta.length > 0 ? (
-        <Box
-          sx={{
-            display: 'flex',
-            flexWrap: 'nowrap',
+<Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'nowrap',
+          borderRadius: '5px',
+          position: 'relative', // Add position relative to the Box
+          '& > :not(style)': {
+            m: 3,
+            width: '50%',
+            height: 220,
+            marginX: 'auto',
             borderRadius: '5px',
-            '& > :not(style)': {
-                m: 3,
-                width: '50%',
-                height: 220,
-                marginX: 'auto',
-                borderRadius: '5px',
-            },
-          }}
-          onDrop={handleFileDrop}
-          onDragOver={handleDragOver}
-        >
+          },
+        }}
+        onDrop={handleFileDrop}
+        onDragOver={handleDragOver}
+      >
         <img
-            src={imgMeta[0].url}
-            alt="Preview"
-            className="object-cover cursor-pointer"
-            onClick={() => document.getElementById("formFileMultiple").click()}
+          src={imgMeta[0].url}
+          alt="Preview"
+          className="object-cover cursor-pointer"
+          onClick={() => document.getElementById("formFileMultiple").click()}
         />
-        </Box>
+      </Box>
         ) : (
         <Box
           sx={{
@@ -135,12 +150,13 @@ const handleDragOver = (e) => {
     )}
 
     {/* 🌿 입력된 이미지의 리스트를 보여주는 창 */}
-    <div className="w-full h-48 bg-neutral-200 overflow-auto flex flex-col rounded">
+    <div className="w-full h-48 bg-neutral-200 overflow-auto flex flex-col rounded mt-4">
       {imgMeta.map((file, index) => (
         <p className="flex px-2" key={index}>
           {file.name}
         </p>
       ))}
+      
     </div>
     {/* 🌿 업로드 버튼 */}
     <div className="flex flex-col mt-4 text-xs items-center">

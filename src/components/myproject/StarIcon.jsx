@@ -46,7 +46,6 @@ const StarIcon = ({ defProject, deflike }) => {
       onClick={handleClick}
       style={{ 
         cursor: 'pointer',
-        filter: 'drop-shadow(2px 2px 3px rgba(255, 255, 255, 0.3))'
       }}
     />
   ) : (

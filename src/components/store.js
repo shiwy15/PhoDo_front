@@ -43,3 +43,16 @@ userStore = devtools(userStore)
 userStore = persist(userStore, { name: 'mypage_clicked' })
 
 export const useUserStore = create(userStore)
+
+
+{/* 🐼my page 업로드 완료 시 재렌더링  ⬇️*/}
+let mypageRenderStore = (set) => ({
+  renderRequest : false,
+  setRenderRequest : (vlaue) => 
+    set((state) => ({ RenderRequest : vlaue}))
+})
+
+mypageRenderStore = devtools(mypageRenderStore)
+mypageRenderStore = persist(mypageRenderStore, { name: 'mypageRender' })
+
+export const useMypageRenderStore = create(mypageRenderStore)
