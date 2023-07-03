@@ -15,7 +15,7 @@ const addImgFile = async (ImgData) => {
   return response;
 };
 
-const ImageUpload = ({ onClose }) => {
+const ImageUpload = ({ onClose  }) => {
 
   {/* 🌿 입력된 이미지들을 담는 변수 */}
   const [imgfiles, setImgfiles] = useState([]);
@@ -37,9 +37,8 @@ const ImageUpload = ({ onClose }) => {
       setTags(data?.data?.tags); // 응답에서 태그를 설정
       
       //업로드 버튼이 눌려지면 
-      if (onClose) {
+      if (onClose ) {
           setRenderRequest(!RenderRequest)
-          onClose();
       }
         
     },
@@ -80,7 +79,7 @@ const handleDragOver = (e) => {
       formData.append('image', file); // 각 파일을 FormData에 추가
     });
     mutation.mutate(formData);
-    imgUploadHandleClose(); // Close the modal after upload
+    onClose (); // Close the modal after upload
   };
 
   useEffect(() => {
