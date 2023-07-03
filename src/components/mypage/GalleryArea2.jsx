@@ -54,6 +54,9 @@ AiFillFileAdd
 //컴포넌트 import
 import ImgFileInput from '../form/ImgFileInput';
 
+// 검색 아이콘 추가
+import { FaMapMarkerAlt } from 'react-icons/fa';
+
 const style = {
     zIndex: 500,
     position: 'absolute',
@@ -214,6 +217,7 @@ export default function MiniDrawer() {
     {/* 🌿 사용 변수들- 닐찌 입력 관련 */}  
     const [dates, setDates] = useState({ startDate: null, endDate: null }); 
     const formatData = useFormatDate();
+    const [searchLocation, setSearchLocation] = useState('');
 
     {/* 🔴 사용 변수들- 중복선택 관련 , 사진 제거 관련 -> imgID기반 */}
     const [selectedImages, setSelectedImages] = useState([]);
@@ -230,6 +234,10 @@ export default function MiniDrawer() {
     const handleValueChange = (newValue) => {
         console.log("newValue:", newValue);
         setDates({ startDate: newValue.startDate, endDate: newValue.endDate });
+    }
+
+    const handleLocationChange = (event) => {
+        setSearchLocation(event.target.value);
     }
 
     {/*🌿 태그 버튼이 눌리면  activeBtns 상태 변화 */}
@@ -274,7 +282,7 @@ export default function MiniDrawer() {
 
     {/* 🌿 apply 버튼 클릭 -> post 보내는 함수 */}
     const applyBtn = () => {
-        const datas = { tags : Object.keys(activeBtns), startDate: dates.startDate, endDate: dates.endDate};
+        const datas = { tags : Object.keys(activeBtns), startDate: dates.startDate, endDate: dates.endDate, location: searchLocation };
         console.log('post sending:', datas);
         mutationApply.mutate(datas);
     };
@@ -550,11 +558,19 @@ export default function MiniDrawer() {
         </div>
         {/*🌿 달력 입력 및 입력,초기화 버튼 구간*/}
         <div className='mb-8 bg-gray-100 p-4 justify-between flex mx-4 rounded-xl'>
-            <div className='w-80 border-violet-800 border-1 rounded-sm ml-8'>
-                <Datepicker 
-                    value={dates} 
-                    onChange={handleValueChange} 
-                />
+            <div className='flex'>
+                <div className='w-80 border-violet-800 border-1 rounded-sm ml-8 mr-5'>
+                    <Datepicker 
+                        value={dates} 
+                        onChange={handleValueChange} 
+                    />
+                </div>
+                <div className='flex w-60 border-violet-800 border-1 bg-white rounded-sm mr-8'>
+                    <input type="text" value={searchLocation} onChange={handleLocationChange} className='flex-grow px-2 mr-5 py-1 rounded-1' placeholder='장소명을 입력하세요'/>
+                    <button className='bg-white py-1 mr-4'>
+                        <FaMapMarkerAlt className='text-gray-400'/>
+                    </button>
+                </div>
             </div>
             <div>
                 <button
@@ -562,9 +578,9 @@ export default function MiniDrawer() {
                     data-te-ripple-init
                     data-te-ripple-color="light"
                     onClick={applyBtn}
-                    className="mx-4 inline-block bg-purple-700 rounded px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+                    className="ml-3 inline-block bg-purple-700 rounded px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
                     <span className="flex items-center">
-                        apply
+                        검색
                     </span>
                 </button>
 
@@ -573,9 +589,9 @@ export default function MiniDrawer() {
                     data-te-ripple-init
                     data-te-ripple-color="light"
                     onClick={initBtn}
-                    className="mx-4 mr-10 inline-block bg-purple-700 rounded px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+                    className="mx-3 mr-10 inline-block bg-purple-700 rounded px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
                     <span className="flex items-center">
-                        init
+                        초기화
                     </span>
                 </button>
             </div>
@@ -594,7 +610,7 @@ export default function MiniDrawer() {
                     onClick={()=>deleteClick()}
                     className="mx-4 inline-block bg-purple-700 rounded px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
                     <span className="flex items-center">
-                        delete
+                        삭제
                     </span>
                 </button>
             </div>
