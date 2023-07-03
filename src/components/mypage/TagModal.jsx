@@ -180,9 +180,7 @@ const TagModal = ({ showModal, setShowModal, selectedImage }) => {
                     suggestions: 'suggestionsClass',
                     activeSuggestion: 'activeSuggestionClass'
                   }}
-
                 />  
-           
                
               </ModalContent>
               <CloseModalButton
