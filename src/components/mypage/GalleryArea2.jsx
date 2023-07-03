@@ -18,11 +18,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import { HiStar } from 'react-icons/hi';
 import Modal from '@mui/material/Modal';
 import TagModal from './TagModal.jsx';
+import ListSubheader from '@mui/material/ListSubheader';
 
 
 import { Link } from 'react-router-dom';
@@ -37,7 +35,6 @@ import { useDetailStore } from '../store';
 
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
 import Datepicker from "react-tailwindcss-datepicker"; 
 
 // 🌿 css용 import 
@@ -47,14 +44,18 @@ import {
     initTE,
 } from "tw-elements";
 
+import { HiStar } from 'react-icons/hi';
 import {
-AiFillFileAdd
+    AiOutlineUpload,
+    AiOutlineRight
 } from "react-icons/ai";
 
 //컴포넌트 import
 import ImgFileInput from '../form/ImgFileInput';
 
-const style = {
+import {useMypageRenderStore} from '../store.js';
+
+const uploadStyle = {
     zIndex: 500,
     position: 'absolute',
     top: '50%',
@@ -156,7 +157,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function MiniDrawer() {
+export default function GalleryArea2() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     
@@ -168,6 +169,8 @@ export default function MiniDrawer() {
         setShowModal(showModal=> !showModal);
     }
 
+    //사진 업로드 완료되면 get한번 더 요청하는 store
+    const renderRequest = useMypageRenderStore(state=> state.renderRequest)
 
     {/* 🌿 사용 변수들- tag btns 관련 */}
     // 기존 변수들
@@ -177,6 +180,8 @@ export default function MiniDrawer() {
     const [buttonGroups, setButtonGroups] = useState([]);
 
     const [activeBtns, setActiveBtns] = useState({})
+
+
     
     //using effect!
     useEffect(() => {
@@ -343,7 +348,7 @@ export default function MiniDrawer() {
     useEffect(() => {
         initTE({ Ripple, Input });
         console.log(selectedImages)
-    },[targetImgData || selectedImages]);
+    },[targetImgData || selectedImages || renderRequest] );
 
     if(isLoading) {return <h2>Loading...</h2>}
     if(isError) {return <h2>{error.message}</h2>}
@@ -353,8 +358,8 @@ export default function MiniDrawer() {
     <TagModal showModal={showModal} setShowModal={setShowModal} selectedImage={selectedImage}/>
     <Box sx={{ display: 'flex' }}  >
         
-      <CssBaseline />
-      <AppBar position="fixed" open={open}>
+    <CssBaseline />
+    <AppBar position="fixed" open={open}>
         <Toolbar sx = {{paddingTop: '80px', backgroundColor: '#14131B'}}>
           <IconButton
             color="inherit"
@@ -372,17 +377,79 @@ export default function MiniDrawer() {
             My Page
           </Typography>
         </Toolbar>
-      </AppBar>
-      <Drawer variant="permanent" open={open}>
+    </AppBar>
+    <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
-        <Divider />
-        <List>
-            <ListItem>
-                {/* 🐼즐겨찾기 해놓은 프로젝트 리스트*/}
+    <Divider variant="middle"/>
+        {/* 🐼즐겨찾기 해놓은 프로젝트 리스트*/}
+    <List
+    aria-labelledby="nested-list-subheader"
+    subheader={
+        <ListSubheader
+            sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+            }}
+            component="div"
+            id="nested-list-subheader"
+        >
+            <div className='ml-12 font-semibold text-violet-950' style={{ fontSize: '18px' }}>즐겨찾는 프로젝트</div>
+        </ListSubheader>
+    }
+>
+    {likedProjects?.slice(0, 3).map((project, index) => (
+        <React.Fragment key={project._id}>
+            <ListItem key={project._id} disablePadding sx={{ display: 'block' }}>
+                <Link to={`/newproject/${project._id}`} style={{ textDecoration: 'none' }}> 
+                    <ListItemButton
+                        sx={{
+                            minHeight: 48,
+                            justifyContent: open ? 'initial' : 'center',
+                            px: 2.5,
+                        }}
+                    >
+                        <ListItemIcon
+                            sx={{
+                                minWidth: 0,
+                                mr: open ? 3 : 'auto',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <HiStar size={24} color="purple" className='mr-1' />
+                        </ListItemIcon>
+                        <ListItemText primary={project.name} secondary={formatData(project.time)} sx={{ opacity: open ? 1 : 0 }} />
+                    </ListItemButton>
+                </Link>
+            </ListItem>
+        </React.Fragment>
+    ))
+    }
+</List>
+
+        <Divider variant="middle" sx={{borderColor: 'rgba(128,0,128,0.5)'}}/>
+        <List
+            aria-labelledby="nested-list-subheader"
+            subheader={
+            <ListSubheader                   
+                sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                component="div" 
+                id="nested-list-subheader">
+            <div className='ml-12 font-semibold text-violet-950' style={{fontSize : '18px'}}>최신 프로젝트</div>
+            </ListSubheader>}
+        >
+          {recentProjects?.slice(0, 3).map((project, index) => (
+            <React.Fragment key={project._id}>
+            <ListItem key={project._id} disablePadding sx={{ display: 'block' }}>
+                <Link to={`/newproject/${project._id}`} style={{ textDecoration: 'none' }}>
                 <ListItemButton
                     sx={{
                     minHeight: 48,
@@ -390,88 +457,6 @@ export default function MiniDrawer() {
                     px: 2.5,
                     }}
                 >
-                    <ListItemIcon
-                    sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : 'auto',
-                        justifyContent: 'center',
-                    }}
-                    >
-                        <HiStar size={24} color="purple" className="mr-1" />
-                    </ListItemIcon>
-                    <ListItemText  sx={{ opacity: open ? 1 : 0 }} >
-                        즐겨찾는 프로젝트
-                        {
-                            likedProjects?.map((project) => (
-                            <div key={project._id}>
-                                <Link to={`/newproject/${project._id}`}>
-                                    <div className="flex items-center">
-                                        <div className="flex flex-col">
-                                            <p className="my-1 text-violet-900 text-xl">{project.name}</p>
-                                            <p className='ml-4 text-md text-gray-500'>{new Date(project.time).toLocaleDateString()}</p>
-                                        </div>
-                                    </div>
-                                </Link>
-                            </div>
-                            ))
-                        }
-                    </ListItemText>
-                </ListItemButton>    
-            </ListItem>
-            {/* 🌿사진 올리기 */}
-            <ListItem>
-                <ListItemButton
-                    onClick={imgUploadHandleOpen}
-                    sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5                    
-                    }}
-                >                    
-                    <ListItemIcon
-                        sx={{
-                            minWidth: 0,
-                            mr: open ? 3 : 'auto',
-                            justifyContent: 'center',
-                        }}
-                        >
-                            <AiFillFileAdd size={24} color="purple" className="mr-1" />
-                    </ListItemIcon>
-                    <ListItemText  sx={{ opacity: open ? 1 : 0 }} >
-                        사진 업로드
-                    </ListItemText>
-                </ListItemButton>
-                    <Modal
-                        open={ImgUploadOpen}
-                        onClose={imgUploadHandleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                    >
-                        <Box sx={style}>
-                        {/* <Typography id="modal-modal-title" variant="h6" component="h2">
-                            Text in a modal
-                        </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                        </Typography> */}
-                        <ImgFileInput />
-                        </Box>
-                    </Modal>
-            </ListItem>
-
-
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
@@ -479,35 +464,47 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  <AiOutlineRight size={24} color="purple" className='mr-1' />
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={project.name} secondary={formatData(project.time)} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
+              </Link>
             </ListItem>
-          ))}
+          </React.Fragment>
+          ))
+          }
         </List>
-        </Drawer>
+    </Drawer>
+
         <div className='11/12 mx-auto'>
             <Box component="main" sx={{ flexGrow: 1, px: 3 }}>
         <DrawerHeader />
-        {/* 🌿 제목 및 '새프로젝트 버튼' 구간*/}
+        {/* 🌿 제목 및 '이미지 업로드 버튼' 구간*/}
         <div className='flex flex-wrap mx-4 px-4 justify-between mb-4'>
             <p className=' tracking-tight text-3xl text-white font-semibold'>Gallery </p>
-             <Link to="/modal">
                 <button
                     type="button"
                     data-te-ripple-init
                     data-te-ripple-color="light"
+                    onClick={imgUploadHandleOpen}
                     className="inline-block bg-purple-700 rounded mr-8 px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] ">
                     <span className="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 mr-2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
-                        새 프로젝트
+                        <AiOutlineUpload size={24} color="white" className="mr-1" />
+                        사진 업로드
                     </span>
                 </button>
-            </Link>
         </div>
+        <Modal
+            open={ImgUploadOpen}
+            onClose={imgUploadHandleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box sx={uploadStyle}>
+
+            <ImgFileInput onClose={imgUploadHandleClose} /> 
+            </Box>
+        </Modal>
         <Divider color='white' />
         <Typography variant="h6" color='white' noWrap component="div" sx={{ margin: 1, marginLeft : 4, textAlign: 'left' }}>
             내 카테고리 버튼

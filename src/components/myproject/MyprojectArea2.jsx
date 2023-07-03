@@ -22,6 +22,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Modal from '@mui/material/Modal';
 import { Container, Row, Col } from "react-bootstrap";
+import ListSubheader from '@mui/material/ListSubheader';
 
 
 import { Link } from 'react-router-dom';
@@ -46,7 +47,7 @@ import {
 } from "tw-elements";
 
 import {
-AiFillFileAdd
+AiOutlineRight
 } from "react-icons/ai";
 
 //좋아요 변경용
@@ -169,7 +170,7 @@ const drawerWidth = 240;
 
 const SideBarArea = () => {
     const theme = useTheme();
-    const [appbarOpen, setappbarOpen] = useState(false);
+    const [open, setOpen] = React.useState(false);
 
     const formatData = useFormatDate();
 
@@ -206,17 +207,17 @@ const SideBarArea = () => {
 
 
     const handleDrawerOpen = () => {
-        setappbarOpen(true);
+        setOpen(true);
     };
 
     const handleDrawerClose = () => {
-        setappbarOpen(false);
+        setOpen(false);
     };
 
   return (
     <Box sx={{ display: 'flex', width: '82vw', marginX : 'auto' }}  >
         <CssBaseline />
-        <AppBar position="fixed" open={appbarOpen}>
+    <AppBar position="fixed" open={open}>
         <Toolbar sx = {{paddingTop: '80px', backgroundColor: '#14131B'}}>
           <IconButton
             color="inherit"
@@ -225,109 +226,110 @@ const SideBarArea = () => {
             edge="start"
             sx={{
               marginRight: 5,
-              ...(appbarOpen && { display: 'none' }),
+              ...(open && { display: 'none' }),
             }}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h4" noWrap component="div" sx={{marginBottom: 1}}>
-            My Project
+            My Page
           </Typography>
         </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={appbarOpen}>
+    </AppBar>
+    <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
-        <Divider />
-        <List>
-            <ListItem>
-                {/* 🐼즐겨찾기 해놓은 프로젝트 리스트*/}
-                <ListItemButton
-                    sx={{
-                    minHeight: 48,
-                    justifyContent: appbarOpen ? 'initial' : 'center',
-                    px: 2.5,
-                    }}
-                >
-                    <ListItemIcon
-                    sx={{
-                        minWidth: 0,
-                        mr: appbarOpen ? 3 : 'auto',
-                        justifyContent: 'center',
-                    }}
+        <Divider variant="middle"/>
+        {/* 🐼즐겨찾기 해놓은 프로젝트 리스트*/}
+        <List
+            aria-labelledby="nested-list-subheader"
+            subheader={
+            <ListSubheader                   
+                sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                component="div" 
+                id="nested-list-subheader">
+            <div className='ml-12 font-semibold text-violet-950' style={{fontSize : '18px'}}>즐겨찾는 프로젝트</div>
+            </ListSubheader>}
+        >
+          {likedProjects?.slice(0, 3).map((project, index) => (
+            <React.Fragment key={project._id}>
+            <ListItem key={project._id} disablePadding sx={{ display: 'block' }}>
+                <Link to={`/newproject/${project._id}`} style={{ textDecoration: 'none' }}>
+                    <ListItemButton
+                        sx={{
+                        minHeight: 48,
+                        justifyContent: open ? 'initial' : 'center',
+                        px: 2.5,
+                        }}
                     >
-                        <HiStar size={24} color="purple" className="mr-1" />
-                    </ListItemIcon>
-                    <ListItemText  sx={{ opacity: appbarOpen ? 1 : 0 }} >
-                        즐겨찾는 프로젝트
-                        {
-                            likedProjects?.map((project) => (
-                            <div key={project._id}>
-                                <Link to={`/newproject/${project._id}`}>
-                                    <div className="flex items-center">
-                                        <div className="flex flex-col">
-                                            <p className="my-1 text-violet-900 text-xl">{project.name}</p>
-                                            <p className='ml-4 text-md text-gray-500'>{new Date(project.time).toLocaleDateString()}</p>
-                                        </div>
-                                    </div>
-                                </Link>
-                            </div>
-                            ))
-                        }
-                    </ListItemText>
-                </ListItemButton>    
-            </ListItem>
-            {/* 🌿사진 올리기 */}
-            <ListItem>
-                <ListItemButton
-                    onClick={imgUploadHandleOpen}
-                    sx={{
-                    minHeight: 48,
-                    justifyContent: appbarOpen ? 'initial' : 'center',
-                    px: 2.5                    
-                    }}
-                >                    
-                    <ListItemIcon
+                        <ListItemIcon
                         sx={{
                             minWidth: 0,
-                            mr: appbarOpen ? 3 : 'auto',
+                            mr: open ? 3 : 'auto',
                             justifyContent: 'center',
                         }}
                         >
-                            <AiFillFileAdd size={24} color="purple" className="mr-1" />
-                    </ListItemIcon>
-                    <ListItemText  sx={{ opacity: appbarOpen ? 1 : 0 }} >
-                        사진 업로드
-                    </ListItemText>
-                </ListItemButton>
-                    <Modal
-                        open={ImgUploadOpen}
-                        onClose={imgUploadHandleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                    >
-                        <Box sx={style}>
-                        {/* <Typography id="modal-modal-title" variant="h6" component="h2">
-                            Text in a modal
-                        </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                        </Typography> */}
-                        <ImgFileInput />
-                        </Box>
-                    </Modal>
+                  <HiStar size={24} color="purple" className='mr-1' />
+                </ListItemIcon>
+                <ListItemText primary={project.name} secondary={formatData(project.time)} sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+              </Link>
             </ListItem>
-
-
+          </React.Fragment>
+          ))
+          }
         </List>
-        <Divider />
-        <List>
-
+        <Divider variant="middle" sx={{borderColor: 'rgba(128,0,128,0.5)'}}/>
+        <List
+            aria-labelledby="nested-list-subheader"
+            subheader={
+            <ListSubheader                   
+                sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                component="div" 
+                id="nested-list-subheader">
+            <div className='ml-12 font-semibold text-violet-950' style={{fontSize : '18px'}}>최신 프로젝트</div>
+            </ListSubheader>}
+        >
+          {recentProjects?.slice(0, 3).map((project, index) => (
+            <React.Fragment key={project._id}>
+            <ListItem key={project._id} disablePadding sx={{ display: 'block' }}>
+                <Link to={`/newproject/${project._id}`} style={{ textDecoration: 'none' }}>
+                <ListItemButton
+                    sx={{
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
+                    }}
+                >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <AiOutlineRight size={24} color="purple" className='mr-1' />
+                </ListItemIcon>
+                <ListItemText primary={project.name} secondary={formatData(project.time)} sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+              </Link>
+            </ListItem>
+          </React.Fragment>
+          ))
+          }
         </List>
-        </Drawer>
+      </Drawer>
         <div className='mx-auto'>
             <Box component="main" sx={{ flexGrow: 1, px: 3 }}>
             <DrawerHeader />
