@@ -14,7 +14,7 @@ const addImgFile = async (ImgData) => {
 };
 
 
-const ImageUpload = () => {
+const ImageUpload = ({ imgUploadHandleClose }) => {
   {/* 🌿 입력된 이미지들을 담는 변수 */}
   const [imgfiles, setImgfiles] = useState([]);
   const [imgMeta, setImgMeta] = useState([]);
@@ -66,6 +66,7 @@ const handleDragOver = (e) => {
       formData.append('image', file); // 각 파일을 FormData에 추가
     });
     mutation.mutate(formData);
+    imgUploadHandleClose(); // Close the modal after upload
   };
 
   useEffect(() => {

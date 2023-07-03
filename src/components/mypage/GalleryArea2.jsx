@@ -511,7 +511,7 @@ export default function MiniDrawer() {
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
                         </Typography> */}
-                        <ImgFileInput />
+                        <ImgFileInput imgUploadHandleClose={imgUploadHandleClose} />
                         </Box>
                     </Modal>
             </ListItem>
