@@ -177,7 +177,10 @@ function formatDate(dateString) {
 export default function MiniDrawer() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    
+
+      {/* 🌿🌿 검색 했는 지 안했는지  */}
+    const [hasSearched, setHasSearched] = useState(false);
+
     {/* 🌿🌿 모달 관련 변수들 */}
     const [showModal, setShowModal] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
@@ -286,13 +289,18 @@ export default function MiniDrawer() {
 
     // Periodic fetching
     useEffect(() => {
-      const intervalId = setInterval(() => {
-          refetch();
-      }, 3000);
-
-      // Cleanup function to clear the interval when the component unmounts
+      let intervalId;
+  
+      if (!hasSearched) {
+          intervalId = setInterval(() => {
+              refetch();
+          }, 3000);
+      }
+  
+      // Cleanup function to clear the interval when the component unmounts or when hasSearched becomes true
       return () => clearInterval(intervalId);
-    }, [refetch]);
+  }, [refetch, hasSearched]);
+  
 
 
 
@@ -319,17 +327,21 @@ export default function MiniDrawer() {
 
     {/* 🌿 apply 버튼 클릭 -> post 보내는 함수 */}
     const applyBtn = () => {
-        const datas = { tags : Object.keys(activeBtns), startDate: dates.startDate, endDate: dates.endDate};
-        console.log('post sending:', datas);
-        mutationApply.mutate(datas);
-    };
+      setHasSearched(true);
+      const datas = { tags : Object.keys(activeBtns), startDate: dates.startDate, endDate: dates.endDate};
+      console.log('post sending:', datas);
+      mutationApply.mutate(datas);
+  };
+  
 
     {/* 🌿 init 버튼 클릭 -> 변수들 초기화 하는 함수 */}
     const initBtn = () => {
-        setActiveBtns({});
-        setTargetImgData(initData);
-        setDates({ startDate: null, endDate: null });
-    }
+      setHasSearched(false);
+      setActiveBtns({});
+      setTargetImgData(initData);
+      setDates({ startDate: null, endDate: null });
+  }
+  
 
     {/* 🌿사진 클릭 시 중복 선택 실행되는 함수 */}
     const selectImgsClick = (imageId) => {
