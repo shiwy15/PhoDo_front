@@ -229,10 +229,10 @@ const VoiceChat = () => {
   };
   
 
-  return (
+return (
     <div className='p-4 rounded-2xl' style={{ 'marginLeft': 20 , 'marginTop': 10, minWidth: '400px', height: '130px', 'backgroundColor' : 'white', 'border': 'solid 3px rgba(0,0,0,0.2)'}}>
       <div className='flex'>
-        <p className='text-xl text-purple-950'>프로젝트 참여자 목록</p>
+        <p className='text-xl text-purple-950'  style={{ marginTop: '-20px' }}>프로젝트 참여자 목록</p>
         <div ref={controlsRef} className="flex-none p-1 rounded overflow-x-auto whitespace-nowrap" style={{ height: '32px', minWidth: '120px' }}>
           {/* Mute button will be appended here */}
         </div>
@@ -240,8 +240,13 @@ const VoiceChat = () => {
         {/*user 아바타 - 아이디 표시 */}
     <Stack direction="row" spacing={2}>
       {userList.map((user, index) => (
-      <div key={index} style={{ position: 'relative', display: 'inline-block' }}>
-          <img src={avatarList[index]} alt={`Avatar of ${user.nickname}`} className='w-16 object-cover' style={{ zIndex: 0 }} />
+          <div key={index} style={{ position: 'relative', display: 'inline-block' }}>
+          <img 
+              src={avatarList[index]} 
+              alt={`Avatar of ${user.nickname}`} 
+              className='w-16 object-cover' 
+              style={{ zIndex: 0, position: 'relative', top: '-21px' }} 
+          />
           <p style={{
               position: 'absolute',
               bottom: 0,
@@ -254,11 +259,13 @@ const VoiceChat = () => {
               padding: '1',
               fontSize: '1.4em', 
               whiteSpace: 'nowrap', 
-              overflowX: 'hidden' 
+              overflowX: 'hidden', 
+              top: '-21px'
           }}>
               {user.nickname}
           </p>
       </div>
+  
 
 
       ))}

@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import ScrollToTop from './components/Main/ScrollTopTop'
 
 import React, { useState, useEffect } from "react";
-import Preloader from "../src/components/Pre";
+// import Preloader from "../src/components/Pre";
 
 
 // login set
@@ -32,33 +32,26 @@ import { BrowserRouter, Routes, Route ,Navigate} from "react-router-dom";
 
 import Navbar from './components/form/Navbar'
 import RedirectToProject from './pages/Redirect/RedirectToProject'
+import AppWrapper from "./AppWrapper";
 
 
 function App() {
-  const [load, upadateLoad] = useState(true);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            upadateLoad(false);
-        }, 1200);
-
-        // Clean up the timer
-        return () => clearTimeout(timer);
-    }, []);
 
   return (
     <BrowserRouter>
-      <Preloader load={load} />
+      
+      {/* <Preloader load={load} /> */}
       <div className="App">
       {/* <Navbar /> */}
       <ScrollToTop />
+      <AppWrapper>
       <Routes>
         
           {/* Main */}
-          <Route path="/" element={<Login />}  />
           <Route path="/main" element={<MainPage />} />
           {/* login set */}
           <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />}  />
           <Route path="/forgotpw" element={<Forgotpw />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/reset/:token" element={<Passwordchange />} />
@@ -82,8 +75,9 @@ function App() {
           <Route path="/Test" element={<Test />} />
 
           <Route path="/myproject" element={<Myproject />} /> 
-          <Route path="*" element={<Navigate to="/Main"/>} />
+          {/* <Route path="*" element={<Navigate to="/Main"/>} /> */}
         </Routes>
+        </AppWrapper>
     </div>
     </BrowserRouter>
   );

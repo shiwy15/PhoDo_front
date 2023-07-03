@@ -13,31 +13,32 @@ const PictureMaterial = () => {
     const [convertedPhotos, setConvertedPhotos] = useState([]);
 
     // 🧞‍♂️ 받는 용
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             // Fetch the initial content from the server
-    //             const response = await request({
-    //                 method: 'get',
-    //                 url: `/project/images/${projectId}`,
-    //             });
-    //             console.log('urls: ', response.data.urls);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Fetch the initial content from the server
+                const response = await request({
+                    method: 'get',
+                    url: `/project/images/${projectId}`,
+                });
+                console.log('urls: ', response.data.urls);
     
-    //             const convertedData = response.data.urls.map(item => ({
-    //                 src: item,
-    //                 width: Math.floor(Math.random() * 4) + 2, // random number between 2 and 5
-    //                 height: Math.floor(Math.random() * 4) + 2 // random number between 2 and 5
-    //             }));
+                const convertedData = response.data.urls.map(item => ({
+                    src: item,
+                    width: Math.floor(Math.random() * 4) + 2, // random number between 2 and 5
+                    height: Math.floor(Math.random() * 4) + 2 // random number between 2 and 5 
+                    // object cover -> width 갖춰주면 
+                }));
                 
-    //             setConvertedPhotos(convertedData);
-    //             console.log(convertedData);
-    //         } catch (err) {
-    //             console.error(err);
-    //         }
-    //     };
+                setConvertedPhotos(convertedData);
+                console.log(convertedData);
+            } catch (err) {
+                console.error(err);
+            }
+        };
     
-    //     fetchData();
-    // }, [ projectId ]);
+        fetchData();
+    }, [ projectId ]);
 
     
     const handleDownload = () => {
@@ -60,15 +61,15 @@ const PictureMaterial = () => {
 
     return (
         <div className='text-center' style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <h1 className='text-white'>Flowchart 내부의 사진들</h1>
-            <button onClick={handleDownload} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                Download Zip
-            </button>
-            <div style={{maxHeight: 'calc(100vh - 60px)', overflowY: 'auto'}}>
-                {/* <Gallery photos={convertedPhotos}/>  */}
-                <Gallery photos={photos}/>
+            <div className="flex justify-center items-center">
+                <h2 className='text-white mr-4'>프로젝트 사진을 다운받아보세요!</h2>
+                <button onClick={handleDownload} className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">
+                    다운로드
+                </button>
             </div>
-
+            <div style={{maxHeight: 'calc(100vh - 60px)', overflowY: 'auto'}}>
+                <Gallery photos={convertedPhotos}/> 
+            </div>
         </div>
     );
 };

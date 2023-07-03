@@ -159,10 +159,31 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+function formatDate(dateString) {
+  const date = new Date(dateString);
+
+  if (isNaN(date)) { // check if date is invalid
+      return ''; // return an empty string
+  }
+
+  const year = date.getFullYear();
+  // getMonth() returns month index starting from 0, so we need to add 1
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}년 ${month}월 ${day}일`;
+}
+
+
+
+
 export default function MiniDrawer() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    
+
+      {/* 🌿🌿 검색 했는 지 안했는지  */}
+    const [hasSearched, setHasSearched] = useState(false);
+
     {/* 🌿🌿 모달 관련 변수들 */}
     const [showModal, setShowModal] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
@@ -183,21 +204,34 @@ export default function MiniDrawer() {
     
     //using effect!
     useEffect(() => {
-        request({
+        // Fetch data immediately upon mounting
+        const fetchData = () => {
+          request({
             method: 'get',
             url: '/api/category',
-        })
+          })
             .then(response => {
-                if (response.data !== null) { // checking if data is not null
-                    setButtonList(response.data);
-                } else {
-                    console.log('nothing~')
-                }
+              if (response.data !== null) { // checking if data is not null
+                setButtonList(response.data);
+              } else {
+                console.log('nothing~')
+              }
             })
             .catch(error => {
-                console.error('There was an error retrieving the data!', error);
+              console.error('There was an error retrieving the data!', error);
             });
-    }, []);
+        };
+      
+        fetchData(); // initial fetch
+      
+        // Fetch data every 30 seconds
+        const intervalId = setInterval(fetchData, 3000);
+      
+        // Cleanup function to clear the interval when the component unmounts
+        return () => {
+          clearInterval(intervalId);
+        };
+      }, []);
     
     useEffect(() => {
         if (buttonList) {
@@ -251,12 +285,31 @@ export default function MiniDrawer() {
     };
 
     {/* 🌿 get */}
-    const { data: initData, isLoading, isError, error } = useQuery('imagesQuery', fetchGallery, {
-        onSuccess: (data) => {
-            setTargetImgData(data);
-            console.log('from /gallery', data);
-        }
+    const { data: initData, isLoading, isError, error, refetch } = useQuery('imagesQuery', fetchGallery, {
+      onSuccess: (data) => {
+          setTargetImgData(data);
+          console.log('from /gallery', data);
+      },
+      retry: false, // don't retry on failure
+      refetchOnMount: false, // don't refetch every time the component is mounted
+      refetchOnWindowFocus: false, // don't refetch when window gets focus
     });
+
+    // Periodic fetching
+    useEffect(() => {
+      let intervalId;
+  
+      if (!hasSearched) {
+          intervalId = setInterval(() => {
+              refetch();
+          }, 3000);
+      }
+  
+      // Cleanup function to clear the interval when the component unmounts or when hasSearched becomes true
+      return () => clearInterval(intervalId);
+  }, [refetch, hasSearched]);
+  
+
 
 
     {/* 🌿 post */}
@@ -282,17 +335,21 @@ export default function MiniDrawer() {
 
     {/* 🌿 apply 버튼 클릭 -> post 보내는 함수 */}
     const applyBtn = () => {
-        const datas = { tags : Object.keys(activeBtns), startDate: dates.startDate, endDate: dates.endDate, location: searchLocation };
-        console.log('post sending:', datas);
-        mutationApply.mutate(datas);
-    };
+      setHasSearched(true);
+      const datas = { tags : Object.keys(activeBtns), startDate: dates.startDate, endDate: dates.endDate, location: searchLocation };
+      console.log('post sending:', datas);
+      mutationApply.mutate(datas);
+  };
+  
 
     {/* 🌿 init 버튼 클릭 -> 변수들 초기화 하는 함수 */}
     const initBtn = () => {
-        setActiveBtns({});
-        setTargetImgData(initData);
-        setDates({ startDate: null, endDate: null });
-    }
+      setHasSearched(false);
+      setActiveBtns({});
+      setTargetImgData(initData);
+      setDates({ startDate: null, endDate: null });
+  }
+  
 
     {/* 🌿사진 클릭 시 중복 선택 실행되는 함수 */}
     const selectImgsClick = (imageId) => {
@@ -462,7 +519,7 @@ export default function MiniDrawer() {
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
                         </Typography> */}
-                        <ImgFileInput />
+                        <ImgFileInput imgUploadHandleClose={imgUploadHandleClose} />
                         </Box>
                     </Modal>
             </ListItem>
@@ -518,7 +575,7 @@ export default function MiniDrawer() {
         </div>
         <Divider color='white' />
         <Typography variant="h6" color='white' noWrap component="div" sx={{ margin: 1, marginLeft : 4, textAlign: 'left' }}>
-            내 카테고리 버튼
+            나만의 카테고리
         </Typography>
         {/* 🌿 태그 버튼 mapping 구간 */}
 
@@ -527,35 +584,40 @@ export default function MiniDrawer() {
             <div key={index} className="mx-4 my-4 flex items-center justify-center">
             <div className="overflow-x-auto min-w-fit inline-flex font-extrabold text-purple-800 rounded-md shadow-[0_4px_9px_-4px_#cbcbcb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(251,251,251,0.3)] dark:hover:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)] dark:focus:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)] dark:active:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)]">
                 {group.map((btn) => (
-                <button
-                    key={btn}
-                    type="button"
-                    onClick={() => tagBtnClick(btn)}
-                    className="inline-block min-w-fit font-extrabold rounded-l text-inherit bg-neutral-50 px-6 pb-2 pt-2.5 text-lg uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
-                    data-te-ripple-init
-                    data-te-ripple-color="light">
-                    {btn}
-                </button>
+                    <button
+                        key={btn}
+                        type="button"
+                        onClick={() => tagBtnClick(btn)}
+                        className="inline-block min-w-fit font-extrabold rounded-l text-inherit bg-neutral-50 px-6 pb-2 pt-2.5 text-lg uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200 mx-[-2]"
+                        data-te-ripple-init
+                        data-te-ripple-color="light">
+                        {btn}
+                    </button>
                 ))}
             </div>
             </div>
         ))
         ) : (
-            <p className="text-white text-lg">사진을 올려 AI가 생성해주는 카테고리를 만들어보세요!</p>
+            <p className="text-white text-lg">사진을 올려서 AI가 생성해주는 카테고리를 만들어보세요!</p>
         )}
-
-
 
 
         {/*🌿 태그 버튼 결과값 창 */}
         <div className='flex'>
             <p className='min-w-fit ml-4 my-2 border-b-1 tracking-tight text-xl text-white font-semibold'>선택된 카테고리 :</p>
             {Object.entries(activeBtns).filter(([key, value]) => value === true).map(([key]) => (
-                <p key={key} className='overflow-x-auto min-w-fit mx-1 ml-4 my-2 border-b-1 tracking-tight text-xl text-white  font-semibold'>
+                <button
+                    key={key}
+                    type="button"
+                    className="overflow-x-auto min-w-fit mx-1 ml-4 my-2 border-b-1 tracking-tight text-s text-black font-semibold inline-flex min-w-fit font-extrabold rounded-full text-inherit bg-neutral-50 px-2 py-1 text-sm uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
+                    data-te-ripple-init
+                    data-te-ripple-color="light">
                     {key}
-                </p>
+                </button>
             ))}
         </div>
+
+
         {/*🌿 달력 입력 및 입력,초기화 버튼 구간*/}
         <div className='mb-8 bg-gray-100 p-4 justify-between flex mx-4 rounded-xl'>
             <div className='flex'>
@@ -615,6 +677,8 @@ export default function MiniDrawer() {
                 </button>
             </div>
         </div>
+
+
         {/*🌿이미지 갤러리 창*/ }
         <div style={{backgroundColor: 'rgba(255,255,255,0.1)'}} className="container mx-auto rounded-md shadow-xl my-4 py-2 lg:px-16 lg:pt-12">
             <ImageList sx={{ width: '100%', gap: 16 }} cols={4} rowHeight={200}>
@@ -641,18 +705,23 @@ export default function MiniDrawer() {
                         }}
                     />
                     <div>
-                        <span className=' text-white flex text-sm'>
-                            {Object.values(image.categories).map((category, index,array) => {
-                                const isLast = index === array.length - 1;
+                          <div style={{ overflowX: 'auto', whiteSpace: 'nowrap' }}>
+                            {Object.values(image.categories).map((category, index) => {
                                 return (
-                                    <div>
-                                        <p key={index}># {category}</p>
-                                        {!isLast && <p></p>}
-                                    </div>
+                                    <button
+                                        key={index}
+                                        type="button"
+                                        className="overflow-x-auto min-w-fit mx-1 ml-4 my-2 border-b-1 tracking-tight text-s text-black font-semibold inline-flex min-w-fit font-extrabold rounded-full text-inherit bg-neutral-50 px-2 py-1 text-sm uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
+                                        data-te-ripple-init
+                                        data-te-ripple-color="light">
+                                        #{category}
+                                    </button>
                                 );
                             })}
-                        </span>
-                        <span className='text-white flex items-start text-sm'>{formatData(image.time)}</span>
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'flex-end', fontWeight: 'bold' }}>
+                            <span className='text-white text-sm'>{formatDate(image.time)}</span>
+                          </div>
                    </div>
                     </ImageListItem>
                 ))}
