@@ -142,26 +142,6 @@ const MenuBar = () => {
             </div>
           </Drawer>
         </div>
-        {/* 🌿 세번째 list -> image box */}
-        {/* <div className='third my-4'>
-          <Button onClick={toggleDrawer3} sx={{ color: 'white', fontSize: '1.4rem' }}>엣지 박스</Button>
-            <Divider sx={{ backgroundColor: 'white', marginY: '12px', marginLeft: '8px', marginRight: '8px' }} />
-          <Drawer
-            anchor="right"
-            open={open3}
-            onClose={toggleDrawer3}
-            sx={{ zIndex: 100 }}
-            slotProps={{
-              backdrop: {
-                style: { backgroundColor: 'transparent' },
-                invisible: true,
-              },
-            }}>
-          <div style={{position: 'fixed', right: MenuboxWidth, top:'64px'}}>
-            <EdgeBox />
-          </div>
-          </Drawer>
-        </div> */}
       </div>
       <div className='bottomPosition place-content-end flex relative'>
         <div className='w-full grid'>
