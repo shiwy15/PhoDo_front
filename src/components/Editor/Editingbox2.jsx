@@ -102,6 +102,10 @@ const Editingbox2 = () => {
 
 
   useEffect(() => {
+    if (wsProvider && wsProvider.connected) {
+      // Disconnect if connected
+      wsProvider.disconnect();
+  }
     wsProvider.connect();
     wsProvider.on('status', event => {
       console.log(event);
@@ -152,7 +156,7 @@ const Editingbox2 = () => {
   return () => {
     wsProvider.disconnect();
     console.log('dismount!');
-    ydoc = createNewDoc();
+    // ydoc = createNewDoc();
     
   };
 }, []);

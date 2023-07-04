@@ -72,6 +72,7 @@ const uploadStyle = {
     borderRadius: '10px', // border radius를 10px로 설정
 };
 
+
 //🌿custom function
 const fetchGallery = () => {return request({ url: 'api/gallery' });}
 
@@ -128,22 +129,16 @@ const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  marginTop: '64px',
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
-        
-
   }),
   ...(open && {
     marginLeft: drawerWidth,
-    marginTop: '64px',
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
-          
-
     }),
   }),
 }));
@@ -712,7 +707,7 @@ export default function GalleryArea2() {
                                     <button
                                         key={index}
                                         type="button"
-                                        className="overflow-x-auto min-w-fit mx-1 ml-4 my-2 border-b-1 tracking-tight text-s text-black font-semibold inline-flex min-w-fit font-extrabold rounded-full text-inherit bg-neutral-50 px-2 py-1 text-sm uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
+                                        className="overflow-x-auto mx-1 ml-4 my-2 border-b-1 tracking-tight text-s text-black font-semibold inline-flex min-w-fit rounded-full text-inherit bg-neutral-50 px-2 py-1 text-sm uppercase leading-normal  transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
                                         data-te-ripple-init
                                         data-te-ripple-color="light">
                                         #{category}

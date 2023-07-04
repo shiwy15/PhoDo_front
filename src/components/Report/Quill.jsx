@@ -50,15 +50,14 @@ const QuillEditor = () => {
             const presenter = res.data.presenter;
             const content = res.data.content;
             // Structure the HTML based on the response
-
-            const key1 = content.key1
-            const key2 = content.key2
-
-
+    
+    
             let contentHtml = `
             <h1>${title}</h1>
             <br>
+            <div style="display: flex; justify-content: flex-end;"><p>${presenter}</p></div>
             <p>이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.</p>
+            <br>
             <br>
             `
             // Loop through the content object
@@ -70,18 +69,19 @@ const QuillEditor = () => {
                     <br>
                 `;
             }
-
-        // Add final part to contentHtml
-        contentHtml += '<h3> [ 첨부사진 ] </h3>';
-
-        setValue(contentHtml);
-        // Now you can use contentHtml variable where you need it
-        console.log(contentHtml);
+    
+            // Add final part to contentHtml
+            contentHtml += '<h3> [ 첨부사진 ] </h3>';
+    
+            setValue(contentHtml);
+            // Now you can use contentHtml variable where you need it
+            console.log(contentHtml);
         })
         .catch(err => {
         console.error(err);
         });
-        });
+    }, []); // <-- This empty array ensures the useEffect only runs once on mount.
+    
 
     useEffect(() => {
         // Fetch the project name
