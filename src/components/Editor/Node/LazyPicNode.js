@@ -20,7 +20,7 @@ const LazyPicNode = ({ id, selected, data }) => {
     if (connection.effectiveType === '4g' && !highResLoaded) {
       setImgSrc(data.imageurl);
       setHighResLoaded(true);
-    } else if (!highResLoaded) {
+    } else if (!highResLoaded && data.networkState !== 'high') {
       setImgSrc(data.thumburl);
     }
   };
