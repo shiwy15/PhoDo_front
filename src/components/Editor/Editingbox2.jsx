@@ -102,6 +102,10 @@ const Editingbox2 = () => {
 
 
   useEffect(() => {
+    if (wsProvider && wsProvider.connected) {
+      // Disconnect if connected
+      wsProvider.disconnect();
+  }
     wsProvider.connect();
     wsProvider.on('status', event => {
       console.log(event);
