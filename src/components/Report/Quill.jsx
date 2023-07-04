@@ -46,19 +46,41 @@ const QuillEditor = () => {
         })
         .then(res => {
             console.log(res.data);
+            const title = res.data.title;
+            const presenter = res.data.presenter;
+            const content = res.data.content;
             // Structure the HTML based on the response
-            const contentHtml = `
-                ${res.data.content}
-        `;
-    
-            // Update the editor's content when the response is received
-            setValue(contentHtml);
+
+            const key1 = content.key1
+            const key2 = content.key2
+
+
+            let contentHtml = `
+            <h1>${title}</h1>
+            <br>
+            <p>이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.</p>
+            <br>
+            `
+            // Loop through the content object
+            for (let key in content) {
+                // Append each key and its associated value to the HTML
+                contentHtml += `
+                    <h2>${key}</h2>
+                    <p>${content[key]}</p>
+                    <br>
+                `;
+            }
+
+        // Add final part to contentHtml
+        contentHtml += '<h3> [ 첨부사진 ] </h3>';
+
+        // Now you can use contentHtml variable where you need it
+        console.log(contentHtml);
         })
         .catch(err => {
-            console.error(err);
+        console.error(err);
         });
-    }, []); // The empty array causes this useEffect to run only once on component mount
-    
+        });
 
     useEffect(() => {
         // Fetch the project name
