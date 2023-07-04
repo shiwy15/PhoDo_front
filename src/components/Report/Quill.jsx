@@ -74,6 +74,7 @@ const QuillEditor = () => {
         // Add final part to contentHtml
         contentHtml += '<h3> [ 첨부사진 ] </h3>';
 
+        setValue(contentHtml);
         // Now you can use contentHtml variable where you need it
         console.log(contentHtml);
         })
