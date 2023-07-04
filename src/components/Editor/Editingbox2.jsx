@@ -99,6 +99,10 @@ function Editingbox2 () {
   );
 
   useEffect(() => {
+    if (wsProvider && wsProvider.connected) {
+      // Disconnect if connected
+      wsProvider.disconnect();
+  }
     wsProvider.connect();
     wsProvider.on('status', event => {
       console.log(event);
@@ -149,10 +153,12 @@ function Editingbox2 () {
   return () => {
     wsProvider.disconnect();
     console.log('dismount!');
-    ydoc = createNewDoc();
-      
-    };
-  }, []);
+
+    // ydoc = createNewDoc();
+    
+  };
+}, []);
+
   
   const [edges, onEdgesChange, onConnect] = useEdgesStateSynced(ydoc);
   const [nodes, onNodesChange] = useNodesStateSynced(ydoc, edgesMap);

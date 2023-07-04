@@ -32,6 +32,7 @@ const VoiceChat = () => {
     socketRef.current = io("wss://hyeontae.shop/ws");  //socketRef에 현재 
     // socketRef.current = io("ws://localhost:4000/ws");  //socketRef에 현재 
 
+
     {/*🌿 연결이 안됐으면, 콘솔창에 에러 띄우기 */}
     socketRef.current.on('connect_error', (err) => {
     console.log(`Connect error due to ${err.message}`);});
@@ -260,7 +261,7 @@ return (
               fontSize: '1.4em', 
               whiteSpace: 'nowrap', 
               overflowX: 'hidden', 
-              top: '-21px'
+              top: '30px'
           }}>
               {user.nickname}
           </p>

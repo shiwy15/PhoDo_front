@@ -1,26 +1,26 @@
 .react-flow .react-flow__handle {
     width: 20px;
-    height: 20px;
-    border-radius: 10px;
+    height: 10px;
+    border-radius: 2px;
     background-color: gray;
 }
 
 .react-flow .react-flow__handle-top {
-    top: -19px;
+    top: -12px;
 }
 
 .react-flow .react-flow__handle-bottom {
-    bottom: -19px;
+    bottom: -12px;
 }
 
 .react-flow .react-flow__handle-left {
-    left: -20px;
-    /* transform: rotate(90deg); */
+    left: -15px;
+    transform: rotate(90deg);
 }
 
 .react-flow .react-flow__handle-right {
-    right: -20px;
-    /* transform: rotate(90deg); */
+    right: -15px;
+    transform: rotate(90deg);
 }
 /* 
 .react-flow .react-flow__node {
