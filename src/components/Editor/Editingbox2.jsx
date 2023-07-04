@@ -23,8 +23,7 @@ import ConnectionLine from './Edge/ConnectionLine'
 import CustomEdge from './Edge/CustomEdge';
 
 // 리액트 플로우 노드 
-import ReactFlow, { ReactFlowProvider, useReactFlow, Controls, MiniMap, Background, BackgroundVariant} from 'reactflow';
-import { Doc } from 'yjs';
+import ReactFlow, { ReactFlowProvider, useNodesState, useEdgesState, useReactFlow, Controls, MiniMap, Background, BackgroundVariant} from 'reactflow';
 import { WebsocketProvider } from 'y-websocket';
 
 // :four_leaf_clover: WebRTC setting
@@ -87,11 +86,10 @@ const wsOpts = {
   awareness: new awarenessProtocol.Awareness(ydoc)
 };
 
-const Editingbox2 = () => {
+function Editingbox2 () {
   const {projectId} = useParams();  
   const { fitView } = useReactFlow();
   
-
   const wsProvider = new WebsocketProvider(
     //'ws://localhost:1234', // :fire: 요청을 보낼 웹소켓 서버
     'wss://phodo.store/ws', // 🔥 요청을 보낼 웹소켓 서버
@@ -99,7 +97,6 @@ const Editingbox2 = () => {
     ydoc, // :fire: 새롭게 전달 받을 도큐먼트 
     wsOpts
   );
-
 
   useEffect(() => {
     wsProvider.connect();
@@ -115,8 +112,8 @@ const Editingbox2 = () => {
     // ydoc = createNewDoc();
       // :star2: Fetch nodes from the API
 // :star2: Fetch project data from the API
-  //axios.get(`http://localhost:4000/project/${projectId}`)
-  axios.get(`https://hyeontae.shop/project/${projectId}`)
+  axios.get(`http://localhost:4000/project/${projectId}`)
+  //axios.get(`https://hyeontae.shop/project/${projectId}`)
   .then((res) => {
     const data = res.data; 
     console.log(res.data);
@@ -153,11 +150,10 @@ const Editingbox2 = () => {
     wsProvider.disconnect();
     console.log('dismount!');
     ydoc = createNewDoc();
-    
-  };
-}, []);
+      
+    };
+  }, []);
   
-
   const [edges, onEdgesChange, onConnect] = useEdgesStateSynced(ydoc);
   const [nodes, onNodesChange] = useNodesStateSynced(ydoc, edgesMap);
 
@@ -183,17 +179,20 @@ const Editingbox2 = () => {
       //:baby_chick: 여기서 아무래도 current 세팅을 해주는 것 같은 데 확인 해봐야할 것 같음
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
       
-      // Drag을 통한 이벤트 생성
+      // Drag을 통한 데이터 패킹
       const type = event.dataTransfer.getData('application/reactflow');
-      const img = event.dataTransfer.getData('data/imageurl');
-      const tags = event.dataTransfer.getData('data/tags');
+      const categories = event.dataTransfer.getData('data/categories');
       const memo = event.dataTransfer.getData('data/memo');
       const title = event.dataTransfer.getData('data/title');
       const content = event.dataTransfer.getData('data/content');
       const date = event.dataTransfer.getData('data/date');
 
+      const imageurl = event.dataTransfer.getData('data/imageurl');
+      const thumburl = event.dataTransfer.getData('data/thumburl');
+      const networkState = event.dataTransfer.getData('data/networkState');
+
       console.log(':evergreen_tree:Getting type ', type); // :apple: drag start에서 가져온 type
-      console.log(':evergreen_tree:Getting image ', img); // :apple: drag start에서 가져온 image 
+      console.log(':evergreen_tree:Getting image ', imageurl); // :apple: drag start에서 가져온 image 
       if (typeof type === 'undefined' || !type) {
         return;
       }
@@ -207,40 +206,11 @@ const Editingbox2 = () => {
         id: getNodeId(),
         type,
         position,
-        data: { label: `${type}` , url: `${img}`, tags: `${tags}`, memo: `${memo}`, 
-                title: `${title}`, content: `${content}`, date: `${date}`},
+        data: { label: `${type}` , imageurl: `${imageurl}`, categories: `${categories}`, memo: `${memo}`, thumburl: `${thumburl}`,
+                title: `${title}`, content: `${content}`, date: `${date}`,  networkState: `${networkState}`},
       };
 
       nodesMap.set(newNode.id, newNode);
-
-    // Check network status : navigator.connection: 표준 이름입니다. 최신 브라우저 / navigator.mozConnection: 오래된 Firefox 브라우저 / navigator.webkitConnection: 오래된 Chrome 브라우저 및 Safari
-    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    let thumbnailResolution;
-      if (connection) {
-    switch (connection.effectiveType) {
-      case 'slow-2g':
-        // Very low-resolution thumbnail for extremely slow network
-        thumbnailResolution = 'slow-2g: very_low';
-        break;
-      case '2g':
-        // Low-resolution thumbnail for slow network
-        thumbnailResolution = '2g: low';
-        break;
-      case '3g':
-        // Medium-resolution thumbnail for fair network
-        thumbnailResolution = '3g: medium';
-        break;
-      case '4g':
-        // High-resolution thumbnail for fast network
-        thumbnailResolution = '4g: high';
-        break;
-      default:
-        // Default to high-resolution if effectiveType is unknown
-        thumbnailResolution = 'high';
-        break;
-    }
-  }
-    console.log(`Thumbnail resolution for the new node: ${thumbnailResolution}`);
   },
     [project]
   );
@@ -286,10 +256,12 @@ const Editingbox2 = () => {
   );
 };
 
-export default () => (
-  <>
+const ReactFlowWrapper = (props) => {
+  return (
   <ReactFlowProvider>
-    <Editingbox2 />
+    <Editingbox2 {...props} />
   </ReactFlowProvider>
-  </>
 );
+};
+
+export default ReactFlowWrapper;

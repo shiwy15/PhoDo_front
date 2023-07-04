@@ -1,16 +1,11 @@
 import React from 'react'
-import { Container, Row, Col } from "react-bootstrap";
 
-/** 이미지 출력용 import **/
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
 
 //Menubar container
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
 
 const NodeBox =() => {
 
@@ -111,18 +106,7 @@ const NodeBox =() => {
             {/* <div>보라</div> */}
           </div>
         </MenuItem>
-        <Row> 
-          <Col>   //node test
-        <MenuItem sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <div className="TextNode inline-block rounded bg-purple-400 my-2 px-6 pb-2 pt-2.5 text-xl font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out hover:bg-info-600 hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(84,180,211,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)]" 
-            onDragStart={(event) => onDragStartDefault(event, 'LazyPicNode')}
-            draggable 
-            style={{ height: '50px', width: '50px' }}>
-            {/* <div>보라</div> */}
-          </div>
-        </MenuItem>
-        </Col>
-        </Row>
+
         </div>
         {/* <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} /> */}
 

@@ -57,14 +57,6 @@ const MenuBar = () => {
     };
   };
 
-  const toggleDrawer3 = () => {
-    setOpen3(!open3);
-    if (open3) {
-      setOpen2(false);
-      setOpen3(false);
-    };
-  };
-
   const handleOpen = () => {
     setOpen(true);
   }
