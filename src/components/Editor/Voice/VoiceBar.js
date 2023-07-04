@@ -29,8 +29,8 @@ const VoiceChat = () => {
     console.log("check render")
     {/*🌿 클라이언트 측에서 Socket.IO를 사용하여 '3001'서버와 클라이언트 소켓 연결을 설정하는 부분 */}
     // socketRef.current = io("wss://phodo.store/vc/", { transports: ['websocket'] });  
-    socketRef.current = io("wss://hyeontae.shop/ws");  //socketRef에 현재 
-    //socketRef.current = io("ws://localhost:4000/ws");  //socketRef에 현재 
+    // socketRef.current = io("wss://hyeontae.shop/ws");  //socketRef에 현재 
+    socketRef.current = io("ws://localhost:4000/ws");  //socketRef에 현재 
 
     {/*🌿 연결이 안됐으면, 콘솔창에 에러 띄우기 */}
     socketRef.current.on('connect_error', (err) => {
@@ -260,7 +260,7 @@ return (
               fontSize: '1.4em', 
               whiteSpace: 'nowrap', 
               overflowX: 'hidden', 
-              top: '-21px'
+              top: '30px'
           }}>
               {user.nickname}
           </p>
