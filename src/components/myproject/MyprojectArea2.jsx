@@ -92,8 +92,9 @@ const closedMixin = (theme) => ({
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
+  marginTop: '64px',
+
   justifyContent: 'flex-end',
-    marginTop: '64px',
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
@@ -104,16 +105,16 @@ const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  marginTop: '64px',
   transition: theme.transitions.create(['width', 'margin'], {
+    marginTop: '64px',
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,      
   }),
   ...(open && {
-    marginTop: '64px',
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
+      marginTop: '64px',
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
@@ -232,7 +233,7 @@ const SideBarArea = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h4" noWrap component="div" sx={{marginBottom: 1}}>
-            My Page
+            My Project
           </Typography>
         </Toolbar>
       </AppBar>
