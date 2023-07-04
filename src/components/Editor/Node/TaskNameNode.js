@@ -4,6 +4,7 @@ import { textAlign } from '@mui/system';
 import { useState, useEffect, useCallback } from 'react';
 import { Handle, Position } from 'reactflow';
 import { nodesMap } from '../Editingbox2';
+import Hangul from 'hangul-js';
 
 const TasknameNode = ({ id, selected, data, isConnectable }) => {
   const [title, setTitle] = useState(data.title);
@@ -12,7 +13,8 @@ const TasknameNode = ({ id, selected, data, isConnectable }) => {
   const [isFolded, setIsFolded] = useState(false);
 
   const onTitleChange = useCallback((evt) => {
-    setTitle(evt.target.value);
+    const normalizedTitle = Hangul.assemble(evt.target.value);
+    setTitle(normalizedTitle);
   }, []);
   
   useEffect(() => {
@@ -31,7 +33,8 @@ const TasknameNode = ({ id, selected, data, isConnectable }) => {
   }, [title]);
 
   const onDateChange = useCallback((evt) => {
-    setDate(evt.target.value);
+    const normalizedDate = Hangul.assemble(evt.target.value);
+    setDate(normalizedDate);
   }, []);
 
   useEffect(() => {
@@ -50,7 +53,8 @@ const TasknameNode = ({ id, selected, data, isConnectable }) => {
   }, [date]);
 
   const onContentChange = useCallback((evt) => {
-    setContent(evt.target.value);
+    const normalizedContent = Hangul.assemble(evt.target.value);
+    setContent(normalizedContent);
   }, []);
   
   useEffect(() => {

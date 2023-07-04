@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Handle, Position } from 'reactflow';
 import { nodesMap } from '../Editingbox2';
 // import { useUpdateNodeInternals } from 'reactflow';
+import Hangul from 'hangul-js';
 
 function TextNode3({ id, selected, data, isConnectable }) {
   const [title, setTitle] = useState(data.title);
@@ -12,7 +13,7 @@ function TextNode3({ id, selected, data, isConnectable }) {
   // const updateNodeInternals = useUpdateNodeInternals();
 
   const onTitleChange = useCallback((evt) => {
-    const normalizedTitle = evt.target.value.normalize('NFKD');
+    const normalizedTitle = Hangul.assemble(evt.target.value);
     setTitle(normalizedTitle);
   }, []);
   
@@ -33,7 +34,7 @@ function TextNode3({ id, selected, data, isConnectable }) {
 
 
   const onDateChange = useCallback((evt) => {
-    const normalizedDate = evt.target.value.normalize('NFKD');
+    const normalizedDate = Hangul.assemble(evt.target.value);
     setDate(normalizedDate);
   }, []);
 
@@ -57,7 +58,7 @@ function TextNode3({ id, selected, data, isConnectable }) {
 
 
   const onContentChange = useCallback((evt) => {
-    const normalizedContent = evt.target.value.normalize('NFKD');
+    const normalizedContent = Hangul.assemble(evt.target.value);
     setContent(normalizedContent);
   }, []);
   

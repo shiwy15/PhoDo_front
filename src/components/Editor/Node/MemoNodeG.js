@@ -1,12 +1,13 @@
 import { useEffect, useCallback, useState } from 'react';
 import { Handle, Position, NodeResizer } from 'reactflow';
 import {nodesMap} from './../Editingbox2'
+import Hangul from 'hangul-js';
 
 const MemoNodeG = ({ id, data, selected }) => {
   const [memo, setMemo] = useState(data.memo);
 
   const onMemoChange = useCallback((evt) => {
-    const normalizedMemo = evt.target.value.normalize('NFKD');
+    const normalizedMemo = Hangul.assemble(evt.target.value);
     setMemo(normalizedMemo);
   }, []);
 

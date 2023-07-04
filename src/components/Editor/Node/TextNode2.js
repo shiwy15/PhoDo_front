@@ -3,13 +3,14 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Handle, Position } from 'reactflow';
 import { nodesMap } from '../Editingbox2';
+import Hangul from 'hangul-js';
 
 function TextNode2({ id, selected, data, isConnectable }) {
   const [title, setTitle] = useState(data.title);
   const [content, setContent] = useState(data.content);
 
   const onTitleChange = useCallback((evt) => {
-    const normalizedTitle = evt.target.value.normalize('NFKD');
+    const normalizedTitle = Hangul.assemble(evt.target.value);
     setTitle(normalizedTitle);
   }, []);
 
@@ -30,7 +31,7 @@ function TextNode2({ id, selected, data, isConnectable }) {
 
 
   const onContentChange = useCallback((evt) => {
-    const normalizedContent = evt.target.value.normalize('NFKD');
+    const normalizedContent = Hangul.assemble(evt.target.value);
     setContent(normalizedContent);
   }, []);
 

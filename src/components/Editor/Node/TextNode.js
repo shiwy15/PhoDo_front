@@ -2,14 +2,22 @@ import { fontSize } from '@mui/system';
 import { useState, useCallback, useEffect } from 'react';
 import { Handle, Position } from 'reactflow';
 import { nodesMap } from '../Editingbox2';
+import Hangul from 'hangul-js';
 
 import './index.css';
 
 function TextNode({ data, isConnectable }) {
   const [title, setTitle] = useState(data.title);
 
+  // const normalizeKoreanInput = (input) => {
+  //   const composedInput = input.normalize('NFC');
+  //   const decomposedInput = composedInput.normalize('NFKC');
+  //   const recomposedInput = decomposedInput.normalize('NFKC');
+  //   return recomposedInput;
+  // };
+
   const onTitleChange = useCallback((evt) => {
-    const normalizedTitle = evt.target.value.normalize('NFKD');
+    const normalizedTitle = Hangul.assemble(evt.target.value);
     setTitle(normalizedTitle);
   }, []);
 
