@@ -214,9 +214,9 @@ const Editingbox2 = () => {
     
   );
 
-  useEffect(() => {
-    fitView({ duration: 400 });
-  }, [nodes, fitView]);
+  // useEffect(() => {
+  //   fitView({ duration: 400 });
+  // }, [nodes, fitView]);
 
   return (
     <>
@@ -234,7 +234,9 @@ const Editingbox2 = () => {
       nodeTypes={nodeTypes}
       edgeTypes={edgeTypes}
       style={{ background: '#23173B', position: 'relative' }}
-      fitView
+      // fitView
+      snapToGrid = {true}
+      snapGrid = {[50, 50]}
       fitViewOptions={fitViewOptions}>
       <Controls position='top-left' style={{top:'68px'}} />
       <MiniMap pannable position='bottom-left'/>
