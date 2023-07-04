@@ -1,11 +1,14 @@
-import { useCallback } from 'react';
-import { Handle, Position, NodeResizer } from 'reactflow';
+import { useState, useEffect, useCallback } from 'react';
+import { Handle, Position, useUpdateNodeInternals } from 'reactflow';
+import { NodeResizer } from '@reactflow/node-resizer';
 
 function PictureNode({ data, selected, isConnectable }) {
   const onChange = useCallback((evt) => {
     console.log(evt.target.value);
   }, []);
 
+  const updateNodeInternals = useUpdateNodeInternals();
+  const [resizable, setResizable] = useState(true);
   const handleStyle = {
     background: 'red', // 핸들의 배경색 설정
     border: '2px solid white', // 핸들의 테두리 설정
@@ -13,6 +16,9 @@ function PictureNode({ data, selected, isConnectable }) {
     width: '15px', // 핸들의 너비 설정
     height: '15px', // 핸들의 높이 설정
   };
+
+    useEffect(() => {
+  }, [ updateNodeInternals]);
 
   return (
     <div className="PictureNodeblock" style={{ border: '4px solid black', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
