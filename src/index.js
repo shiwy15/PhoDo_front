@@ -5,6 +5,9 @@ import './main.css';
 import App from './App';
 import { QueryClient, QueryClientProvider } from "react-query"
 
+import reportWebVitals from './reportWebVitals';
+import { sendToAnalytics } from "./vitals";
+
 
 //🥕React query instance
 const queryClient = new QueryClient()
@@ -18,4 +21,8 @@ root.render(
         </QueryClientProvider>
     </React.StrictMode>
 );
+
+reportWebVitals();
+
+// if (typeof window !== "undefined") reportWebVitals(sendToAnalytics);
 

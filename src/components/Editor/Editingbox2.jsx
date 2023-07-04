@@ -91,13 +91,23 @@ const Editingbox2 = () => {
   
 
   const wsProvider = new WebsocketProvider(
-    // 'ws://localhost:1234', // :fire: 요청을 보낼 웹소켓 서버
-    'wss://phodo.store/ws', // 🔥 요청을 보낼 웹소켓 서버
+    'ws://localhost:1234', // :fire: 요청을 보낼 웹소켓 서버
+    // 'wss://phodo.store/ws', // 🔥 요청을 보낼 웹소켓 서버
     projectId, // :fire: 프로젝트 아이디
     ydoc, // :fire: 새롭게 전달 받을 도큐먼트 
     wsOpts
   );
-  
+
+
+  // useEffect(() => {
+  //   // measureNetwork 함수를 5초마다 실행
+  //   const intervalId = setInterval(measureNetwork, 5000); // 5000ms = 5s
+
+  //   // 컴포넌트가 언마운트될 때 인터벌을 제거
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // }, []);
 
   useEffect(() => {
     wsProvider.connect();
@@ -189,12 +199,12 @@ const Editingbox2 = () => {
       const title = event.dataTransfer.getData('data/title');
       const content = event.dataTransfer.getData('data/content');
       const date = event.dataTransfer.getData('data/date');
+
       console.log(':evergreen_tree:Getting type ', type); // :apple: drag start에서 가져온 type
       console.log(':evergreen_tree:Getting image ', img); // :apple: drag start에서 가져온 image 
       if (typeof type === 'undefined' || !type) {
         return;
       }
-
 
       const position = project({
         x: event.clientX - reactFlowBounds.left,
@@ -210,8 +220,37 @@ const Editingbox2 = () => {
       };
 
       nodesMap.set(newNode.id, newNode);
-    },
-    
+
+    // Check network status : navigator.connection: 표준 이름입니다. 최신 브라우저 / navigator.mozConnection: 오래된 Firefox 브라우저 / navigator.webkitConnection: 오래된 Chrome 브라우저 및 Safari
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    let thumbnailResolution;
+      if (connection) {
+    switch (connection.effectiveType) {
+      case 'slow-2g':
+        // Very low-resolution thumbnail for extremely slow network
+        thumbnailResolution = 'slow-2g: very_low';
+        break;
+      case '2g':
+        // Low-resolution thumbnail for slow network
+        thumbnailResolution = '2g: low';
+        break;
+      case '3g':
+        // Medium-resolution thumbnail for fair network
+        thumbnailResolution = '3g: medium';
+        break;
+      case '4g':
+        // High-resolution thumbnail for fast network
+        thumbnailResolution = '4g: high';
+        break;
+      default:
+        // Default to high-resolution if effectiveType is unknown
+        thumbnailResolution = 'high';
+        break;
+    }
+  }
+    console.log(`Thumbnail resolution for the new node: ${thumbnailResolution}`);
+  },
+    [project]
   );
 
   useEffect(() => {

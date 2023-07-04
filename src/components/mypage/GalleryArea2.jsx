@@ -112,6 +112,7 @@ const closedMixin = (theme) => ({
   },
 });
 
+// eslint-disable-next-line 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -122,23 +123,26 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
+// eslint-disable-next-line 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
+  marginTop: '64px',
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
-        marginTop: '64px',
+        
 
   }),
   ...(open && {
     marginLeft: drawerWidth,
+    marginTop: '64px',
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
-          marginTop: '64px',
+          
 
     }),
   }),
