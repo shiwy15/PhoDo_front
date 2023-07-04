@@ -26,6 +26,7 @@ const MainFeaturedPost = () => {
       }}
     >
       <Box>
+        // eslint-disable-next-line 
         <Box sx={{marginBottom: '10px', marginTop: '80px'}}>
           <Typography variant="IBM Plex Sans KR" color="black" gutterBottom sx={{ fontSize: '90px', fontWeight: 'bold'}}>
           <span style={{ color: '#8F44AD' }}>Photo</span> 업무를 함께 DO!
@@ -44,6 +45,7 @@ const MainFeaturedPost = () => {
         동료들에게 일일이 묻고 물어 저 멀리 자료를 찾아 떠나던 과거는 이제 안녕!<br />
         PhoDo는 효율이 중요한 당신을 위한 <span style={{ color: '#FF9300'}}>사진 중심 협업 사이트</span>입니다.
         </Typography>
+        // eslint-disable-next-line 
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '40px'}}>
           <Button variant="IBM Plex Sans KR" href="/modal" sx={{ border: '4px solid black', 'marginRight':'25px', color: 'white', fontSize: '30px', fontWeight: 'bold', bgcolor: '#8F44AD', borderColor: 'black', borderRadius: '10px' }}>
             {post.linkText}

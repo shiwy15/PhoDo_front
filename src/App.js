@@ -46,7 +46,6 @@ function App() {
       <ScrollToTop />
       <AppWrapper>
       <Routes>
-        
           {/* Main */}
           <Route path="/main" element={<MainPage />} />
           {/* login set */}
