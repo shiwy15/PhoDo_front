@@ -25,8 +25,10 @@ const PictureMaterial = () => {
     
                 const convertedData = response.data.urls.map(item => ({
                     src: item,
-                    width: Math.floor(Math.random() * 4) + 2, // random number between 2 and 5
-                    height: Math.floor(Math.random() * 4) + 2 // random number between 2 and 5 
+                    // width: Math.floor(Math.random() * 4) + 2, // random number between 2 and 5
+                    // height: Math.floor(Math.random() * 4) + 2 // random number between 2 and 5
+                    width: 3, // random number between 2 and 5
+                    height: 3
                     // object cover -> width 갖춰주면 
                 }));
                 
