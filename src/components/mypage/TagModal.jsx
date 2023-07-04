@@ -35,6 +35,7 @@ const ModalImg = styled.img`
   height: 100%;
   border-radius: 10px 0 0 10px;
   background: #000;
+  overflow: auto
 `;
 
 const ModalContent = styled.div`
@@ -48,13 +49,6 @@ const ModalContent = styled.div`
   p {
     margin-bottom: 1rem;
   }
-
-  button {
-    padding: 10px 24px;
-    background: #141414;
-    color: #fff;
-    border: none;
-  }
 `;
 
 const CloseModalButton = styled(MdClose)`
@@ -67,6 +61,7 @@ const CloseModalButton = styled(MdClose)`
   padding: 0;
   z-index: 10;
 `;
+
 
 
 const TagModal = ({ showModal, setShowModal, selectedImage }) => {
@@ -90,6 +85,21 @@ const TagModal = ({ showModal, setShowModal, selectedImage }) => {
     console.log('🔥🔥🔥🔥🔥', selectedImage?._id  , tagToDelete.text );
     setTags(tags.filter((tag, index) => index !== i));
   };
+
+  const handleImageDelete = async () => {
+    try {
+      console.log('삭제할 ID: ', selectedImage?._id);
+      const response = await request({
+        method: 'post',
+        url: '/api/galleryDelete',
+        data: { id: [ selectedImage?._id ]  }
+      });
+      console.log('삭제할 ID ', response.data);
+    } catch (error) {
+      console.log(error); // Log any errors that occur
+    }
+  };
+  
 
   const handleAddition = async tag => {
     await request({
@@ -168,6 +178,7 @@ const TagModal = ({ showModal, setShowModal, selectedImage }) => {
                 {selectedImage?.location && <p>장소: {selectedImage.location} </p>}
                 {selectedImage?.time && <p>시간: {formatDate(selectedImage.time)} </p>}
                 {/* <h4>카테고리를 추가하려면 아래에 적어 <br/> Enter를 눌러보세요! </h4> */}
+                
                 <ReactTags
                   tags={tags}
                   handleDelete={handleDelete}
@@ -189,12 +200,19 @@ const TagModal = ({ showModal, setShowModal, selectedImage }) => {
                   }}
                 />  
                
+                <button type="button" onclick={handleImageDelete} class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full 
+                text-sm px-3 py-2 text-center mt-10
+                mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                사진 삭제</button>
               </ModalContent>
+
               <CloseModalButton
                 aria-label='Close modal'
                 onClick={() => setShowModal(prev => !prev)}
               />
+              
             </ModalWrapper>
+            
           {/* </animated.div> */}
         </Background>
       ) : null

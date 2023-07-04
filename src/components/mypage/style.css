@@ -14,7 +14,6 @@
     border-radius: 70% !important;
     margin-left: 10px!important ;
     padding: 1px 8px !important; /* Change this value to reduce the size of the button */
-
     cursor: pointer !important;
     font-size: 13px !important;  /* Adjust this value to change the size of the button */
   }
