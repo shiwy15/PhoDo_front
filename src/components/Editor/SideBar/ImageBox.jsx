@@ -37,9 +37,10 @@ const postApply = (datas) => {
 
 const ImageBox = () => {
   {/* 🌿 사용 변수들- categories btns 관련 */}
-  const buttonList = ['마케팅', '건설/토목', '비즈니스', '화학', '에너지', '자재/장비', '운송', '과학', '컴퓨터', '재무', '통신', '직업/교육', '뉴스', '사회', '레퍼런스', '기타'];
+  // const buttonList = ['마케팅', '건설/토목', '비즈니스', '화학', '에너지', '자재/장비', '운송', '과학', '컴퓨터', '재무', '통신', '직업/교육', '뉴스', '사회', '레퍼런스', '기타'];
   const [activeBtns, setActiveBtns] = useState({})  
-  
+  const [buttonGroups, setButtonGroups] = useState([]);
+
   {/* 🌿 사용 변수들- 날짜 입력 관련 */}  
   const [dates, setDates] = useState({ startDate: null, endDate: null }); 
   const formatData = useFormatDate();
@@ -130,37 +131,73 @@ const ImageBox = () => {
   }
 
   {/* 🌿 카테고리 버튼그룹 매핑 관련 */}
-  const buttonGroups = [];
+  const buttonGroups2 = [];
   const buttonsPerGroup = 4;
 
-  for (let i = 0; i < buttonList.length; i += buttonsPerGroup) {
-    buttonGroups.push(buttonList.slice(i, i + buttonsPerGroup));
+  for (let i = 0; i < buttonGroups.length; i += buttonsPerGroup) {
+    buttonGroups2.push(buttonGroups.slice(i, i + buttonsPerGroup));
   }
+
+    //using effect!
+  useEffect(() => {
+      // Fetch data immediately upon mounting
+      const fetchData = () => {
+        request({
+          method: 'get',
+          url: '/api/category',
+        })
+          .then(response => {
+            if (response.data !== null) { // checking if data is not null
+              setButtonGroups(response.data);
+            } else {
+              console.log('nothing~')
+            }
+          })
+          .catch(error => {
+            console.error('There was an error retrieving the data!', error);
+          });
+      };
+    
+      fetchData(); // initial fetch
+    
+      // Fetch data every 30 seconds
+      const intervalId = setInterval(fetchData, 10000);
+    
+      // Cleanup function to clear the interval when the component unmounts
+      return () => {
+        clearInterval(intervalId);
+      };
+    }, []);
 
   return (
     <div>
       {/* sidebar css 부분 */}
       <Paper sx={{     
-        width: 420,
-        height: '100vh',
-        backgroundColor: 'rgba(255,255,255,0.5)',
-        borderTopRightRadius: 0,
-        borderBottomRightRadius: 0,
-        color: 'rgb(255,255,255)'}}>
+          width: 420,
+          height: '100vh',
+          backgroundColor: 'rgba(255,255,255,0.5)',
+          borderTopRightRadius: 0,
+          borderBottomRightRadius: 0,
+          top: 0,
+          bottom: 0,
+          color: 'rgb(255,255,255)',
+          overflow: 'auto'  // 여기를 추가합니다.
+      }}>
+
         <MenuList dense>
           {/* 🌿 Edit box제목 */}
-          <h2 className="text-3xl mt-1 font-bold relative top-0 text-center text-violet-600">이미지 박스</h2>
+          <h2 className="text-3xl mt-1 font-bold relative top-0 text-center text-violet-900">이미지 박스</h2>
           {/* 🌸 구분선 */}
           <Divider variant="middle" sx={{ padding:'8px', borderColor: 'purple' }} />
           {/* 🌿 카테고리 버튼 리스트 */}
-          <div className="text-2xl font-bold ml-5 mt-2 text-violet-600 p-1 rounded-lg ">
+          <div className="text-2xl font-bold ml-5 mt-2 text-violet-900 p-1 rounded-lg ">
             카테고리</div>
           {/* 🌿 태그 버튼 mapping 구간 */}
           <div>
-            {buttonGroups.map((group, groupIndex) => (
-              <div key={groupIndex} className="mx-4 flex items-center justify-center">
+            {buttonGroups2.map((group, groupIndex) => (
+              <div key={groupIndex} className="mx-1 flex items-center justify-center">
                 <div
-                  className="overflow-x-auto mb-1 min-w-fit inline-flex font-bold text-purple-800 rounded-md shadow-[0_4px_9px_-4px_#cbcbcb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(251,251,251,0.3)] dark:hover:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)] dark:focus:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)] dark:active:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)]"
+                  className="overflow-x-auto mb-1 min-w-fit inline-flex font-bold text-purple-800 rounded-md shadow-[0_4px_9px_-4px_#cbcbcb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] "
                   role="group">
                   {group.map((btn, btnIndex) => (
                     <button
@@ -214,9 +251,9 @@ const ImageBox = () => {
         {/* 🌸 구분선 */}
         <Divider variant="middle" sx={{ padding:'8px', borderColor: 'purple' }} />
         {/* 🌸 이미지 모아볼 수 있는 미니 갤러리 */}
-        <div className="text-2xl font-bold ml-5 mt-2 text-violet-600 p-1 rounded-lg ">
+        <div className="text-2xl font-bold ml-5 mt-2 text-violet-900 p-1 rounded-lg ">
             이미지 노드 <p className='text-lg'>편집창에 끌어다 놓아보세요!</p></div>
-        <ImageList cols={2} gap={8} sx={{ padding: '10px', height: '600px'}}>
+        <ImageList cols={2} gap={8} sx={{ padding: '10px',marginBottom: '12px'}}>
           {images && images?.data?.map((image, index) => (
             <ImageListItem key={image.id}>
               <img 
@@ -226,9 +263,9 @@ const ImageBox = () => {
                 onDragStart={(event) => onDragStart(event, 'pix', image.url, Object.values(image.tags))}
                 draggable
                 alt="Gallery Item" />
-              <span  className='text-violet-800 max-h-6 mb-1' key={index} style={{ fontSize: '18px', padding:'2px'}}>
+              <span  className='text-violet-900 max-h-6 mb-1' key={index} style={{ fontSize: '18px', padding:'2px'}}>
                 {Object.values(image.categories).slice(0, 2).map((categories, index) => {
-                  return (index < Object.values(image.categories).length - 1 && index !== 1) ? `${categories}, ` : categories;
+                  return (index < Object.values(image.categories).length - 1 && index !== 1) ? `#${categories} ` : `#${categories}`;
                 })}
               </span>
             </ImageListItem>

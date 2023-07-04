@@ -16,6 +16,7 @@ import TaskNameNode from './Node/TaskNameNode';
 import TextNode1 from './Node/TextNode';
 import TextNode2 from './Node/TextNode2';
 import TextNode3 from './Node/TextNode3';
+import LazyPicNode from './Node/LazyPicNode.js';
 
 //엣지 타입
 import ConnectionLine from './Edge/ConnectionLine'
@@ -55,7 +56,8 @@ const nodeTypes = {
   TextNode1: TextNode1, 
   TextNode2 : TextNode2,
   TextNode3 , TextNode3,
-  pix: PictureNode
+  pix: PictureNode,
+  LazyPicNode: LazyPicNode
 };
 
 //
@@ -99,16 +101,6 @@ const Editingbox2 = () => {
   );
 
 
-  // useEffect(() => {
-  //   // measureNetwork 함수를 5초마다 실행
-  //   const intervalId = setInterval(measureNetwork, 5000); // 5000ms = 5s
-
-  //   // 컴포넌트가 언마운트될 때 인터벌을 제거
-  //   return () => {
-  //     clearInterval(intervalId);
-  //   };
-  // }, []);
-
   useEffect(() => {
     wsProvider.connect();
     wsProvider.on('status', event => {
@@ -123,7 +115,7 @@ const Editingbox2 = () => {
     // ydoc = createNewDoc();
       // :star2: Fetch nodes from the API
 // :star2: Fetch project data from the API
-  // axios.get(`http://localhost:4000/project/${projectId}`)
+  //axios.get(`http://localhost:4000/project/${projectId}`)
   axios.get(`https://hyeontae.shop/project/${projectId}`)
   .then((res) => {
     const data = res.data; 
