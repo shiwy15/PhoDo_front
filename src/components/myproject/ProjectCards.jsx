@@ -5,11 +5,10 @@ import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 //서버요청용
-import { useQuery } from 'react-query';
-import { request } from "../../utils/axios-utils";
 
 //좋아요 변경용
 import StarIcon from './StarIcon';
+import { request } from './../../utils/axios-utils'
 
 //thumbnail 변경용
 import ThumbFileInput from './ThumbFileInput';
@@ -28,6 +27,7 @@ const styleThumb = {
   p: 4,
 };
 
+
 function ProjectCards(props) {
 
     const [thumnailOpen, setThumnailOpen] = useState(false);
@@ -43,7 +43,19 @@ function ProjectCards(props) {
     };
 
 
-  return (
+    const handleDeleteProject = async (projectId) => {
+      try {
+        const response = await request({
+          method: 'delete',
+          url: `/project/${projectId}`
+        });
+        console.log('Project deleted', response.data);
+      } catch (error) {
+        console.error('Failed to delete project', error);
+      }
+    };
+
+    return (
     <Card className="project-card-view">
       <Link to={`/newproject/${props.pjtID}`}>
       <Card.Img variant="top" src={props.imgPath} alt="card-img" className=' h-56 object-contain' />
@@ -59,8 +71,14 @@ function ProjectCards(props) {
         <Button 
           type="button"
           onClick={() => ThumbHandleOpen(props.pjtID, props.imgPath)}
-          className=" mx-4 w-fit inline-block rounded bg-violet-800 px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] whitespace-nowrap">
+          className=" mx-2 w-fit inline-block rounded bg-violet-800 px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] whitespace-nowrap">
         썸네일 변경
+        </Button>
+        <Button 
+          type="button"
+          onClick={() => handleDeleteProject(props.pjtID)}
+          className=" mx-2 w-fit inline-block rounded bg-violet-800 px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] whitespace-nowrap">
+        프로젝트 삭제
         </Button>
           <Modal
             open={thumnailOpen}
