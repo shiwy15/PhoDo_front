@@ -24,6 +24,7 @@ function PictureNode({ data, selected, isConnectable }) {
     <div className="PictureNodeblock" style={{ border: '4px solid black', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       
       <div style={{ position: 'relative', width: '100%' }} >
+      <Handle className="w-4 h-4" type="target" position={Position.Top} id="top" isConnectable={isConnectable} />
       <Handle type="target" position={Position.Left} id="left" isConnectable={isConnectable} />
         <NodeResizer color="#ff0071" isVisible={selected} minWidth={100} minHeight={30} style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0 }} handleStyle={handleStyle} >
           <Handle type="target" position={Position.Left}/>
@@ -33,6 +34,7 @@ function PictureNode({ data, selected, isConnectable }) {
         {/* Render each tag as a separate label */}
         <img src={data.url} alt="image" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
         <Handle type="source" position={Position.Right} id="right" isConnectable={isConnectable} />
+        <Handle type="source" position={Position.Bottom} id="bottom" isConnectable={isConnectable} />
       </div>
       
     </div>
