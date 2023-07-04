@@ -1,40 +1,56 @@
-import React, { useEffect, useState, } from 'react';
-import { Handle, Position, useUpdateNodeInternals } from 'reactflow';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Handle, Position,  } from 'reactflow';
 import { NodeResizer } from '@reactflow/node-resizer';
+import { memo } from 'react';
 
-export default function LazyPicNode({
-  id,
-  sourcePosition = Position.Left,
-  targetPosition = Position.Right,
-  data,
-}) {
-  const updateNodeInternals = useUpdateNodeInternals();
-  const [resizable, setResizable] = useState(true);
+const LazyPicNode = ({ id, selected, data }) => {
+  const handleStyle = {
+    background: 'red',
+    border: '2px solid white',
+    borderRadius: '10%',
+    width: '15px',
+    height: '15px',
+  };
+  
+  const [imgSrc, setImgSrc] = useState(data.networkState === 'high' ? data.imageurl : data.thumburl);
+  const [highResLoaded, setHighResLoaded] = useState(false);
+
+   const handleNetworkChange = () => {
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (connection.effectiveType === '4g' && !highResLoaded) {
+      setImgSrc(data.imageurl);
+      setHighResLoaded(true);
+    } else if (!highResLoaded) {
+      setImgSrc(data.thumburl);
+    }
+  };
 
   useEffect(() => {
-  }, [id, updateNodeInternals]);
+    console.log(data.url);
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (connection) {
+      connection.addEventListener('change', handleNetworkChange);
+    }
+
+    return () => {
+      if (connection) {
+        connection.removeEventListener('change', handleNetworkChange);
+      }
+    };
+  }, [id, data.url, highResLoaded]);
 
   return (
-    <>
-      <div>
-        <NodeResizer isVisible={resizable} minWidth={180} minHeight={100} />
-        <div/>
+    <div className="PictureNodeblock" style={{ border: '4px solid black', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ position: 'relative', width: '100%' }}>
+        <NodeResizer isVisible={selected} minWidth={180} minHeight={100} handleStyle={handleStyle} />
+        <Handle type="target" position={Position.Left} />
         <div>
-          {data?.label}
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                checked={resizable}
-                onChange={(evt) => setResizable(evt.target.checked)}
-              />
-              resizable
-            </label>
-          </div>
+          <img src={imgSrc} alt="image" style={{ height: '400px', objectFit: 'contain' }} />
         </div>
-        <Handle style={{ opacity: 0 }} position={sourcePosition} type="source" />
-        <Handle style={{ opacity: 0 }} position={targetPosition} type="target" />
+        <Handle type="source" position={Position.Right} />
       </div>
-    </>
+    </div>
   );
 }
+
+export default memo(LazyPicNode);

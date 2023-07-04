@@ -1,7 +1,6 @@
 import React, {useState, useEffect } from 'react';
 import { request } from "../../../utils/axios-utils"
 import { useMutation, useQuery } from 'react-query';
-
 // 🌿 css용 import 
 import {
     Input,
@@ -19,8 +18,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
+
 
 // 🌿 custom hook
 import useFormatDate from "../../../hooks/useFormatDate";
@@ -103,12 +101,6 @@ const ImageBox = () => {
 
   }, [ images]);
 
-  //기본 노드용 onDragStart함수
-  const onDragStartDefault = (event, nodeType) => {
-    event.dataTransfer.setData('application/reactflow', nodeType);
-    event.dataTransfer.effectAllowed = 'move';
-  };
-
   const onDragStart = (event, nodeType, imageURL, tags) => {    
     console.log('🌸before drag event: ', event.dataTransfer);
     event.dataTransfer.setData('application/reactflow', nodeType);
@@ -130,13 +122,42 @@ const ImageBox = () => {
     event.dataTransfer.effectAllowed = 'move';
   }
 
+  const onDragThumbStart= (event, nodeType,thumbURL, imageURL, categories) => {    
+    console.log('🌸before drag event: ', event.dataTransfer);
+    event.dataTransfer.setData('application/reactflow', nodeType);
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('data/thumburl', thumbURL);
+    event.dataTransfer.setData('data/imageurl', imageURL);
+    event.dataTransfer.setData('data/categories', categories);
+
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    let networkState;
+    if (connection) {
+      if (connection.effectiveType === '4g') {
+        networkState = 'high';
+      } else {
+        imageURL = thumbURL;
+        networkState = 'low';
+      }
+    }
+
+  // Add network state to the data transfer
+  event.dataTransfer.setData('data/networkState', networkState);
+
+
+  }
   {/* 🌿 카테고리 버튼그룹 매핑 관련 */}
   const buttonGroups2 = [];
   const buttonsPerGroup = 4;
 
-  for (let i = 0; i < buttonGroups.length; i += buttonsPerGroup) {
-    buttonGroups2.push(buttonGroups.slice(i, i + buttonsPerGroup));
+  try {
+    for (let i = 0; i < buttonGroups.length; i += buttonsPerGroup) {
+      buttonGroups2.push(buttonGroups.slice(i, i + buttonsPerGroup));
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
   }
+
 
     //using effect!
   useEffect(() => {
@@ -253,37 +274,25 @@ const ImageBox = () => {
         {/* 🌸 이미지 모아볼 수 있는 미니 갤러리 */}
         <div className="text-2xl font-bold ml-5 mt-2 text-violet-900 p-1 rounded-lg ">
             이미지 노드 <p className='text-lg'>편집창에 끌어다 놓아보세요!</p></div>
-            <ImageList cols={2} gap={8} sx={{ padding: '10px', height: '600px'}}>
-  {images && images?.data?.map((image, index) => (
-    <ImageListItem key={image.id}>
-      <img 
-        src={image.thumbnailUrl}
-        className="imgNode max-h-50 rounded-lg"
-        loading="lazy"
-        onDragStart={(event) => onDragStart(event, 'pix', image.url, Object.values(image.tags))}
-        draggable
-        alt="Gallery Item" 
-      />
-      <div style={{ overflowX: 'auto', whiteSpace: 'nowrap' }}>
-        {Object.values(image.categories).map((category, idx) => {
-          return (
-            <button
-              key={idx}
-              type="button"
-              className="overflow-x-auto mx-1 ml-4 my-2 border-b-1 tracking-tight text-s text-black font-semibold inline-flex min-w-fit rounded-full text-inherit bg-neutral-50 px-2 py-1 text-sm uppercase leading-normal transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
-              data-te-ripple-init
-              data-te-ripple-color="light">
-              #{category}
-            </button>
-          );
-        })}
-      </div>
-    </ImageListItem>
-  ))}    
-</ImageList>
+        <ImageList cols={2} gap={8} sx={{ padding: '10px',marginBottom: '12px'}}>
+          {images && images?.data?.map((image, index) => (
+            <ImageListItem key={image.id}>
+              <img 
+                src={image.thumbnailUrl}
+                className="imgNode max-h-50 rounded-lg"
+                loading="lazy"
+                onDragStart={(event) => onDragThumbStart(event, 'LazyPicNode',image.thumbnailUrl, image.url, Object.values(image.categories))}
+                draggable
+                alt="Gallery Item" />
+              <span  className='text-violet-900 max-h-6 mb-1' key={index} style={{ fontSize: '18px', padding:'2px'}}>
+                {Object.values(image.categories).slice(0, 2).map((categories, index) => {
+                  return (index < Object.values(image.categories).length - 1 && index !== 1) ? `#${categories} ` : `#${categories}`;
+                })}
+              </span>
+            </ImageListItem>
+          ))}    
+        </ImageList>
 
-
-        
         <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />
         {/* <MenuItem style={{display: 'flex', justifyContent: 'center'}}>
           <div className="TextNode inline-block rounded bg-info px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out hover:bg-info-600 hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(84,180,211,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)]" 

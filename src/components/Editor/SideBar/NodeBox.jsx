@@ -1,16 +1,11 @@
 import React from 'react'
-import { Container, Row, Col } from "react-bootstrap";
 
-/** 이미지 출력용 import **/
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
 
 //Menubar container
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
 
 const NodeBox =() => {
 
@@ -113,7 +108,7 @@ const NodeBox =() => {
             {/* <div>보라</div> */}
           </div>
         </MenuItem>
-        
+
         </div>
         {/* <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} /> */}
 
