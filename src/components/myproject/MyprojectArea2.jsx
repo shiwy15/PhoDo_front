@@ -216,7 +216,7 @@ const SideBarArea = () => {
     };
 
   return (
-    <Box sx={{ display: 'flex', width: '100vw'}}  >
+    <Box sx={{ display: 'flex'}}  >
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar sx = {{paddingTop: '80px', backgroundColor: '#14131B'}}>
