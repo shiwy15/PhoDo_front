@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { Drawer, Button, List, ListItem, ListItemText, Divider } from '@mui/material';
+import { Drawer, Button, Divider } from '@mui/material';
 
 import ImageBox from './SideBar/ImageBox';
 import NodeBox from './SideBar/NodeBox';
 
-import { HiEnvelope, HiQuestionMarkCircle, HiPhoto, HiMiniPencilSquare } from "react-icons/hi2";
+import { HiEnvelope,  HiPhoto, HiMiniPencilSquare } from "react-icons/hi2";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import { IoExitOutline } from 'react-icons/io5';
 
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import InputSubscription from '../Editor/SideBar/InputSubscription'
 
@@ -33,7 +32,6 @@ const style = {
 const MenuBar = () => {
   const [open1, setOpen1] = useState(false);
   const [open2, setOpen2] = useState(false);
-  const [open3, setOpen3] = useState(false);
 
   //이메일 전송용
   const { projectId } = useParams();
@@ -45,7 +43,6 @@ const MenuBar = () => {
     setOpen1(!open1);
     if (open1) {
       setOpen2(false);
-      setOpen3(false);
     };
   };
 
@@ -53,7 +50,6 @@ const MenuBar = () => {
     setOpen2(!open2);
     if (open2) {
       setOpen1(false);
-      setOpen3(false);
     };
   };
 

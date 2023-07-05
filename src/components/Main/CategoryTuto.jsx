@@ -5,7 +5,9 @@ import React, { useState } from 'react';
 import { request } from "../../utils/axios-utils"
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import {AiFillPicture, AiFillFileAdd} from "react-icons/ai";
+import { AiFillFileAdd } from "react-icons/ai";
+
+import preImage from '../../Assets/pre.svg'
 
 const addImgFile = async (image) => {
     console.log('image:', image)
@@ -49,8 +51,9 @@ const CategoryTuto =() => {
     <div>
         <div className="flex justify-center items-center relative  mx-auto">
             {isLoading && (
-            <div className="absolute inset-0 flex items-center justify-center z-[500]">
-                <p className='text-3xl text-yellow-400' aria-labelledby="wave">결과를 가져오고 있어요!🙂</p>
+            <div className="absolute inset-0 flex flex-col items-center justify-center z-[500]">
+                <img src={preImage} alt="preparing" />
+                <p>잠시만 기다려 주세요</p>
             </div>
             )}
         <input
@@ -69,8 +72,8 @@ const CategoryTuto =() => {
         borderRadius: '5px',
         height: '110px', // Box의 높이를 고정값으로 설정
         '& > :not(style)': {
-            m: 3,
-            width: '50%',
+            m: 1,
+            width: '100%',
             height: '110px', // 이미지의 높이를 고정값으로 설정
             marginX: 'auto',
             borderRadius: '5px',
