@@ -13,14 +13,15 @@ import TextNode from './SampleNode';
 
 
 const initialNodes = [
-  { id: '1', position: { x: 30, y: 50 }, data: { label: '공사 전' } },
-  { id: '2', position: { x: 100, y: 200 }, data: { label: '공사 중' } },
-  { id: '4', position: {x: 300, y: 20}, type: 'pix', width: 10, height: 10,
-  data: {url:'https://velog.velcdn.com/images/hodee/post/26d2b93c-8588-4848-8020-55a6fc347f96/image.png'}}
+  { id: '1', position: { x: 80, y: 30 }, data: { label: '회의' } },
+  // { id: '2', position: {x: 100, y: 100}, type: 'pix', width: 3, height: 3,
+  // data: {url:'https://velog.velcdn.com/images/hodee/post/9cd9e7e6-fd88-4b1f-9958-c0e5437b481d/image.png'}},
+  { id: '3', position: {x: 200, y: 140}, type: 'pix', width: 3, height: 3, 
+  data: {url:'https://velog.velcdn.com/images/hodee/post/69a092ce-4c1a-40ff-ad22-e29171184bf2/image.png'}}
  ];
 
  const initialEdges = [
-    {id: 'e1-2', source: '1', target: '4', style: {stroke: 'red', strokeWidth: 4}, animated: true }
+    {id: 'e1-2', source: '1', target: '3', style: {stroke: 'red', strokeWidth: 4}, animated: true }
   ];
 
   const nodeTypes = {
