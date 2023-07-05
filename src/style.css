@@ -663,3 +663,21 @@ button:focus {
     padding-top: 0 !important;
   }
 }
+
+.edit-view {
+  position: fixed;
+  background-color: white;
+  margin: 24px;
+  margin-left: 60px;
+  height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 10px;
+  width: 40%;
+}
+
+.picture-view{
+  margin: 24px;
+  padding-left: 50px;
+}
