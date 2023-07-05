@@ -63,7 +63,7 @@ const PictureMaterial = () => {
 
     return (
         <div className='text-center' style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <div className="flex justify-center items-center">
+            <div className="fixed flex justify-center items-center">
                 <h2 className='text-white mr-4'>프로젝트 사진을 다운받아보세요!</h2>
                 <button onClick={handleDownload} className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">
                     다운로드

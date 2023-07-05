@@ -209,9 +209,9 @@ const ImageBox = () => {
           {/* 🌿 Edit box제목 */}
           <h2 className="text-3xl mt-1 font-bold relative top-0 text-center text-violet-900">이미지 박스</h2>
           {/* 🌸 구분선 */}
-          <Divider variant="middle" sx={{ padding:'8px', borderColor: 'purple' }} />
+        <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white', borderBottom: '2px solid' }} />
           {/* 🌿 카테고리 버튼 리스트 */}
-          <div className="text-2xl font-bold ml-5 mt-2 text-violet-900 p-1 rounded-lg ">
+          <div className="text-2xl font-bold ml-5 mt-2 mb-1 text-violet-900 p-1 rounded-lg ">
             카테고리</div>
           {/* 🌿 태그 버튼 mapping 구간 */}
           <div>
@@ -251,9 +251,9 @@ const ImageBox = () => {
                     data-te-ripple-init
                     data-te-ripple-color="light"
                     onClick={applyBtn}
-                    className=" mx-4 my-1 inline-block bg-purple-700 rounded bg-primary px-6 py-2 text-xl font-medium uppercase leading-normal text-white ">
+                    className=" mx-4 my-1 inline-block bg-purple-700 rounded px-6 py-2 text-lg font-medium uppercase leading-normal text-white ">
                     <span className="flex items-center">
-                        apply
+                        검색
                     </span>
                 </button>
 
@@ -262,29 +262,29 @@ const ImageBox = () => {
                     data-te-ripple-init
                     data-te-ripple-color="light"
                     onClick={initBtn}
-                    className=" mx-4 my-1 inline-block bg-purple-700 rounded bg-primary px-6 py-2 text-xl font-medium uppercase leading-normal text-white ">
+                    className=" mx-4 my-1 inline-block bg-purple-700 rounded px-6 py-2 text-lg font-medium uppercase leading-normal text-white ">
                     <span className="flex items-center">
-                        init
+                        초기화
                     </span>
                 </button>
             </div>
 
         {/* 🌸 구분선 */}
-        <Divider variant="middle" sx={{ padding:'8px', borderColor: 'purple' }} />
+        <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white', borderBottom: '2px solid' }} />
         {/* 🌸 이미지 모아볼 수 있는 미니 갤러리 */}
         <div className="text-2xl font-bold ml-5 mt-2 text-violet-900 p-1 rounded-lg ">
             이미지 노드 <p className='text-lg'>편집창에 끌어다 놓아보세요!</p></div>
-            <ImageList cols={2} gap={8} sx={{ padding: '25px', marginBottom: '18px', overflow:'hidden'}}>
+            <ImageList cols={2} gap={8} sx={{ paddingLeft: '25px', paddingRight: '25px', marginBottom: '18px', overflow:'hidden'}}>
     {images && images?.data?.map((image, index) => (
         <ImageListItem key={image.id}>
             <img 
                 src={image.thumbnailUrl}
-                className="imgNode max-h-50 rounded-lg"
+                className="imgNode max-h-24 rounded-lg"
                 loading="lazy"
                 onDragStart={(event) => onDragThumbStart(event, 'LazyPicNode',image.thumbnailUrl, image.url, Object.values(image.categories))}
                 draggable
                 alt="Gallery Item" />
-            <div className='text-violet-900 max-h-6 mb-1' style={{ fontSize: '18px', padding:'2px'}}>
+            <div className='text-violet-900 max-h-6 mb-3' style={{ fontSize: '18px', padding:'2px'}}>
             {Object.values(image.categories).slice(0, 2).map((category, index) => {
     return (
         <button
