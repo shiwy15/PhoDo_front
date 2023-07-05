@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Handle, Position,  } from 'reactflow';
 import { NodeResizer } from '@reactflow/node-resizer';
 import { memo } from 'react';
@@ -11,11 +11,11 @@ const LazyPicNode = ({ id, selected, data }) => {
     width: '15px',
     height: '15px',
   };
-  
+
   const [imgSrc, setImgSrc] = useState(data.networkState === 'high' ? data.imageurl : data.thumburl);
   const [highResLoaded, setHighResLoaded] = useState(false);
 
-   const handleNetworkChange = () => {
+  const handleNetworkChange = useCallback(() => {
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     if (connection.effectiveType === '4g' && !highResLoaded) {
       setImgSrc(data.imageurl);
@@ -23,7 +23,7 @@ const LazyPicNode = ({ id, selected, data }) => {
     } else if (!highResLoaded && data.networkState !== 'high') {
       setImgSrc(data.thumburl);
     }
-  };
+  }, [highResLoaded, data]);
 
   useEffect(() => {
     console.log(data.url);
@@ -37,7 +37,7 @@ const LazyPicNode = ({ id, selected, data }) => {
         connection.removeEventListener('change', handleNetworkChange);
       }
     };
-  }, [id, data.url, highResLoaded]);
+  }, [id, data.url, handleNetworkChange]);
 
   return (
     <div className="PictureNodeblock" style={{ border: '4px solid black', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -45,7 +45,7 @@ const LazyPicNode = ({ id, selected, data }) => {
         <NodeResizer isVisible={selected} minWidth={180} minHeight={100} handleStyle={handleStyle} />
         <Handle type="target" position={Position.Left} />
         <div>
-          <img src={imgSrc} alt="image" style={{ height: '400px', objectFit: 'contain' }} />
+          <img src={imgSrc} alt='thumbnail' style={{ height: '400px', objectFit: 'contain' }} />
         </div>
         <Handle type="source" position={Position.Right} />
       </div>

@@ -1,5 +1,5 @@
 // 컴포넌트
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import MenuBarR from "../../components/Editor/MenuBarR";
 
 // 스타일 시트
@@ -23,7 +23,7 @@ import ConnectionLine from './Edge/ConnectionLine'
 import CustomEdge from './Edge/CustomEdge';
 
 // 리액트 플로우 노드 
-import ReactFlow, { ReactFlowProvider, useNodesState, useEdgesState, useReactFlow, Controls, MiniMap, Background, BackgroundVariant} from 'reactflow';
+import ReactFlow, { ReactFlowProvider, useReactFlow, Controls, MiniMap, Background, BackgroundVariant} from 'reactflow';
 import { WebsocketProvider } from 'y-websocket';
 
 // :four_leaf_clover: WebRTC setting
@@ -54,7 +54,7 @@ const nodeTypes = {
   TaskNameNode : TaskNameNode,
   TextNode1: TextNode1, 
   TextNode2 : TextNode2,
-  TextNode3 , TextNode3,
+  TextNode3 : TextNode3,
   pix: PictureNode,
   LazyPicNode: LazyPicNode
 };
@@ -116,8 +116,8 @@ function Editingbox2 () {
     // ydoc = createNewDoc();
       // :star2: Fetch nodes from the API
 // :star2: Fetch project data from the API
-  axios.get(`http://localhost:4000/project/${projectId}`)
-  //axios.get(`https://hyeontae.shop/project/${projectId}`)
+  //axios.get(`http://localhost:4000/project/${projectId}`)
+  axios.get(`https://hyeontae.shop/project/${projectId}`)
   .then((res) => {
     const data = res.data; 
     console.log(res.data);
@@ -157,7 +157,7 @@ function Editingbox2 () {
     // ydoc = createNewDoc();
     
   };
-}, []);
+}, [projectId]);
 
   
   const [edges, onEdgesChange, onConnect] = useEdgesStateSynced(ydoc);
