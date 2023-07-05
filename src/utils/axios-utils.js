@@ -4,7 +4,7 @@ import axios from "axios";
 const client = axios.create({ baseURL : 'https://hyeontae.shop'})
 
 //json server 등 연결
-//const client = axios.create({ baseURL : 'http://localhost:4000'})
+// const client = axios.create({ baseURL : 'http://localhost:4000'})
 
 export const request = ({ ...options}) => {
     client.defaults.headers.common.Authorization = `Bearer token`
