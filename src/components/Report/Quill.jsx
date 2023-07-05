@@ -8,6 +8,7 @@ import html2canvas from "html2canvas";
 import { request } from "../../utils/axios-utils"
 import './../../index.css'
 import './QuillEditor.css'
+import { saveAs } from 'file-saver';
 
 Quill.register('modules/ImageResize', ImageResize);
 
@@ -36,6 +37,19 @@ const QuillEditor = () => {
     const [value, setValue] = useState('');
     const editorRef = useRef(null);
     const [projectName, setProjectName] = useState(''); // added this line
+    const handleDownload = () => {
+        request({
+            url: `/project/zipimage/${projectId}`, // Replace with your zip file path
+            method: 'GET',
+            responseType: 'blob',
+        })
+            .then((response) => {
+                const blob = new Blob([response.data], { type: 'application/zip' });
+                saveAs(blob, 'images.zip');
+            })
+            .catch((error) => console.error('There was an error!', error));
+    };
+
 
 
     useEffect(() => {
@@ -118,25 +132,32 @@ const QuillEditor = () => {
         });
     };    
 
-    return (
-    <div className='py-2'>
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <h1 className='flex-auto '> {projectName} </h1>
-            <button className="button mr-3 inline-block mb-2 bg-purple-700 rounded px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]" 
-            onClick={exportAsPDF}>
+return (
+<div className='py-2'>
+<div style={{ display: 'flex', justifyContent: 'center' }}>
+        <button 
+            className="button mr-3 inline-block mb-2 bg-purple-700 rounded px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white" 
+            onClick={exportAsPDF}
+            style={{ marginRight: '80px' }}>
                 보고서 다운로드 (PDF)
-            </button>
-        </div>
-        <ReactQuill 
-            theme="snow" 
-            value={value} 
-            onChange={setValue}
-            modules={modules}
-            ref={editorRef}
-        />
-    </div>
+        </button>
 
-    );
+        <button 
+            onClick={handleDownload} 
+            className="button mr-3 inline-block mb-2 bg-purple-700 rounded px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white">
+                프로젝트 사진 다운로드 (ZIP)
+        </button> 
+    </div>
+    <ReactQuill 
+        theme="snow" 
+        value={value} 
+        onChange={setValue}
+        modules={modules}
+        ref={editorRef}
+    />
+</div>
+
+);
 };
 
 export default QuillEditor;
