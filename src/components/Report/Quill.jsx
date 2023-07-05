@@ -8,6 +8,7 @@ import html2canvas from "html2canvas";
 import { request } from "../../utils/axios-utils"
 import './../../index.css'
 import './QuillEditor.css'
+import { saveAs } from 'file-saver';
 
 Quill.register('modules/ImageResize', ImageResize);
 
@@ -36,6 +37,19 @@ const QuillEditor = () => {
     const [value, setValue] = useState('');
     const editorRef = useRef(null);
     const [projectName, setProjectName] = useState(''); // added this line
+    const handleDownload = () => {
+        request({
+            url: `/project/zipimage/${projectId}`, // Replace with your zip file path
+            method: 'GET',
+            responseType: 'blob',
+        })
+            .then((response) => {
+                const blob = new Blob([response.data], { type: 'application/zip' });
+                saveAs(blob, 'images.zip');
+            })
+            .catch((error) => console.error('There was an error!', error));
+    };
+
 
 
     useEffect(() => {
@@ -52,6 +66,7 @@ const QuillEditor = () => {
             // Structure the HTML based on the response
     
     
+<<<<<<< HEAD
             const contentHtml = `
 <h1>아파트 내부 인테리어에 관한 가족회의 보고서</h1>
 
@@ -92,6 +107,15 @@ const QuillEditor = () => {
 
 <p><strong>작성자:</strong> 아버지</p>                
 `;
+=======
+            let contentHtml = `
+            <h1>${title}</h1>
+            <br>
+            <div style="display: flex; justify-content: flex-end;"><p>${presenter}</p></div>
+            <br>
+            <br>
+            `
+>>>>>>> 74c4ac02c45c168f626f67bc168163d89bf98be6
             // Loop through the content object
             for (let key in content) {
                 // Append each key and its associated value to the HTML
@@ -151,23 +175,32 @@ const QuillEditor = () => {
         });
     };    
 
-    return (
-        <div>
-        <h1 className='flex-auto text-center'> {projectName}  </h1>
-        <button className="button" onClick={exportAsPDF}>
-            PDF로 출력해보세요!
-          </button>
-        <ReactQuill 
-            theme="snow" 
-            className='h-screen'
-            value={value} 
-            onChange={setValue}
-            modules={modules}
-            ref={editorRef}
-        />
-        
-        </div>
-    );
+return (
+<div className='py-2'>
+<div style={{ display: 'flex', justifyContent: 'center' }}>
+        <button 
+            className="button mr-3 inline-block mb-2 bg-purple-700 rounded px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white" 
+            onClick={exportAsPDF}
+            style={{ marginRight: '80px' }}>
+                보고서 다운로드 (PDF)
+        </button>
+
+        <button 
+            onClick={handleDownload} 
+            className="button mr-3 inline-block mb-2 bg-purple-700 rounded px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white">
+                프로젝트 사진 다운로드 (ZIP)
+        </button> 
+    </div>
+    <ReactQuill 
+        theme="snow" 
+        value={value} 
+        onChange={setValue}
+        modules={modules}
+        ref={editorRef}
+    />
+</div>
+
+);
 };
 
 export default QuillEditor;

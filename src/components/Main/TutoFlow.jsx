@@ -12,7 +12,7 @@ function TutoFlow() {
       <Container>
         <Row>
             <Col className="home-about-description mx-2">
-            <Card className="project-card-view h-96">
+            <Card className="tuto-card-view h-96">
                 <Card.Body >
                     <Card.Title>업무흐름을 만들어보세요!</Card.Title>
                     <TutorialFlow/>
@@ -20,7 +20,7 @@ function TutoFlow() {
             </Card>
             </Col>
             <Col  className="home-about-description mx-2">
-            <Card className="project-card-view h-96">
+            <Card className="tuto-card-view h-96">
                 <Card.Body>
                     <Card.Title>카테고리로 정리해보세요!</Card.Title>
                     <CategoryTuto />

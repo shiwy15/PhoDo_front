@@ -216,7 +216,7 @@ const SideBarArea = () => {
     };
 
   return (
-    <Box sx={{ display: 'flex', width: '100vw'}}  >
+    <Box sx={{ display: 'flex'}}  >
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar sx = {{paddingTop: '80px', backgroundColor: '#14131B'}}>
@@ -367,32 +367,27 @@ const SideBarArea = () => {
                   </Link>
                 </div>
                 {/* 🌿 검색결과 */}
-                <div className="flex items-center justify-start bg-violet-200 rounded-xl px-4 w-5/6 pt-1 pb-1 h-16 mx-auto overflow-x-auto mb-4">
+                <div className="flex items-center justify-start bg-violet-200 rounded-xl px-4  w-5/6 pt-1 pb-1 h-16 mx-auto overflow-x-auto mb-4">
                 <h3 className='mr-2 text-xl min-w-fit'>검색 결과 : </h3>
                 {
-                    projectData?.data?.filter(project => project.name === searchTerm || project._id === searchTerm).map(project => (
-                        
-                        <Link to={`/newproject/${project._id}`} key={project._id} className='flex mx-2 items-center justify-start border  px-4 py-1 text-blue-500 text-white rounded-full min-w-fit'>
-                            <p key={project._id} className='text-xl'>{`${project.name}`}</p>
-                            <p key={project._id} className='text-md ml-1 mt-1' >{` by ${formatData(project.time)}`}</p>
-                        </Link>
-                    ))
+                  projectData?.data?.filter(project => project.name === searchTerm || project._id === searchTerm).map(project => (
+                  <Link to={`/newproject/${project._id}`} key={project._id} className="overflow-x-auto px-2 no-underline mx-1 my-2 border-b-1 tracking-tight pt-2 text-black inline-flex items-center min-w-fit rounded-2xl leading-normal ">
+                      <p key={project._id} className='text-xl' style={{paddingTop: '2px', paddingBottom: '2px'}}>{`${project.name}`}</p>
+                      <p key={project._id} className='text-md ml-1 mt-1' style={{paddingTop: '2px', paddingBottom: '2px'}}>{` by ${formatData(project.time)}`}</p>
+                  </Link>
+                  ))
                 }
                 </div>
-
-                <Divider color='white' />
-
+                  <Divider sx={{ backgroundColor: 'white', marginY: '20px', marginLeft: '8px', marginRight: '8px' }} />
                 {/* 🐼최근 참여한 프로젝트 리스트 */}
                 <Col>
-                <Row>
-                  
-                    <h2 className="text-2xl pl-2 font-semibold ml-6 mt-6 text-white text-left">최근 참여한 프로젝트</h2>
-                  
+                <Row >   
+                    <h2 className="text-2xl pl-2 font-semibold ml-6 text-white text-left">최근 참여한 프로젝트</h2>       
                 </Row>
                 </Col>
                 <Row className="justify-content-center pb-3">
                   {recentProjects && recentProjects.map((project) => (
-                    <Col key={project._id} className="m-2 mb-4">
+                    <Col key={project._id} lg={3} className="m-2 mb-4">
                       <ProjectCard
                         imgPath={`${project.image}?w=248&fit=crop&auto=format`}
                         pjtID={project._id}

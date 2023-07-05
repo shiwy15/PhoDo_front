@@ -56,8 +56,8 @@ function ProjectCards(props) {
     };
 
     return (
-    <Card className="project-card-view">
-      <Link to={`/newproject/${props.pjtID}`}>
+    <Card className="project-card-view w-fit px-1">
+      <Link to={`/newproject/${props.pjtID}`} className='blog-link'>
       <Card.Img variant="top" src={props.imgPath} alt="card-img" className=' h-56 object-contain' />
       <Card.Body className='text-white no-underline'>
         <Card.Title className='text-xl'>{props.title}</Card.Title>
@@ -71,13 +71,13 @@ function ProjectCards(props) {
         <Button 
           type="button"
           onClick={() => ThumbHandleOpen(props.pjtID, props.imgPath)}
-          className=" mx-2 w-fit inline-block rounded bg-violet-800 px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] whitespace-nowrap">
+          className=" mx-1 w-fit inline-block rounded bg-violet-800 px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] whitespace-nowrap">
         썸네일 변경
         </Button>
         <Button 
           type="button"
           onClick={() => handleDeleteProject(props.pjtID)}
-          className=" mx-2 w-fit inline-block rounded bg-violet-800 px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] whitespace-nowrap">
+          className=" mx-1 w-fit inline-block rounded bg-violet-800 px-6 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] whitespace-nowrap">
         프로젝트 삭제
         </Button>
           <Modal
@@ -89,11 +89,13 @@ function ProjectCards(props) {
             >
             <Box sx={styleThumb}>
                 {thumnailOpen && <ThumbFileInput projectId={currentProjectId} defThumb={currentDefThumb} />}
-                <button className='relative bottom-10' onClick={() => setThumnailOpen(false)}>닫기</button>
+              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <button className='relative bottom-1' onClick={() => setThumnailOpen(false)}>닫기</button>
+              </div>            
             </Box>
           </Modal>
         {/*좋아요 버튼**/}
-        <StarIcon defProject={props.pjtID} deflike={props.like} className=' mx-4'/>
+        <StarIcon defProject={props.pjtID} deflike={props.like}/>
       </div>
 
         

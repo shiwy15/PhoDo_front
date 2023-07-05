@@ -1,7 +1,7 @@
 // eslint-disable-next-line 
 
 import React, { useState, useEffect, useRef } from 'react';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled, useTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -605,7 +605,7 @@ export default function GalleryArea2() {
                 <button
                     key={key}
                     type="button"
-                    className="overflow-x-auto min-w-fit mx-1 ml-4 my-2 border-b-1 tracking-tight text-s text-black font-semibold inline-flex min-w-fit font-extrabold rounded-full text-inherit bg-neutral-50 px-2 py-1 text-sm uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
+                    className="overflow-x-auto  mx-1 ml-4 my-2 border-b-1 tracking-tight text-s font-semibold inline-flex min-w-fit rounded-full text-inherit bg-neutral-50 px-2 py-1 text-sm uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
                     data-te-ripple-init
                     data-te-ripple-color="light">
                     {key}
@@ -623,9 +623,9 @@ export default function GalleryArea2() {
                         onChange={handleValueChange} 
                     />
                 </div>
-                <div className='flex w-60 border-violet-800 border-1 bg-white rounded-sm mr-8'>
+                <div className='flex w-70 border-violet-800 border-1 bg-white rounded-sm '>
                     <input type="text" value={searchLocation} onChange={handleLocationChange} className='flex-grow px-2 mr-5 py-1 rounded-1' placeholder='장소명을 입력하세요'/>
-                    <button className='bg-white py-1 mr-4'>
+                    <button className='bg-white py-1 mr-1 '>
                         <FaMapMarkerAlt className='text-gray-400'/>
                     </button>
                 </div>
@@ -647,7 +647,7 @@ export default function GalleryArea2() {
                     data-te-ripple-init
                     data-te-ripple-color="light"
                     onClick={initBtn}
-                    className="mx-3 mr-10 inline-block bg-purple-700 rounded px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+                    className="mx-3 mr-10 inline-block w-fit bg-purple-700 rounded px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
                     <span className="flex items-center">
                         초기화
                     </span>
@@ -657,23 +657,6 @@ export default function GalleryArea2() {
         <div className='mx-4'>
         <Divider color='white' />
         </div>
-        {/*sort row */}
-        <div className='mt-2'>
-            {/*🌿이미지 삭제 버튼 */ }
-            <div className='flex justify-end mr-8 mb-2'>
-                <button
-                    type="button"
-                    data-te-ripple-init
-                    data-te-ripple-color="light"
-                    onClick={()=>deleteClick()}
-                    className="mx-4 inline-block bg-purple-700 rounded px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
-                    <span className="flex items-center">
-                        삭제
-                    </span>
-                </button>
-            </div>
-        </div>
-
 
         {/*🌿이미지 갤러리 창*/ }
         <div style={{backgroundColor: 'rgba(255,255,255,0.1)'}} className="container mx-auto rounded-md shadow-xl my-4 py-2 lg:px-16 lg:pt-12">
@@ -701,23 +684,25 @@ export default function GalleryArea2() {
                         }}
                     />
                     <div>
-                    <div style={{ overflowX: 'auto', whiteSpace: 'nowrap' }}>
-                  {Object.values(image.categories).slice(0, 3).map((category, index) => {
-                      return (
-                          <button
-                              key={index}
-                              type="button"
-                              className="overflow-x-auto mx-1 ml-4 my-2 border-b-1 tracking-tight text-s text-black font-semibold inline-flex min-w-fit rounded-full text-inherit bg-neutral-50 px-2 py-1 text-sm uppercase leading-normal  transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
-                              data-te-ripple-init
-                              data-te-ripple-color="light">
-                              #{category}
-                          </button>
-                      );
-                  })}
-                     </div>
-                          <div style={{ display: 'flex', justifyContent: 'flex-end', fontWeight: 'bold' }}>
-                            <span className='text-white text-sm'>{formatDate(image.time)}</span>
-                          </div>
+
+                      <div style={{ overflowX: 'auto', whiteSpace: 'nowrap', textAlign: 'left' }}>
+                        {Object.values(image.categories).slice(0, 3).map((category, index) => {
+                            return (
+                                <button
+                                    key={index}
+                                    type="button"
+                                    className="overflow-x-auto mx-1 ml-4 my-2 border-b-1 tracking-tight text-s text-black font-semibold inline-flex min-w-fit rounded-full text-inherit bg-neutral-50 px-2 py-1 text-sm uppercase leading-normal  transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
+                                    data-te-ripple-init
+                                    data-te-ripple-color="light">
+                                    #{category}
+                                </button>
+                            );
+                        })}
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'flex-end', fontWeight: 'bold' }}>
+                        <span className='text-white text-sm'>{formatDate(image.time)}</span>
+                      </div>
+
                    </div>
                     </ImageListItem>
                 ))}
