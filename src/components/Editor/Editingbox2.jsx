@@ -116,8 +116,8 @@ function Editingbox2 () {
     // ydoc = createNewDoc();
       // :star2: Fetch nodes from the API
 // :star2: Fetch project data from the API
-  axios.get(`http://localhost:4000/project/${projectId}`)
-  //axios.get(`https://hyeontae.shop/project/${projectId}`)
+  // axios.get(`http://localhost:4000/project/${projectId}`)
+  axios.get(`https://hyeontae.shop/project/${projectId}`)
   .then((res) => {
     const data = res.data; 
     console.log(res.data);
