@@ -88,7 +88,7 @@ const handleDragOver = (e) => {
 
   return (
   <div className="flex justify-center flex-col items-center p-4 shadow-4 rounded-lg w-full h-4/12">
-    <h2 className="text-2xl font-semibold pb-4 relative top-0 text-center">사진을 넣어주세요</h2>
+    <h2 className="text-2xl font-semibold pb-4 relative top-0 text-center">박스를 클릭하거나 Drag&Drop으로 이미지를 넣어주세요</h2>
 
     {/* 🌿input창 */}
     <input
