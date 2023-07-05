@@ -468,7 +468,6 @@ button:focus {
 /* --------- */
 .project-section {
   overflow-y: auto !important;
-  overflow: auto !important; 
   position: fixed !important;
   top: 0px;
   bottom: 0px;
@@ -680,4 +679,9 @@ button:focus {
 .picture-view{
   margin: 24px;
   padding-left: 50px;
+}
+
+.TagModal-section{
+  position: relative;
+  z-index:1000;
 }
