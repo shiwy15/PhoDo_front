@@ -56,7 +56,6 @@ const QuillEditor = () => {
             <h1>${title}</h1>
             <br>
             <div style="display: flex; justify-content: flex-end;"><p>${presenter}</p></div>
-            <p>이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.이곳은 보고서 개요를 쓰는 곳입니다.</p>
             <br>
             <br>
             `
