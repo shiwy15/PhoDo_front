@@ -684,6 +684,7 @@ export default function GalleryArea2() {
                         }}
                     />
                     <div>
+
                       <div style={{ overflowX: 'auto', whiteSpace: 'nowrap', textAlign: 'left' }}>
                         {Object.values(image.categories).map((category, index) => {
                             return (
@@ -701,6 +702,7 @@ export default function GalleryArea2() {
                       <div style={{ display: 'flex', justifyContent: 'flex-end', fontWeight: 'bold' }}>
                         <span className='text-white text-sm'>{formatDate(image.time)}</span>
                       </div>
+
                    </div>
                     </ImageListItem>
                 ))}

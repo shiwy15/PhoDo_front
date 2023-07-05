@@ -2,7 +2,7 @@
 const BASE_URL = 'https://hyeontae.shop';
 
 //json server 등 연결
-//const BASE_URL = 'http://localhost:4000';
+// const BASE_URL = 'http://localhost:4000';
 
 
 export const API = {
