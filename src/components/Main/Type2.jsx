@@ -6,7 +6,7 @@ function Type() {
     <Typewriter
       options={{
         strings: [
-          "AI 카테고리 & 보고서 작성"
+          "AI 카테고리 & 레포트 작성"
         ],
         autoStart: true,
         loop: true,

@@ -147,7 +147,7 @@ const MenuBar = () => {
                 type="button"
                 onClick={() => makeReport()}>
                 <HiOutlineDocumentText className="h-16 w-16 text-navy mx-auto transition duration-150 ease-in-out hover:text-yellow-400  focus:text-purple-800 active:text-purple-800 " />
-                <p className='text-navy text-l'>보고서 작성</p>
+                <p className='text-navy text-l'>레포트 작성</p>
               </button>
             </div>
             <div className='self-center'>

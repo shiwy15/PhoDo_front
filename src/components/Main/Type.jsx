@@ -6,7 +6,7 @@ function Type() {
     <Typewriter
       options={{
         strings: [
-          "실시간 공유 문서 편집"
+          "실시간 공유 협업 툴"
         ],
         autoStart: true,
         loop: true,

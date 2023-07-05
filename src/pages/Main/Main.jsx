@@ -27,7 +27,7 @@ export const MainPage =() => {
 
               <h1 className="heading-name">
                 
-                <strong className="main-name"> 사진관리부터 보고서 작성까지!</strong>
+                <strong className="main-name"> 사진 관리, 공유, 레포트 작성까지!</strong>
               </h1>
 
               <div style={{ padding: 50, textAlign: "left" }}>
