@@ -16,7 +16,7 @@ const AppWrapper = ({ children }) => {
 
       const timer = setTimeout(() => {
         updateLoad(false);
-      }, 5000);
+      }, 7000);
 
       return () => clearTimeout(timer);
     } else {
