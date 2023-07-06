@@ -148,7 +148,7 @@ const ImageBox = () => {
   }
   {/* 🌿 카테고리 버튼그룹 매핑 관련 */}
   const buttonGroups2 = [];
-  const buttonsPerGroup = 4;
+  const buttonsPerGroup = 1;
 
   try {
     for (let i = 0; i < buttonGroups.length; i += buttonsPerGroup) {
@@ -214,27 +214,21 @@ const ImageBox = () => {
           <div className="text-2xl font-bold ml-5 mt-2 mb-1 text-violet-900 p-1 rounded-lg ">
             카테고리</div>
           {/* 🌿 태그 버튼 mapping 구간 */}
-          <div>
+          <div className='flex items-center justify-center flex-wrap'>
             {buttonGroups2.map((group, groupIndex) => (
-              <div key={groupIndex} className="mx-1 flex items-center justify-center">
-                <div
-                  className="overflow-x-auto mb-1 min-w-fit inline-flex font-bold text-purple-800 rounded-md shadow-[0_4px_9px_-4px_#cbcbcb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] "
-                  role="group">
+              <div key={groupIndex} className="mx-1 flex items-center justify-start">
                   {group.map((btn, btnIndex) => (
                     <button
-                      key={btn}
+                      key={btnIndex}
                       type="button"
                       onClick={() => tagBtnClick(btn)}
-                      className={`inline-block min-w-fit text-lg bg-neutral-50 px-3 py-2 uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200 ${
-                        btnIndex === 0 ? "font-extrabold rounded-l pl-2" : btnIndex === group.length - 1 ? "rounded-r" : "pr-2"
-                      }`}
+                      className="whitespace-nowrap inline-block font-sans font-semibold rounded-full mb-2 bg-neutral-50 px-6 pb-1 pt-1.5 text-md leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#cbcbcb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)]"
                       data-te-ripple-init
                       data-te-ripple-color="light"
                     >
-                      {btn}
+                      #{btn}
                     </button>
                   ))}
-                </div>
               </div>
             ))}
           </div>
