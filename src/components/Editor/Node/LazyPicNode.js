@@ -12,21 +12,24 @@ const LazyPicNode = ({ id, selected, data, isConnectable }) => {
     height: '15px',
   };
 
-  const [imgSrc, setImgSrc] = useState(null);
+  const [imgSrc, setImgSrc] = useState(data.networkState === 'high' ? data.imageurl : data.thumburl);
+  const [currentRes, setCurrentRes] = useState(data.networkState);
 
   const handleNetworkChange = useCallback(() => {
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    if (connection.effectiveType === '4g' && imgSrc !== data.imageurl) {
+    if (connection.effectiveType === '4g' && currentRes !== 'high') {
       setImgSrc(data.imageurl);
-    } else if (imgSrc === null) {
+      setCurrentRes('high');
+    } else if (currentRes !== 'low' && data.networkState !== 'high') {
       setImgSrc(data.thumburl);
+      setCurrentRes('low');
     }
-  }, [imgSrc, data]);
+  }, [currentRes, data]);
 
   useEffect(() => {
+    console.log(data.url);
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     if (connection) {
-      handleNetworkChange();
       connection.addEventListener('change', handleNetworkChange);
     }
 

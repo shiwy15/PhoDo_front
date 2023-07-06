@@ -150,7 +150,7 @@ return (
         onChange={setValue}
         modules={modules}
         ref={editorRef}
-        style={{height: "72vh"}}
+        style={{ height: "76vh", borderColor: 'white'}}
     />
 </div>
 

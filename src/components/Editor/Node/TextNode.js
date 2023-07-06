@@ -83,15 +83,15 @@ const TextNode = ({ id, data, isConnectable }) => {
           style={{
             width: '300px',
             height: '100px',
-            fontSize: '20pt',
+            fontSize: '40pt',
             border: '1px solid transparent',
             outline: 'none',
             overflowWrap: 'break-word',
           }}
         />
           {data.owner && (
-          <div style={{ position: 'absolute', bottom: '0', right: '0', background: data.using, color: 'black', padding: '5px', fontWeight: 'bold' }}>
-            Last edited by: {data.owner}
+          <div style={{ position: 'absolute', bottom: '3px', right: '3px', background: data.using, color: 'black', padding: '5px', fontWeight: 'bold' , borderRadius: '10px' }}>
+            마지막 작성자: {data.owner}
           </div>
         )}
       </div>
