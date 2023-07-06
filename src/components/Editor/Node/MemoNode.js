@@ -7,6 +7,7 @@ import { useUserStore } from '../../store';
 const MemoNode = ({ id, data, selected }) => {
   const [memo, setMemo] = useState(data.memo);
   const [lastEditBy, setLastEditBy] = useState(null);
+  const [using, setUsing] = useState(data.using);
   const { userName } = useUserStore();
   const [colorMap, setColorMap] = useState({});
 
@@ -19,15 +20,18 @@ const MemoNode = ({ id, data, selected }) => {
       node.data = {
           ...node.data,
           memo: normalizedMemo,
-          owner: userName
+          owner: userName,
+          using: '#ACF9AA',
       };
       nodesMap.set(id, node);
     }
 
+    setUsing('#ACF9AA'); // And here as well
+
     if (!colorMap[userName]) {
       setColorMap(prevColorMap => ({
         ...prevColorMap,
-        [userName]: getRandomBrightColor(),
+        [userName]: '#ACF9AA',
       }));
     }
   }, [id, userName, colorMap]);
@@ -50,16 +54,34 @@ const MemoNode = ({ id, data, selected }) => {
     }
   }, [lastEditBy]);
 
-  const getRandomBrightColor = () => {
-    const lightColors = ['F', 'D', 'C', 'B', 'A'];
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += lightColors[Math.floor(Math.random() * lightColors.length)];
+  useEffect(() => {
+    if (memo) {
+      const timeoutId = setTimeout(() => {
+        const node = nodesMap.get(id);
+        if (node) {
+          node.data = {
+            ...node.data,
+            using: 'white',
+          };
+          nodesMap.set(id, node);
+        }
+        setUsing('white');
+      }, 500);
+      return () => clearTimeout(timeoutId);
     }
-    return color;
-  };
+  }, [memo]);
 
-  const backgroundColor = lastEditBy ? colorMap[lastEditBy] || 'white' : 'white';
+
+  // const getRandomBrightColor = () => {
+  //   const lightColors = ['F', 'D', 'C', 'B', 'A'];
+  //   let color = '#';
+  //   for (let i = 0; i < 6; i++) {
+  //     color += lightColors[Math.floor(Math.random() * lightColors.length)];
+  //   }
+  //   return color;
+  // };
+
+  // const backgroundColor = lastEditBy ? colorMap[lastEditBy] || 'white' : 'white';
 
 
 
@@ -133,7 +155,7 @@ const MemoNode = ({ id, data, selected }) => {
             
             </textarea>
             {data.owner && (
-        <div style={{ position: 'absolute', bottom: '0', right: '0', background: backgroundColor, color: 'black', padding: '5px', fontWeight: 'bold' }}>
+        <div style={{ position: 'absolute', bottom: '0', right: '0', background: data.using, color: 'black', padding: '5px', fontWeight: 'bold' }}>
           마지막 작성자: {data.owner}
         </div>
       )}

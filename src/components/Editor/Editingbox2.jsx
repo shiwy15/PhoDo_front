@@ -209,7 +209,10 @@ function Editingbox2 () {
       const thumburl = event.dataTransfer.getData('data/thumburl');
       const networkState = event.dataTransfer.getData('data/networkState');
 
+      // 지금 데이터 만드는 사람 
       const owner = event.dataTransfer.getData('data/owner');
+      const using = event.dataTransfer.getData('data/using');
+
 
       console.log(':evergreen_tree:Getting type ', type); // :apple: drag start에서 가져온 type
       console.log(':evergreen_tree:Getting image ', imageurl); // :apple: drag start에서 가져온 image
@@ -228,7 +231,8 @@ function Editingbox2 () {
         type,
         position,
         data: { label: `${type}` , imageurl: `${imageurl}`, categories: `${categories}`, memo: `${memo}`, thumburl: `${thumburl}`,
-                title: `${title}`, content: `${content}`, date: `${date}`,  networkState: `${networkState}`, owner: `${owner}`},
+                title: `${title}`, content: `${content}`, date: `${date}`,  networkState: `${networkState}`, owner: `${owner}`,
+                using: `${using}`},
       };
 
       nodesMap.set(newNode.id, newNode);
