@@ -2,37 +2,19 @@ import { useEffect, useCallback, useState } from 'react';
 import { Handle, Position, NodeResizer } from 'reactflow';
 import {nodesMap} from './../Editingbox2'
 import Hangul from 'hangul-js';
+import { useUserStore } from '../../store';
 
 const MemoNode = ({ id, data, selected }) => {
   const [memo, setMemo] = useState(data.memo);
+  const { userName } = useUserStore();
 
-  // const onMemoChange = useCallback((evt) => {
-  //   const normalizedMemo = Hangul.assemble(evt.target.value);
-  //   setMemo(normalizedMemo);
-  // }, []);
-
-  // useEffect(() => {
-  //   // This is your map iteration code 
-  //   nodesMap.forEach((node, nodeId) => {
-  //     if (node.selected === true) {
-  //       node.data = {
-  //           ...node.data,
-  //           memo: memo
-  //       };
-  //       nodesMap.set(nodeId, node);
-  //       console.log('노드는 ', node);
-  //       console.log('바뀌고 있어 이건 확실해');
-  //       // updateNodeInternals(nodeId);  // Trigger re-render of this node.
-  //       // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
-  //     }
-  //   });
-  // }, [memo]);
 
   const onMemoChange = useCallback((evt) => {
     const normalizedMemo = Hangul.assemble(evt.target.value);
     setMemo(normalizedMemo);
     // Immediately update the corresponding node
     const node = nodesMap.get(id);
+    console.log(`Memo changed by user: ${userName}`);
     if (node) {
       node.data = {
           ...node.data,
@@ -40,9 +22,7 @@ const MemoNode = ({ id, data, selected }) => {
       };
       nodesMap.set(id, node);
     }
-  }, [id]);
-
-
+  }, [id, userName]);
 
 
 
