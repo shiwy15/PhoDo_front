@@ -37,6 +37,8 @@ import * as awarenessProtocol from 'y-protocols/awareness.js'
 
 import {createNewDoc } from './ydoc'
 
+import { useUserStore } from './../store';
+
 
 //:dolphin: 웹 알티시 테스팅
 const proOptions = {
@@ -87,6 +89,7 @@ const wsOpts = {
 };
 
 function Editingbox2 () {
+  const { userName } = useUserStore(state => ({ userName: state.userName }));
   const {projectId} = useParams();  
   const { fitView } = useReactFlow();
   
@@ -113,6 +116,15 @@ function Editingbox2 () {
         console.log("Successfully connected");
       }
     });
+    // 시도는 해볼 수 있잖아 ?  
+    const awareness = wsProvider.awareness;
+    awareness.setLocalState({name: userName });
+    awareness.on('change', changes => {
+      // Whenever somebody updates their awareness information,
+      // we log all awareness information from all users.
+      console.log(Array.from(awareness.getStates().values()))
+    })
+
     // ydoc = createNewDoc();
       // :star2: Fetch nodes from the API
 // :star2: Fetch project data from the API
