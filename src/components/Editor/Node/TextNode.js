@@ -1,5 +1,4 @@
 import { useState, useCallback, useEffect } from 'react';
-import { fontSize } from '@mui/system';
 import { Handle, Position } from 'reactflow';
 import { nodesMap } from '../Editingbox2';
 import Hangul from 'hangul-js';
@@ -8,23 +7,69 @@ import { useUserStore } from '../../store';
 
 import './index.css';
 
-function TextNode({ id, data, isConnectable }) {
+const TextNode = ({ id, data, isConnectable }) => {
   const [title, setTitle] = useState(data.title);
-  const { userName } =useUserStore();
+  const [lastEditBy, setLastEditBy] = useState(null);
+  const [using, setUsing] = useState(data.using);
+  const { userName } = useUserStore();
+  const [colorMap, setColorMap] = useState({});
+
+
   const onTitleChange = useCallback((evt) => {
     const normalizedTitle = Hangul.assemble(evt.target.value);
     setTitle(normalizedTitle);
     // Immediately update the corresponding node
     const node = nodesMap.get(id);
+    setLastEditBy(userName);
     console.log(`Title changed by user: ${userName}`);
     if (node) {
       node.data = {
         ...node.data,
-        title: normalizedTitle
+        title: normalizedTitle,
+        owner: userName,
+        using: '#ACF9AA',
       };
       nodesMap.set(id, node);
     }
-  }, [id, userName]);
+    // setLastEditBy(userName);
+
+    setUsing('#ACF9AA');
+
+    if (!colorMap[userName]) {
+      setColorMap(prevColorMap => ({
+        ...prevColorMap,
+        [userName]: '#ACF9AA',
+      }));
+    }
+
+  }, [id, userName, colorMap]);
+
+  useEffect(() => {
+    if (lastEditBy) {
+      const timeoutId = setTimeout(() => {
+        setLastEditBy(null);
+      }, 2000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [lastEditBy]);
+
+  useEffect(() => {
+    if (title) {
+      const timeoutId = setTimeout(() => {
+        const node = nodesMap.get(id);
+        if (node) {
+          node.data = {
+            ...node.data,
+            using: 'white',
+          };
+          nodesMap.set(id, node);
+        }
+        setUsing('white');
+      }, 500);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [title]);
+
 
   return (
     <div className="textNode bg-white px-5 py-5 rounded-lg">
@@ -44,6 +89,11 @@ function TextNode({ id, data, isConnectable }) {
             overflowWrap: 'break-word',
           }}
         />
+          {data.owner && (
+          <div style={{ position: 'absolute', bottom: '0', right: '0', background: data.using, color: 'black', padding: '5px', fontWeight: 'bold' }}>
+            Last edited by: {data.owner}
+          </div>
+        )}
       </div>
       <Handle type="source" position={Position.Right} id="right" isConnectable={isConnectable} />
       <Handle

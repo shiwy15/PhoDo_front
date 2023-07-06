@@ -6,22 +6,36 @@ import { useUserStore } from '../../store';
 
 const MemoNodeB = ({ id, data, selected }) => {
   const [memo, setMemo] = useState(data.memo);
+  const [lastEditBy, setLastEditBy] = useState(null);
+  const [using, setUsing] = useState(data.using);
   const { userName } = useUserStore();
+  const [colorMap, setColorMap] = useState({});
 
   const onMemoChange = useCallback((evt) => {
     const normalizedMemo = Hangul.assemble(evt.target.value);
     setMemo(normalizedMemo);
-    // Immediately update the corresponding node
     const node = nodesMap.get(id);
-    console.log(`Memo changed by user: ${userName}`);
+    setLastEditBy(userName);
     if (node) {
       node.data = {
           ...node.data,
-          memo: normalizedMemo
+          memo: normalizedMemo,
+          owner: userName,
+          using: '#ff8f8f',
       };
       nodesMap.set(id, node);
     }
-  }, [id, userName]);
+
+    setUsing('#ff8f8f'); // And here as well
+
+    if (!colorMap[userName]) {
+      setColorMap(prevColorMap => ({
+        ...prevColorMap,
+        [userName]: '#ff8f8f',
+      }));
+    }
+  }, [id, userName, colorMap]);
+
 
   const handleStyle = {
     background: 'red', // 핸들의 배경색 설정
@@ -30,6 +44,33 @@ const MemoNodeB = ({ id, data, selected }) => {
     width: '15px', // 핸들의 너비 설정
     height: '15px', // 핸들의 높이 설정
   };
+
+  useEffect(() => {
+    if (lastEditBy) {
+      const timeoutId = setTimeout(() => {
+        setLastEditBy(null);
+      }, 2000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [lastEditBy]);
+
+  useEffect(() => {
+    if (memo) {
+      const timeoutId = setTimeout(() => {
+        const node = nodesMap.get(id);
+        if (node) {
+          node.data = {
+            ...node.data,
+            using: 'white',
+          };
+          nodesMap.set(id, node);
+        }
+        setUsing('white');
+      }, 500);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [memo]);
+
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
@@ -99,6 +140,11 @@ const MemoNodeB = ({ id, data, selected }) => {
           >
             
             </textarea>
+            {data.owner && (
+        <div style={{ position: 'absolute', bottom: '0', right: '0', background: data.using, color: 'black', padding: '5px', fontWeight: 'bold' }}>
+          마지막 작성자: {data.owner}
+        </div>
+      )}
         </div>
       </div>
     </div>
