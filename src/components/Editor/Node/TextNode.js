@@ -1,40 +1,30 @@
-import { fontSize } from '@mui/system';
 import { useState, useCallback, useEffect } from 'react';
+import { fontSize } from '@mui/system';
 import { Handle, Position } from 'reactflow';
 import { nodesMap } from '../Editingbox2';
 import Hangul from 'hangul-js';
+import { useUserStore } from '../../store';
+
 
 import './index.css';
 
-function TextNode({ data, isConnectable }) {
+function TextNode({ id, data, isConnectable }) {
   const [title, setTitle] = useState(data.title);
-
-  // const normalizeKoreanInput = (input) => {
-  //   const composedInput = input.normalize('NFC');
-  //   const decomposedInput = composedInput.normalize('NFKC');
-  //   const recomposedInput = decomposedInput.normalize('NFKC');
-  //   return recomposedInput;
-  // };
-
+  const { userName } =useUserStore();
   const onTitleChange = useCallback((evt) => {
     const normalizedTitle = Hangul.assemble(evt.target.value);
     setTitle(normalizedTitle);
-  }, []);
-
-  useEffect(() => {
-    // This is your map iteration code 
-    nodesMap.forEach((node, nodeId) => {
-      if (node.selected === true) {
-        node.data = {
-          ...node.data,
-          title: title
-        };
-        nodesMap.set(nodeId, node);
-        // updateNodeInternals(nodeId);  // Trigger re-render of this node.
-        // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
-      }
-    });
-  }, [title]);
+    // Immediately update the corresponding node
+    const node = nodesMap.get(id);
+    console.log(`Title changed by user: ${userName}`);
+    if (node) {
+      node.data = {
+        ...node.data,
+        title: normalizedTitle
+      };
+      nodesMap.set(id, node);
+    }
+  }, [id, userName]);
 
   return (
     <div className="textNode bg-white px-5 py-5 rounded-lg">

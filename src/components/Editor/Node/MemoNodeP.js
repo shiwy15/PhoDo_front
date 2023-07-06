@@ -2,31 +2,26 @@ import { useEffect, useCallback, useState } from 'react';
 import { Handle, Position, NodeResizer } from 'reactflow';
 import {nodesMap} from './../Editingbox2'
 import Hangul from 'hangul-js';
+import { useUserStore } from '../../store';
 
 const MemoNodeP = ({ id, data, selected }) => {
   const [memo, setMemo] = useState(data.memo);
+  const { userName } = useUserStore();
 
   const onMemoChange = useCallback((evt) => {
     const normalizedMemo = Hangul.assemble(evt.target.value);
     setMemo(normalizedMemo);
-  }, []);
-
-  useEffect(() => {
-    // This is your map iteration code 
-    nodesMap.forEach((node, nodeId) => {
-      if (node.selected === true) {
-        node.data = {
-            ...node.data,
-            memo: memo
-        };
-        nodesMap.set(nodeId, node);
-        console.log('노드는 ', node);
-        console.log('바뀌고 있어 이건 확실해');
-        // updateNodeInternals(nodeId);  // Trigger re-render of this node.
-        // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
-      }
-    });
-  }, [memo]);
+    // Immediately update the corresponding node
+    const node = nodesMap.get(id);
+    console.log(`Memo changed by user: ${userName}`);
+    if (node) {
+      node.data = {
+          ...node.data,
+          memo: normalizedMemo
+      };
+      nodesMap.set(id, node);
+    }
+  }, [id, userName]);
 
   const handleStyle = {
     background: 'red', // 핸들의 배경색 설정
