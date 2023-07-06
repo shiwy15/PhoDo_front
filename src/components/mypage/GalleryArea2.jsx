@@ -21,7 +21,6 @@ import ListItemText from '@mui/material/ListItemText';
 import Modal from '@mui/material/Modal';
 import TagModal from './TagModal.jsx';
 import ListSubheader from '@mui/material/ListSubheader';
-import { TERipple } from "tw-elements-react";
 
 import { Link } from 'react-router-dom';
 
@@ -280,8 +279,7 @@ export default function GalleryArea2() {
     const tagBtnClick = (tag) => {
         setActiveBtns((prevState) => {
             const newState = { ...prevState, [tag]: !prevState[tag] };
-            console.log('newState', newState);
-            const activeBtns = Object.keys(newState).filter((key) => newState[key] === true);
+            const activeBtns = Object.keys(newState).filter((key) => newState[key]);
             console.log('activeBtns', activeBtns);
             return newState;
         });
@@ -409,7 +407,7 @@ export default function GalleryArea2() {
     useEffect(() => {
         initTE({ Ripple, Input });
         console.log(selectedImages)
-    },[targetImgData,selectedImages,renderRequest] );
+    },[targetImgData,renderRequest] );
 
     if(isLoading) {return <h2>Loading...</h2>}
     if(isError) {return <h2>{error.message}</h2>}
@@ -577,15 +575,13 @@ export default function GalleryArea2() {
           buttonGroups.length > 0 ? (
             buttonGroups.map((btn, index) => (
               <div key={index} className="mr-4 mb-3 flex items-center justify-start">
-                <TERipple>
                   <button
                     type="button"
-                    onClick={() => tagBtnClick(btn)}
+                    onClick={() => { console.log("Button clicked!"); tagBtnClick(btn); }}
                     className="whitespace-nowrap inline-block rounded-full font-semibold bg-violet-50 px-6 pb-2 pt-2.5 text-md uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#cbcbcb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] "
                   >
                     #{btn}
                   </button>
-                </TERipple>
               </div>
             ))
           ) : (
@@ -600,7 +596,7 @@ export default function GalleryArea2() {
               <button
                 key={key}
                 type="button"
-                className="overflow-x-auto  mx-1 ml-4 my-2 border-b-1 tracking-tight text-s font-semibold inline-flex min-w-fit rounded-full text-inherit bg-neutral-50 px-2 py-1 text-sm uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
+                className="flex-wrap mx-1 ml-4 my-2 border-b-1 tracking-tight text-s font-semibold inline-flex min-w-fit rounded-full text-inherit bg-neutral-50 px-2 py-1 text-sm uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
                 data-te-ripple-init
                 data-te-ripple-color="light">
                 {key}
@@ -655,7 +651,7 @@ export default function GalleryArea2() {
 
         {/*🌿이미지 갤러리 창*/ }
         <div style={{backgroundColor: 'rgba(255,255,255,0.1)'}} className="container mx-auto rounded-md shadow-xl my-4 py-2 lg:px-16 lg:pt-12">
-            <ImageList sx={{ width: '100%', gap: 16 }} cols={4} rowHeight={200}>
+            <ImageList sx={{ width: '100%', gap: 16 }} cols={4} rowHeight={250}>
                 <React.Fragment>
                 {targetImgData?.data?.map((image) => (
                     <ImageListItem 
@@ -680,13 +676,13 @@ export default function GalleryArea2() {
                     />
                     <div>
 
-                      <div style={{ overflowX: 'auto', whiteSpace: 'nowrap', textAlign: 'left' }}>
-                        {Object.values(image.categories).slice(0, 3).map((category, index) => {
+                      <div style={{ textAlign: 'left' }}>
+                        {Object.values(image.categories).slice(0, 2).map((category, index) => {
                             return (
                                 <button
                                     key={index}
                                     type="button"
-                                    className="overflow-x-auto mx-1 ml-4 my-2 border-b-1 tracking-tight text-s text-black font-semibold inline-flex min-w-fit rounded-full text-inherit bg-neutral-50 px-2 py-1 text-sm uppercase leading-normal  transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
+                                    className="whitespace-nowrap mx-1 ml-4 my-2 border-b-1 tracking-tight text-s text-black font-semibold inline-flex min-w-fit rounded-full text-inherit bg-neutral-50 px-2 py-1 text-sm uppercase leading-normal  transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
                                     data-te-ripple-init
                                     data-te-ripple-color="light">
                                     #{category}
