@@ -21,7 +21,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Modal from '@mui/material/Modal';
 import TagModal from './TagModal.jsx';
 import ListSubheader from '@mui/material/ListSubheader';
-
+import { TERipple } from "tw-elements-react";
 
 import { Link } from 'react-router-dom';
 
@@ -198,14 +198,13 @@ export default function GalleryArea2() {
     {/* 🌿 사용 변수들- tag btns 관련 */}
     // 기존 변수들
     // const buttonList = ['마케팅', '건설/토목', '비즈니스', '화학', '에너지', '자재/장비', '운송', '과학', '컴퓨터', '재무', '통신', '직업/교육', '뉴스', '사회', '레퍼런스', '기타'];
-    const [buttonList, setButtonList] = useState(null);
-    const buttonPerGroup = 8;
+       const [buttonList, setButtonList] = useState(null);
+    const buttonPerGroup = 1;
     const [buttonGroups, setButtonGroups] = useState([]);
 
     const [activeBtns, setActiveBtns] = useState({})
 
-
-    
+ 
     //using effect!
     useEffect(() => {
         // Fetch data immediately upon mounting
@@ -217,6 +216,7 @@ export default function GalleryArea2() {
             .then(response => {
               if (response.data !== null) { // checking if data is not null
                 setButtonList(response.data);
+                console.log('buttonList:', buttonList)
               } else {
                 console.log('nothing~')
               }
@@ -229,14 +229,13 @@ export default function GalleryArea2() {
         fetchData(); // initial fetch
       
         // Fetch data every 30 seconds
-        const intervalId = setInterval(fetchData, 3000);
+        const intervalId = setInterval(fetchData, 5000);
       
         // Cleanup function to clear the interval when the component unmounts
         return () => {
           clearInterval(intervalId);
         };
-      }, []);
-    
+      },[]);
     useEffect(() => {
         if (buttonList) {
           const newButtonGroups = [];
@@ -245,11 +244,10 @@ export default function GalleryArea2() {
           }
           setButtonGroups(newButtonGroups);
         }
-      }, [buttonList]); // This will run whenever buttonList changes
-    
+      }, [buttonList]); // This will run whenever buttonList changes    
 
 
-    {/* 🌿 갤러리에 렌더링 되는 데이터  */} 
+          {/* 🌿 갤러리에 렌더링 되는 데이터  */} 
     const [targetImgData, setTargetImgData] = useState('')
 
     {/* 🌿 사용 변수들- 닐찌 입력 관련 */}  
@@ -282,7 +280,8 @@ export default function GalleryArea2() {
     const tagBtnClick = (tag) => {
         setActiveBtns((prevState) => {
             const newState = { ...prevState, [tag]: !prevState[tag] };
-            const activeBtns = Object.keys(newState).filter((key) => newState[key]);
+            console.log('newState', newState);
+            const activeBtns = Object.keys(newState).filter((key) => newState[key] === true);
             console.log('activeBtns', activeBtns);
             return newState;
         });
@@ -306,15 +305,13 @@ export default function GalleryArea2() {
       if (!hasSearched) {
           intervalId = setInterval(() => {
               refetch();
-          }, 3000);
+          }, 5000);
       }
   
       // Cleanup function to clear the interval when the component unmounts or when hasSearched becomes true
       return () => clearInterval(intervalId);
   }, [refetch, hasSearched]);
   
-
-
 
     {/* 🌿 post */}
     const mutationApply = useMutation(postApply, {
@@ -412,10 +409,11 @@ export default function GalleryArea2() {
     useEffect(() => {
         initTE({ Ripple, Input });
         console.log(selectedImages)
-    },[targetImgData || selectedImages || renderRequest] );
+    },[targetImgData,selectedImages,renderRequest] );
 
     if(isLoading) {return <h2>Loading...</h2>}
     if(isError) {return <h2>{error.message}</h2>}
+    
 
   return (
     <>
@@ -546,17 +544,17 @@ export default function GalleryArea2() {
         {/* 🌿 제목 및 '이미지 업로드 버튼' 구간*/}
         <div className='flex justify-between mb-4'>
             <p className=' tracking-tight text-3xl text-white font-semibold'>Gallery </p>
-                <button
-                    type="button"
-                    data-te-ripple-init
-                    data-te-ripple-color="light"
-                    onClick={imgUploadHandleOpen}
-                    className="inline-block bg-purple-700 rounded mr-8 px-6 w-max-24 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] ">
-                    <span className="flex items-center">
-                        <AiOutlineUpload size={24} color="white" className="mr-1" />
-                        사진 업로드
-                    </span>
-                </button>
+              <button
+                type="button"
+                data-te-ripple-init
+                data-te-ripple-color="light"
+                onClick={imgUploadHandleOpen}
+                className="inline-block bg-purple-700 rounded mr-8 px-6 w-max-24 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] ">
+                <span className="flex items-center">
+                  <AiOutlineUpload size={24} color="white" className="mr-1" />
+                  사진 업로드
+                </span>
+              </button>
         </div>
         <Modal
             open={ImgUploadOpen}
@@ -574,70 +572,67 @@ export default function GalleryArea2() {
             나만의 카테고리
         </Typography>
         {/* 🌿 태그 버튼 mapping 구간 */}
-
-                {buttonGroups.length > 0 ? (
-        buttonGroups.map((group, index) => (
-            <div key={index} className="mx-4 my-4 flex items-center justify-center">
-            <div className="overflow-x-auto min-w-fit inline-flex font-extrabold text-purple-800 rounded-md shadow-[0_4px_9px_-4px_#cbcbcb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(251,251,251,0.3)] dark:hover:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)] dark:focus:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)] dark:active:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.1),0_4px_18px_0_rgba(251,251,251,0.05)]">
-                {group.map((btn) => (
-                    <button
-                        key={btn}
-                        type="button"
-                        onClick={() => tagBtnClick(btn)}
-                        className="inline-block min-w-fit font-extrabold rounded-l text-inherit bg-neutral-50 px-6 pb-2 pt-2.5 text-lg uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200 mx-[-2]"
-                        data-te-ripple-init
-                        data-te-ripple-color="light">
-                        {btn}
-                    </button>
-                ))}
-            </div>
-            </div>
-        ))
-        ) : (
+        <div className='flex w-full flex-wrap'>
+        {
+          buttonGroups.length > 0 ? (
+            buttonGroups.map((btn, index) => (
+              <div key={index} className="mr-4 mb-3 flex items-center justify-start">
+                <TERipple>
+                  <button
+                    type="button"
+                    onClick={() => tagBtnClick(btn)}
+                    className="whitespace-nowrap inline-block rounded-full font-semibold bg-violet-50 px-6 pb-2 pt-2.5 text-md uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#cbcbcb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] "
+                  >
+                    #{btn}
+                  </button>
+                </TERipple>
+              </div>
+            ))
+          ) : (
             <p className="text-white text-lg">사진을 올려서 AI가 생성해주는 카테고리를 만들어보세요!</p>
-        )}
-
-
+          )
+        }
+        </div>
         {/*🌿 태그 버튼 결과값 창 */}
         <div className='flex'>
             <p className='min-w-fit ml-4 my-2 border-b-1 tracking-tight text-xl text-white font-semibold'>선택된 카테고리 :</p>
             {Object.entries(activeBtns).filter(([key, value]) => value === true).map(([key]) => (
-                <button
-                    key={key}
-                    type="button"
-                    className="overflow-x-auto  mx-1 ml-4 my-2 border-b-1 tracking-tight text-s font-semibold inline-flex min-w-fit rounded-full text-inherit bg-neutral-50 px-2 py-1 text-sm uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
-                    data-te-ripple-init
-                    data-te-ripple-color="light">
-                    {key}
-                </button>
+              <button
+                key={key}
+                type="button"
+                className="overflow-x-auto  mx-1 ml-4 my-2 border-b-1 tracking-tight text-s font-semibold inline-flex min-w-fit rounded-full text-inherit bg-neutral-50 px-2 py-1 text-sm uppercase leading-normal text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
+                data-te-ripple-init
+                data-te-ripple-color="light">
+                {key}
+              </button>
             ))}
         </div>
 
 
         {/*🌿 달력 입력 및 입력,초기화 버튼 구간*/}
-        <div className='mb-8 bg-gray-100 p-4 justify-between flex mx-4 rounded-xl'>
+        <div className='mb-8 bg-gray-100 p-4 justify-between flex mx-4 rounded-xl overflow-auto'>
             <div className='flex'>
-                <div className='w-80 border-violet-800 border-1 rounded-sm ml-8 mr-5'>
+                <div className='w-80 h-12 border-violet-800 border-1 rounded-sm ml-8 mr-5'>
                     <Datepicker 
                         value={dates} 
                         onChange={handleValueChange} 
                     />
                 </div>
-                <div className='flex w-70 border-violet-800 border-1 bg-white rounded-sm '>
+                <div className='flex w-70 border-violet-800 border-1 bg-white rounded-sm h-12'>
                     <input type="text" value={searchLocation} onChange={handleLocationChange} className='flex-grow px-2 mr-5 py-1 rounded-1' placeholder='장소명을 입력하세요'/>
                     <button className='bg-white py-1 mr-1 '>
                         <FaMapMarkerAlt className='text-gray-400'/>
                     </button>
                 </div>
             </div>
-            <div>
+            <div className='flex'>
                 <button
                     type="button"
                     data-te-ripple-init
                     data-te-ripple-color="light"
                     onClick={applyBtn}
                     className="ml-3 inline-block bg-purple-700 rounded px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
-                    <span className="flex items-center">
+                    <span className="whitespace-nowrap flex items-center">
                         검색
                     </span>
                 </button>
@@ -648,7 +643,7 @@ export default function GalleryArea2() {
                     data-te-ripple-color="light"
                     onClick={initBtn}
                     className="mx-3 mr-10 inline-block w-fit bg-purple-700 rounded px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
-                    <span className="flex items-center">
+                    <span className="whitespace-nowrap flex items-center">
                         초기화
                     </span>
                 </button>
