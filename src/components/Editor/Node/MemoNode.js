@@ -6,7 +6,9 @@ import { useUserStore } from '../../store';
 
 const MemoNode = ({ id, data, selected }) => {
   const [memo, setMemo] = useState(data.memo);
+  const [lastEditBy, setLastEditBy] = useState(null);
   const { userName } = useUserStore();
+  const [colorMap, setColorMap] = useState({});
 
 
   const onMemoChange = useCallback((evt) => {
@@ -14,7 +16,9 @@ const MemoNode = ({ id, data, selected }) => {
     setMemo(normalizedMemo);
     // Immediately update the corresponding node
     const node = nodesMap.get(id);
+    setLastEditBy(userName);
     console.log(`Memo changed by user: ${userName}`);
+
     if (node) {
       node.data = {
           ...node.data,
@@ -22,9 +26,38 @@ const MemoNode = ({ id, data, selected }) => {
       };
       nodesMap.set(id, node);
     }
-  }, [id, userName]);
+
+    if (!colorMap[userName]) {
+      setColorMap(prevColorMap => ({
+        ...prevColorMap,
+        [userName]: getRandomBrightColor(),
+      }));
+    }
+  }, [id, userName, colorMap]);
 
 
+  useEffect(() => {
+    if (lastEditBy) {
+      const timeoutId = setTimeout(() => {
+        setLastEditBy(null);
+      }, 2000); // Clear the name after 2 seconds
+
+      // Clear the timeout if the component is unmounted
+      return () => clearTimeout(timeoutId);
+    }
+  }, [lastEditBy]);
+
+
+  const getRandomBrightColor = () => {
+    const lightColors = ['F', 'D', 'C', 'B', 'A'];
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += lightColors[Math.floor(Math.random() * lightColors.length)];
+    }
+    return color;
+  };
+
+  const backgroundColor = lastEditBy ? colorMap[lastEditBy] || 'white' : 'white';
 
   const handleStyle = {
     background: 'red', // 핸들의 배경색 설정
@@ -100,8 +133,12 @@ const MemoNode = ({ id, data, selected }) => {
               fontSize: '20pt'
             }}
           >
-            
             </textarea>
+            {lastEditBy && (
+        <div style={{ position: 'absolute', bottom: '0', right: '0', background: backgroundColor, color: 'black', padding: '5px', fontWeight: 'bold' }}>
+          작성하고 있는 사람: {lastEditBy}
+        </div>
+      )}
         </div>
       </div>
     </div>
