@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Handle, Position,  } from 'reactflow';
+import { Handle, Position } from 'reactflow';
 import { NodeResizer } from '@reactflow/node-resizer';
 import { memo } from 'react';
 
@@ -12,24 +12,21 @@ const LazyPicNode = ({ id, selected, data, isConnectable }) => {
     height: '15px',
   };
 
-const [imgSrc, setImgSrc] = useState(data.networkState === 'high' ? data.imageurl : data.thumburl);
-const [currentRes, setCurrentRes] = useState(data.networkState);
+  const [imgSrc, setImgSrc] = useState(null);
 
-const handleNetworkChange = useCallback(() => {
-  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  if (connection.effectiveType === '4g' && currentRes !== 'high') {
-    setImgSrc(data.imageurl);
-    setCurrentRes('high');
-  } else if (currentRes !== 'low' && data.networkState !== 'high') {
-    setImgSrc(data.thumburl);
-    setCurrentRes('low');
-  }
-}, [currentRes, data]);
+  const handleNetworkChange = useCallback(() => {
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (connection.effectiveType === '4g' && imgSrc !== data.imageurl) {
+      setImgSrc(data.imageurl);
+    } else if (imgSrc === null) {
+      setImgSrc(data.thumburl);
+    }
+  }, [imgSrc, data]);
 
   useEffect(() => {
-    console.log(data.url);
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     if (connection) {
+      handleNetworkChange();
       connection.addEventListener('change', handleNetworkChange);
     }
 
@@ -39,6 +36,7 @@ const handleNetworkChange = useCallback(() => {
       }
     };
   }, [id, data.url, handleNetworkChange]);
+
 
   return (
     <div className="PictureNodeblock" style={{ border: '4px solid black', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -50,7 +48,7 @@ const handleNetworkChange = useCallback(() => {
           <Handle type="source" position={Position.Right}/>
         </NodeResizer>
         
-          <img src={imgSrc} alt='thumbnail' style={{  width: '100%', height: '100%', objectFit: 'contain' }} />
+          <img src={imgSrc} alt='thumbnail' style={{  width: '100%', height: '800px', objectFit: 'contain' }} />
           <Handle type="source" position={Position.Right} id="right" isConnectable={isConnectable} />
         <Handle type="source" position={Position.Bottom} id="bottom" isConnectable={isConnectable}/>
       </div>
