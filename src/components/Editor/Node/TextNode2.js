@@ -4,53 +4,41 @@ import { useState, useCallback, useEffect } from 'react';
 import { Handle, Position } from 'reactflow';
 import { nodesMap } from '../Editingbox2';
 import Hangul from 'hangul-js';
+import { useUserStore } from '../../store';
 
 function TextNode2({ id, selected, data, isConnectable }) {
   const [title, setTitle] = useState(data.title);
   const [content, setContent] = useState(data.content);
+  const { userName } = useUserStore();
 
   const onTitleChange = useCallback((evt) => {
     const normalizedTitle = Hangul.assemble(evt.target.value);
     setTitle(normalizedTitle);
-  }, []);
-
-  useEffect(() => {
-    // This is your map iteration code 
-    nodesMap.forEach((node, nodeId) => {
-      if (node.selected === true) {
-        node.data = {
-            ...node.data,
-            title: title
-        };
-        nodesMap.set(nodeId, node);
-        // updateNodeInternals(nodeId);  // Trigger re-render of this node.
-        // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
-      }
-    });
-  }, [title]);
-
+    const node = nodesMap.get(id);
+    console.log(`Title changed by user: ${userName}`);
+    if (node) {
+      node.data = {
+        ...node.data,
+        title: normalizedTitle
+      };
+      nodesMap.set(id, node);
+    }
+  }, [id, userName]);
 
   const onContentChange = useCallback((evt) => {
     const normalizedContent = Hangul.assemble(evt.target.value);
     setContent(normalizedContent);
-  }, []);
-
-  useEffect(() => {
-    // This is your map iteration code 
-    nodesMap.forEach((node, nodeId) => {
-      if (node.selected === true) {
-        node.data = {
-            ...node.data,
-            content: content
-        };
-        nodesMap.set(nodeId, node);
-        console.log('노드는 ', node);
-        console.log('바뀌고 있어 이건 확실해');
-        // updateNodeInternals(nodeId);  // Trigger re-render of this node.
-        // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
-      }
-    });
-  }, [content]);
+    // Immediately update the corresponding node
+    const node = nodesMap.get(id);
+    console.log(`Content changed by user: ${userName}`);
+    if (node) {
+      node.data = {
+        ...node.data,
+        content: normalizedContent
+      };
+      nodesMap.set(id, node);
+    }
+  }, [id, userName]);  
 
 
   return (

@@ -15,62 +15,45 @@ const TasknameNode = ({ id, selected, data, isConnectable }) => {
   const onTitleChange = useCallback((evt) => {
     const normalizedTitle = Hangul.assemble(evt.target.value);
     setTitle(normalizedTitle);
-  }, []);
-  
-  useEffect(() => {
-    // This is your map iteration code 
-    nodesMap.forEach((node, nodeId) => {
-      if (node.selected === true) {
-        node.data = {
-            ...node.data,
-            title: title
-        };
-        nodesMap.set(nodeId, node);
-        // updateNodeInternals(nodeId);  // Trigger re-render of this node.
-        // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
-      }
-    });
-  }, [title]);
+    // Immediately update the corresponding node
+    const node = nodesMap.get(id);
+    if (node) {
+      node.data = {
+        ...node.data,
+        title: normalizedTitle
+      };
+      nodesMap.set(id, node);
+    }
+  }, [id]);
 
   const onDateChange = useCallback((evt) => {
     const normalizedDate = Hangul.assemble(evt.target.value);
     setDate(normalizedDate);
-  }, []);
-
-  useEffect(() => {
-    // This is your map iteration code 
-    nodesMap.forEach((node, nodeId) => {
-      if (node.selected === true) {
-        node.data = {
-            ...node.data,
-            date: date
-        };
-        nodesMap.set(nodeId, node);
-        // updateNodeInternals(nodeId);  // Trigger re-render of this node.
-        // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
-      }
-    });
-  }, [date]);
+    // Immediately update the corresponding node
+    const node = nodesMap.get(id);
+    if (node) {
+      node.data = {
+        ...node.data,
+        date: normalizedDate
+      };
+      nodesMap.set(id, node);
+    }
+  }, [id]);
 
   const onContentChange = useCallback((evt) => {
     const normalizedContent = Hangul.assemble(evt.target.value);
     setContent(normalizedContent);
-  }, []);
-  
-  useEffect(() => {
-    // This is your map iteration code 
-    nodesMap.forEach((node, nodeId) => {
-      if (node.selected === true) {
-        node.data = {
-            ...node.data,
-            content: content
-        };
-        nodesMap.set(nodeId, node);
-        // updateNodeInternals(nodeId);  // Trigger re-render of this node.
-        // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
-      }
-    });
-  }, [content]);
+    // Immediately update the corresponding node
+    const node = nodesMap.get(id);
+    if (node) {
+      node.data = {
+        ...node.data,
+        content: normalizedContent
+      };
+      nodesMap.set(id, node);
+    }
+  }, [id]);
+
 
   const toggleFold = useCallback(() => {
     setIsFolded((prevFolded) => !prevFolded);

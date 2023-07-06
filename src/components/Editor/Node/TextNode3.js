@@ -1,81 +1,59 @@
-// 이 내용은 text node!
-
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Handle, Position } from 'reactflow';
 import { nodesMap } from '../Editingbox2';
-// import { useUpdateNodeInternals } from 'reactflow';
 import Hangul from 'hangul-js';
+import { useUserStore } from '../../store';
 
 function TextNode3({ id, selected, data, isConnectable }) {
   const [title, setTitle] = useState(data.title);
   const [date, setDate] = useState(data.date);
   const [content, setContent] = useState(data.content);
-  // const updateNodeInternals = useUpdateNodeInternals();
+  const { userName } = useUserStore();
 
   const onTitleChange = useCallback((evt) => {
     const normalizedTitle = Hangul.assemble(evt.target.value);
     setTitle(normalizedTitle);
-  }, []);
-  
-  useEffect(() => {
-    // This is your map iteration code 
-    nodesMap.forEach((node, nodeId) => {
-      if (node.selected === true) {
-        node.data = {
-            ...node.data,
-            title: title
-        };
-        nodesMap.set(nodeId, node);
-        // updateNodeInternals(nodeId);  // Trigger re-render of this node.
-        // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
-      }
-    });
-  }, [title]);
-
+    // Immediately update the corresponding node
+    const node = nodesMap.get(id);
+    console.log(`Title changed by user: ${userName}`);
+    if (node) {
+      node.data = {
+        ...node.data,
+        title: normalizedTitle
+      };
+      nodesMap.set(id, node);
+    }
+  }, [id, userName]);
 
   const onDateChange = useCallback((evt) => {
     const normalizedDate = Hangul.assemble(evt.target.value);
     setDate(normalizedDate);
-  }, []);
-
-  useEffect(() => {
-    // This is your map iteration code 
-    nodesMap.forEach((node, nodeId) => {
-      if (node.selected === true) {
-        node.data = {
-            ...node.data,
-            date: date
-        };
-        nodesMap.set(nodeId, node);
-        // updateNodeInternals(nodeId);  // Trigger re-render of this node.
-        // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
-      }
-    });
-  }, [date]);
-
-
-
-
+    // Immediately update the corresponding node
+    const node = nodesMap.get(id);
+    console.log(`Date changed by user: ${userName}`);
+    if (node) {
+      node.data = {
+        ...node.data,
+        date: normalizedDate
+      };
+      nodesMap.set(id, node);
+    }
+  }, [id, userName]);
 
   const onContentChange = useCallback((evt) => {
     const normalizedContent = Hangul.assemble(evt.target.value);
     setContent(normalizedContent);
-  }, []);
-  
-  useEffect(() => {
-    // This is your map iteration code 
-    nodesMap.forEach((node, nodeId) => {
-      if (node.selected === true) {
-        node.data = {
-            ...node.data,
-            content: content
-        };
-        nodesMap.set(nodeId, node);
-        // updateNodeInternals(nodeId);  // Trigger re-render of this node.
-        // onNodesChange(nodes.map(node => node.id === id ? { ...node, data: { ...node.data, memo: content } } : node));
-      }
-    });
-  }, [content]);
+    // Immediately update the corresponding node
+    const node = nodesMap.get(id);
+    console.log(`Content changed by user: ${userName}`);
+    if (node) {
+      node.data = {
+        ...node.data,
+        content: normalizedContent
+      };
+      nodesMap.set(id, node);
+    }
+  }, [id, userName]);
 
   return (
     <div className="textNode3 bg-white px-4 py-3 pt-4 rounded-lg" style={{ border: '2px solid black', paddingTop: '25px' }}>
