@@ -65,6 +65,25 @@ const ImageBox = () => {
       }
   });
 
+  //이미지 박스 고해상도가 됐는지 log하는 hook
+  const [highResLoaded, setHighResLoaded] = useState({});
+
+  const loadImage = (thumbUrl, imageUrl, imageId) => {
+    let imageSrc = thumbUrl;
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+
+    if (connection) {
+      if (connection.effectiveType === '4g') {
+        // If high-res image hasn't been loaded yet, update image source
+        if (!highResLoaded[imageId]) {
+          imageSrc = imageUrl;
+          setHighResLoaded(prevState => ({ ...prevState, [imageId]: true }));
+        }
+      }
+    }
+    
+    return highResLoaded[imageId] ? imageUrl : imageSrc;
+  }
 
   {/* 🌿 사용 변수들- 닐짜 입력 관련 함수 */}  
   const handleValueChange = (newValue) => {
@@ -143,9 +162,8 @@ const ImageBox = () => {
 
   // Add network state to the data transfer
   event.dataTransfer.setData('data/networkState', networkState);
-
-
   }
+
   {/* 🌿 카테고리 버튼그룹 매핑 관련 */}
   const buttonGroups2 = [];
   const buttonsPerGroup = 1;
@@ -158,146 +176,142 @@ const ImageBox = () => {
     console.error("An error occurred:", error);
   }
 
-
-    //using effect!
+  //using effect!
   useEffect(() => {
-      // Fetch data immediately upon mounting
-      const fetchData = () => {
-        request({
-          method: 'get',
-          url: '/api/category',
-        })
-          .then(response => {
-            if (response.data !== null) { // checking if data is not null
-              setButtonGroups(response.data);
-            } else {
-              console.log('nothing~')
-            }
-          })
-          .catch(error => {
-            console.error('There was an error retrieving the data!', error);
-          });
-      };
-    
-      fetchData(); // initial fetch
-    
-      // Fetch data every 30 seconds
-      const intervalId = setInterval(fetchData, 10000);
-    
-      // Cleanup function to clear the interval when the component unmounts
-      return () => {
-        clearInterval(intervalId);
-      };
-    }, []);
+    // Fetch data immediately upon mounting
+    const fetchData = () => {
+      request({
+        method: 'get',
+        url: '/api/category',
+      })
+      .then(response => {
+        if (response.data !== null) { // checking if data is not null
+          setButtonGroups(response.data);
+        } else {
+          console.log('nothing~')
+        }
+      })
+      .catch(error => {
+        console.error('There was an error retrieving the data!', error);
+      });
+    };
+    fetchData(); // initial fetch
+  
+    // Fetch data every 30 seconds
+    const intervalId = setInterval(fetchData, 10000);
+  
+    // Cleanup function to clear the interval when the component unmounts
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
   return (
     <div>
       {/* sidebar css 부분 */}
       <Paper sx={{     
-          width: 420,
-          height: '100vh',
-          backgroundColor: 'rgba(255,255,255,0.5)',
-          borderTopRightRadius: 0,
-          borderBottomRightRadius: 0,
-          top: 0,
-          bottom: 0,
-          color: 'rgb(255,255,255)',
-          overflow: 'auto'  // 여기를 추가합니다.
+        width: 420,
+        height: '100vh',
+        backgroundColor: 'rgba(255,255,255,0.5)',
+        borderTopRightRadius: 0,
+        borderBottomRightRadius: 0,
+        top: 0,
+        bottom: 0,
+        color: 'rgb(255,255,255)',
+        overflow: 'auto'
       }}>
 
-        <MenuList dense>
-          {/* 🌿 Edit box제목 */}
-          <h2 className="text-3xl mt-1 font-bold relative top-0 text-center text-violet-900">이미지 박스</h2>
-          {/* 🌸 구분선 */}
-        <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white', borderBottom: '2px solid' }} />
-          {/* 🌿 카테고리 버튼 리스트 */}
-          <div className="text-2xl font-bold ml-5 mt-2 mb-1 text-violet-900 p-1 rounded-lg ">
-            카테고리</div>
-          {/* 🌿 태그 버튼 mapping 구간 */}
-          <div className='flex items-center justify-center flex-wrap'>
-            {buttonGroups2.map((group, groupIndex) => (
-              <div key={groupIndex} className="mx-1 flex items-center justify-start">
-                  {group.map((btn, btnIndex) => (
-                    <button
-                      key={btnIndex}
-                      type="button"
-                      onClick={() => tagBtnClick(btn)}
-                      className="whitespace-nowrap inline-block font-sans font-semibold rounded-full mb-2 bg-neutral-50 px-6 pb-1 pt-1.5 text-md leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#cbcbcb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)]"
-                      data-te-ripple-init
-                      data-te-ripple-color="light"
-                    >
-                      #{btn}
-                    </button>
-                  ))}
+      <MenuList dense>
+        {/* 🌿 Edit box제목 */}
+        <h2 className="text-3xl mt-1 font-bold relative top-0 text-center text-violet-900">이미지 박스</h2>
+        {/* 🌸 구분선 */}
+      <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white', borderBottom: '2px solid' }} />
+        {/* 🌿 카테고리 버튼 리스트 */}
+        <div className="text-2xl font-bold ml-5 mt-2 mb-1 text-violet-900 p-1 rounded-lg ">
+          카테고리</div>
+        {/* 🌿 태그 버튼 mapping 구간 */}
+        <div className='flex items-center justify-center flex-wrap'>
+          {buttonGroups2.map((group, groupIndex) => (
+            <div key={groupIndex} className="mx-1 flex items-center justify-start">
+                {group.map((btn, btnIndex) => (
+                  <button
+                    key={btnIndex}
+                    type="button"
+                    onClick={() => tagBtnClick(btn)}
+                    className="whitespace-nowrap inline-block font-sans font-semibold rounded-full mb-2 bg-neutral-50 px-6 pb-1 pt-1.5 text-md leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#cbcbcb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(203,203,203,0.3),0_4px_18px_0_rgba(203,203,203,0.2)]"
+                    data-te-ripple-init
+                    data-te-ripple-color="light"
+                  >
+                    #{btn}
+                  </button>
+                ))}
               </div>
             ))}
-          </div>
+            </div>
           {/*🌿 달력 입력 및 입력,초기화 버튼 구간*/}
-            <div className='w-54 mt-2 border-violet-800 border-1 rounded-sm mx-2'>
-                <Datepicker 
-                    value={dates} 
-                    onChange={handleValueChange} 
-                />
-            </div>
-            <div className="flex justify-center mt-1">
-                <button
-                    type="button"
-                    data-te-ripple-init
-                    data-te-ripple-color="light"
-                    onClick={applyBtn}
-                    className=" mx-4 my-1 inline-block bg-purple-700 rounded px-6 py-2 text-lg font-medium uppercase leading-normal text-white ">
-                    <span className="flex items-center">
-                        검색
-                    </span>
-                </button>
-
-                <button
-                    type="button"
-                    data-te-ripple-init
-                    data-te-ripple-color="light"
-                    onClick={initBtn}
-                    className=" mx-4 my-1 inline-block bg-purple-700 rounded px-6 py-2 text-lg font-medium uppercase leading-normal text-white ">
-                    <span className="flex items-center">
-                        초기화
-                    </span>
-                </button>
-            </div>
-
-        {/* 🌸 구분선 */}
-        <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white', borderBottom: '2px solid' }} />
-        {/* 🌸 이미지 모아볼 수 있는 미니 갤러리 */}
-        <div className="text-2xl font-bold ml-5 mt-2 text-violet-900 p-1 rounded-lg ">
-            이미지 노드 <p className='text-lg'>편집창에 끌어다 놓아보세요!</p></div>
-            <ImageList cols={2} gap={8} sx={{ paddingLeft: '25px', paddingRight: '25px', marginBottom: '18px', overflow:'hidden'}}>
-    {images && images?.data?.map((image, index) => (
-        <ImageListItem key={image.id}>
-            <img 
-                src={image.thumbnailUrl}
-                className="imgNode max-h-24 rounded-lg"
-                loading="lazy"
-                onDragStart={(event) => onDragThumbStart(event, 'LazyPicNode',image.thumbnailUrl, image.url, Object.values(image.categories))}
-                draggable
-                alt="Gallery Item" />
-            <div className='text-violet-900 max-h-6 mb-3' style={{ fontSize: '18px', padding:'2px'}}>
-            {Object.values(image.categories).slice(0, 2).map((category, index) => {
-    return (
-        <button
-            key={index}
-            type="button"
-            className="overflow-x-auto mx-1 ml-4 my-0.5 mb-4 border-b-1 tracking-tight text-s text-black font-semibold inline-flex min-w-fit rounded-full text-inherit bg-neutral-50 px-2 py-1 text-sm uppercase leading-normal  transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
-            data-te-ripple-init
-            data-te-ripple-color="light">
-            #{category}
-        </button>
-    );
-})}
-
-            </div>
-        </ImageListItem>
-    ))}
-</ImageList>
-
-
+          <div className='w-54 mt-2 border-violet-800 border-1 rounded-sm mx-2'>
+            <Datepicker 
+              value={dates} 
+              onChange={handleValueChange} 
+            />
+          </div>
+          <div className="flex justify-center mt-1">
+            <button
+              type="button"
+              data-te-ripple-init
+              data-te-ripple-color="light"
+              onClick={applyBtn}
+              className=" mx-4 my-1 inline-block bg-purple-700 rounded px-6 py-2 text-lg font-medium uppercase leading-normal text-white ">
+              <span className="flex items-center">
+                검색
+              </span>
+            </button>
+            <button
+              type="button"
+              data-te-ripple-init
+              data-te-ripple-color="light"
+              onClick={initBtn}
+              className=" mx-4 my-1 inline-block bg-purple-700 rounded px-6 py-2 text-lg font-medium uppercase leading-normal text-white ">
+              <span className="flex items-center">
+                초기화
+              </span>
+            </button>
+          </div>
+          {/* 🌸 구분선 */}
+          <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white', borderBottom: '2px solid' }} />
+          {/* 🌸 이미지 모아볼 수 있는 미니 갤러리 */}
+          <div className="text-2xl font-bold ml-5 mt-2 text-violet-900 p-1 rounded-lg ">
+          이미지 노드 <p className='text-lg'>편집창에 끌어다 놓아보세요!</p></div>
+          <ImageList cols={2} gap={8} sx={{ paddingLeft: '25px', paddingRight: '25px', marginBottom: '18px', overflow:'hidden'}}>
+            {images && images?.data?.map((image, index) => {
+              const imgSrc = loadImage(image.thumbnailUrl, image.url, image.id);
+              return (
+                <ImageListItem key={image.id}>
+                  <img 
+                    src={imgSrc}
+                    className="imgNode max-h-24 rounded-lg"
+                    loading="lazy"
+                    onDragStart={(event) => onDragThumbStart(event, 'LazyPicNode',image.thumbnailUrl, image.url, Object.values(image.categories))}
+                    draggable
+                    alt="Gallery Item" />
+                  <div className='text-violet-900 max-h-6 mb-3' style={{ fontSize: '18px', padding:'2px'}}>
+                    {Object.values(image.categories).slice(0, 2).map((category, index) => {
+                      return (
+                        <button
+                        key={index}
+                        type="button"
+                        className="overflow-x-auto mx-1 ml-4 my-0.5 mb-4 border-b-1 tracking-tight text-s text-black font-semibold inline-flex min-w-fit rounded-full text-inherit bg-neutral-50 px-2 py-1 text-sm uppercase leading-normal  transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none focus:ring-0 active:bg-neutral-200"
+                        data-te-ripple-init
+                        data-te-ripple-color="light">
+                        #{category}
+                    </button>
+                        );
+                    })}
+                  </div>
+                </ImageListItem>
+              )
+            })}
+          </ImageList>
         <Divider variant="middle" sx={{ padding:'8px', borderColor: 'white' }} />
         {/* <MenuItem style={{display: 'flex', justifyContent: 'center'}}>
           <div className="TextNode inline-block rounded bg-info px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out hover:bg-info-600 hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(84,180,211,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)]" 
