@@ -54,8 +54,8 @@ const QuillEditor = () => {
         const contentHtml = `
         <br>
         <h1><span style="color: rgb(153, 51, 255);">아파트 내부 인테리어에 관한 가족회의 보고서 </span></h1>
+        <br>
         <p class="ql-align-right"><strong>날짜:</strong> 2023년 7월 5일</p>
-        
         <p class="ql-align-right"><strong>회의 참석자:</strong> 가족 전체</p>
         <br>
         <h2>1. 인테리어 필요성</h2>
