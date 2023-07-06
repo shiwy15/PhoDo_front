@@ -40,8 +40,6 @@ const LazyPicNode = ({ id, selected, data, isConnectable }) => {
     };
   }, [id, data.url, handleNetworkChange]);
 
-
-
   return (
     <div className="PictureNodeblock" style={{ border: '4px solid black', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ position: 'relative', width: '100%' }}>
