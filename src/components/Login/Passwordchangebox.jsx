@@ -27,7 +27,7 @@ const Forgotpwbox = () => {
         e.preventDefault();
         //🔥 reset/token
         // axios.post(`${API.CHANGEPW, token}`, { password, confirmpassword, token })
-        axios.post(`http://localhost:4000/reset/${token}`, { password, confirmpassword, token })
+        axios.post(`https://hyeontae.shop/reset/${token}`, { password, confirmpassword, token })
             .then(res => {
                 if (res.status === 200) {
                     navigate('/login');
