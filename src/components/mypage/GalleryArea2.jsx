@@ -191,6 +191,26 @@ export default function GalleryArea2() {
         setShowModal(showModal=> !showModal);
     }
 
+  //이미지 박스 고해상도가 됐는지 log하는 hook
+  const [highResLoaded, setHighResLoaded] = useState({});
+
+  const loadImage = (thumbUrl, imageUrl, imageId) => {
+    let imageSrc = thumbUrl;
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+
+    if (connection) {
+      if (connection.effectiveType === '4g') {
+        // If high-res image hasn't been loaded yet, update image source
+        if (!highResLoaded[imageId]) {
+          imageSrc = imageUrl;
+          setHighResLoaded(prevState => ({ ...prevState, [imageId]: true }));
+        }
+      }
+    }
+    
+    return highResLoaded[imageId] ? imageUrl : imageSrc;
+  }
+
     //사진 업로드 완료되면 get한번 더 요청하는 store
     const renderRequest = useMypageRenderStore(state=> state.renderRequest)
 
@@ -411,7 +431,6 @@ export default function GalleryArea2() {
 
     if(isLoading) {return <h2>Loading...</h2>}
     if(isError) {return <h2>{error.message}</h2>}
-    
 
   return (
     <>
@@ -653,7 +672,9 @@ export default function GalleryArea2() {
         <div style={{backgroundColor: 'rgba(255,255,255,0.1)'}} className="container mx-auto rounded-md shadow-xl my-4 py-2 lg:px-16 lg:pt-12">
             <ImageList sx={{ width: '100%', gap: 16 }} cols={4} rowHeight={250}>
                 <React.Fragment>
-                {targetImgData?.data?.map((image) => (
+                {targetImgData?.data?.map((image) => {
+                  const imgSrc = loadImage(image.thumbnailUrl, image.url, image.id);
+                  return (
                     <ImageListItem 
                     key={image._id} 
                     className='gallery-imgCard'
@@ -663,7 +684,7 @@ export default function GalleryArea2() {
 
                     <img
                         key={image._id}
-                        src={`${image.url}?w=248&fit=crop&auto=format`}
+                        src={`${imgSrc}?w=248&fit=crop&auto=format`}
                         alt='loading...'
                         loading="lazy"
                             style={{
@@ -696,7 +717,8 @@ export default function GalleryArea2() {
 
                    </div>
                     </ImageListItem>
-                ))}
+                  )
+                })}
                 </React.Fragment>
             </ImageList>
         </div>
