@@ -209,8 +209,11 @@ function Editingbox2 () {
       const thumburl = event.dataTransfer.getData('data/thumburl');
       const networkState = event.dataTransfer.getData('data/networkState');
 
+      const owner = event.dataTransfer.getData('data/owner');
+
       console.log(':evergreen_tree:Getting type ', type); // :apple: drag start에서 가져온 type
-      console.log(':evergreen_tree:Getting image ', imageurl); // :apple: drag start에서 가져온 image 
+      console.log(':evergreen_tree:Getting image ', imageurl); // :apple: drag start에서 가져온 image
+      console.log('owner: ', owner); 
       if (typeof type === 'undefined' || !type) {
         return;
       }
@@ -225,7 +228,7 @@ function Editingbox2 () {
         type,
         position,
         data: { label: `${type}` , imageurl: `${imageurl}`, categories: `${categories}`, memo: `${memo}`, thumburl: `${thumburl}`,
-                title: `${title}`, content: `${content}`, date: `${date}`,  networkState: `${networkState}`},
+                title: `${title}`, content: `${content}`, date: `${date}`,  networkState: `${networkState}`, owner: `${owner}`},
       };
 
       nodesMap.set(newNode.id, newNode);
