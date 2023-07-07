@@ -665,21 +665,19 @@ button:focus {
 }
 
 .edit-view {
-  position: fixed;
   background-color: white;
-  margin: 24px;
-  margin-left: 200px;
-  height: 88vh;
+  margin: 20px;
+  width: 50%; /* This sets the width to 2/5 or 40% of the parent element */
   display: flex;
   flex-direction: column;
   align-items: stretch;
   border-radius: 10px;
-  width: 800px;
+  position: relative; /* Not fixed anymore */
 }
 
 .picture-view{
   margin: 24px;
-  padding-left: 50px;
+  width: 50%; /* The remaining space */
 }
 
 .TagModal-section{

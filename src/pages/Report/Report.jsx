@@ -10,12 +10,16 @@ function Report() {
         <>
         <NavBar/>
         <Container fluid className="project-section">            
-            <div className="edit-view">
-                <QuillEditor/>
-            </div>
-            <div className ="picture-view absolute right-20 w-1/2">
+        <div className="flex">
+                <div className="edit-view">
+                    <QuillEditor/>
+                </div>
+            <div >
+                <div className="picture-view">
                 <PictureMaterial/>
+                </div>
             </div>
+        </div>
 
         </Container>
         </>
