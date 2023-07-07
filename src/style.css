@@ -345,8 +345,13 @@ button:focus {
   color: white !important;
   /* padding-top: 100px !important; */
   padding-bottom: 20px !important;
-  height: 35vh;
+  height: 500px;
   text-align: center;
+}
+
+.card-title{
+  font-size: 1.5em !important;
+  margin-bottom: 15px !important;
 }
 
 .home-about-body {
@@ -508,14 +513,13 @@ button:focus {
   opacity: 0.9 !important;
   transition: all 0.5s ease 0s !important;
   height: 100% !important;
-
-  /* max-width: 350px; */
 }
 
 .tuto-card-view:hover {
   transform: scale(1.02) !important;
   overflow: hidden !important;
   box-shadow: 0 4px 4px 5px rgba(129, 72, 144, 0.561) !important;
+  
 }
 
 .project-card-view {

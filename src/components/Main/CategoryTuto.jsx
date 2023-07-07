@@ -70,11 +70,11 @@ const CategoryTuto =() => {
         display: 'flex',
         flexWrap: 'nowrap',
         borderRadius: '5px',
-        height: '110px', // Box의 높이를 고정값으로 설정
+        height: '208px', // Box의 높이를 고정값으로 설정
         '& > :not(style)': {
             m: 1,
             width: '100%',
-            height: '110px', // 이미지의 높이를 고정값으로 설정
+            height: '192px', // 이미지의 높이를 고정값으로 설정
             marginX: 'auto',
             borderRadius: '5px',
         },
@@ -83,8 +83,8 @@ const CategoryTuto =() => {
     <img
         src={image}
         alt="Preview"
-        className="w-32 h-32 cursor-pointer"
-        style={{ objectFit: 'contain', height: '110px' }} // object-fit을 contain으로 설정하고 높이를 고정값으로 설정
+        className="w-48 h-48 cursor-pointer"
+        style={{ objectFit: 'contain', height: '192px' }} // object-fit을 contain으로 설정하고 높이를 고정값으로 설정
         onClick={() => document.getElementById("imageInput").click()}
     />
 </Box>
@@ -95,7 +95,7 @@ const CategoryTuto =() => {
                 flexWrap: 'nowrap',
                 '& > :not(style)': {
                     width: '100%',
-                    height: 110,
+                    height: 192,
                     marginX : 'auto'
                 },
             }}
@@ -122,16 +122,16 @@ const CategoryTuto =() => {
             },
         }}
     >
-    <Paper elevation={3} style={{ height: '100px' }}>
-        <div className='text-center text-xl font-bold'>태그 결과</div>
+    <Paper elevation={3} style={{ height: '170px' }}>
+        <div className='text-center text-xl font-bold m-1'>태그 결과</div>
         <div className='relative text-md mx-1 px-2' style={{ height: '80px', overflowY: 'auto', paddingY : '2px' }}>
             {tags?.map((tag, index) => (
                 <span key={index}>{tag} </span>
             ))}
         </div>
     </Paper>
-    <Paper elevation={3} style={{ height: '100px' }}>
-        <div className='text-center text-xl font-bold'>카테고리 결과</div>
+    <Paper elevation={3} style={{ height: '170px' }}>
+        <div className='text-center text-xl font-bold m-1'>카테고리 결과</div>
         <div className='text-md mx-1 px-2' style={{ height: '80px', overflowY: 'auto' }}>
             {category?.map((cate, index) => (
                 <span key={index}>{cate} </span>
