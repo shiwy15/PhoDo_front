@@ -387,7 +387,7 @@ const SideBarArea = () => {
                 </Col>
                 <Row className="justify-content-center pb-3">
                   {recentProjects && recentProjects.map((project) => (
-                    <Col key={project._id} lg={3} className="m-2 mb-4">
+                    <Col key={project._id} className="flex flex-wrap m-2 mb-4">
                       <ProjectCard
                         imgPath={`${project.image}?w=248&fit=crop&auto=format`}
                         pjtID={project._id}

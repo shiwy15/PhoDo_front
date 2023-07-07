@@ -56,7 +56,7 @@ function ProjectCards(props) {
     };
 
     return (
-    <Card className="project-card-view w-fit px-1">
+    <Card className="project-card-view w-fit px-1 flex flex-wrap">
       <Link to={`/newproject/${props.pjtID}`} className='blog-link'>
       <Card.Img variant="top" src={props.imgPath} alt="card-img" className=' h-56 object-contain' />
       <Card.Body className='text-white no-underline'>
@@ -97,9 +97,6 @@ function ProjectCards(props) {
         {/*좋아요 버튼**/}
         <StarIcon defProject={props.pjtID} deflike={props.like}/>
       </div>
-
-        
-      
     </Card>
   );
 }

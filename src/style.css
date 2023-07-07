@@ -525,8 +525,11 @@ button:focus {
   transition: all 0.5s ease 0s !important;
   height: 100% !important;
   margin: 1em !important;
-      /* Add margin around your card */
+  padding-left: 1px !important; 
+  padding-right: 1px !important;
+  width: fit-content !important; 
 }
+
 
 .project-card-view:hover {
   transform: scale(1.02) !important;
