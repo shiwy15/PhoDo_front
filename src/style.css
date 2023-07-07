@@ -667,18 +667,30 @@ button:focus {
 .edit-view {
   background-color: white;
   margin: 20px;
-  width: 50%; /* This sets the width to 2/5 or 40% of the parent element */
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   border-radius: 10px;
-  position: relative; /* Not fixed anymore */
+  height: 85vh;
 }
 
 .picture-view{
-  margin: 24px;
-  width: 50%; /* The remaining space */
+  margin: 20px;
+  width: 50%;
 }
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-view, .picture-view {
+  width: 50%; 
+  /* or set to whatever you want. You might also want to subtract a small 
+     amount from this value if you have padding or margins to account for. */
+}
+
 
 .TagModal-section{
   position: relative;

@@ -10,17 +10,14 @@ function Report() {
         <>
         <NavBar/>
         <Container fluid className="project-section">            
-        <div className="flex">
+            <div className="flex-container">
                 <div className="edit-view">
                     <QuillEditor/>
                 </div>
-            <div >
                 <div className="picture-view">
-                <PictureMaterial/>
+                    <PictureMaterial/>
                 </div>
             </div>
-        </div>
-
         </Container>
         </>
     )

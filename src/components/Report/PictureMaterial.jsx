@@ -27,8 +27,8 @@ const PictureMaterial = () => {
                     src: item,
                     // width: Math.floor(Math.random() * 4) + 2, // random number between 2 and 5
                     // height: Math.floor(Math.random() * 4) + 2 // random number between 2 and 5
-                    width: 2, // random number between 2 and 5
-                    height: 2
+                    width: 3, // random number between 2 and 5
+                    height: 3
                     // object cover -> width 갖춰주면 
                 }));
                 
@@ -58,11 +58,25 @@ const PictureMaterial = () => {
 
 
     return (
-        <div className='text-center' style={{ display: 'flex', flexDirection: 'column' }}>
-            <div className="fixed flex justify-center items-center my-2">
-                <p className='text-white text-center font-bold pt-3'>이미지를 드래그해서 보고서에 넣어보세요!</p>
+        <div>
+            <div>
+            <button 
+              style={{
+                  display: 'inline-block',
+                  backgroundColor: 'white',
+                  color: 'black',
+                  fontWeight: 'bold',
+                  padding: '10px 20px',
+                  borderRadius: '25px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  marginBottom: '10px'  // add this line
+              }}
+            >
+              이미지를 드래그해서 보고서에 넣어보세요!
+            </button>
             </div>
-            <div style={{maxHeight: '82vh', overflowY: 'auto', marginTop: '60px'}}>
+            <div style={{ overflowY: 'scroll', maxHeight: '80vh' }}>
                 <Gallery photos={convertedPhotos}/> 
             </div>
         </div>

@@ -1,14 +1,12 @@
 .ql-container {
     font-family: 'IBM Plex Sans KR', sans-serif;
     border-color: white !important;
-    height: 62vh;
+    height: 72vh !important
 }
 
 .ql-editor {
     padding: 40px 40px 40px 40px;
     border-color: white !important;
-    height: 70vh;
-    /*  */
 }
 
 .project_title {
