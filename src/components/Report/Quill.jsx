@@ -53,16 +53,16 @@ const QuillEditor = () => {
     useEffect(() => {
         const contentHtml = `
         <div>
-        <br>
-        <h2 class="ql-align-center"><span style="color: rgb(153, 51, 255);">아파트 내부 인테리어에 관한 가족회의 보고서 </span></h2>
+        
+        <h1 class="ql-align-center"><span style="color: rgb(153, 51, 255);">아파트 내부 인테리어에 관한 가족회의 보고서 </span></h1>
         <br>
         <p class="ql-align-right"><strong>날짜:</strong> 2023년 7월 5일</p>
         <p class="ql-align-right"><strong>회의 참석자:</strong> 가족 전체</p>
         <br>
-        <h3><strong>1. 인테리어 필요성</strong></h3>
+        <h2><strong>1. 인테리어 필요성</strong></h2>
         <p style="margin-left: 1rem;">우리 가족 아파트의 인테리어 개선은 단순히 물질적인 만족도만을 증가시키는 것이 아닙니다. 보다 편안하고, 아름다운 환경에서 생활하는 것은 우리 가족 모두의 삶의 질을 향상시키고, 행복감을 늘려줄 것이라고 확신하고 있습니다. 이러한 생각은 우리 가족 모두가 공감하고 있으며, 따라서 이번 내부 인테리어는 가족 모두의 기대와 열정으로 시작되었습니다.</p>
         <br>
-        <h3><strong>2. 인테리어 계획</strong></h3>
+        <h2><strong>2. 인테리어 계획</strong></h2>
         <p>우리 가족은 각 방에 따라 다른 인테리어 계획을 세우기로 결정했습니다. 이는 각 방의 기능과 사용목적, 그리고 가족 구성원의 개인적인 취향을 고려하기 위함입니다.</p>
         <br>
         <h3><strong>2-a. 거실</strong></h3>
