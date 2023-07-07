@@ -16,7 +16,7 @@ import InputSubscription from '../Editor/SideBar/InputSubscription'
 import { useNavigate, useParams } from "react-router-dom";
 const MenuboxWidth = '100px'
 
-const style = {
+const inputstyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -94,8 +94,8 @@ const MenuBar = () => {
                 invisible: true,
               },
             }}>
-            <div style={{ position: 'fixed', right: MenuboxWidth, top: '64px' }}>
-              <ImageBox />``
+            <div style={{ position: 'fixed', right: MenuboxWidth, top: '64px', overflow: 'visible' }}>
+              <ImageBox />
             </div>
           </Drawer>
         </div>
@@ -166,7 +166,7 @@ const MenuBar = () => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
-            <Box sx={style}>
+            <Box sx={inputstyle}>
               <InputSubscription />
               <div className='grid'><button className='mt-2 justify-self-end' onClick={() => setOpen(false)}>닫기</button></div>
 

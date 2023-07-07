@@ -213,8 +213,8 @@ const ImageBox = () => {
         width: 420,
         height: '100vh',
         backgroundColor: 'rgba(255,255,255,0.5)',
-        borderTopRightRadius: 0,
-        borderBottomRightRadius: 0,
+        paddingBottom: '30px',
+
         top: 0,
         bottom: 0,
         color: 'rgb(255,255,255)',
@@ -249,10 +249,9 @@ const ImageBox = () => {
             ))}
             </div>
           {/*🌿 달력 입력 및 입력,초기화 버튼 구간*/}
-          <div className='w-54 mt-2 border-violet-800 border-1 rounded-sm mx-2'>
+          <div className='w-54 mt-2 mb-16'>
             <Datepicker 
-              transitionName="Datepicker-trans"
-              containerClassName='absolute w-80 h-12'
+              containerClassName='datepicker-style w-80 h-12 ml-12'
               value={dates}
               popoverDirection="down" 
               onChange={handleValueChange} 
