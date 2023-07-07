@@ -128,7 +128,7 @@ const ImageUpload = ({ onClose  }) => {
           display: 'flex',
           flexWrap: 'nowrap',
           borderRadius: '5px',
-          position: 'relative', // Add position relative to the Box
+          position: 'relative',
           '& > :not(style)': {
             m: 3,
             width: '50%',

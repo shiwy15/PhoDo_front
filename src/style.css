@@ -710,3 +710,10 @@ button:focus {
   position: absolute !important;
   z-index: 99999 !important;
 }
+
+.datepicker-style{
+  position: fixed;
+  z-index: 10000;
+  right:160px;
+  color: black;
+}

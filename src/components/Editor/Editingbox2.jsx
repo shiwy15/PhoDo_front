@@ -246,7 +246,7 @@ function Editingbox2 () {
 
   return (
     <>
-    <div className= "wrapper" ref={reactFlowWrapper} style={{Index:0, height: '100vh'}}>
+    <div className= "wrapper" ref={reactFlowWrapper} style={{position: 'absolute',top:0, bottom:0, left:0, right:0, Index:-1111, height: '100vh'}}>
     <ReactFlow
       nodes={nodes}
       edges={edges}
@@ -268,7 +268,7 @@ function Editingbox2 () {
       <MiniMap pannable position='bottom-left'/>
       <Background id="1" gap={30} color="#6F6F6F" variant={BackgroundVariant.Cross} />
       <Background id="2" gap={300} offset={1} color="#6F6F6F" variant={BackgroundVariant.Lines} />
-    <div style={{zIndex: 150 }}>
+    <div>
       <MenuBarR />
     </div>
     </ReactFlow>
