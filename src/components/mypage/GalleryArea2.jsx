@@ -57,6 +57,7 @@ import {useMypageRenderStore} from '../store.js';
 
 // 검색 아이콘 추가
 import { FaMapMarkerAlt } from 'react-icons/fa';
+import { Fullscreen } from '@mui/icons-material';
 
 const uploadStyle = {
     zIndex: 500,
@@ -622,25 +623,26 @@ export default function GalleryArea2() {
               </button>
             ))}
         </div>
-
-
         {/*🌿 달력 입력 및 입력,초기화 버튼 구간*/}
-        <div className='mb-8 bg-gray-100 p-4 justify-between flex mx-4 rounded-xl overflow-auto'>
-            <div className='flex'>
-                <div className='w-80 h-12 border-violet-800 border-1 rounded-sm ml-8 mr-5'>
-                    <Datepicker 
-                        value={dates} 
-                        onChange={handleValueChange} 
-                    />
-                </div>
-                <div className='flex w-70 border-violet-800 border-1 bg-white rounded-sm h-12'>
-                    <input type="text" value={searchLocation} onChange={handleLocationChange} className='flex-grow px-2 mr-5 py-1 rounded-1' placeholder='장소명을 입력하세요'/>
-                    <button className='bg-white py-1 mr-1 '>
-                        <FaMapMarkerAlt className='text-gray-400'/>
-                    </button>
-                </div>
+        <div className='mb-8 bg-gray-100 p-4 justify-between flex mx-4 rounded-xl overflow-auto'> {/*선택 박스*/}
+            <div className='flex justify-between'>
+              <div className=' h-12 bg-white p-1 border-violet-800 border-1 rounded-sm ml-8 mr-5' style={{width: '326px'}}>
+                  <Datepicker
+                    transitionName="Datepicker-trans"
+                    containerClassName='absolute w-80 h-12'
+                    value={dates}
+                    onChange={handleValueChange} 
+                  />
+              </div>
+              <div className='flex w-70 border-violet-800 border-1 bg-white rounded-sm h-12'>
+                  <input type="text" value={searchLocation} onChange={handleLocationChange} className='flex-grow px-2 mr-5 py-1 rounded-1' placeholder='장소명을 입력하세요'/>
+                  <button className='bg-white py-1 mr-1 '>
+                      <FaMapMarkerAlt className='text-gray-400'/>
+                  </button>
+              </div>
+
             </div>
-            <div className='flex'>
+              <div className='flex'>
                 <button
                     type="button"
                     data-te-ripple-init
@@ -662,14 +664,15 @@ export default function GalleryArea2() {
                         초기화
                     </span>
                 </button>
-            </div>
+              </div>
+
         </div>
         <div className='mx-4'>
         <Divider color='white' />
         </div>
 
         {/*🌿이미지 갤러리 창*/ }
-        <div style={{backgroundColor: 'rgba(255,255,255,0.1)'}} className="container mx-auto rounded-md shadow-xl my-4 py-2 lg:px-16 lg:pt-12">
+        <div style={{backgroundColor: 'rgba(255,255,255,0.1)'}} className="gallery-container mx-auto rounded-md shadow-xl my-4 py-2 lg:px-16 lg:pt-12">
             <ImageList sx={{ width: '100%', gap: 16 }} cols={4} rowHeight={250}>
                 <React.Fragment>
                 {targetImgData?.data?.map((image) => {
