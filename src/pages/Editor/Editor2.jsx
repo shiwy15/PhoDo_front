@@ -5,7 +5,7 @@ function Editor2() {
     return (
         <>
         <Navbar/>
-        <div className="edit">
+        <div className="editor-section">
             <Editingbox2/>
         </div>
         </>

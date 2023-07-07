@@ -50,7 +50,7 @@ const LazyPicNode = ({ id, selected, data, isConnectable }) => {
           <Handle type="source" position={Position.Right}/>
         </NodeResizer>
         
-          <img src={imgSrc} alt='thumbnail' style={{  width: '100%', height: '100%', objectFit: 'contain' }} />
+          <img src={`${imgSrc}?w=248&fit=crop&auto=format`} alt='thumbnail' style={{  width: '100%', height: '100%', objectFit: 'contain' }} />
           <Handle type="source" position={Position.Right} id="right" isConnectable={isConnectable} />
         <Handle type="source" position={Position.Bottom} id="bottom" isConnectable={isConnectable}/>
       </div>

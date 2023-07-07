@@ -251,7 +251,10 @@ const ImageBox = () => {
           {/*🌿 달력 입력 및 입력,초기화 버튼 구간*/}
           <div className='w-54 mt-2 border-violet-800 border-1 rounded-sm mx-2'>
             <Datepicker 
-              value={dates} 
+              transitionName="Datepicker-trans"
+              containerClassName='absolute w-80 h-12'
+              value={dates}
+              popoverDirection="down" 
               onChange={handleValueChange} 
             />
           </div>
@@ -288,7 +291,7 @@ const ImageBox = () => {
               return (
                 <ImageListItem key={image.id}>
                   <img 
-                    src={imgSrc}
+                    src={`${imgSrc}?w=248&fit=crop&auto=format`}
                     className="imgNode max-h-24 rounded-lg"
                     loading="lazy"
                     onDragStart={(event) => onDragThumbStart(event, 'LazyPicNode',image.thumbnailUrl, image.url, Object.values(image.categories))}

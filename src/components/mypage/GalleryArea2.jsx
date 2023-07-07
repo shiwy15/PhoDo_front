@@ -626,11 +626,12 @@ export default function GalleryArea2() {
         {/*🌿 달력 입력 및 입력,초기화 버튼 구간*/}
         <div className='mb-8 bg-gray-100 p-4 justify-between flex mx-4 rounded-xl overflow-auto'> {/*선택 박스*/}
             <div className='flex justify-between'>
-              <div className=' h-12 bg-white p-1 border-violet-800 border-1 rounded-sm ml-8 mr-5' style={{width: '326px'}}>
+              <div className=' h-12 bg-white p-1 border-violet-800 border-1 rounded-sm ml-8 mr-5' style={{width: '330px'}}>
                   <Datepicker
                     transitionName="Datepicker-trans"
                     containerClassName='absolute w-80 h-12'
                     value={dates}
+                    popoverDirection="down" 
                     onChange={handleValueChange} 
                   />
               </div>
