@@ -385,19 +385,18 @@ const SideBarArea = () => {
                     <h2 className="text-2xl pl-2 font-semibold ml-6 text-white text-left">최근 참여한 프로젝트</h2>       
                 </Row>
                 </Col>
-                <Row className="justify-content-center pb-3">
+                <div className="justify-content-center pb-3 flex flex-wrap">
                   {recentProjects && recentProjects.map((project) => (
-                    <Col key={project._id} className="flex flex-wrap m-2 mb-4">
                       <ProjectCard
+                      key={project._id}
                         imgPath={`${project.image}?w=248&fit=crop&auto=format`}
                         pjtID={project._id}
                         title={project.name}
                         description={formatData(project.time)}
                         like={project.like}
                       />
-                    </Col>
                   ))}
-                </Row>
+                </div>
             </div>
             </Box>
         </div>

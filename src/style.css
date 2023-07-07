@@ -525,9 +525,7 @@ button:focus {
   transition: all 0.5s ease 0s !important;
   height: 100% !important;
   margin: 1em !important;
-  padding-left: 1px !important; 
-  padding-right: 1px !important;
-  width: fit-content !important; 
+  width: 340px; 
 }
 
 

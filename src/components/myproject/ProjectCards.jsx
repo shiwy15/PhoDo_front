@@ -58,7 +58,7 @@ function ProjectCards(props) {
     return (
     <Card className="project-card-view w-fit px-1 flex flex-wrap">
       <Link to={`/newproject/${props.pjtID}`} className='blog-link'>
-      <Card.Img variant="top" src={props.imgPath} alt="card-img" className=' h-56 object-contain' />
+      <Card.Img variant="top" src={props.imgPath} alt="card-img" className=' h-56 w-60 object-contain' />
       <Card.Body className='text-white no-underline'>
         <Card.Title className='text-xl'>{props.title}</Card.Title>
         <Card.Text style={{ textAlign: "justify" }}>
