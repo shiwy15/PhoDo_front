@@ -26,9 +26,9 @@ const ImageUpload = ({ onClose  }) => {
 
   //usestore로 창이 닫혔는지 전달하는 함수
   const RenderRequest = useMypageRenderStore(state => state.RenderRequest)
-  const setRenderRequest = useMypageRenderStore(state => state.setRenderRequest)
+  const setRenderRequest = useMypageRenderStore(state => state.setRenderRequest);
 
-
+  const [message, setMessage] = useState(null);
 
   {/* 🌿 입력된 이미지를 post로 보내는 함수 */}
   const mutation = useMutation(addImgFile, {
@@ -67,11 +67,11 @@ const ImageUpload = ({ onClose  }) => {
         url: URL.createObjectURL(file),
         name: file.name,
     })));
-};
+  };
 
-const handleDragOver = (e) => {
-    e.preventDefault();
-};
+  const handleDragOver = (e) => {
+      e.preventDefault();
+  };
 
   const handleUpload = () => {
     const formData = new FormData();
@@ -79,7 +79,12 @@ const handleDragOver = (e) => {
       formData.append('image', file); // 각 파일을 FormData에 추가
     });
     mutation.mutate(formData);
-    onClose (); // Close the modal after upload
+    setMessage('업로드가 완료되면 자동으로 렌더링 될거에요!');
+    setTimeout(() => {
+      setMessage(null);
+      onClose ();}
+      , 2500);
+     
   };
 
   useEffect(() => {
@@ -89,6 +94,25 @@ const handleDragOver = (e) => {
   return (
   <div className="flex justify-center flex-col items-center p-4 shadow-4 rounded-lg w-full h-4/12">
     <h2 className="text-2xl font-semibold pb-4 relative top-0 text-center">박스를 클릭하거나 Drag&Drop으로 이미지를 넣어주세요</h2>
+{message && 
+  <div style={{ 
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)', 
+    fontSize: '30px', 
+    zIndex: 1000, 
+    background: 'rgba(255, 255, 255, 0.8)', 
+    padding: '20px', 
+    borderRadius: '10px',
+    fontFamily: "'Noto Sans KR', sans-serif",
+    boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.2)',
+    textAlign: 'center',
+  }}>
+    {message}
+  </div>
+}
+
 
     {/* 🌿input창 */}
     <input
