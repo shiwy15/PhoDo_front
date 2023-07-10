@@ -10,7 +10,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ---
 ## 상세 사항
-![팀원 소개](https://github.com/JinkyoJB/jungle-front/assets/85150616/c64257ab-4c50-442b-a60d-a5f1e1c26094)
+![팀원](https://github.com/JinkyoJB/jungle-front/assets/85150616/35aea1f7-96dd-41f7-b534-3759634e0fc0)
 
 ![주제선정배경](https://github.com/JinkyoJB/jungle-front/assets/85150616/4bc7909f-75c2-4fe8-81d8-933852a04245)
 
